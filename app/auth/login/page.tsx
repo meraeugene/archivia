@@ -2,19 +2,21 @@
 "use client";
 import { useState } from "react";
 import { GraduationCap, User, Lock, Eye, EyeOff } from "lucide-react";
+import { login } from "@/actions/auth";
+import { toast } from "sonner";
 
 interface FormData {
-  schoolId: string;
+  userId: string;
   password: string;
 }
 
 export default function GreenThemedLogin() {
   const [formData, setFormData] = useState<FormData>({
-    schoolId: "",
+    userId: "",
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -23,14 +25,33 @@ export default function GreenThemedLogin() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
-    // Simulate login
-    setTimeout(() => {
-      setIsLoading(false);
-      console.log("Login submitted:", formData);
-    }, 2000);
+
+    if (!formData.userId.trim()) {
+      toast.error("Username is required");
+      return;
+    }
+
+    if (!formData.password.trim()) {
+      toast.error("Password is required");
+      return;
+    }
+
+    setLoading(true);
+
+    try {
+      const result = await login(formData.userId, formData.password);
+      if (result?.error) {
+        toast.error(result.error);
+        setLoading(false);
+        return;
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -65,21 +86,20 @@ export default function GreenThemedLogin() {
             {/* School ID */}
             <div>
               <label
-                htmlFor="schoolId"
+                htmlFor="userId"
                 className="block text-sm text-black font-semibold mb-2"
               >
-                School ID
+                Username
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                   <User className="h-5 w-5 text-gray-400" />
                 </div>
                 <input
-                  id="schoolId"
-                  name="schoolId"
+                  id="userId"
+                  name="userId"
                   type="text"
-                  required
-                  value={formData.schoolId}
+                  value={formData.userId}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 text-black border border-gray-300 rounded-md focus:ring-1 focus:ring-black/80 focus:border-transparent outline-none"
                   placeholder="Enter your school ID"
@@ -103,7 +123,6 @@ export default function GreenThemedLogin() {
                   id="password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  required
                   value={formData.password}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-12 py-3 text-black border border-gray-300 rounded-md focus:ring-1 focus:ring-black/80 focus:border-transparent outline-none"
@@ -126,10 +145,13 @@ export default function GreenThemedLogin() {
             {/* Submit */}
             <button
               type="submit"
-              disabled={isLoading}
-              className="w-full mt-2 text-white bg-black hover:bg-black/90 py-3 px-4 rounded-md  cursor-pointer font-medium disabled:opacity-80  ease-in"
+              disabled={loading}
+              className="w-full mt-2 text-white bg-black hover:bg-black/90 py-3 px-4 rounded-md cursor-pointer font-medium disabled:opacity-80 flex items-center justify-center gap-2"
             >
-              {isLoading ? "Signing in..." : "Sign In"}
+              {loading && (
+                <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              )}
+              {loading ? "Signing in..." : "Sign In"}
             </button>
           </form>
 

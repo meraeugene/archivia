@@ -22,7 +22,8 @@ export const footerLinks = {
 export const navLinks = [
   { label: "Home", href: "/" },
   // { label: "Browse", href: "#browse" },
-  // { label: "Submit", href: "#submit" },
-  { label: "Features", href: "#features" },
+  { label: "Find Adviser", href: "/find-adviser" },
+  // { label: "Submit Thesis", href: "/submit-thesis" },
+  // { label: "Create Group", href: "/create-group" },
   { label: "Login", href: "/auth/login" },
 ];

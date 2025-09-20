@@ -18,7 +18,7 @@ const AdviserRecommender = () => {
 
         <div className="flex justify-center">
           <Link
-            href="/adviser"
+            href="/find-adviser"
             className="bg-black cursor-pointer text-white px-6 py-3 rounded-md font-medium hover:bg-gray-800 transition"
           >
             Find My Adviser
