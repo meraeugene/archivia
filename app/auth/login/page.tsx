@@ -98,6 +98,7 @@ export default function GreenThemedLogin() {
                 <input
                   id="userId"
                   name="userId"
+                  autoComplete="username"
                   type="text"
                   value={formData.userId}
                   onChange={handleInputChange}
@@ -121,6 +122,7 @@ export default function GreenThemedLogin() {
                 </div>
                 <input
                   id="password"
+                  autoComplete="current-password"
                   name="password"
                   type={showPassword ? "text" : "password"}
                   value={formData.password}

@@ -1,43 +1,8 @@
+import { users } from "@/data/users";
 import { hashPassword } from "@/lib/hash";
 import { supabase } from "@/utils/supabase/seedClient";
 
 async function seed() {
-  const users = [
-    {
-      user_id: "admin",
-      password: "admin",
-      role: "admin",
-      profile: {
-        first_name: "Admin",
-        last_name: "User",
-        email: "admin@example.com",
-        profile_picture: null,
-      },
-    },
-    {
-      user_id: "1234567",
-      password: "1234567",
-      role: "faculty",
-      profile: {
-        first_name: "Johny",
-        last_name: "Bobby",
-        email: "johny.bobby@school.edu",
-        profile_picture: null,
-      },
-    },
-    {
-      user_id: "2022304365",
-      password: "2022304365",
-      role: "student",
-      profile: {
-        first_name: "Andrew",
-        last_name: "Villalon",
-        email: "andrew.villalon@student.edu",
-        profile_picture: null,
-      },
-    },
-  ];
-
   for (const user of users) {
     // 🔹 Make sure old user (and profile) is deleted first
     const { error: deleteError } = await supabase
@@ -73,8 +38,9 @@ async function seed() {
       .from("user_profiles")
       .insert({
         user_id: data.id, // FK to users.id
-        first_name: user.profile.first_name,
-        last_name: user.profile.last_name,
+        full_name: user.profile.full_name,
+        prefix: user.profile.prefix,
+        suffix: user.profile.suffix,
         email: user.profile.email,
         profile_picture: user.profile.profile_picture,
       });

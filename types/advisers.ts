@@ -1,16 +1,18 @@
-export type StudentData = {
-  thesisTitle: string;
+export interface StudentData {
+  title: string;
   abstract: string;
-  availability: string;
-};
+}
 
 export type StudentDataField = keyof StudentData;
 
-export type Adviser = {
-  id: string | number;
-  name: string;
-  students: number;
-  bio: string;
-  specialization: string[];
-  availability: string[];
-};
+export interface Project {
+  title: string;
+  similarity: number;
+  abstract: string;
+}
+
+export interface Adviser {
+  adviser: string;
+  score: number;
+  projects: Project[];
+}
