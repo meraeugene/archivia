@@ -61,6 +61,15 @@ def map_adviser_names_to_ids(adviser_names: list[str]) -> dict[str, str]:
             mapping[name] = None
     return mapping
 
+# ---------------- Helper: get adviser capacity ----------------
+def get_adviser_capacity(adviser_id: str) -> str:
+    response = supabase.table("adviser_capacity").select("current_leaders, max_leaders").eq("adviser_id", adviser_id).execute()
+    if response.data:
+        cap = response.data[0]
+        return f"{cap['current_leaders']}/{cap['max_leaders']}"
+    return "0/0"  # fallback if no record exists
+
+
 # ---------------- Recommendation endpoint ----------------
 @app.post("/recommend")
 def recommend(project: Project):
@@ -86,9 +95,14 @@ def recommend(project: Project):
     results = []
     for adviser_name, score in adviser_scores.head(5).items():
         adviser_id = name_to_id.get(adviser_name)
+
+        print("🔹 Processing adviser:", adviser_name, "with ID:", adviser_id)
+        
         if adviser_id is None:
             print(f"⚠️ Adviser not found in DB: {adviser_name}")
             continue  # Skip advisers not in DB
+        
+        capacity = get_adviser_capacity(adviser_id)
 
          # Fetch the full name from Supabase
         supabase_user = supabase.table("user_profiles").select("prefix, full_name, suffix").eq("user_id", adviser_id).execute()
@@ -125,6 +139,7 @@ def recommend(project: Project):
             "adviser": full_name_with_title,   # Use full name from Supabase
             "user_id": name_to_id[adviser_name],
             "score": float(score),
+            "capacity": capacity,  
             "projects": projects
         })
 

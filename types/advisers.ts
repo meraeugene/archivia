@@ -14,5 +14,7 @@ export interface Project {
 export interface Adviser {
   adviser: string;
   score: number;
+  capacity: string; // e.g., "2/5"
+  user_id: string;
   projects: Project[];
 }

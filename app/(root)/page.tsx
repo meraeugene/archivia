@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { thesesData } from "@/data/thesis";
 import { Thesis } from "@/types/thesis";

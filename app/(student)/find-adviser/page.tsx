@@ -1,11 +1,12 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { Adviser, StudentData, StudentDataField } from "@/types/advisers";
 import InputPanel from "@/components/InputPanel";
 import ConfirmModal from "@/components/ConfirmModal";
 import RecommendationsList from "@/components/RecommendationsList";
+import { sendRequest } from "@/actions/studentRequests";
 
 const StudentAdviserMatcher = () => {
   const [studentData, setStudentData] = useState<StudentData>({
@@ -16,6 +17,9 @@ const StudentAdviserMatcher = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
+
+  // useTransition for confirm request
+  const [isPending, startTransition] = useTransition();
 
   const hasRecommendations = recommendations.length > 0;
 
@@ -43,6 +47,22 @@ const StudentAdviserMatcher = () => {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleConfirmRequest = async () => {
+    if (!selectedAdviser) return;
+
+    startTransition(async () => {
+      const res = await sendRequest(selectedAdviser.user_id);
+
+      if (res.error) {
+        toast.error(res.error);
+        return;
+      }
+
+      toast.success("Adviser request sent successfully!");
+      setShowModal(false);
+    });
   };
 
   return (
@@ -75,10 +95,8 @@ const StudentAdviserMatcher = () => {
         <ConfirmModal
           adviser={selectedAdviser}
           onCancel={() => setShowModal(false)}
-          onConfirm={() => {
-            console.log("Send request to:", selectedAdviser);
-            setShowModal(false);
-          }}
+          onConfirm={handleConfirmRequest}
+          isPending={isPending}
         />
       )}
     </div>

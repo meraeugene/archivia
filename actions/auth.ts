@@ -23,11 +23,12 @@ export async function login(userId: string, password: string) {
   // 1. Fetch user record from Supabase `users` table
   const { data: user, error } = await supabase
     .from("users")
-    .select("*")
+    .select("id,role,password")
     .eq("user_id", userId)
     .single();
 
   if (error || !user) {
+    console.log(error);
     return { error: "Invalid credentials" }; // user not found
   }
 
@@ -38,7 +39,7 @@ export async function login(userId: string, password: string) {
   }
 
   // 3. Sign a JWT containing user ID and role
-  const token = await signToken({ sub: user.user_id, role: user.role });
+  const token = await signToken({ sub: user.id, role: user.role });
 
   // 4. Save JWT in a secure HTTP-only cookie
   const cookieStore = await cookies();
@@ -51,6 +52,11 @@ export async function login(userId: string, password: string) {
   });
 
   // Redirect user to homepage after successful login
+
+  if (user.role === "faculty") {
+    redirect("/dashboard");
+  }
+
   redirect("/");
 }
 
@@ -65,6 +71,40 @@ export async function getSession() {
   if (!token) return null;
 
   return await verifyToken(token);
+}
+
+/**
+ * Get current logged-in user details
+ * @returns Current logged-in user details from Supabase
+ */
+export async function getCurrentUser() {
+  // 1. Decode JWT
+  const session = await getSession();
+  if (!session) return null;
+
+  const supabase = await createClient();
+
+  // 2. Fetch user details from Supabase `user_details` view
+  const { data, error } = await supabase
+    .from("user_details")
+    .select("*")
+    .eq("id", session.sub)
+    .single();
+
+  if (error || !data) {
+    console.error("Error fetching current user:", error?.message);
+    return null;
+  }
+
+  return {
+    user_id: data.user_id,
+    role: data.role as "student" | "faculty" | "admin",
+    email: data.email,
+    full_name: data.full_name,
+    prefix: data.prefix,
+    suffix: data.suffix,
+    profile_picture: data.profile_picture,
+  };
 }
 
 /**

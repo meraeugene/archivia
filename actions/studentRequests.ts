@@ -1,0 +1,65 @@
+"use server";
+
+import { createClient } from "@/utils/supabase/server";
+import { getSession } from "./auth";
+
+export async function sendRequest(adviserId: string) {
+  const supabase = await createClient();
+  const user = await getSession();
+
+  if (!user) {
+    return { error: "User not authenticated" };
+  }
+
+  if (user.role !== "student") {
+    return { error: "Only students can send requests" };
+  }
+
+  // 1️. Check adviser capacity
+  const { data: capacity, error: capError } = await supabase
+    .from("adviser_capacity")
+    .select("current_leaders, max_leaders")
+    .eq("adviser_id", adviserId)
+    .maybeSingle();
+
+  if (capError) {
+    console.error(capError);
+    return { error: "Unable to check adviser capacity" };
+  }
+
+  if (capacity && capacity.current_leaders >= capacity.max_leaders) {
+    return { error: "This adviser cannot take more students." };
+  }
+
+  // 2️. Check if student already sent a request to this adviser
+  const { data: existing } = await supabase
+    .from("student_requests")
+    .select("id, status")
+    .eq("student_id", user.sub)
+    .eq("adviser_id", adviserId)
+    .maybeSingle();
+
+  if (existing) {
+    return {
+      error:
+        "You have already sent a request to this adviser. Please wait for a response.",
+    };
+  }
+
+  // 3️. Insert request
+  const { data, error } = await supabase
+    .from("student_requests")
+    .insert({
+      student_id: user.sub,
+      adviser_id: adviserId,
+    })
+    .select()
+    .single();
+
+  if (error) {
+    console.error(error);
+    return { error: error.message };
+  }
+
+  return data;
+}

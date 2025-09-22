@@ -3,13 +3,14 @@ import { verifyToken } from "@/lib/jwt";
 
 const PUBLIC_PATHS = ["/auth/login"];
 const PROTECTED_PATHS = ["/find-adviser", "/dashboard"];
+const STUDENT_ONLY_PATHS = ["/find-adviser"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // 1. Read cookie
   const token = request.cookies.get("session")?.value;
-  const user = token ? verifyToken(token) : null;
+  const user = token ? await verifyToken(token) : null;
 
   const url = request.nextUrl.clone();
 
@@ -19,8 +20,17 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // 3. If logged in and trying to access /auth → redirect to home
+  // 3. If logged in and trying to access public path → redirect to home
   if (user && PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
+    url.pathname = "/";
+    return NextResponse.redirect(url);
+  }
+
+  // 4. Redirect faculty away from student-only pages
+  if (
+    user?.role === "faculty" &&
+    STUDENT_ONLY_PATHS.some((path) => pathname.startsWith(path))
+  ) {
     url.pathname = "/";
     return NextResponse.redirect(url);
   }
@@ -29,7 +39,7 @@ export async function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Tell Next.js which routes to run middleware on
+// Apply middleware to all routes except assets
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"], // apply to all routes except assets
+  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
 };

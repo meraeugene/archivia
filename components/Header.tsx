@@ -1,16 +1,26 @@
 "use client";
 
 import { logout } from "@/actions/auth";
+import { getInitials } from "@/utils/getInitials";
+import { User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { LogoutButton } from "./LogoutButton";
 
-const Header = ({
-  session,
-  navLinks,
-}: {
-  session: unknown;
+interface HeaderProps {
+  currentUser: {
+    email: string;
+    full_name: string;
+    prefix: string | null;
+    profile_picture: string | null;
+    role: "student" | "faculty" | "admin";
+    suffix: string | null;
+    user_id: string;
+  } | null;
   navLinks: { label: string; href: string }[];
-}) => {
+}
+
+const Header = ({ currentUser, navLinks }: HeaderProps) => {
   const pathname = usePathname();
 
   return (
@@ -23,47 +33,91 @@ const Header = ({
           </Link>
 
           {/* Navigation */}
-          <nav className="hidden md:flex space-x-8 items-center">
-            {navLinks.map(({ label, href }) => {
-              if (session && href === "/auth/login") return null;
+          <nav className="hidden md:flex space-x-6 items-center">
+            {navLinks
+              .filter(
+                ({ label }) =>
+                  !(label === "Find Adviser" && currentUser?.role === "faculty")
+              )
+              .map(({ label, href }) => {
+                if (href === "/auth/login" && currentUser) return null;
 
-              const isActive = pathname === href;
+                const isActive = pathname === href;
 
-              return (
-                <Link
-                  key={href}
-                  href={href}
-                  className={
-                    href === "/auth/login"
-                      ? "font-medium bg-black text-white hover:bg-black/90 px-4 py-[0.4rem] rounded-md"
-                      : isActive
-                      ? "font-semibold text-black"
-                      : "text-gray-800 hover:text-black"
-                  }
-                >
-                  {label}
-                </Link>
-              );
-            })}
+                return (
+                  <Link
+                    key={href}
+                    href={href}
+                    className={
+                      href === "/auth/login"
+                        ? "font-medium bg-black text-white hover:bg-black/90 px-4 py-[0.4rem] rounded-md"
+                        : isActive
+                        ? "font-semibold text-black"
+                        : "text-gray-800 hover:text-black"
+                    }
+                  >
+                    {label}
+                  </Link>
+                );
+              })}
+
+            {currentUser?.role === "faculty" && (
+              <Link
+                href="/dashboard"
+                className="text-gray-800 hover:text-black"
+              >
+                Dashboard
+              </Link>
+            )}
 
             {/* If logged in */}
-            {session ? (
-              <>
-                <Link
-                  href="/account"
-                  className="text-gray-800 hover:text-black"
+            {currentUser ? (
+              <div className="relative group">
+                <div className="w-9 h-9 cursor-pointer rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">
+                  {currentUser.profile_picture ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={currentUser.profile_picture}
+                      alt={currentUser.full_name}
+                      className="w-full h-full object-cover"
+                    />
+                  ) : (
+                    getInitials(currentUser.full_name)
+                  )}
+                </div>
+
+                {/* Dropdown (hover only) */}
+                <div
+                  className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg  
+             opacity-0 scale-95 transform transition-all duration-200 origin-top-right 
+             group-hover:opacity-100 group-hover:scale-100"
                 >
-                  Profile
-                </Link>
-                <form action={logout}>
-                  <button
-                    type="submit"
-                    className="font-medium bg-black text-white hover:bg-black/90 cursor-pointer px-4 py-[0.4rem] rounded"
+                  {/* User info */}
+                  <div className="px-4 py-3 border-b border-gray-100 text-sm text-gray-700">
+                    <div className="font-medium text-gray-900 truncate">
+                      {currentUser?.full_name}
+                    </div>
+                    {currentUser?.email && (
+                      <span className="truncate">{currentUser.email}</span>
+                    )}
+                  </div>
+
+                  {/* Profile link */}
+                  <Link
+                    href="/profile"
+                    className="flex text-sm items-center space-x-2 px-4 py-2 hover:bg-gray-100"
                   >
-                    Logout
-                  </button>
-                </form>
-              </>
+                    {" "}
+                    <User size={16} className="text-gray-600" />{" "}
+                    <span>Profile</span>{" "}
+                  </Link>
+
+                  {/* Logout */}
+                  <form action={logout}>
+                    <LogoutButton />
+                  </form>
+                </div>
+              </div>
             ) : null}
           </nav>
         </div>

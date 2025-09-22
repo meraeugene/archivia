@@ -35,7 +35,7 @@ const AdviserCard = ({
           <div className="flex items-center gap-4 text-sm text-gray-600">
             <div className="flex items-center gap-1">
               <Users size={14} />
-              <span>2/5 groups</span>
+              <span>{adviser.capacity} groups</span>
             </div>
             <div className="flex items-center gap-1">
               <Clock size={14} />

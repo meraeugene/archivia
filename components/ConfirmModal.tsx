@@ -1,16 +1,17 @@
 "use client";
 
 import React from "react";
-import { ShieldCheck } from "lucide-react";
+import { SendHorizonal, ShieldCheck } from "lucide-react";
 import { Adviser } from "@/types/advisers";
 
 type Props = {
   adviser: Adviser | null;
   onCancel: () => void;
   onConfirm: () => void;
+  isPending: boolean;
 };
 
-const ConfirmModal = ({ adviser, onCancel, onConfirm }: Props) => {
+const ConfirmModal = ({ adviser, onCancel, onConfirm, isPending }: Props) => {
   if (!adviser) return null;
 
   return (
@@ -47,10 +48,21 @@ const ConfirmModal = ({ adviser, onCancel, onConfirm }: Props) => {
             Cancel
           </button>
           <button
+            disabled={isPending}
             onClick={onConfirm}
-            className="flex-1 cursor-pointer px-5 py-3 rounded-xl bg-black text-white font-semibold hover:bg-black/90 transition-all"
+            className="flex-1 cursor-pointer px-5 py-3 rounded-xl bg-black text-white font-semibold hover:bg-black/90 transition-all flex items-center justify-center gap-2 "
           >
-            Confirm
+            {isPending && (
+              <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+            )}
+            {isPending ? (
+              "Sending..."
+            ) : (
+              <div className="flex items-center gap-2">
+                <SendHorizonal size={18} />
+                <span>Send</span>
+              </div>
+            )}
           </button>
         </div>
       </div>
