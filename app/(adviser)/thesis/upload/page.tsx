@@ -86,7 +86,7 @@ const ThesisUploadUI: React.FC = () => {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-5 bg-white text-black py-12">
+    <main className="flex-1 mx-auto bg-gray-50 text-black py-14">
       {/* Header */}
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold  text-gray-900 mb-3">
@@ -99,7 +99,7 @@ const ThesisUploadUI: React.FC = () => {
 
       {/* Upload Zone */}
       <div
-        className={`relative border-1 rounded-sm border-dashed transition-all duration-300 ${
+        className={`relative border-1 max-w-5xl bg-white mx-auto rounded-sm border-dashed transition-all duration-300 ${
           dragActive
             ? "border-blue-500 bg-blue-50"
             : uploadedFile
@@ -161,11 +161,7 @@ const ThesisUploadUI: React.FC = () => {
 
       {/* File Display */}
       {uploadedFile && (
-        <div className="space-y-4 mb-8 mt-6">
-          <h2 className="text-2xl font-light text-gray-900 mb-6">
-            Selected Thesis
-          </h2>
-
+        <div className="space-y-4 mb-8 mt-6 max-w-5xl mx-auto">
           <div className="bg-gray-50 border border-gray-200 p-6 rounded ">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
@@ -203,7 +199,7 @@ const ThesisUploadUI: React.FC = () => {
 
       {/* Upload Guidelines */}
       <div className="flex justify-center mt-12 ">
-        <div className="bg-gray-50 border border-gray-200 p-8 rounded max-w-3xl w-full">
+        <div className="bg-white border-gray-900 border-l-4 border  p-8 rounded-lg max-w-3xl w-full">
           <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">
             Thesis Upload Guidelines
           </h3>
@@ -228,21 +224,17 @@ const ThesisUploadUI: React.FC = () => {
               </h4>
               <ul className="space-y-1 list-disc list-inside">
                 <li>
-                  Ensure your thesis is the{" "}
+                  Ensure the thesis is the{" "}
                   <span className="font-medium">final approved version</span>
                 </li>
-                <li>
-                  Include your{" "}
-                  <span className="font-medium">name and student ID</span> in
-                  the file name
-                </li>
+                <li>Include all necessary sections and appendices</li>
                 <li>Check formatting and content before uploading</li>
               </ul>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

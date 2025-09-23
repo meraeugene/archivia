@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/actions/auth";
+import { getAdviserRequestsCount } from "@/actions/facultyRequests";
 import Sidebar from "@/components/Sidebar";
 import { redirect } from "next/navigation";
 
@@ -13,9 +14,14 @@ export default async function FacultyLayout({
     redirect("/");
   }
 
+  const adviserRequestCount = await getAdviserRequestsCount();
+
   return (
     <main className="min-h-screen bg-gray-50 flex ">
-      <Sidebar currentUser={currentUser} />
+      <Sidebar
+        currentUser={currentUser}
+        adviserRequestCount={adviserRequestCount}
+      />
       {children}
     </main>
   );

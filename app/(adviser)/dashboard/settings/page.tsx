@@ -45,7 +45,17 @@ const page = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  First Name
+                  Prefix
+                </label>
+                <input
+                  type="text"
+                  defaultValue="Dr."
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Full Name
                 </label>
                 <input
                   type="text"
@@ -55,11 +65,11 @@ const page = () => {
               </div>
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Last Name
+                  Suffix
                 </label>
                 <input
                   type="text"
-                  defaultValue="Anderson"
+                  defaultValue="PhD"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                 />
               </div>
@@ -70,16 +80,6 @@ const page = () => {
                 <input
                   type="email"
                   defaultValue="john.anderson@university.edu"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
-                />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-2">
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  defaultValue="+1 (555) 123-4567"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent"
                 />
               </div>
@@ -112,6 +112,7 @@ const page = () => {
 
           <div className="p-6 space-y-4">
             <Link
+              prefetch
               href="/change-password"
               className="w-full flex items-center justify-between p-4 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
             >

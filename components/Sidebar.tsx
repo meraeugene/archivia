@@ -10,8 +10,18 @@ import {
   Settings,
   LayoutDashboard,
   LogOutIcon,
+  Upload,
 } from "lucide-react";
 import { useTransition } from "react";
+
+const adviserNavLinks = [
+  { label: "Home", href: "/", icon: Home },
+  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
+  { label: "Requests", href: "/dashboard/requests", icon: FileText },
+  { label: "Upload Thesis", href: "/thesis/upload", icon: Upload },
+  { label: "Settings", href: "/dashboard/settings", icon: Settings },
+  { label: "Logout", href: "/", icon: LogOutIcon },
+];
 
 interface SidebarProps {
   currentUser: {
@@ -23,17 +33,10 @@ interface SidebarProps {
     suffix: string | null;
     user_id: string;
   } | null;
+  adviserRequestCount: number;
 }
 
-const adviserNavLinks = [
-  { label: "Home", href: "/", icon: Home },
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Requests", href: "/dashboard/requests", icon: FileText },
-  { label: "Settings", href: "/dashboard/settings", icon: Settings },
-  { label: "Logout", href: "/", icon: LogOutIcon },
-];
-
-const Sidebar = ({ currentUser }: SidebarProps) => {
+const Sidebar = ({ currentUser, adviserRequestCount }: SidebarProps) => {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
@@ -102,6 +105,7 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
 
             return (
               <Link
+                prefetch
                 key={item.href}
                 href={item.href}
                 className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors
@@ -114,9 +118,9 @@ const Sidebar = ({ currentUser }: SidebarProps) => {
                 <Icon className="h-5 w-5 mr-3" />
                 {item.label}
 
-                {item.label === "Requests" && (
-                  <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full">
-                    4
+                {item.label === "Requests" && adviserRequestCount > 0 && (
+                  <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
+                    {adviserRequestCount}
                   </span>
                 )}
               </Link>

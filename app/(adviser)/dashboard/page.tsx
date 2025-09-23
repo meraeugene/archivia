@@ -1,17 +1,17 @@
-import {
-  CheckCircle,
-  Clock,
-  FileText,
-  Settings,
-  User,
-  Users,
-} from "lucide-react";
-import { requests } from "@/data/requests";
+import { Calendar, Clock, FileText, Mail, Settings, Users } from "lucide-react";
 import { formatDate } from "@/utils/formatDate";
 import Link from "next/link";
+import {
+  getAdviserRequests,
+  getAdviserRequestsCount,
+} from "@/actions/facultyRequests";
+import { getInitials } from "@/utils/getInitials";
 
-export default function FacultyDashboard() {
-  const pendingRequests = requests.filter((req) => req.status === "pending");
+export default async function FacultyDashboard() {
+  const [requests, adviserRequestCount] = await Promise.all([
+    getAdviserRequests(),
+    getAdviserRequestsCount(),
+  ]);
 
   return (
     <main className="flex-1 ">
@@ -30,7 +30,7 @@ export default function FacultyDashboard() {
                     Total Requests
                   </p>
                   <p className="text-3xl font-bold text-gray-900">
-                    {requests.length}
+                    {adviserRequestCount}
                   </p>
                 </div>
                 <div className="bg-gray-100 p-3 rounded-lg">
@@ -48,7 +48,7 @@ export default function FacultyDashboard() {
                 <div>
                   <p className="text-sm font-medium text-gray-600">Pending</p>
                   <p className="text-3xl font-bold text-yellow-600">
-                    {pendingRequests.length}
+                    {adviserRequestCount}
                   </p>
                 </div>
                 <div className="bg-yellow-100 p-3 rounded-lg">
@@ -63,42 +63,15 @@ export default function FacultyDashboard() {
             <div className="bg-white   border border-green-600 border-l-4  p-6 rounded-lg">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-sm font-medium text-gray-600">Accepted</p>
-                  <p className="text-3xl font-bold text-green-600">
-                    {requests.filter((r) => r.status === "accepted").length}
-                  </p>
+                  <p className="text-sm font-medium text-gray-600">Students</p>
+                  <p className="text-3xl font-bold text-green-600">0</p>
                 </div>
                 <div className="bg-green-100 p-3 rounded-lg">
-                  <CheckCircle className="h-6 w-6 text-green-600" />
+                  <Users className="h-6 w-6 text-green-600" />
                 </div>
               </div>
               <div className="mt-4 flex items-center text-sm">
-                <span className="text-green-500 font-medium">
-                  {Math.round(
-                    (requests.filter((r) => r.status === "accepted").length /
-                      requests.length) *
-                      100
-                  )}
-                  %
-                </span>
-                <span className="text-gray-500 ml-1">approval rate</span>
-              </div>
-            </div>
-
-            <div className="bg-white   border border-blue-600 border-l-4  p-6 rounded-lg">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-sm font-medium text-gray-600">Students</p>
-                  <p className="text-3xl font-bold text-blue-600">
-                    {new Set(requests.map((r) => r.studentId)).size}
-                  </p>
-                </div>
-                <div className="bg-blue-100 p-3 rounded-lg">
-                  <Users className="h-6 w-6 text-blue-600" />
-                </div>
-              </div>
-              <div className="mt-4 flex items-center text-sm">
-                <span className="text-gray-500">Active students</span>
+                <span className="text-gray-500">Accepted student leaders</span>
               </div>
             </div>
           </div>
@@ -111,6 +84,7 @@ export default function FacultyDashboard() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <Link
+              prefetch
               href="/dashboard/requests"
               className="bg-white p-6  text-left group rounded-lg shadow-sm border border-gray-900 border-l-4 hover:shadow-md transition-shadow"
             >
@@ -128,6 +102,7 @@ export default function FacultyDashboard() {
             </Link>
 
             <Link
+              prefetch
               href="/dashboard/settings"
               className="bg-white p-6  text-left group rounded-lg shadow-sm border border-gray-900 border-l-4 hover:shadow-md transition-shadow"
             >
@@ -148,60 +123,75 @@ export default function FacultyDashboard() {
 
         {/* Recent Activity */}
         <section>
-          <div className="flex items-center justify-between mb-6">
+          <div className=" mb-6">
             <h2 className="text-xl font-semibold text-gray-900">
-              Recent Activity
+              Recent Requests
             </h2>
-            <Link
-              href="/dashboard/requests"
-              className="text-sm font-medium text-gray-900 hover:underline"
-            >
-              View all requests
-            </Link>
+
+            {requests.length === 0 && (
+              <p className="text-gray-600 mt-2">
+                No advisory requests at the moment.
+              </p>
+            )}
           </div>
 
-          <div className="bg-white hover:shadow-md transition-shadow shadow-sm rounded-lg border overflow-hidden border-gray-900 border-l-4 ">
-            <div className="divide-y divide-gray-300">
-              {requests.slice(0, 5).map((request) => (
-                <div
-                  key={request.id}
-                  className="p-6 hover:bg-gray-50 transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center space-x-4">
-                      <div className="bg-gray-100 rounded-full p-3">
-                        <User className="h-5 w-5 text-gray-600" />
-                      </div>
-                      <div>
-                        <h3 className="font-medium text-gray-900">
-                          {request.studentName}
-                        </h3>
-                        <p className="text-sm text-gray-500">
-                          {request.requestType} • {request.studentId}
-                        </p>
-                      </div>
+          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {requests.slice(0, 5).map((request) => (
+              <div
+                key={request.id}
+                className=" bg-white cursor-pointer border overflow-hidden border-gray-900 border-l-4 p-6 hover:shadow-md transition-shadow shadow-sm rounded-lg hover:bg-gray-50 "
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center space-x-3">
+                    <div className="w-9 h-9 cursor-pointer rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">
+                      {request?.studentProfilePicture ? (
+                        // eslint-disable-next-line @next/next/no-img-element
+                        <img
+                          src={request.studentProfilePicture}
+                          alt={request.studentName}
+                          className="w-full h-full object-cover"
+                        />
+                      ) : (
+                        getInitials(request?.studentName)
+                      )}
                     </div>
-                    <div className="flex items-center space-x-4">
-                      <span className="text-sm text-gray-500">
-                        {formatDate(request.submittedAt)}
-                      </span>
-                      <span
-                        className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
-                          request.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
-                            : request.status === "accepted"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
-                        }`}
-                      >
-                        {request.status.charAt(0).toUpperCase() +
-                          request.status.slice(1)}
-                      </span>
+                    <div>
+                      <h3 className="font-medium text-gray-900">
+                        {request.studentName}
+                      </h3>
+                      <p className="text-sm text-gray-500">
+                        {request.studentId}
+                      </p>
                     </div>
                   </div>
+
+                  <span
+                    className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+                      request.status === "pending"
+                        ? "bg-yellow-100 text-yellow-800"
+                        : request.status === "accepted"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-red-100 text-red-800"
+                    }`}
+                  >
+                    {request.status.charAt(0).toUpperCase() +
+                      request.status.slice(1)}
+                  </span>
                 </div>
-              ))}
-            </div>
+
+                <div className="space-y-3 ">
+                  <div className="flex items-center text-sm text-gray-600">
+                    <Mail className="h-4 w-4 mr-2" />
+                    <span>{request.studentEmail}</span>
+                  </div>
+
+                  <div className="flex items-center text-sm text-gray-600">
+                    <Calendar className="h-4 w-4 mr-2" />
+                    <span>{formatDate(request.submittedAt)}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
           </div>
         </section>
       </div>

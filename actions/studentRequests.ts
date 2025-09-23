@@ -3,7 +3,11 @@
 import { createClient } from "@/utils/supabase/server";
 import { getSession } from "./auth";
 
-export async function sendRequest(adviserId: string) {
+export async function sendRequest(
+  adviserId: string,
+  title: string,
+  abstract: string
+) {
   const supabase = await createClient();
   const user = await getSession();
 
@@ -52,6 +56,8 @@ export async function sendRequest(adviserId: string) {
     .insert({
       student_id: user.sub,
       adviser_id: adviserId,
+      title,
+      abstract,
     })
     .select()
     .single();

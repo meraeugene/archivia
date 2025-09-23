@@ -28,17 +28,22 @@ const Header = ({ currentUser, navLinks }: HeaderProps) => {
       <div className="max-w-6xl mx-auto px-5">
         <div className="flex justify-between items-center py-3">
           {/* Logo / Title */}
-          <Link href="/" className="text-3xl font-bold tracking-tight">
+          <Link prefetch href="/" className="text-3xl font-bold tracking-tight">
             Archivia
           </Link>
 
           {/* Navigation */}
           <nav className="hidden md:flex space-x-6 items-center">
             {navLinks
-              .filter(
-                ({ label }) =>
-                  !(label === "Find Adviser" && currentUser?.role === "faculty")
-              )
+              .filter(({ label }) => {
+                if (
+                  currentUser?.role === "faculty" &&
+                  label === "Find Adviser"
+                ) {
+                  return false; // hide only Find Adviser
+                }
+                return true; // show everything else
+              })
               .map(({ label, href }) => {
                 if (href === "/auth/login" && currentUser) return null;
 
@@ -46,6 +51,7 @@ const Header = ({ currentUser, navLinks }: HeaderProps) => {
 
                 return (
                   <Link
+                    prefetch
                     key={href}
                     href={href}
                     className={
@@ -63,8 +69,9 @@ const Header = ({ currentUser, navLinks }: HeaderProps) => {
 
             {currentUser?.role === "faculty" && (
               <Link
+                prefetch
                 href="/dashboard"
-                className="text-gray-800 hover:text-black"
+                className="text-gray-800  hover:text-black "
               >
                 Dashboard
               </Link>
@@ -104,6 +111,7 @@ const Header = ({ currentUser, navLinks }: HeaderProps) => {
 
                   {/* Profile link */}
                   <Link
+                    prefetch
                     href="/profile"
                     className="flex text-sm items-center space-x-2 px-4 py-2 hover:bg-gray-100"
                   >

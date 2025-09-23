@@ -1,19 +1,22 @@
-import { requests } from "@/data/requests";
+import { getAdviserRequests } from "@/actions/facultyRequests";
 import { formatDate } from "@/utils/formatDate";
-import { Calendar, Check, Mail, User, X } from "lucide-react";
+import { getInitials } from "@/utils/getInitials";
+import { Calendar, Check, Mail, X } from "lucide-react";
 
-const page = () => {
+export default async function Page() {
+  const requests = await getAdviserRequests();
+
   return (
-    <main className="flex-1 ">
-      <div className="flex items-center gap-3 px-8 py-4 border-b bg-white border-gray-200">
-        <h1 className="text-lg font-bold text-gray-900">
-          All Pending Requests
-        </h1>
-
-        <span className=" bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full">
-          4
-        </span>
+    <main className="flex-1">
+      <div className=" px-8 py-4 border-b bg-white border-gray-200">
+        <h1 className="text-lg font-bold text-gray-900">Advisory Requests</h1>
       </div>
+
+      {requests.length === 0 && (
+        <div className="px-8 py-4">
+          <p className="text-gray-600">No advisory requests at the moment.</p>
+        </div>
+      )}
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 p-8">
         {requests.map((request) => (
@@ -24,8 +27,17 @@ const page = () => {
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <div className="flex items-center space-x-3">
-                  <div className="bg-gray-100 rounded-full p-2">
-                    <User className="h-4 w-4 text-gray-600" />
+                  <div className="w-9 h-9 cursor-pointer rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">
+                    {request?.studentProfilePicture ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={request.studentProfilePicture}
+                        alt={request.studentName}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      getInitials(request?.studentName)
+                    )}
                   </div>
                   <div>
                     <h3 className="font-semibold text-gray-900">
@@ -60,12 +72,12 @@ const page = () => {
                 </div>
               </div>
 
-              <div className="mb-4">
+              <div className="mb-8">
                 <h4 className="font-medium text-gray-900 mb-2">
-                  {request.subject}
+                  {request.title}
                 </h4>
-                <p className="text-sm text-gray-600 line-clamp-3">
-                  {request.message}
+                <p className="text-sm text-gray-600 text-justify">
+                  {request.abstract}
                 </p>
               </div>
 
@@ -87,6 +99,4 @@ const page = () => {
       </div>
     </main>
   );
-};
-
-export default page;
+}

@@ -53,7 +53,11 @@ const StudentAdviserMatcher = () => {
     if (!selectedAdviser) return;
 
     startTransition(async () => {
-      const res = await sendRequest(selectedAdviser.user_id);
+      const res = await sendRequest(
+        selectedAdviser.user_id,
+        studentData.title,
+        studentData.abstract
+      );
 
       if (res.error) {
         toast.error(res.error);
