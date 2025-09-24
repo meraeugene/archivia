@@ -20,7 +20,7 @@ export const footerLinks = {
 };
 
 export const navLinks = [
-  // { label: "Browse", href: "#browse" },
+  { label: "Home", href: "/" },
   { label: "Find Adviser", href: "/find-adviser" },
   { label: "Advisers", href: "/advisers" },
   // { label: "Submit Thesis", href: "/submit-thesis" },

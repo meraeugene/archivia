@@ -21,7 +21,7 @@ const InputPanel = ({
 }: Props) => {
   return (
     <div
-      className={`transition-all duration-700 ease-in-out ${
+      className={`transition-all  duration-700 ease-in-out ${
         hasRecommendations
           ? "w-2/5 border-r border-gray-200"
           : "w-full flex items-center justify-center pt-10 pb-16"

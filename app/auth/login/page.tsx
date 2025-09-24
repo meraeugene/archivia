@@ -66,9 +66,9 @@ export default function GreenThemedLogin() {
         }}
       />
 
-      <div className="w-full max-w-6xl bg-white/10 backdrop-blur-lg  z-10  relative rounded-3xl  border border-gray-200    overflow-hidden flex">
+      <div className="w-full max-w-6xl h-[90vh] bg-white/10 backdrop-blur-lg  z-10  relative rounded-3xl  border border-gray-200    overflow-hidden flex">
         {/* Left Side - Login */}
-        <div className="flex flex-col p-20  w-[55%]">
+        <div className="flex flex-col px-20 py-16   w-[55%]">
           {/* Header */}
           <div className="mb-8 ">
             <div className="flex  mb-6">
@@ -172,7 +172,7 @@ export default function GreenThemedLogin() {
           <img
             src="/images/login.jpg"
             alt="Login Illustration"
-            className="object-cover h-full"
+            className="object-cover h-full w-full"
           />
         </div>
       </div>

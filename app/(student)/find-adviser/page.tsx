@@ -54,7 +54,7 @@ const StudentAdviserMatcher = () => {
 
     startTransition(async () => {
       const res = await sendRequest(
-        selectedAdviser.user_id,
+        selectedAdviser.id,
         studentData.title,
         studentData.abstract
       );
