@@ -137,7 +137,7 @@ def recommend(project: Project):
 
         results.append({
             "adviser": full_name_with_title,   # Use full name from Supabase
-            "user_id": name_to_id[adviser_name],
+            "id": name_to_id[adviser_name],
             "score": float(score),
             "capacity": capacity,  
             "projects": projects

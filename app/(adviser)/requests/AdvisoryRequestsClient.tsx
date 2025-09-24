@@ -33,9 +33,9 @@ export default function AdvisoryRequestsClient({
       const result = await acceptRequest(id);
       if (!result.success) {
         toast.error(result.error);
+      } else {
+        toast.success(result.message);
       }
-
-      toast.success(result.message);
     });
   };
 
@@ -64,7 +64,7 @@ export default function AdvisoryRequestsClient({
         </div>
       )}
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 p-8">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-8">
         {requests.map((request) => {
           const isExpanded = expandedId === request.id;
 
@@ -94,7 +94,7 @@ export default function AdvisoryRequestsClient({
                         {request.studentName}
                       </h3>
                       <p className="text-sm text-gray-500">
-                        {request.studentId}
+                        {request.studentUserId}
                       </p>
                     </div>
                   </div>

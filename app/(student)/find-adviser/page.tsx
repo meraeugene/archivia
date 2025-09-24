@@ -7,6 +7,7 @@ import InputPanel from "@/components/InputPanel";
 import ConfirmModal from "@/components/ConfirmModal";
 import RecommendationsList from "@/components/RecommendationsList";
 import { sendRequest } from "@/actions/studentRequests";
+import { isValidText } from "@/utils/isValidText";
 
 const StudentAdviserMatcher = () => {
   const [studentData, setStudentData] = useState<StudentData>({
@@ -27,8 +28,8 @@ const StudentAdviserMatcher = () => {
     setStudentData((prev) => ({ ...prev, [field]: value }));
 
   const handleGetRecommendations = async () => {
-    if (!studentData.title.trim() || !studentData.abstract.trim()) {
-      toast.error("Please fill in both the thesis title and abstract.");
+    if (!isValidText(studentData.title) || !isValidText(studentData.abstract)) {
+      toast.error("Please enter a meaningful title and abstract.");
       return;
     }
 
@@ -40,7 +41,6 @@ const StudentAdviserMatcher = () => {
         body: JSON.stringify(studentData),
       });
       const data = await res.json();
-      console.log(data);
       setRecommendations(data.recommendations);
     } catch (error) {
       console.error("Error fetching recommendations:", error);

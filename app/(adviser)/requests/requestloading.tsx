@@ -5,8 +5,8 @@ export default function Loading() {
         <h1 className="text-lg font-bold text-gray-900">Advisory Requests</h1>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 p-8">
-        {Array.from({ length: 5 }).map((_, i) => (
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3  p-8">
+        {Array.from({ length: 6 }).map((_, i) => (
           <div
             key={i}
             className="bg-white rounded-lg shadow-sm border border-gray-200 animate-pulse"
@@ -41,7 +41,7 @@ export default function Loading() {
                 <div className="h-4 w-full bg-gray-200 rounded mb-2" />
                 <div className="h-4 w-full bg-gray-200 rounded mb-2" />
                 <div className="h-3 mt-4 w-full bg-gray-200 rounded mb-1" />
-                {Array.from({ length: 17 }).map((_, i) => (
+                {Array.from({ length: 4 }).map((_, i) => (
                   <div
                     key={i}
                     className="h-3 w-full bg-gray-200 rounded mb-1"

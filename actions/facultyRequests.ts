@@ -82,7 +82,7 @@ export const getAdviserRequests = cache(async () => {
     status: req.status,
     studentProfilePicture: req.student_profile_picture,
     submittedAt: req.submitted_at,
-    studentId: req.student_user_id,
+    studentId: req.student_id,
     studentName: req.student_name,
     studentEmail: req.student_email,
     title: req.title,
@@ -111,13 +111,13 @@ export const getPendingAdviserRequests = cache(async () => {
     status: req.status,
     studentProfilePicture: req.student_profile_picture,
     submittedAt: req.submitted_at,
-    studentId: req.student_user_id,
+    studentId: req.student_id,
+    studentUserId: req.student_user_id,
     studentName: req.student_name,
     studentEmail: req.student_email,
     title: req.title,
     abstract: req.abstract,
     adviserId: req.adviser_id,
-    studentUserId: req.student_user_id,
   }));
 });
 
@@ -140,13 +140,13 @@ export const getAdviserAdvisees = cache(async () => {
     status: req.status,
     studentProfilePicture: req.student_profile_picture,
     submittedAt: req.submitted_at,
-    studentId: req.student_user_id,
+    studentId: req.student_id,
+    studentUserId: req.student_user_id,
     studentName: req.student_name,
     studentEmail: req.student_email,
     title: req.title,
     abstract: req.abstract,
     adviserId: req.adviser_id,
-    studentUserId: req.student_user_id,
   }));
 });
 
@@ -174,7 +174,10 @@ export async function acceptRequest(
 
   if (advError) return { success: false, error: advError.message };
   if (advData.current_leaders >= advData.max_leaders)
-    return { success: false, error: "Adviser is full" };
+    return {
+      success: false,
+      error: "You have reached the maximum number of leaders.",
+    };
 
   // Update request to accepted
   const { error: updateReqError } = await supabase

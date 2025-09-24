@@ -33,7 +33,7 @@ const RequestCard = ({
           </div>
           <div>
             <h3 className="font-medium text-gray-900">{request.studentName}</h3>
-            <p className="text-sm text-gray-500">{request.studentId}</p>
+            <p className="text-sm text-gray-500">{request.studentUserId}</p>
           </div>
         </div>
 
