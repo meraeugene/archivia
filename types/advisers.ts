@@ -11,10 +11,19 @@ export interface Project {
   abstract: string;
 }
 
-export interface Adviser {
-  adviser: string;
-  score: number;
-  capacity: string; // e.g., "2/5"
-  user_id: string;
-  projects: Project[];
-}
+export type Adviser = {
+  id: string;
+  full_name: string;
+  prefix: string | null;
+  suffix: string | null;
+  email: string | null;
+  profile_picture: string | null;
+  position: string | null;
+  bio: string | null;
+  highest_educational_attainment: string | null;
+  research_interest: string | null;
+  orcid: string | null;
+  handled_subjects: string | null;
+  max_leaders: number;
+  current_leaders: number;
+};

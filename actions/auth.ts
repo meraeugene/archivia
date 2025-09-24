@@ -86,7 +86,7 @@ export async function getCurrentUser() {
 
   // 2. Fetch user details from Supabase `user_details` view
   const { data, error } = await supabase
-    .from("user_details")
+    .from("user_details_view")
     .select("*")
     .eq("id", session.sub)
     .single();
@@ -104,6 +104,19 @@ export async function getCurrentUser() {
     prefix: data.prefix,
     suffix: data.suffix,
     profile_picture: data.profile_picture,
+
+    // Adviser-only fields
+    position: data.position,
+    bio: data.bio,
+    highest_educational_attainment: data.highest_educational_attainment,
+    research_interest: data.research_interest,
+    orcid: data.orcid,
+    handled_subjects: data.handled_subjects,
+
+    // Student-only fields
+    course: data.course,
+    year_level: data.year_level,
+    section: data.section,
   };
 }
 

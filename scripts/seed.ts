@@ -43,6 +43,13 @@ async function seed() {
         suffix: user.profile.suffix,
         email: user.profile.email,
         profile_picture: user.profile.profile_picture,
+        position: user.profile.position,
+        bio: user.profile.bio,
+        highest_educational_attainment:
+          user.profile.highest_educational_attainment,
+        research_interest: user.profile.research_interest,
+        orcid: user.profile.orcid,
+        handled_subjects: user.profile.handled_subjects,
       });
 
     if (profileError)
