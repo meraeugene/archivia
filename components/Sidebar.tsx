@@ -11,15 +11,17 @@ import {
   LayoutDashboard,
   LogOutIcon,
   Upload,
+  Users,
 } from "lucide-react";
 import { useTransition } from "react";
 
 const adviserNavLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Requests", href: "/dashboard/requests", icon: FileText },
+  { label: "Requests", href: "/requests", icon: FileText },
+  { label: "Advisees", href: "/advisees", icon: Users },
   { label: "Upload Thesis", href: "/thesis/upload", icon: Upload },
-  { label: "Settings", href: "/dashboard/settings", icon: Settings },
+  { label: "Settings", href: "/settings", icon: Settings },
   { label: "Logout", href: "/", icon: LogOutIcon },
 ];
 
@@ -33,10 +35,10 @@ interface SidebarProps {
     suffix: string | null;
     user_id: string;
   } | null;
-  adviserRequestCount: number;
+  pendingAdviserRequestCount: number;
 }
 
-const Sidebar = ({ currentUser, adviserRequestCount }: SidebarProps) => {
+const Sidebar = ({ currentUser, pendingAdviserRequestCount }: SidebarProps) => {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
@@ -118,11 +120,12 @@ const Sidebar = ({ currentUser, adviserRequestCount }: SidebarProps) => {
                 <Icon className="h-5 w-5 mr-3" />
                 {item.label}
 
-                {item.label === "Requests" && adviserRequestCount > 0 && (
-                  <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
-                    {adviserRequestCount}
-                  </span>
-                )}
+                {item.label === "Requests" &&
+                  pendingAdviserRequestCount > 0 && (
+                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
+                      {pendingAdviserRequestCount}
+                    </span>
+                  )}
               </Link>
             );
           })}

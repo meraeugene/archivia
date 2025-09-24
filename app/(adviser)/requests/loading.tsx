@@ -5,7 +5,7 @@ export default function Loading() {
         <h1 className="text-lg font-bold text-gray-900">Advisory Requests</h1>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 p-8">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 p-8">
         {Array.from({ length: 5 }).map((_, i) => (
           <div
             key={i}

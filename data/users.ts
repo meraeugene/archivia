@@ -353,4 +353,24 @@ export const users = [
       profile_picture: null,
     },
   },
+  {
+    user_id: "2022303622",
+    password: "2022303622",
+    role: "student",
+    profile: {
+      full_name: "Roy T. Cuyones",
+      email: "roy.cuyones@student.edu",
+      profile_picture: null,
+    },
+  },
+  {
+    user_id: "2022301617",
+    password: "2022301617",
+    role: "student",
+    profile: {
+      full_name: "Fiel Oliver E. Enad",
+      email: "fiel.enad@student.edu",
+      profile_picture: null,
+    },
+  },
 ];
