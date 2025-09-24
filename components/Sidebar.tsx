@@ -57,18 +57,18 @@ const Sidebar = ({ currentUser, pendingAdviserRequestCount }: SidebarProps) => {
         </div>
 
         <div className="flex items-center space-x-3 border-b py-4 border-gray-200 px-4">
-          <div className="w-9 h-9 cursor-pointer rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">
-            {currentUser?.profile_picture ? (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                src={currentUser.profile_picture}
-                alt={currentUser.full_name}
-                className="w-full h-full object-cover"
-              />
-            ) : (
-              getInitials(currentUser?.full_name)
-            )}
-          </div>
+          {currentUser?.profile_picture ? (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              src={currentUser?.profile_picture}
+              alt={currentUser?.full_name}
+              className="object-cover rounded-full w-9 h-9"
+            />
+          ) : (
+            <div className="w-9 h-9 cursor-pointer rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">
+              {getInitials(currentUser?.full_name)}
+            </div>
+          )}
           <div>
             <p className="text-sm font-medium text-gray-900">
               {currentUser?.full_name}

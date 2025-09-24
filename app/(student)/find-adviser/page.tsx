@@ -70,7 +70,7 @@ const StudentAdviserMatcher = () => {
   };
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 ">
       <div
         className={`transition-all duration-700 ease-in-out ${
           hasRecommendations ? "max-w-6xl mx-auto flex" : ""
