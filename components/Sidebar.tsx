@@ -14,6 +14,7 @@ import {
   Users,
 } from "lucide-react";
 import { useTransition } from "react";
+import { CurrentUser } from "@/types/currentUser";
 
 const adviserNavLinks = [
   { label: "Home", href: "/", icon: Home },
@@ -26,19 +27,16 @@ const adviserNavLinks = [
 ];
 
 interface SidebarProps {
-  currentUser: {
-    email: string;
-    full_name: string;
-    prefix: string | null;
-    profile_picture: string | null;
-    role: "student" | "faculty" | "admin";
-    suffix: string | null;
-    user_id: string;
-  } | null;
+  currentUser: CurrentUser;
   pendingAdviserRequestCount: number;
+  currentAdviserLeadersCount: string;
 }
 
-const Sidebar = ({ currentUser, pendingAdviserRequestCount }: SidebarProps) => {
+const Sidebar = ({
+  currentUser,
+  pendingAdviserRequestCount,
+  currentAdviserLeadersCount,
+}: SidebarProps) => {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
@@ -124,6 +122,13 @@ const Sidebar = ({ currentUser, pendingAdviserRequestCount }: SidebarProps) => {
                   pendingAdviserRequestCount > 0 && (
                     <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
                       {pendingAdviserRequestCount}
+                    </span>
+                  )}
+
+                {item.label === "Advisees" &&
+                  currentAdviserLeadersCount !== "0" && (
+                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
+                      {currentAdviserLeadersCount}
                     </span>
                   )}
               </Link>

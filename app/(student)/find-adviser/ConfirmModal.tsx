@@ -31,7 +31,7 @@ const ConfirmModal = ({ adviser, onCancel, onConfirm, isPending }: Props) => {
             You are about to send a formal adviser request to
           </p>
           <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
-            <p className="font-bold text-black text-lg">{adviser.adviser}</p>
+            <p className="font-bold text-black text-lg">{adviser.full_name}</p>
           </div>
           <p className="text-gray-600 text-sm w-[80%] mx-auto">
             Please confirm that you are the{" "}

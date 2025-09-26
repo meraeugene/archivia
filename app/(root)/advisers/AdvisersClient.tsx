@@ -1,6 +1,15 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 import { useState } from "react";
-import { BookOpen, X, Mail } from "lucide-react";
+import {
+  BookOpen,
+  X,
+  Mail,
+  GraduationCap,
+  Book,
+  LinkIcon,
+  FileText,
+} from "lucide-react";
 import { getInitials } from "@/utils/getInitials";
 import { Adviser } from "@/types/advisers";
 
@@ -121,18 +130,18 @@ const AdvisersClient = ({ advisers }: AdvisersClientProps) => {
           className="fixed inset-0 z-50 flex items-center justify-center  bg-black/20 backdrop-blur-sm "
           onClick={closeModal}
         >
-          <div className="bg-white rounded-lg shadow-2xl w-full max-w-4xl overflow-auto max-h-[90vh] relative ">
+          <div className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[90vh] relative ">
             {/* Close Button */}
             <button
               onClick={closeModal}
-              className="absolute top-6 right-6 z-10 w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center hover:bg-gray-700 cursor-pointer"
+              className="absolute top-4 right-4 z-10 w-12 h-12 bg-gray-800 text-white rounded-full flex items-center justify-center hover:bg-gray-700 cursor-pointer"
             >
               <X className="w-6 h-6" />
             </button>
 
             <div className="flex flex-col md:flex-row h-full">
               {/* Left Side - Large Profile Picture */}
-              <div className="md:w-1/2 h-64 md:h-auto relative overflow-hidden">
+              <div className="md:w-[40%] h-64 md:h-auto relative overflow-hidden">
                 {selectedAdviser.profile_picture ? (
                   <img
                     src={selectedAdviser.profile_picture}
@@ -152,7 +161,7 @@ const AdvisersClient = ({ advisers }: AdvisersClientProps) => {
               </div>
 
               {/* Right Side - Content */}
-              <div className="md:w-1/2 p-6 overflow-y-auto">
+              <div className="md:w-[30%] p-6 pr-0 overflow-y-auto">
                 <div className="mb-6">
                   <h3 className="text-3xl font-light text-gray-900 mb-2">
                     {selectedAdviser.full_name}
@@ -173,6 +182,19 @@ const AdvisersClient = ({ advisers }: AdvisersClientProps) => {
                     </div>
                   )}
                 </div>
+
+                {/* Highest Educational Attainment */}
+                {selectedAdviser.highest_educational_attainment && (
+                  <div className="mb-8">
+                    <h4 className="text-gray-900 text-sm font-medium mb-4 uppercase tracking-wider flex items-center">
+                      <GraduationCap className="w-4 h-4 mr-2" />
+                      Highest Educational Attainment
+                    </h4>
+                    <p className="text-gray-700">
+                      {selectedAdviser.highest_educational_attainment}
+                    </p>
+                  </div>
+                )}
 
                 {selectedAdviser.research_interest && (
                   <div className="mb-8">
@@ -195,12 +217,61 @@ const AdvisersClient = ({ advisers }: AdvisersClientProps) => {
                   </div>
                 )}
 
+                {/* Handled Subjects */}
+                {selectedAdviser.handled_subjects &&
+                  selectedAdviser.handled_subjects.length > 0 && (
+                    <div className="mb-8">
+                      <h4 className="text-gray-900 text-sm font-medium mb-4 uppercase tracking-wider flex items-center">
+                        <Book className="w-4 h-4 mr-2" />
+                        Handled Subjects
+                      </h4>
+                      <div className="flex flex-wrap gap-3">
+                        {selectedAdviser.handled_subjects
+                          .split(",")
+                          .map((spec, idx) => (
+                            <div
+                              key={idx}
+                              className="bg-gray-800 text-white w-fit  border text-sm px-4 py-3 rounded border-l-4 border-l-blue-200  transform hover:translateX-1 transition-transform duration-200"
+                            >
+                              {spec.trim()}
+                            </div>
+                          ))}
+                      </div>
+                    </div>
+                  )}
+
+                {/* ORCID */}
+                {selectedAdviser.orcid && (
+                  <div className="mb-8">
+                    <h4 className="text-gray-900 text-sm font-medium mb-4 uppercase tracking-wider flex items-center">
+                      <LinkIcon className="w-4 h-4 mr-2" />
+                      ORCID
+                    </h4>
+                    {selectedAdviser.orcid === "To be provided" ? (
+                      <span>To be provided</span>
+                    ) : (
+                      <a
+                        href={`https://orcid.org/${selectedAdviser.orcid}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-blue-600 hover:underline break-all"
+                      >
+                        {selectedAdviser.orcid}
+                      </a>
+                    )}
+                  </div>
+                )}
+              </div>
+
+              {/* Biography */}
+              <div className="md:w-[30%] p-6 pt-24 overflow-y-auto">
                 {selectedAdviser.bio && (
                   <div>
-                    <h4 className="text-gray-900 text-sm font-medium mb-4 uppercase tracking-wider">
+                    <h4 className="text-gray-900 text-sm font-medium mb-4 uppercase tracking-wider flex items-center">
+                      <FileText className="w-4 h-4 mr-2" />
                       Biography
                     </h4>
-                    <p className="text-gray-700 leading-relaxed line-clamp-7">
+                    <p className="text-gray-700 leading-relaxed line-clamp-25">
                       {selectedAdviser.bio}
                     </p>
                   </div>

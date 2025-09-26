@@ -41,9 +41,10 @@ export async function sendRequest(
     .select("id, status")
     .eq("student_id", user.sub)
     .eq("adviser_id", adviserId)
+    .in("status", ["pending", "accepted"])
     .maybeSingle();
 
-  if (existing) {
+  if (existing && existing.status !== "rejected") {
     return {
       error:
         "You have already sent a request to this adviser. Please wait for a response.",
@@ -63,7 +64,7 @@ export async function sendRequest(
     .single();
 
   if (error) {
-    console.error(error);
+    console.error("nigga", error);
     return { error: error.message };
   }
 

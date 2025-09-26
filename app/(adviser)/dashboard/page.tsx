@@ -5,7 +5,7 @@ import {
   getAdviserRequestsCount,
   getPendingAdviserRequestsCount,
 } from "@/actions/facultyRequests";
-import RequestsList from "@/components/RequestsList";
+import RequestsList from "@/app/(adviser)/dashboard/RequestsList";
 import StatsCard from "./StatsCard";
 import QuickActionsCard from "./QuickActionsCard";
 

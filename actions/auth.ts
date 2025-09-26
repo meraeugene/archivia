@@ -5,6 +5,7 @@ import { signToken, verifyToken } from "@/lib/jwt";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { cache } from "react";
 
 /**
  * Login function
@@ -77,7 +78,7 @@ export async function getSession() {
  * Get current logged-in user details
  * @returns Current logged-in user details from Supabase
  */
-export async function getCurrentUser() {
+export const getCurrentUser = cache(async () => {
   // 1. Decode JWT
   const session = await getSession();
   if (!session) return null;
@@ -118,7 +119,7 @@ export async function getCurrentUser() {
     year_level: data.year_level,
     section: data.section,
   };
-}
+});
 
 /**
  * Logout function

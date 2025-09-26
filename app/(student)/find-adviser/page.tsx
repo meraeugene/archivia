@@ -3,9 +3,9 @@
 import React, { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { Adviser, StudentData, StudentDataField } from "@/types/advisers";
-import InputPanel from "@/components/InputPanel";
-import ConfirmModal from "@/components/ConfirmModal";
-import RecommendationsList from "@/components/RecommendationsList";
+import InputPanel from "@/app/(student)/find-adviser/InputPanel";
+import ConfirmModal from "@/app/(student)/find-adviser/ConfirmModal";
+import RecommendationsList from "@/app/(student)/find-adviser/RecommendationsList";
 import { sendRequest } from "@/actions/studentRequests";
 import { isValidText } from "@/utils/isValidText";
 

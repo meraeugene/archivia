@@ -1,6 +1,5 @@
 "use client";
 
-import { FileText } from "lucide-react";
 import { ReactNode } from "react";
 
 interface StatsCardProps {

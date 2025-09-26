@@ -62,12 +62,19 @@ def map_adviser_names_to_ids(adviser_names: list[str]) -> dict[str, str]:
     return mapping
 
 # ---------------- Helper: get adviser capacity ----------------
-def get_adviser_capacity(adviser_id: str) -> str:
-    response = supabase.table("adviser_capacity").select("current_leaders, max_leaders").eq("adviser_id", adviser_id).execute()
+def get_adviser_capacity(adviser_id: str) -> tuple[str, str]:
+    response = supabase.table("adviser_capacity") \
+        .select("current_leaders, max_leaders") \
+        .eq("adviser_id", adviser_id) \
+        .execute()
+
     if response.data:
         cap = response.data[0]
-        return f"{cap['current_leaders']}/{cap['max_leaders']}"
-    return "0/0"  # fallback if no record exists
+        capacity_str = f"{cap['current_leaders']}/{cap['max_leaders']}"
+        availability = "Unavailable" if cap['current_leaders'] >= cap['max_leaders'] else "Available"
+        return capacity_str, availability
+
+    return "0/0", "Available"  # fallback if no record exists
 
 
 # ---------------- Recommendation endpoint ----------------
@@ -102,10 +109,10 @@ def recommend(project: Project):
             print(f"⚠️ Adviser not found in DB: {adviser_name}")
             continue  # Skip advisers not in DB
         
-        capacity = get_adviser_capacity(adviser_id)
+        capacity, availability = get_adviser_capacity(adviser_id)
 
          # Fetch the full name from Supabase
-        supabase_user = supabase.table("user_profiles").select("prefix, full_name, suffix").eq("user_id", adviser_id).execute()
+        supabase_user = supabase.table("user_profiles").select(  "prefix, full_name, suffix, profile_picture, email, position, research_interest, bio").eq("user_id", adviser_id).execute()
 
         if not supabase_user.data:
             print(f"⚠️ Full name not found in Supabase for user_id: {adviser_id}")
@@ -136,12 +143,19 @@ def recommend(project: Project):
         ]
 
         results.append({
-            "adviser": full_name_with_title,   # Use full name from Supabase
+            "full_name": full_name_with_title,
             "id": name_to_id[adviser_name],
             "score": float(score),
-            "capacity": capacity,  
-            "projects": projects
+            "availability": availability, 
+            "capacity": capacity,
+            "projects": projects,
+            "profile_picture": user.get("profile_picture"),
+            "email": user.get("email"),
+            "position": user.get("position"),
+            "research_interest": user.get("research_interest"),
+            "bio": user.get("bio"),
         })
+
 
 
     if not results:

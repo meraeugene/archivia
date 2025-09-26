@@ -25,6 +25,28 @@ export const getAdviserCapacity = cache(async (): Promise<string> => {
   return `${data.current_leaders}/${data.max_leaders}`;
 });
 
+export const getAdviserCurrentLeadersCount = cache(
+  async (): Promise<string> => {
+    const supabase = await createClient();
+    const currentUser = await getSession();
+
+    if (!currentUser) return "0/0";
+
+    const { data, error } = await supabase
+      .from("adviser_capacity")
+      .select("current_leaders")
+      .eq("adviser_id", currentUser.sub)
+      .single();
+
+    if (error || !data) {
+      console.error("Error fetching adviser capacity:", error?.message);
+      return "0/0";
+    }
+
+    return `${data.current_leaders}`;
+  }
+);
+
 export const getAdviserRequestsCount = cache(async () => {
   const supabase = await createClient();
   const currentUser = await getSession();
@@ -151,7 +173,8 @@ export const getAdviserAdvisees = cache(async () => {
 });
 
 export async function acceptRequest(
-  requestId: string
+  requestId: string,
+  feedback?: string
 ): Promise<{ success: boolean; error?: string; message?: string }> {
   const supabase = await createClient();
 
@@ -182,10 +205,11 @@ export async function acceptRequest(
   // Update request to accepted
   const { error: updateReqError } = await supabase
     .from("student_requests")
-    .update({ status: "accepted" })
+    .update({ status: "accepted", feedback: feedback || null })
     .eq("id", requestId);
 
-  if (updateReqError) return { success: false, error: updateReqError.message };
+  if (updateReqError)
+    return { success: false, error: "Error updating request" };
 
   // Increment adviser current_leaders
   const { error: updateAdvError } = await supabase
@@ -193,7 +217,8 @@ export async function acceptRequest(
     .update({ current_leaders: advData.current_leaders + 1 })
     .eq("adviser_id", reqData.adviser_id);
 
-  if (updateAdvError) return { success: false, error: updateAdvError.message };
+  if (updateAdvError)
+    return { success: false, error: "Error updating adviser capacity" };
 
   revalidatePath("/requests");
   revalidatePath("/dashboard");
@@ -201,16 +226,28 @@ export async function acceptRequest(
 }
 
 export async function rejectRequest(
-  requestId: string
+  requestId: string,
+  feedback: string
 ): Promise<{ success: boolean; error?: string; message?: string }> {
   const supabase = await createClient();
 
+  if (!feedback.trim()) {
+    return { success: false, error: "Feedback is required for rejection." };
+  }
+
+  if (feedback.length > 300) {
+    return {
+      success: false,
+      error: "Feedback must be less than 300 characters.",
+    };
+  }
+
   const { error } = await supabase
     .from("student_requests")
-    .update({ status: "rejected" })
+    .update({ status: "rejected", feedback })
     .eq("id", requestId);
 
-  if (error) return { success: false, error: error.message };
+  if (error) return { success: false, error: "Error rejecting request" };
 
   revalidatePath("/requests");
   revalidatePath("/dashboard");

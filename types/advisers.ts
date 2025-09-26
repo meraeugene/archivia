@@ -13,6 +13,7 @@ export interface Project {
 
 export type Adviser = {
   id: string;
+  availability: string;
   full_name: string;
   prefix: string | null;
   suffix: string | null;
@@ -26,4 +27,10 @@ export type Adviser = {
   handled_subjects: string | null;
   max_leaders: number;
   current_leaders: number;
+  capacity: string;
+  projects: {
+    abstract: string;
+    title: string;
+    similarity: number;
+  }[];
 };

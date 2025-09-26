@@ -18,7 +18,7 @@ const ThesisUploadUI: React.FC = () => {
 
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
-  // 🔹 Drag Handlers
+  //  Drag Handlers
   const handleDrag = (e: DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
@@ -42,14 +42,14 @@ const ThesisUploadUI: React.FC = () => {
     }
   };
 
-  // 🔹 File Input
+  // File Input
   const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files) return;
     const files = Array.from(e.target.files);
     handleFiles(files);
   };
 
-  // 🔹 Validate + Store File
+  //  Validate + Store File
   const handleFiles = (files: File[]) => {
     const file = files[0]; // only 1 file allowed
     if (!file) return;
@@ -76,7 +76,7 @@ const ThesisUploadUI: React.FC = () => {
     setUploadStatus("success"); // later hook up to backend
   };
 
-  // 🔹 Remove File
+  // Remove File
   const removeFile = () => {
     setUploadedFile(null);
     setUploadStatus("idle");
