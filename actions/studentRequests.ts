@@ -70,3 +70,52 @@ export async function sendRequest(
 
   return data;
 }
+
+export async function getStudentSentRequests() {
+  const supabase = await createClient();
+  const user = await getSession();
+
+  if (!user) {
+    return { error: "User not authenticated" };
+  }
+
+  const { data, error } = await supabase
+    .from("student_sent_requests_view")
+    .select("*")
+    .eq("student_id", user.sub)
+    .order("submitted_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching sent requests:", error);
+    return { error: "Failed to fetch sent requests" };
+  }
+
+  return { data };
+}
+
+export async function getStudentAdviser() {
+  const supabase = await createClient();
+
+  const session = await getSession();
+
+  if (!session) {
+    return { success: false, message: "User not authenticated" };
+  }
+
+  const { data: adviser, error } = await supabase
+    .from("student_adviser_view")
+    .select("*")
+    .eq("student_id", session.sub)
+    .maybeSingle();
+
+  if (error) {
+    console.error("❌ Error fetching adviser:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  if (!adviser) {
+    return null;
+  }
+
+  return adviser;
+}

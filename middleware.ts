@@ -2,8 +2,8 @@ import { NextResponse, type NextRequest } from "next/server";
 import { verifyToken } from "@/lib/jwt";
 
 const PUBLIC_PATHS = ["/auth/login"];
-const PROTECTED_PATHS = ["/find-adviser", "/dashboard"];
-const STUDENT_ONLY_PATHS = ["/find-adviser"];
+const PROTECTED_PATHS = ["/find-adviser", "/dashboard", "/my-requests"];
+const STUDENT_ONLY_PATHS = ["/find-adviser", "/my-requests"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;

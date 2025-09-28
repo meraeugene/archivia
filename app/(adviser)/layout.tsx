@@ -23,8 +23,6 @@ export default async function FacultyLayout({
       getAdviserCurrentLeadersCount(),
     ]);
 
-  console.log(currentAdviserLeadersCount);
-
   return (
     <main className="min-h-screen bg-gray-50 flex ">
       <Sidebar

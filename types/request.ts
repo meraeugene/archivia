@@ -2,7 +2,7 @@ export type Request = {
   id: string;
   adviserId: string;
   studentId: string;
-  status: "pending" | "accepted" | "rejected";
+  status: "pending" | "accepted" | "rejected" | "already_handled";
   submittedAt: string;
   studentUserId: string;
   studentName: string;
@@ -10,4 +10,5 @@ export type Request = {
   studentProfilePicture: string | null;
   title: string;
   abstract: string;
+  feedback: string | null;
 };

@@ -38,7 +38,7 @@ const RequestCard = ({
         </div>
 
         <span
-          className={`inline-flex px-3 py-1 rounded-full text-xs font-medium ${
+          className={`text-xs font-medium px-2 py-1 rounded-full ${
             request.status === "pending"
               ? "bg-yellow-100 text-yellow-800"
               : request.status === "accepted"
@@ -46,14 +46,19 @@ const RequestCard = ({
               : "bg-red-100 text-red-800"
           }`}
         >
-          {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+          {request.status.replace(/_/g, " ").toUpperCase()}
         </span>
       </div>
 
       <div className="space-y-3 mb-4 ">
         <div className="flex items-center text-sm text-gray-600">
           <Mail className="h-4 w-4 mr-2" />
-          <span>{request.studentEmail}</span>
+          <a
+            href={`mailto:${request.studentEmail}`}
+            className="text-blue-600 hover:underline"
+          >
+            {request.studentEmail}
+          </a>
         </div>
 
         <div className="flex items-center text-sm text-gray-600">
@@ -79,6 +84,12 @@ const RequestCard = ({
           {isExpanded ? "Show less" : "Read more"}
         </button>
       </div>
+
+      {request.status === "already_handled" && (
+        <div className="text-sm text-center mt-6 text-red-600 font-medium">
+          {request.feedback}
+        </div>
+      )}
     </div>
   );
 };

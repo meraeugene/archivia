@@ -132,7 +132,7 @@ export default function AdvisoryRequestsClient({
                         : "bg-red-100 text-red-800"
                     }`}
                   >
-                    {request.status.toUpperCase()}
+                    {request.status.replace(/_/g, " ").toUpperCase()}
                   </span>
                 </div>
 
@@ -140,7 +140,12 @@ export default function AdvisoryRequestsClient({
                 <div className="space-y-3 mb-6">
                   <div className="flex items-center text-sm text-gray-600">
                     <Mail className="h-4 w-4 mr-2" />
-                    <span>{request.studentEmail}</span>
+                    <a
+                      href={`mailto:${request.studentEmail}`}
+                      className="text-blue-600 hover:underline"
+                    >
+                      {request.studentEmail}
+                    </a>
                   </div>
                   <div className="flex items-center text-sm text-gray-600">
                     <Calendar className="h-4 w-4 mr-2" />
@@ -149,7 +154,7 @@ export default function AdvisoryRequestsClient({
                 </div>
 
                 {/* Title and Abstract */}
-                <div className="mb-8">
+                <div className="mb-6">
                   <h4 className="font-medium text-gray-900 mb-2">
                     {request.title}
                   </h4>
@@ -171,7 +176,7 @@ export default function AdvisoryRequestsClient({
                 </div>
 
                 {/* Actions */}
-                {request.status === "pending" && (
+                {request.status === "pending" ? (
                   <div className="flex space-x-3">
                     <button
                       disabled={isPending}
@@ -190,7 +195,11 @@ export default function AdvisoryRequestsClient({
                       Reject
                     </button>
                   </div>
-                )}
+                ) : request.status === "already_handled" ? (
+                  <div className="text-sm text-center text-red-600 font-medium">
+                    {request.feedback}
+                  </div>
+                ) : null}
               </div>
             </div>
           );

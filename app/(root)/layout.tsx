@@ -1,4 +1,5 @@
 import { getCurrentUser } from "@/actions/auth";
+import { getStudentAdviser } from "@/actions/studentRequests";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { navLinks } from "@/data/links";
@@ -9,10 +10,18 @@ export default async function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const currentUser = await getCurrentUser();
+  const [currentUser, studentAdviser] = await Promise.all([
+    getCurrentUser(),
+    getStudentAdviser(),
+  ]);
+
   return (
     <main>
-      <Header currentUser={currentUser} navLinks={navLinks} />
+      <Header
+        currentUser={currentUser}
+        navLinks={navLinks}
+        studentAdviser={studentAdviser}
+      />
       {children}
       <Footer />
     </main>

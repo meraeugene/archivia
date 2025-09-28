@@ -110,6 +110,7 @@ export const getAdviserRequests = cache(async () => {
     title: req.title,
     abstract: req.abstract,
     adviserId: req.adviser_id,
+    feedback: req.feedback,
     studentUserId: req.student_user_id,
   }));
 });
@@ -123,7 +124,7 @@ export const getPendingAdviserRequests = cache(async () => {
     .from("adviser_requests_view")
     .select("*")
     .eq("adviser_id", currentUser?.sub)
-    .eq("status", "pending")
+    .in("status", ["pending", "already_handled"])
     .order("submitted_at", { ascending: false });
 
   if (error) throw new Error(error.message);
@@ -140,6 +141,7 @@ export const getPendingAdviserRequests = cache(async () => {
     title: req.title,
     abstract: req.abstract,
     adviserId: req.adviser_id,
+    feedback: req.feedback,
   }));
 });
 
@@ -178,7 +180,7 @@ export async function acceptRequest(
 ): Promise<{ success: boolean; error?: string; message?: string }> {
   const supabase = await createClient();
 
-  // Start transaction
+  // 1️. Fetch the request being accepted
   const { data: reqData, error: reqError } = await supabase
     .from("student_requests")
     .select("*")
@@ -189,6 +191,7 @@ export async function acceptRequest(
   if (reqData.status !== "pending")
     return { success: false, error: "Request already processed" };
 
+  // 2️. Fetch adviser capacity
   const { data: advData, error: advError } = await supabase
     .from("adviser_capacity")
     .select("*")
@@ -202,7 +205,19 @@ export async function acceptRequest(
       error: "You have reached the maximum number of leaders.",
     };
 
-  // Update request to accepted
+  // 3️. Fetch adviser name (for feedback message in other requests)
+  const { data: adviserProfile, error: adviserError } = await supabase
+    .from("user_profiles")
+    .select("full_name")
+    .eq("user_id", reqData.adviser_id)
+    .single();
+
+  if (adviserError)
+    return { success: false, error: "Error fetching adviser details" };
+
+  const adviserName = adviserProfile.full_name;
+
+  // 4️. Update this request to accepted
   const { error: updateReqError } = await supabase
     .from("student_requests")
     .update({ status: "accepted", feedback: feedback || null })
@@ -211,7 +226,20 @@ export async function acceptRequest(
   if (updateReqError)
     return { success: false, error: "Error updating request" };
 
-  // Increment adviser current_leaders
+  // 5️. Mark all other requests by this student as already_handled
+  const { error: updateOthersError } = await supabase
+    .from("student_requests")
+    .update({
+      status: "already_handled",
+      feedback: `This student is already handled by ${adviserName}`,
+    })
+    .eq("student_id", reqData.student_id)
+    .neq("id", requestId);
+
+  if (updateOthersError)
+    return { success: false, error: "Error updating other requests" };
+
+  // 6️. Increment adviser current_leaders
   const { error: updateAdvError } = await supabase
     .from("adviser_capacity")
     .update({ current_leaders: advData.current_leaders + 1 })
@@ -222,6 +250,7 @@ export async function acceptRequest(
 
   revalidatePath("/requests");
   revalidatePath("/dashboard");
+
   return { success: true, message: "Request accepted successfully." };
 }
 
