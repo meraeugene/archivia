@@ -10,7 +10,7 @@ export const getAllAdvisers = cache(async () => {
 
   if (error) {
     console.error("Error fetching all advisers:", error.message);
-    return [];
+    return { error: "Failed to fetch all advisers." };
   }
 
   return data;

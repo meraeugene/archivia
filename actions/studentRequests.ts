@@ -109,7 +109,7 @@ export async function getStudentAdviser() {
     .maybeSingle();
 
   if (error) {
-    console.error("❌ Error fetching adviser:", error.message);
+    console.error("Error fetching adviser:", error.message);
     return { success: false, error: error.message };
   }
 
