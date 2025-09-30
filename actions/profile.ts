@@ -2,8 +2,9 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getSession } from "./auth";
+import { revalidatePath } from "next/cache";
 
-export async function updateProfile(formData: {
+export async function updateAdviserProfile(formData: {
   prefix: string;
   full_name: string;
   suffix: string;
@@ -37,4 +38,38 @@ export async function updateProfile(formData: {
     console.error("Error updating profile:", error.message);
     return { error: "Failed to update profile." };
   }
+}
+
+export async function updateStudentProfile(formData: {
+  email: string;
+  course: string;
+  year_level: number;
+  section: string;
+  bio: string;
+}) {
+  const session = await getSession();
+  if (!session?.sub) {
+    return { error: "No active session found." };
+  }
+
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("user_profiles")
+    .update({
+      email: formData.email,
+      course: formData.course,
+      year_level: formData.year_level,
+      section: formData.section,
+      bio: formData.bio,
+    })
+    .eq("user_id", session.sub);
+
+  if (error) {
+    console.error("Error updating student profile:", error.message);
+    return { error: "Failed to update student profile." };
+  }
+
+  revalidatePath("/profile/" + session.sub);
+  return { success: true };
 }

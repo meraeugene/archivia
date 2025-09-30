@@ -1,6 +1,6 @@
 "use client";
 
-import { updateProfile } from "@/actions/profile";
+import { updateAdviserProfile } from "@/actions/profile";
 import { CurrentUser } from "@/types/currentUser";
 import { Camera, User } from "lucide-react";
 import { useState, useTransition } from "react";
@@ -39,7 +39,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
   const handleSubmit = () => {
     startTransition(async () => {
       try {
-        const result = await updateProfile(form);
+        const result = await updateAdviserProfile(form);
         if (result?.error) {
           toast.error(result.error);
           return;
