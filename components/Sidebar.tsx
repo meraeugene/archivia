@@ -21,7 +21,7 @@ const adviserNavLinks = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Requests", href: "/requests", icon: FileText },
   { label: "Advisees", href: "/advisees", icon: Users },
-  { label: "Upload Thesis", href: "/thesis/upload", icon: Upload },
+  { label: "Upload Thesis", href: "/upload-thesis", icon: Upload },
   { label: "Settings", href: "/settings", icon: Settings },
   { label: "Logout", href: "/", icon: LogOutIcon },
 ];

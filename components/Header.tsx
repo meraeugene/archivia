@@ -13,18 +13,23 @@ import { StudentAdviser } from "@/types/studentAdviser";
 interface HeaderProps {
   currentUser: CurrentUser | null;
   navLinks: { label: string; href: string }[];
-  studentAdviser: StudentAdviser | null; // 👉 make nullable
+  studentAdviser: StudentAdviser | null;
 }
 
 const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
+  // --- Helpers ---
+  const hideFindAdviser =
+    currentUser?.role === "faculty" ||
+    (currentUser?.role === "student" && studentAdviser);
+
   return (
-    <header className="border-b border-gray-200 bg-white sticky top-0 z-50">
+    <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md">
       <div className="max-w-6xl mx-auto px-5">
         <div className="flex justify-between items-center py-3">
-          {/* Logo / Title */}
+          {/* Logo */}
           <Link prefetch href="/" className="text-3xl font-bold tracking-tight">
             Archivia
           </Link>
@@ -32,58 +37,38 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
           {/* Navigation */}
           <nav className="hidden md:flex space-x-6 items-center">
             {navLinks
-              .filter(({ label }) => {
-                // Faculty should never see "Find Adviser"
-                if (
-                  currentUser?.role === "faculty" &&
-                  label === "Find Adviser"
-                ) {
-                  return false;
-                }
-
-                // Student already has adviser → hide "Find Adviser"
-                if (
-                  currentUser?.role === "student" &&
-                  studentAdviser &&
-                  label === "Find Adviser"
-                ) {
-                  return false;
-                }
-
-                return true;
-              })
+              .filter(
+                ({ label }) => !(hideFindAdviser && label === "Find Adviser")
+              )
               .map(({ label, href }) => {
                 if (href === "/auth/login" && currentUser) return null;
 
                 const isActive = pathname === href;
+                const linkClass =
+                  href === "/auth/login"
+                    ? "font-medium bg-black text-white hover:bg-black/90 px-4 py-[0.4rem] rounded-md"
+                    : isActive
+                    ? "font-semibold text-black"
+                    : "text-gray-800 hover:text-black";
 
                 return (
-                  <Link
-                    prefetch
-                    key={href}
-                    href={href}
-                    className={
-                      href === "/auth/login"
-                        ? "font-medium bg-black text-white hover:bg-black/90 px-4 py-[0.4rem] rounded-md"
-                        : isActive
-                        ? "font-semibold text-black"
-                        : "text-gray-800 hover:text-black"
-                    }
-                  >
+                  <Link prefetch key={href} href={href} className={linkClass}>
                     {label}
                   </Link>
                 );
               })}
 
+            {/* Student adviser badge */}
             {currentUser?.role === "student" && studentAdviser && (
-              <div className="flex items-center rounded  border border-gray-200 border-r-black border-r-4  ">
-                {/* Left side: Label */}
-                <div className="bg-black  text-white rounded rounded-br-none rounded-tr-none px-4  h-full py-2  text-sm font-medium">
-                  My Adviser
+              <div className="flex items-stretch px-2 ">
+                {/* Left: Label with icon */}
+                <div className="bg-black text-white px-4 rounded-md rounded-tr-none rounded-br-none  py-2 text-sm font-medium flex items-center gap-2">
+                  <User size={16} className="text-white" />
+                  Adviser
                 </div>
 
-                {/* Right side: Adviser info */}
-                <div className="flex items-center space-x-3 flex-1  px-4 ">
+                {/* Right: Adviser Info */}
+                <div className="flex items-center gap-2 rounded-tl-none rounded-bl-none rounded-md border border-gray-200 px-4 py-2 ">
                   <span className="text-gray-900 font-medium">
                     {studentAdviser.adviser_name}
                   </span>
@@ -106,20 +91,24 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
               </Link>
             )}
 
+            {/* Faculty-only link */}
             {currentUser?.role === "faculty" && (
               <Link
                 prefetch
                 href="/dashboard"
-                className="text-gray-800 hover:text-black"
+                className={
+                  pathname === "/dashboard"
+                    ? "font-semibold text-black"
+                    : "text-gray-800 hover:text-black"
+                }
               >
                 Dashboard
               </Link>
             )}
 
-            {/* If logged in */}
-            {currentUser ? (
+            {/* Avatar + Dropdown */}
+            {currentUser && (
               <div className="relative">
-                {/* Avatar (click target) */}
                 <div
                   onClick={() => setOpen((prev) => !prev)}
                   className="cursor-pointer"
@@ -138,23 +127,24 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
                   )}
                 </div>
 
-                {/* Dropdown (click toggle) */}
                 {open && (
                   <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg">
                     {/* User info */}
-                    <div className="px-4 py-3 border-b border-gray-100 text-sm text-gray-700">
+                    <div className="px-4 py-3 border-b border-gray-100 text-sm">
                       <div className="font-medium text-gray-900 truncate">
-                        {currentUser?.full_name}
+                        {currentUser.full_name}
                       </div>
-                      {currentUser?.email && (
-                        <span className="truncate">{currentUser.email}</span>
+                      {currentUser.email && (
+                        <span className="truncate text-gray-700">
+                          {currentUser.email}
+                        </span>
                       )}
                     </div>
 
                     {/* Profile link */}
                     <Link
                       prefetch
-                      href="/profile"
+                      href={`/profile/${currentUser.user_id}`}
                       className="flex text-sm items-center space-x-2 px-4 py-2 hover:bg-gray-100"
                       onClick={() => setOpen(false)}
                     >
@@ -169,7 +159,7 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
                   </div>
                 )}
               </div>
-            ) : null}
+            )}
           </nav>
         </div>
       </div>

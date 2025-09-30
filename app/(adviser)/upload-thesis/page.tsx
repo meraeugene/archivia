@@ -199,7 +199,7 @@ const ThesisUploadUI: React.FC = () => {
 
       {/* Upload Guidelines */}
       <div className="flex justify-center mt-12 ">
-        <div className="bg-white border-gray-900 border-l-4 border  p-8 rounded-lg max-w-3xl w-full">
+        <div className="bg-white shadow-xs  p-8 rounded-lg max-w-3xl w-full">
           <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">
             Thesis Upload Guidelines
           </h3>
