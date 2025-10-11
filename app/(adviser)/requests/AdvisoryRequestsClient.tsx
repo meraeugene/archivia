@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { formatDate } from "@/utils/formatDate";
-import { getInitials } from "@/utils/getInitials";
-import { Calendar, Check, Mail, X } from "lucide-react";
 import { acceptRequest, rejectRequest } from "@/actions/facultyRequests";
 import { toast } from "sonner";
 import Modal from "./Modal";
 import { Request } from "@/types/request";
+import RequestCard from "../../../components/RequestCard";
 
 export default function AdvisoryRequestsClient({
   requests,
@@ -17,61 +15,43 @@ export default function AdvisoryRequestsClient({
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [modalType, setModalType] = useState<"accept" | "reject">("accept");
-  const [selectedRequest, setSelectedRequest] = useState<Request | null>(null);
+  const [modalState, setModalState] = useState<{
+    open: boolean;
+    type: "accept" | "reject";
+    request: Request | null;
+  }>({ open: false, type: "accept", request: null });
 
-  const handleToggleExpand = (id: string) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
+  const openModal = (request: Request, type: "accept" | "reject") =>
+    setModalState({ open: true, type, request });
 
-  const handleAccept = (id: string, feedback: string) => {
+  const closeModal = () =>
+    setModalState({ open: false, type: "accept", request: null });
+
+  const handleAction = (
+    type: "accept" | "reject",
+    id: string,
+    feedback: string
+  ) => {
     startTransition(async () => {
-      const result = await acceptRequest(id, feedback);
+      const action = type === "accept" ? acceptRequest : rejectRequest;
+      const result = await action(id, feedback);
+
       if (!result.success) {
         toast.error(result.error);
       } else {
         toast.success(result.message);
-        handleCloseModal();
+        closeModal();
       }
     });
-  };
-
-  const handleReject = (id: string, feedback: string) => {
-    startTransition(async () => {
-      const result = await rejectRequest(id, feedback);
-      if (!result.success) {
-        toast.error(result.error);
-      } else {
-        toast.success(result.message);
-        handleCloseModal();
-      }
-    });
-  };
-
-  const handleOpenModal = (request: Request, type: "accept" | "reject") => {
-    setSelectedRequest(request);
-    setModalType(type);
-    setModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setModalOpen(false);
-    setSelectedRequest(null);
   };
 
   const handleConfirmModal = (feedback?: string) => {
-    if (!selectedRequest) return;
-
-    if (modalType === "accept") {
-      handleAccept(selectedRequest.id, feedback ?? "");
-    } else {
-      if (!feedback?.trim()) {
-        toast.error("Feedback is required when rejecting a request.");
-        return;
-      }
-      handleReject(selectedRequest.id, feedback);
+    if (!modalState.request) return;
+    if (modalState.type === "reject" && !feedback?.trim()) {
+      toast.error("Feedback is required when rejecting a request.");
+      return;
     }
+    handleAction(modalState.type, modalState.request.id, feedback ?? "");
   };
 
   return (
@@ -89,130 +69,28 @@ export default function AdvisoryRequestsClient({
       )}
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3 p-8">
-        {requests.map((request) => {
-          const isExpanded = expandedId === request.id;
-
-          return (
-            <div
-              key={request.id}
-              className="bg-white h-fit rounded-lg shadow-sm border border-gray-900 border-l-4 hover:shadow-md transition-shadow"
-            >
-              <div className="p-6">
-                {/* Header */}
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex items-center space-x-3">
-                    <div className="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">
-                      {request.studentProfilePicture ? (
-                        // eslint-disable-next-line @next/next/no-img-element
-                        <img
-                          src={request.studentProfilePicture}
-                          alt={request.studentName}
-                          className="w-full h-full object-cover"
-                        />
-                      ) : (
-                        getInitials(request.studentName)
-                      )}
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-gray-900">
-                        {request.studentName}
-                      </h3>
-                      <p className="text-sm text-gray-500">
-                        {request.studentUserId}
-                      </p>
-                    </div>
-                  </div>
-
-                  <span
-                    className={`text-xs font-medium px-2 py-1 rounded-full ${
-                      request.status === "pending"
-                        ? "bg-yellow-100 text-yellow-800"
-                        : request.status === "accepted"
-                        ? "bg-green-100 text-green-800"
-                        : "bg-red-100 text-red-800"
-                    }`}
-                  >
-                    {request.status.replace(/_/g, " ").toUpperCase()}
-                  </span>
-                </div>
-
-                {/* Student Info */}
-                <div className="space-y-3 mb-6">
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Mail className="h-4 w-4 mr-2" />
-                    <a
-                      href={`mailto:${request.studentEmail}`}
-                      className="text-blue-600 hover:underline"
-                    >
-                      {request.studentEmail}
-                    </a>
-                  </div>
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Calendar className="h-4 w-4 mr-2" />
-                    <span>{formatDate(request.submittedAt)}</span>
-                  </div>
-                </div>
-
-                {/* Title and Abstract */}
-                <div className="mb-6">
-                  <h4 className="font-medium text-gray-900 mb-2">
-                    {request.title}
-                  </h4>
-                  <p
-                    className={`text-sm text-gray-600 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
-                      isExpanded
-                        ? "line-clamp-none max-h-96"
-                        : "line-clamp-3 max-h-20"
-                    }`}
-                  >
-                    {request.abstract}
-                  </p>
-                  <button
-                    onClick={() => handleToggleExpand(request.id)}
-                    className="mt-2 text-xs text-gray-600 cursor-pointer hover:underline"
-                  >
-                    {isExpanded ? "Show less" : "Read more"}
-                  </button>
-                </div>
-
-                {/* Actions */}
-                {request.status === "pending" ? (
-                  <div className="flex space-x-3">
-                    <button
-                      disabled={isPending}
-                      onClick={() => handleOpenModal(request, "accept")}
-                      className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
-                    >
-                      <Check className="h-4 w-4 mr-2" />
-                      Accept
-                    </button>
-                    <button
-                      disabled={isPending}
-                      onClick={() => handleOpenModal(request, "reject")}
-                      className="flex-1 cursor-pointer bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
-                    >
-                      <X className="h-4 w-4 mr-2" />
-                      Reject
-                    </button>
-                  </div>
-                ) : request.status === "already_handled" ? (
-                  <div className="text-sm text-center text-red-600 font-medium">
-                    {request.feedback}
-                  </div>
-                ) : null}
-              </div>
-            </div>
-          );
-        })}
+        {requests.map((request) => (
+          <RequestCard
+            key={request.id}
+            request={request}
+            isExpanded={expandedId === request.id}
+            toggleExpand={() =>
+              setExpandedId(expandedId === request.id ? null : request.id)
+            }
+            isPending={isPending}
+            handleOpenModal={openModal}
+            isRequestTab={true}
+          />
+        ))}
       </div>
 
       {/* Modal */}
       <Modal
-        isOpen={modalOpen}
-        type={modalType}
-        studentName={selectedRequest?.studentName || ""}
+        isOpen={modalState.open}
+        type={modalState.type}
+        studentName={modalState.request?.studentName || ""}
         isPending={isPending}
-        onClose={handleCloseModal}
+        onClose={closeModal}
         onConfirm={handleConfirmModal}
       />
     </main>

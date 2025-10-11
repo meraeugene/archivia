@@ -1,7 +1,7 @@
 "use client";
 
 import { Request } from "@/types/request";
-import RequestsList from "../dashboard/RequestsList";
+import RequestsList from "../../../components/RequestsList";
 
 interface Props {
   requests: Request[];

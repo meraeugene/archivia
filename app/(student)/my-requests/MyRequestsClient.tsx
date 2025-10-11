@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { Mail, X, User } from "lucide-react";
 import { formatDate } from "@/utils/formatDate";
+import { cancelRequest } from "@/actions/studentRequests";
+import { toast } from "sonner";
 
 interface StudentRequest {
   id: string;
@@ -26,7 +28,6 @@ interface MyRequestsClientProps {
 export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
   const [expanded, setExpanded] = useState<string | null>(null);
   const [cancelling, setCancelling] = useState<string | null>(null);
-  const [items, setItems] = useState<StudentRequest[]>(requests);
 
   const toggleExpand = (id: string) => {
     setExpanded(expanded === id ? null : id);
@@ -35,25 +36,20 @@ export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
   const handleCancel = async (id: string) => {
     setCancelling(id);
 
-    try {
-      const res = await fetch(`/api/requests/${id}/cancel`, {
-        method: "POST",
-      });
-      if (!res.ok) throw new Error("Failed to cancel");
+    const result = await cancelRequest(id);
 
-      // Optimistically remove request from list
-      setItems((prev) => prev.filter((req) => req.id !== id));
-    } catch (err) {
-      console.error("Cancel error:", err);
-      alert("Failed to cancel request. Please try again.");
-    } finally {
-      setCancelling(null);
+    if (result.error) {
+      toast.error(result.error);
+    } else {
+      toast.success("Request cancelled successfully");
     }
+
+    setCancelling(null);
   };
 
-  if (items.length === 0) {
+  if (requests.length === 0) {
     return (
-      <div className="relative overflow-hidden">
+      <div className="relative overflow-hidden min-h-[60vh] flex items-center justify-center">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
         <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
           <h1 className="text-5xl text-white font-extrabold mb-5 tracking-tight">
@@ -95,7 +91,7 @@ export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
                  grid grid-cols-2  
                  gap-6 auto-rows-max px-5"
       >
-        {items.map((request) => (
+        {requests.map((request) => (
           <div
             key={request.id}
             className="relative bg-white h-fit border overflow-hidden 
@@ -195,6 +191,28 @@ export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
                 {expanded === request.id ? "Show less" : "Read more"}
               </button>
             </div>
+
+            {request.status === "accepted" ? (
+              <div className="mt-6 border border-green-100 bg-green-50 rounded-md p-4">
+                <h3 className="text-sm  font-medium text-green-800 mb-1 flex items-center gap-2">
+                  Feedback
+                </h3>
+                <p className="text-base flex items-center gap-2 text-green-700 leading-relaxed">
+                  <span className="inline-block w-1 h-1 bg-green-600 rounded-full"></span>
+                  {request.feedback || "No feedback provided."}
+                </p>
+              </div>
+            ) : request.status === "rejected" ? (
+              <div className="mt-6 border border-red-100 bg-red-50 rounded-md p-4">
+                <h3 className="text-sm  font-medium text-red-800 mb-1 flex items-center gap-2">
+                  Feedback
+                </h3>
+                <p className="text-base flex items-center gap-2 text-red-700 leading-relaxed">
+                  <span className="inline-block w-1 h-1 bg-red-600 rounded-full"></span>
+                  {request.feedback || "No feedback provided."}
+                </p>
+              </div>
+            ) : null}
           </div>
         ))}
       </div>

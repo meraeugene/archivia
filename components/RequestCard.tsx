@@ -3,17 +3,23 @@
 import { Request } from "@/types/request";
 import { formatDate } from "@/utils/formatDate";
 import { getInitials } from "@/utils/getInitials";
-import { Calendar, Mail } from "lucide-react";
+import { Calendar, Check, Mail, X } from "lucide-react";
 
 interface RequestCardProps {
   request: Request;
   isExpanded: boolean;
   toggleExpand: (text: string) => void;
+  isRequestTab?: boolean;
+  isPending?: boolean;
+  handleOpenModal?: (request: Request, type: "accept" | "reject") => void;
 }
 const RequestCard = ({
   request,
   isExpanded,
   toggleExpand,
+  isRequestTab,
+  isPending,
+  handleOpenModal,
 }: RequestCardProps) => {
   return (
     <div className=" bg-white  h-fit cursor-pointer border overflow-hidden border-gray-900 border-l-4 p-6 hover:shadow-md transition-shadow shadow-sm rounded-lg hover:bg-gray-50 ">
@@ -68,7 +74,7 @@ const RequestCard = ({
       </div>
 
       {/* Title and Abstract with ellipsis */}
-      <div>
+      <div className="mb-4">
         <h4 className="font-medium text-gray-900 mb-2">{request.title}</h4>
         <p
           className={`text-sm text-gray-600 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
@@ -84,6 +90,32 @@ const RequestCard = ({
           {isExpanded ? "Show less" : "Read more"}
         </button>
       </div>
+
+      {/* Actions */}
+      {request.status === "pending" && isRequestTab ? (
+        <div className="flex space-x-3">
+          <button
+            disabled={isPending}
+            onClick={() => handleOpenModal?.(request, "accept")}
+            className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
+          >
+            <Check className="h-4 w-4 mr-2" />
+            Accept
+          </button>
+          <button
+            disabled={isPending}
+            onClick={() => handleOpenModal?.(request, "reject")}
+            className="flex-1 cursor-pointer bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
+          >
+            <X className="h-4 w-4 mr-2" />
+            Reject
+          </button>
+        </div>
+      ) : request.status === "already_handled" ? (
+        <div className="text-sm text-center text-red-600 font-medium">
+          {request.feedback}
+        </div>
+      ) : null}
 
       {request.status === "already_handled" && (
         <div className="text-sm text-center mt-6 text-red-600 font-medium">

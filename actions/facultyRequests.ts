@@ -97,9 +97,7 @@ export const getAdviserRequests = cache(async () => {
     .eq("adviser_id", currentUser?.sub)
     .order("submitted_at", { ascending: false });
 
-  if (error) {
-    return { error: "Failed to fetch adviser requests." };
-  }
+  if (error) throw new Error(error.message);
 
   return data.map((req) => ({
     id: req.id,
@@ -129,9 +127,7 @@ export const getPendingAdviserRequests = cache(async () => {
     .in("status", ["pending", "already_handled"])
     .order("submitted_at", { ascending: false });
 
-  if (error) {
-    return { error: "Failed to fetch pending adviser requests." };
-  }
+  if (error) throw new Error(error.message);
 
   return data.map((req) => ({
     id: req.id,
@@ -161,9 +157,7 @@ export const getAdviserAdvisees = cache(async () => {
     .eq("status", "accepted")
     .order("submitted_at", { ascending: false });
 
-  if (error) {
-    return { error: "Failed to fetch accepted adviser requests." };
-  }
+  if (error) throw new Error(error.message);
 
   return data.map((req) => ({
     id: req.id,
@@ -177,6 +171,7 @@ export const getAdviserAdvisees = cache(async () => {
     title: req.title,
     abstract: req.abstract,
     adviserId: req.adviser_id,
+    feedback: req.feedback,
   }));
 });
 

@@ -1,5 +1,6 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { verifyToken } from "@/lib/jwt";
+import { createClient } from "./utils/supabase/server";
 
 const PUBLIC_PATHS = ["/auth/login"];
 const PROTECTED_PATHS = ["/find-adviser", "/dashboard", "/my-requests"];
@@ -33,6 +34,22 @@ export async function middleware(request: NextRequest) {
   ) {
     url.pathname = "/";
     return NextResponse.redirect(url);
+  }
+
+  // 5. If student already has an adviser, redirect away from find-adviser page
+  if (user?.role === "student" && pathname.startsWith("/find-adviser")) {
+    const supabase = await createClient();
+
+    const { data: adviser } = await supabase
+      .from("student_adviser_view")
+      .select("adviser_id")
+      .eq("student_id", user.sub)
+      .maybeSingle();
+
+    if (adviser) {
+      url.pathname = "/my-requests";
+      return NextResponse.redirect(url);
+    }
   }
 
   // Allow request to continue
