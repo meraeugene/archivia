@@ -3,26 +3,35 @@ import { verifyToken } from "@/lib/jwt";
 import { createClient } from "./utils/supabase/server";
 
 const PUBLIC_PATHS = ["/auth/login"];
-const PROTECTED_PATHS = ["/find-adviser", "/dashboard", "/my-requests"];
+const PROTECTED_PATHS = ["/", "/find-adviser", "/dashboard", "/my-requests"];
 const STUDENT_ONLY_PATHS = ["/find-adviser", "/my-requests"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-
-  // 1. Read cookie
-  const token = request.cookies.get("session")?.value;
-  const user = token ? await verifyToken(token) : null;
-
   const url = request.nextUrl.clone();
 
+  // 1. Read cookie and verify token
+  const token = request.cookies.get("session")?.value;
+  const user = token ? await verifyToken(token).catch(() => null) : null;
+
   // 2. If not logged in but visiting protected page → redirect to login
-  if (!user && PROTECTED_PATHS.some((path) => pathname.startsWith(path))) {
+  if (
+    !user &&
+    PROTECTED_PATHS.some(
+      (path) => pathname === path || pathname.startsWith(`${path}/`)
+    )
+  ) {
     url.pathname = "/auth/login";
     return NextResponse.redirect(url);
   }
 
   // 3. If logged in and trying to access public path → redirect to home
-  if (user && PUBLIC_PATHS.some((path) => pathname.startsWith(path))) {
+  if (
+    user &&
+    PUBLIC_PATHS.some(
+      (path) => pathname === path || pathname.startsWith(`${path}/`)
+    )
+  ) {
     url.pathname = "/";
     return NextResponse.redirect(url);
   }
@@ -30,7 +39,9 @@ export async function middleware(request: NextRequest) {
   // 4. Redirect faculty away from student-only pages
   if (
     user?.role === "faculty" &&
-    STUDENT_ONLY_PATHS.some((path) => pathname.startsWith(path))
+    STUDENT_ONLY_PATHS.some(
+      (path) => pathname === path || pathname.startsWith(`${path}/`)
+    )
   ) {
     url.pathname = "/";
     return NextResponse.redirect(url);

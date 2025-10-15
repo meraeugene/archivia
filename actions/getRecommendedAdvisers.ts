@@ -1,0 +1,26 @@
+import { getSession } from "./auth";
+
+export async function getRecommendedAdvisers(title: string, abstract: string) {
+  const session = await getSession();
+
+  try {
+    const res = await fetch("http://localhost:8000/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, abstract, student_id: session?.sub }),
+      cache: "no-store",
+    });
+
+    if (!res.ok) {
+      const err = await res.text();
+      console.error("FastAPI error:", err);
+      return { error: err };
+    }
+
+    const data = await res.json();
+    return { recommendations: data.recommendations };
+  } catch (err) {
+    console.error("Fetch error:", err);
+    return { error: "Server connection failed." };
+  }
+}

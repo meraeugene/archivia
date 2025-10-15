@@ -251,6 +251,7 @@ export async function acceptRequest(
 
   revalidatePath("/requests");
   revalidatePath("/dashboard");
+  revalidatePath("/");
 
   return { success: true, message: "Request accepted successfully." };
 }

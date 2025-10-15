@@ -101,7 +101,7 @@ const Modal: React.FC<ConfirmModalProps> = ({
               <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             )}
             {isPending ? (
-              "Processing..."
+              "Loading..."
             ) : type === "accept" ? (
               <>
                 <Check size={18} />

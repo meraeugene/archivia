@@ -1,9 +1,10 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GraduationCap, User, Lock, Eye, EyeOff } from "lucide-react";
 import { login } from "@/actions/auth";
 import { toast } from "sonner";
+import { useAdviserStore } from "@/store/adviserStore";
 
 interface FormData {
   userId: string;
@@ -11,6 +12,13 @@ interface FormData {
 }
 
 export default function GreenThemedLogin() {
+  const { reset } = useAdviserStore();
+
+  // Reset the store when the component mounts
+  useEffect(() => {
+    reset();
+  }, [reset]);
+
   const [formData, setFormData] = useState<FormData>({
     userId: "",
     password: "",

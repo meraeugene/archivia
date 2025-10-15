@@ -20,7 +20,6 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  // --- Helpers ---
   const hideFindAdviser =
     currentUser?.role === "faculty" ||
     (currentUser?.role === "student" && studentAdviser);

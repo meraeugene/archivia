@@ -37,18 +37,18 @@ const InputPanel = ({
         {!hasRecommendations && (
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-black mb-3">
-              Find Your Perfect Adviser
+              Find Your Adviser
             </h1>
             <p className="text-gray-600">
               Match with research mentors based on your thesis topic and
-              research interests
+              research overview
             </p>
           </div>
         )}
 
         {hasRecommendations && (
           <h2 className="text-3xl font-bold text-black mb-6">
-            Find Your Perfect Adviser
+            Find Your Adviser
           </h2>
         )}
 
@@ -72,12 +72,12 @@ const InputPanel = ({
           <div className="group">
             <label className="flex items-center text-sm font-semibold text-gray-700 mb-3">
               <FileText className="mr-2" size={20} />
-              Research Abstract
+              Research Overview
             </label>
             <textarea
               className="w-full p-4 border border-gray-200 rounded-xl resize-none bg-white focus:ring-2 focus:ring-black outline-none transition-all duration-200 text-black placeholder-gray-400"
               rows={hasRecommendations ? 10 : 6}
-              placeholder="Describe your research problem, objectives, and methodology..."
+              placeholder="Describe your research topic, objectives, and any specific areas of interest or methodologies you plan to use."
               value={studentData.abstract}
               onChange={(e) => onChange("abstract", e.target.value)}
             />
@@ -92,7 +92,7 @@ const InputPanel = ({
           {isLoading ? (
             <>
               <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-              Finding Perfect Matches...
+              Finding Advisers...
             </>
           ) : (
             <>Get Recommendations</>
@@ -106,9 +106,9 @@ const InputPanel = ({
               <div>
                 <h4 className="font-semibold text-black mb-2">How it works</h4>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Our AI analyzes your research topic and abstract to match you
-                  with advisers who have experience in similar projects. The
-                  more detailed your description, the better the
+                  Our AI Model analyzes your research topic and overview to
+                  match you with advisers who have experience in similar
+                  projects. The more detailed your description, the better the
                   recommendations.
                 </p>
               </div>
@@ -121,8 +121,10 @@ const InputPanel = ({
             <Lightbulb className="text-blue-600 mt-0.5" size={18} />
             <p>
               Start typing your{" "}
-              <span className="font-medium">thesis title, abstract</span> to see
-              your recommended advisers.
+              <span className="font-medium">
+                thesis title, research overview
+              </span>{" "}
+              to see your recommended advisers.
             </p>
           </div>
         )}

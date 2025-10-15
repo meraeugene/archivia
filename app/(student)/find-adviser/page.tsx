@@ -1,31 +1,28 @@
 "use client";
-
 import React, { useState, useTransition } from "react";
+import { useAdviserStore } from "@/store/adviserStore";
 import { toast } from "sonner";
-import { Adviser, StudentData, StudentDataField } from "@/types/advisers";
-import InputPanel from "@/app/(student)/find-adviser/InputPanel";
-import ConfirmModal from "@/app/(student)/find-adviser/ConfirmModal";
-import RecommendationsList from "@/app/(student)/find-adviser/RecommendationsList";
+import InputPanel from "./InputPanel";
+import ConfirmModal from "./ConfirmModal";
+import RecommendationsList from "./RecommendationsList";
 import { sendRequest } from "@/actions/studentRequests";
 import { isValidText } from "@/utils/isValidText";
+import { Adviser } from "@/types/advisers";
+import { getRecommendedAdvisers } from "@/actions/getRecommendedAdvisers";
 
 const StudentAdviserMatcher = () => {
-  const [studentData, setStudentData] = useState<StudentData>({
-    title: "",
-    abstract: "",
-  });
-  const [recommendations, setRecommendations] = useState<Adviser[]>([]);
+  const { studentData, setStudentData, recommendations, setRecommendations } =
+    useAdviserStore();
+
+  const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
 
-  // useTransition for confirm request
-  const [isPending, startTransition] = useTransition();
-
   const hasRecommendations = recommendations.length > 0;
 
-  const handleInputChange = (field: StudentDataField, value: string) =>
-    setStudentData((prev) => ({ ...prev, [field]: value }));
+  const handleInputChange = (field: keyof typeof studentData, value: string) =>
+    setStudentData({ ...studentData, [field]: value });
 
   const handleGetRecommendations = async () => {
     if (!isValidText(studentData.title) || !isValidText(studentData.abstract)) {
@@ -35,15 +32,18 @@ const StudentAdviserMatcher = () => {
 
     setIsLoading(true);
     try {
-      const res = await fetch("http://localhost:8000/recommend", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(studentData),
-      });
-      const data = await res.json();
-      setRecommendations(data.recommendations);
+      const result = await getRecommendedAdvisers(
+        studentData.title,
+        studentData.abstract
+      );
+      if (result.error) {
+        toast.error(result.error);
+        return;
+      }
+
+      setRecommendations(result.recommendations);
     } catch (error) {
-      console.error("Error fetching recommendations:", error);
+      console.error(error);
     } finally {
       setIsLoading(false);
     }
@@ -66,11 +66,23 @@ const StudentAdviserMatcher = () => {
 
       toast.success("Adviser request sent successfully!");
       setShowModal(false);
+
+      const result = await getRecommendedAdvisers(
+        studentData.title,
+        studentData.abstract
+      );
+
+      if (result.error) {
+        console.error(result.error);
+        return;
+      }
+
+      setRecommendations(result.recommendations || []);
     });
   };
 
   return (
-    <div className="bg-gray-50 ">
+    <div className="bg-gray-50">
       <div
         className={`transition-all duration-700 ease-in-out ${
           hasRecommendations ? "max-w-6xl mx-auto flex" : ""
@@ -83,7 +95,6 @@ const StudentAdviserMatcher = () => {
           isLoading={isLoading}
           hasRecommendations={hasRecommendations}
         />
-
         {hasRecommendations && (
           <RecommendationsList
             recommendations={recommendations}

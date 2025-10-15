@@ -33,4 +33,5 @@ export type Adviser = {
     title: string;
     similarity: number;
   }[];
+  already_requested: boolean;
 };

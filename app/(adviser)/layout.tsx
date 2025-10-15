@@ -13,6 +13,7 @@ export default async function FacultyLayout({
 }) {
   const currentUser = await getCurrentUser();
 
+  // Redirect if not faculty user
   if (currentUser?.role !== "faculty") {
     redirect("/");
   }

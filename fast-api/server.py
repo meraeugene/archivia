@@ -48,6 +48,7 @@ clf_df = pd.read_pickle("clf_df.pkl")  # Contains columns: TITLE, ABSTRACT, ADVI
 class Project(BaseModel):
     title: str
     abstract: str
+    student_id: str 
 
 # ---------------- Helper: map adviser names to Supabase IDs ----------------
 def map_adviser_names_to_ids(adviser_names: list[str]) -> dict[str, str]:
@@ -60,6 +61,17 @@ def map_adviser_names_to_ids(adviser_names: list[str]) -> dict[str, str]:
         else:
             mapping[name] = None
     return mapping
+
+# ---------------- Helper: get sent advisers for a student ----------------
+def get_sent_advisers(student_id: str) -> set[str]:
+    response = supabase.table("student_requests") \
+        .select("adviser_id") \
+        .eq("student_id", student_id) \
+        .in_("status", ["pending", "accepted"]) \
+        .execute()
+
+    return {r["adviser_id"] for r in response.data} if response.data else set()
+
 
 # ---------------- Helper: get adviser capacity ----------------
 def get_adviser_capacity(adviser_id: str) -> tuple[str, str]:
@@ -76,89 +88,88 @@ def get_adviser_capacity(adviser_id: str) -> tuple[str, str]:
 
     return "0/0", "Available"  # fallback if no record exists
 
-
-# ---------------- Recommendation endpoint ----------------
 @app.post("/recommend")
 def recommend(project: Project):
-    if not project.title.strip() or not project.abstract.strip():
-        raise HTTPException(status_code=400, detail="Title and abstract are required.")
+    try:
+        print("Received project:", project.dict())
 
+        if not project.title.strip() or not project.abstract.strip():
+            raise HTTPException(status_code=400, detail="Title and abstract are required.")
 
-    user_text = f"{project.title} {project.abstract}"
-    user_vec = vectorizer.transform([user_text])
+        sent_advisers = get_sent_advisers(project.student_id)
+        print("🔹 Sent advisers:", sent_advisers)
 
-    similarities = cosine_similarity(user_vec, vectorizer.transform(clf_df["COMBINED_TEXT"])).flatten()
-    clf_df["similarity"] = similarities
+        user_text = f"{project.title} {project.abstract}"
+        user_vec = vectorizer.transform([user_text])
+        print("Vectorized text successfully")
 
-    # Rank advisers by highest similarity project
-    adviser_scores = clf_df.groupby("ADVISER")["similarity"].max().sort_values(ascending=False)
+        similarities = cosine_similarity(user_vec, vectorizer.transform(clf_df["COMBINED_TEXT"])).flatten()
+        print("Calculated similarities")
 
-    adviser_names = adviser_scores.head(5).index.tolist()
-    print("🔹 Top adviser names:", adviser_names)
+        clf_df["similarity"] = similarities
+        adviser_scores = clf_df.groupby("ADVISER")["similarity"].max().sort_values(ascending=False)
+        adviser_names = adviser_scores.head(5).index.tolist()
+        print("Adviser scores:", adviser_scores.head(5).to_dict())
 
-    name_to_id = map_adviser_names_to_ids(adviser_names)
-    print("🔹 Adviser name -> UUID mapping:", name_to_id)
+        name_to_id = map_adviser_names_to_ids(adviser_names)
+        print("Adviser name → ID mapping:", name_to_id)
 
-    results = []
-    for adviser_name, score in adviser_scores.head(5).items():
-        adviser_id = name_to_id.get(adviser_name)
+        results = []
 
-        print("🔹 Processing adviser:", adviser_name, "with ID:", adviser_id)
-        
-        if adviser_id is None:
-            print(f"⚠️ Adviser not found in DB: {adviser_name}")
-            continue  # Skip advisers not in DB
-        
-        capacity, availability = get_adviser_capacity(adviser_id)
+        for adviser_name, score in adviser_scores.head(5).items():
+            print(f"Processing adviser: {adviser_name} ({score:.4f})")
+            adviser_id = name_to_id.get(adviser_name)
 
-         # Fetch the full name from Supabase
-        supabase_user = supabase.table("user_profiles").select(  "prefix, full_name, suffix, profile_picture, email, position, research_interest, bio").eq("user_id", adviser_id).execute()
+            if adviser_id is None:
+                print(f"Skipping adviser '{adviser_name}' — no matching Supabase ID")
+                continue
 
-        if not supabase_user.data:
-            print(f"⚠️ Full name not found in Supabase for user_id: {adviser_id}")
-            full_name = adviser_name  # fallback
-        else:
-            user = supabase_user.data[0]
-            prefix = user.get("prefix") or ""
-            name = user.get("full_name") or adviser_name
-            suffix = user.get("suffix") or ""
+            capacity, availability = get_adviser_capacity(adviser_id)
+            print(f"Capacity for {adviser_name}: {capacity} ({availability})")
 
-            # Construct full name with optional prefix/suffix
-            full_name_with_title = f"{prefix + ' ' if prefix else ''}{name}{', ' + suffix if suffix else ''}"
-            print("🔹 Full name with title from Supabase:", full_name_with_title)
+            supabase_user = supabase.table("user_profiles") \
+                .select("prefix, full_name, suffix, profile_picture, email, position, research_interest, bio") \
+                .eq("user_id", adviser_id).execute()
 
-        adviser_projects = (
-            clf_df[clf_df["ADVISER"] == adviser_name]
-            .sort_values(by="similarity", ascending=False)[["TITLE", "ABSTRACT", "similarity"]]
-            .to_dict(orient="records")
-        )
+            user = supabase_user.data[0] if supabase_user.data else {}
+            full_name_with_title = f"{user.get('prefix', '') + ' ' if user.get('prefix') else ''}{user.get('full_name', adviser_name)}{', ' + user.get('suffix') if user.get('suffix') else ''}"
 
-        projects = [
-            {
-                "title": p["TITLE"],
-                "abstract": p["ABSTRACT"],
-                "similarity": float(p["similarity"])
-            }
-            for p in adviser_projects
-        ]
+            adviser_projects = (
+                clf_df[clf_df["ADVISER"] == adviser_name]
+                .sort_values(by="similarity", ascending=False)[["TITLE", "ABSTRACT", "similarity"]]
+                .to_dict(orient="records")
+            )
 
-        results.append({
-            "full_name": full_name_with_title,
-            "id": name_to_id[adviser_name],
-            "score": float(score),
-            "availability": availability, 
-            "capacity": capacity,
-            "projects": projects,
-            "profile_picture": user.get("profile_picture"),
-            "email": user.get("email"),
-            "position": user.get("position"),
-            "research_interest": user.get("research_interest"),
-            "bio": user.get("bio"),
-        })
+            already_requested = adviser_id in sent_advisers
+            print(f"Adviser '{adviser_name}' already requested:", already_requested)
 
+            results.append({
+                "full_name": full_name_with_title,
+                "id": adviser_id,
+                "score": float(score),
+                "availability": availability,
+                "capacity": capacity,
+                "projects": [
+                    {"title": p["TITLE"], "abstract": p["ABSTRACT"], "similarity": float(p["similarity"])}
+                    for p in adviser_projects
+                ],
+                "profile_picture": user.get("profile_picture"),
+                "email": user.get("email"),
+                "position": user.get("position"),
+                "research_interest": user.get("research_interest"),
+                "bio": user.get("bio"),
+                "already_requested": already_requested,
+            })
 
+        if not results:
+            print("No advisers found in results.")
+            raise HTTPException(status_code=404, detail="No advisers found in the database.")
 
-    if not results:
-        raise HTTPException(status_code=404, detail="No advisers found in the database.")
+        print("✅ Successfully generated recommendations.")
+        return {"recommendations": results}
 
-    return {"recommendations": results}
+    except Exception as e:
+        import traceback
+        print("ERROR OCCURRED IN /recommend ENDPOINT")
+        print(traceback.format_exc())  # shows exact stack trace
+        raise HTTPException(status_code=500, detail=str(e))

@@ -24,7 +24,7 @@ const RecommendationsList = ({ recommendations, onConnect }: Props) => {
             Recommended Advisers
           </h2>
           <div className="flex items-center gap-2 text-sm px-4 py-2 rounded-lg bg-black text-white ">
-            {recommendations.length} matches found
+            {recommendations.length} advisers found
           </div>
         </div>
         {/* Info notice */}{" "}

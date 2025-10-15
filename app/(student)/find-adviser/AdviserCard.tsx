@@ -165,18 +165,30 @@ const AdviserCard = ({
 
       {/* Connect Button */}
       <button
-        disabled={adviser.availability !== "Available"}
+        disabled={
+          adviser.availability !== "Available" || adviser.already_requested
+        }
         onClick={onConnect}
-        className={`w-full flex items-center justify-center gap-2 font-semibold py-4 px-6 rounded-xl transition-all duration-200 shadow-lg
-  ${
-    adviser.availability === "Available"
-      ? "bg-black text-white hover:bg-black/90 cursor-pointer"
-      : "bg-gray-100 text-gray-500 border border-gray-200 cursor-not-allowed"
-  }
-`}
+        className={`w-full flex items-center justify-center gap-2 font-semibold py-4 px-6 rounded-xl transition-all duration-200 
+    ${
+      adviser.availability !== "Available"
+        ? "bg-gray-100 text-gray-500 border border-gray-100 cursor-not-allowed"
+        : adviser.already_requested
+        ? "bg-green-100 text-green-700 border border-green-200 cursor-not-allowed"
+        : "bg-black text-white hover:bg-black/90 cursor-pointer"
+    }`}
       >
-        <UserPlus size={18} />
-        Connect with {adviser.full_name}
+        {adviser.already_requested ? (
+          <>
+            <CheckCircle size={18} />
+            Request Sent
+          </>
+        ) : (
+          <>
+            <UserPlus size={18} />
+            Connect with {adviser.full_name}
+          </>
+        )}
       </button>
     </div>
   );
