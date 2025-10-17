@@ -1,6 +1,6 @@
 "use client";
 
-import { BookOpen, FileText, Lightbulb } from "lucide-react";
+import { FileText, Lightbulb, Tags } from "lucide-react";
 import { StudentData, StudentDataField } from "@/types/advisers";
 
 type Props = {
@@ -55,13 +55,13 @@ const InputPanel = ({
           {/* Thesis Title */}
           <div className="group">
             <label className="flex items-center text-sm font-semibold text-gray-700 mb-3">
-              <BookOpen className="mr-2" size={20} />
-              Thesis Title
+              <Tags className="mr-2" size={20} />
+              Research Topics
             </label>
             <input
               type="text"
               className="w-full p-4 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-black outline-none transition-all duration-200 text-black placeholder-gray-400"
-              placeholder="e.g., Predictive Models for Crop Yield Optimization"
+              placeholder="e.g., Machine Learning, Crop Yield Prediction, Climate Data"
               value={studentData.title}
               onChange={(e) => onChange("title", e.target.value)}
             />
@@ -121,7 +121,7 @@ const InputPanel = ({
             <p>
               Start typing your{" "}
               <span className="font-medium">
-                thesis title, research overview
+                research topics, research overview
               </span>{" "}
               to see your recommended advisers.
             </p>

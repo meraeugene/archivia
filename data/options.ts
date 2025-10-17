@@ -1,12 +1,11 @@
-const filterOptions = [
-  { key: "all", label: "All Fields" },
-  { key: "computer-science", label: "Computer Science" },
-  { key: "psychology", label: "Psychology" },
-  { key: "engineering", label: "Engineering" },
-  { key: "business", label: "Business" },
-  { key: "literature", label: "Literature" },
+const categoryOptions = [
+  { key: "all", label: "All" },
+  { key: "AI", label: "Artificial Intelligence" },
+  { key: "Education", label: "Education" },
+  { key: "Health", label: "Health" },
+  { key: "Business", label: "Business" },
 ];
 
 const sortOptions = ["Relevance", "Date", "Title", "Author"] as const;
 
-export { filterOptions, sortOptions };
+export { categoryOptions, sortOptions };

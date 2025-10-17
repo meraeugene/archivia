@@ -21,6 +21,7 @@ export const footerLinks = {
 
 export const navLinks = [
   { label: "Home", href: "/" },
+  { label: "Browse", href: "/browse" },
   { label: "Find Adviser", href: "/find-adviser" },
   { label: "Advisers", href: "/advisers" },
   // { label: "Submit Thesis", href: "/submit-thesis" },

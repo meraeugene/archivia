@@ -2,27 +2,26 @@
 
 import { Search } from "lucide-react";
 import React from "react";
-
-interface FilterOption {
+interface CategoryOption {
   key: string;
   label: string;
 }
 
-interface SearchFilterProps {
+interface SearchCategoryProps {
   searchQuery: string;
   setSearchQuery: (value: string) => void;
-  currentFilter: string;
-  setCurrentFilter: (value: string) => void;
-  filterOptions: FilterOption[];
-  onSearch?: () => void; // optional callback
+  currentCategory: string;
+  setCurrentCategory: (value: string) => void;
+  categoryOptions: CategoryOption[];
+  onSearch?: () => void;
 }
 
-const SearchFilter: React.FC<SearchFilterProps> = ({
+const SearchCategory: React.FC<SearchCategoryProps> = ({
   searchQuery,
   setSearchQuery,
-  currentFilter,
-  setCurrentFilter,
-  filterOptions,
+  currentCategory,
+  setCurrentCategory,
+  categoryOptions,
   onSearch,
 }) => {
   return (
@@ -39,10 +38,9 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
             placeholder="Search theses by title, adviser, or keywords..."
             className="w-full px-5 py-4 pr-24 text-base border border-gray-300 rounded-lg bg-white focus:border-gray-800 focus:outline-none transition-colors"
           />
-
           <button
             onClick={onSearch}
-            className="absolute cursor-pointer  right-3 top-1/2 transform -translate-y-1/2 px-4 py-2 rounded font-medium transition-colors flex items-center gap-2 bg-black hover:bg-black/90 text-white"
+            className="absolute right-3 top-1/2 transform -translate-y-1/2 px-4 py-2 rounded font-medium bg-black text-white hover:bg-gray-800 cursor-pointer transition-colors flex items-center gap-2"
           >
             <Search size={16} />
             Search
@@ -50,13 +48,13 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
         </div>
 
         <div className="flex flex-wrap gap-3 justify-center">
-          {filterOptions.map((option) => (
+          {categoryOptions.map((option) => (
             <button
               key={option.key}
-              onClick={() => setCurrentFilter(option.key)}
+              onClick={() => setCurrentCategory(option.key)}
               className={`px-4 py-2 cursor-pointer rounded-full text-sm font-medium transition-all ${
-                currentFilter === option.key
-                  ? "bg-black/90 text-white"
+                currentCategory === option.key
+                  ? "bg-black text-white"
                   : "bg-white border border-gray-200 hover:bg-gray-100"
               }`}
             >
@@ -69,4 +67,4 @@ const SearchFilter: React.FC<SearchFilterProps> = ({
   );
 };
 
-export default SearchFilter;
+export default SearchCategory;

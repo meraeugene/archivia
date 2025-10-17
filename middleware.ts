@@ -3,7 +3,24 @@ import { verifyToken } from "@/lib/jwt";
 import { createClient } from "./utils/supabase/server";
 
 const PUBLIC_PATHS = ["/auth/login"];
-const PROTECTED_PATHS = ["/", "/find-adviser", "/dashboard", "/my-requests"];
+const PROTECTED_PATHS = [
+  // root
+  "/",
+  "/advisers",
+  "/browse",
+  "/profile",
+
+  // stuent
+  "/find-adviser",
+  "/my-requests",
+
+  // faculty
+  "/advisees",
+  "/dashboard",
+  "/requests",
+  "/settings",
+  "/upload-thesis",
+];
 const STUDENT_ONLY_PATHS = ["/find-adviser", "/my-requests"];
 
 export async function middleware(request: NextRequest) {

@@ -6,11 +6,11 @@ import ThesisCard from "@/components/ThesisCard";
 import ThesisModal from "@/components/ThesisModal";
 import AdviserRecommender from "@/sections/AdviserRecommender";
 import Link from "next/link";
-import SearchFilter from "@/components/SearchFilter";
-import { filterOptions } from "@/data/options";
 import { ArrowRight } from "lucide-react";
 import ThesisCardSkeleton from "@/components/ThesisCardSkeleton";
 import { useArchivia } from "@/hooks/useArchivia";
+import { categoryOptions } from "@/data/options";
+import SearchCategory from "@/components/SearchFilter";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
@@ -22,33 +22,33 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({ initialTheses }) => {
     isModalOpen,
     selectedThesis,
     searchQuery,
-    currentFilter,
     isPending,
     setSearchQuery,
-    setCurrentFilter,
     handleSearch,
     handlePreview,
     handleDownload,
     closeModal,
+    currentCategory,
+    setCurrentCategory,
   } = useArchivia(initialTheses);
 
   return (
     <main className="min-h-screen bg-white text-black">
       <Hero />
 
-      <SearchFilter
+      <SearchCategory
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        currentFilter={currentFilter}
-        setCurrentFilter={setCurrentFilter}
-        filterOptions={filterOptions}
+        currentCategory={currentCategory}
+        setCurrentCategory={setCurrentCategory}
+        categoryOptions={categoryOptions}
         onSearch={handleSearch}
       />
 
       <section className="py-15">
         <div className="max-w-6xl mx-auto px-5">
           <div className="mb-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <div className="  mb-3 sm:mb-0">
+            <div className="mb-3 sm:mb-0">
               {isPending
                 ? "Searching..."
                 : `Showing ${displayedTheses.length} theses`}
