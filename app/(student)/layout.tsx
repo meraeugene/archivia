@@ -1,5 +1,5 @@
 import { getCurrentUser } from "@/actions/auth";
-import { getStudentAdviser } from "@/actions/studentRequests";
+import { getStudentAdviser } from "@/actions/getStudentAdviser";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { navLinks } from "@/data/links";

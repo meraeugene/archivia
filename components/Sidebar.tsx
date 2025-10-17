@@ -69,7 +69,8 @@ const Sidebar = ({
           )}
           <div>
             <p className="text-sm font-medium text-gray-900">
-              {currentUser?.full_name}
+              {currentUser?.prefix} {currentUser?.full_name}{" "}
+              {currentUser?.suffix}
             </p>
             <p className="text-xs text-gray-500">{currentUser?.email}</p>
           </div>

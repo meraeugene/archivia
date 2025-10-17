@@ -14,7 +14,6 @@ interface FormData {
 export default function Login() {
   const { reset } = useAdviserStore();
 
-  // Reset the store when the component mounts
   useEffect(() => {
     reset();
   }, [reset]);

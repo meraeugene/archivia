@@ -1,3 +1,5 @@
+"use client";
+
 interface ActionButtonProps {
   label: string;
   onClick: () => void;

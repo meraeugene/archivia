@@ -17,8 +17,8 @@ const FindAdviser = () => {
     handleInputChange,
     handleGetRecommendations,
     handleConfirmRequest,
-    setShowModal,
-    setSelectedAdviser,
+    handleConnect,
+    handleCancel,
   } = useFindAdviser();
 
   return (
@@ -38,10 +38,7 @@ const FindAdviser = () => {
         {hasRecommendations && (
           <RecommendationsList
             recommendations={recommendations}
-            onConnect={(adviser) => {
-              setSelectedAdviser(adviser);
-              setShowModal(true);
-            }}
+            onConnect={handleConnect}
           />
         )}
       </div>
@@ -49,7 +46,7 @@ const FindAdviser = () => {
       {showModal && selectedAdviser && (
         <ConfirmModal
           adviser={selectedAdviser}
-          onCancel={() => setShowModal(false)}
+          onCancel={handleCancel}
           onConfirm={handleConfirmRequest}
           isPending={isPending}
         />

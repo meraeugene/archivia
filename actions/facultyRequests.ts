@@ -283,5 +283,6 @@ export async function rejectRequest(
 
   revalidatePath("/requests");
   revalidatePath("/dashboard");
+  revalidatePath("/my-requests");
   return { success: true, message: "Request rejected successfully." };
 }

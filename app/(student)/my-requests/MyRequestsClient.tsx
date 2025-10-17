@@ -1,51 +1,33 @@
 "use client";
 
-import { useState } from "react";
-import { Mail, X, User } from "lucide-react";
+import { Mail, X, User, RotateCcw } from "lucide-react";
 import { formatDate } from "@/utils/formatDate";
-import { cancelRequest } from "@/actions/studentRequests";
-import { toast } from "sonner";
-
-interface StudentRequest {
-  id: string;
-  status: string;
-  submitted_at: string;
-  updated_at: string;
-  title: string;
-  abstract: string;
-  feedback: string | null;
-  adviser_user_id: string;
-  adviser_name: string;
-  adviser_email: string;
-  adviser_profile_picture: string | null;
-  student_id: string;
-}
+import { StudentRequest } from "@/types/studentRequests";
+import ResendModal from "./ResendModal";
+import { StudentAdviser } from "@/types/studentAdviser";
+import { useStudentRequests } from "@/hooks/useStudentRequests";
 
 interface MyRequestsClientProps {
   requests: StudentRequest[];
+  studentAdviser?: StudentAdviser | null;
 }
 
-export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
-  const [expanded, setExpanded] = useState<string | null>(null);
-  const [cancelling, setCancelling] = useState<string | null>(null);
-
-  const toggleExpand = (id: string) => {
-    setExpanded(expanded === id ? null : id);
-  };
-
-  const handleCancel = async (id: string) => {
-    setCancelling(id);
-
-    const result = await cancelRequest(id);
-
-    if (result.error) {
-      toast.error(result.error);
-    } else {
-      toast.success("Request cancelled successfully");
-    }
-
-    setCancelling(null);
-  };
+export default function MyRequestsClient({
+  requests,
+  studentAdviser,
+}: MyRequestsClientProps) {
+  const {
+    expanded,
+    toggleExpand,
+    cancelling,
+    handleCancel,
+    showResendModal,
+    handleOpenResendModal,
+    handleCloseResendModal,
+    selectedRequest,
+    handleResendConfirm,
+    isPending,
+  } = useStudentRequests();
 
   if (requests.length === 0) {
     return (
@@ -86,17 +68,13 @@ export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
         </div>
       </div>
 
-      <div
-        className="max-w-6xl mx-auto  py-14 
-                 grid grid-cols-2  
-                 gap-6 auto-rows-max px-5"
-      >
+      <div className="max-w-6xl mx-auto py-14 columns-1 sm:columns-2 lg:columns-2 gap-6 px-5">
         {requests.map((request) => (
           <div
             key={request.id}
-            className="relative bg-white h-fit border overflow-hidden 
-                     border-gray-900 border-l-4 p-6 hover:shadow-md 
-                     transition-shadow shadow-sm rounded-lg "
+            className="break-inside-avoid mb-8 bg-white border overflow-hidden 
+                 border-gray-900 border-l-4 p-6 hover:shadow-md 
+                 transition-shadow shadow-sm rounded-lg"
           >
             {/* Adviser Info + Status + Cancel */}
             <div className="flex items-start justify-between mb-3">
@@ -115,7 +93,8 @@ export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
                 </div>
                 <div>
                   <h3 className="font-medium text-gray-900">
-                    {request.adviser_name}
+                    {request.adviser_prefix} {request.adviser_name}{" "}
+                    {request.adviser_suffix}
                   </h3>
                   <div className="flex items-center text-sm text-gray-600">
                     <Mail className="h-4 w-4 mr-2" />
@@ -203,18 +182,38 @@ export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
                 </p>
               </div>
             ) : request.status === "rejected" ? (
-              <div className="mt-6 border border-red-100 bg-red-50 rounded-md p-4">
-                <h3 className="text-sm  font-medium text-red-800 mb-1 flex items-center gap-2">
-                  Feedback
-                </h3>
-                <p className="text-base flex items-center gap-2 text-red-700 leading-relaxed">
-                  <span className="inline-block w-1 h-1 bg-red-600 rounded-full"></span>
-                  {request.feedback || "No feedback provided."}
-                </p>
-              </div>
+              <>
+                <div className="mt-6 border border-red-100 bg-red-50 rounded-md p-4">
+                  <h3 className="text-sm font-medium text-red-800 mb-1 flex items-center gap-2">
+                    Feedback
+                  </h3>
+                  <p className="text-base flex items-center gap-2 text-red-700 leading-relaxed ">
+                    <span className="inline-block w-1 h-1 bg-red-600 rounded-full"></span>
+                    {request.feedback || "No feedback provided."}
+                  </p>
+                </div>
+
+                {!studentAdviser && (
+                  <button
+                    onClick={() => handleOpenResendModal(request)}
+                    className="mt-6 flex items-center justify-center gap-2 cursor-pointer bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors"
+                  >
+                    <RotateCcw size={16} className="text-white" />
+                    Send Request Again
+                  </button>
+                )}
+              </>
             ) : null}
           </div>
         ))}
+
+        <ResendModal
+          isOpen={showResendModal}
+          onClose={handleCloseResendModal}
+          onConfirm={handleResendConfirm}
+          request={selectedRequest}
+          isPending={isPending}
+        />
       </div>
     </main>
   );

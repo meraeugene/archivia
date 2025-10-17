@@ -1,5 +1,6 @@
+"use client";
+
 /* eslint-disable @next/next/no-img-element */
-import React from "react";
 import { UserPlus, Users, Mail, CheckCircle, XCircle } from "lucide-react";
 import { Adviser } from "@/types/advisers";
 import { getInitials } from "@/utils/getInitials";

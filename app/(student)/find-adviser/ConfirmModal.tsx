@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { SendHorizonal, ShieldCheck } from "lucide-react";
 import { Adviser } from "@/types/advisers";
 
@@ -26,7 +25,7 @@ const ConfirmModal = ({ adviser, onCancel, onConfirm, isPending }: Props) => {
           </h3>
         </div>
 
-        <div className="text-center mb-10 space-y-3">
+        <div className="text-center mb-10 space-y-4">
           <p className="text-gray-600">
             You are about to send a formal adviser request to
           </p>

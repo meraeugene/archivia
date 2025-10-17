@@ -85,7 +85,7 @@ export default function ProfilePageClient({
             {/* Name */}
             <div className="mb-8">
               <h1 className="text-6xl lg:text-7xl font-black tracking-tight leading-none">
-                {profile.full_name}
+                {profile.prefix} {profile.full_name} {profile.suffix}
               </h1>
 
               {/* Faculty position */}

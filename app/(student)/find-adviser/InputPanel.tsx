@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { BookOpen, FileText, Lightbulb } from "lucide-react";
 import { StudentData, StudentDataField } from "@/types/advisers";
 

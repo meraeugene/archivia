@@ -1,58 +1,24 @@
 "use client";
 
-import { useState, useTransition } from "react";
-import { acceptRequest, rejectRequest } from "@/actions/facultyRequests";
-import { toast } from "sonner";
 import Modal from "./Modal";
 import { Request } from "@/types/request";
 import RequestCard from "../../../components/RequestCard";
+import { useAdvisoryRequests } from "@/hooks/useAdvisoryRequests";
 
 export default function AdvisoryRequestsClient({
   requests,
 }: {
   requests: Request[];
 }) {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-  const [isPending, startTransition] = useTransition();
-
-  const [modalState, setModalState] = useState<{
-    open: boolean;
-    type: "accept" | "reject";
-    request: Request | null;
-  }>({ open: false, type: "accept", request: null });
-
-  const openModal = (request: Request, type: "accept" | "reject") =>
-    setModalState({ open: true, type, request });
-
-  const closeModal = () =>
-    setModalState({ open: false, type: "accept", request: null });
-
-  const handleAction = (
-    type: "accept" | "reject",
-    id: string,
-    feedback: string
-  ) => {
-    startTransition(async () => {
-      const action = type === "accept" ? acceptRequest : rejectRequest;
-      const result = await action(id, feedback);
-
-      if (!result.success) {
-        toast.error(result.error);
-      } else {
-        toast.success(result.message);
-        closeModal();
-      }
-    });
-  };
-
-  const handleConfirmModal = (feedback?: string) => {
-    if (!modalState.request) return;
-    if (modalState.type === "reject" && !feedback?.trim()) {
-      toast.error("Feedback is required when rejecting a request.");
-      return;
-    }
-    handleAction(modalState.type, modalState.request.id, feedback ?? "");
-  };
+  const {
+    expandedId,
+    isPending,
+    modalState,
+    toggleExpand,
+    openModal,
+    closeModal,
+    handleConfirmModal,
+  } = useAdvisoryRequests();
 
   return (
     <main className="flex-1">
@@ -74,9 +40,7 @@ export default function AdvisoryRequestsClient({
             key={request.id}
             request={request}
             isExpanded={expandedId === request.id}
-            toggleExpand={() =>
-              setExpandedId(expandedId === request.id ? null : request.id)
-            }
+            toggleExpand={() => toggleExpand(request.id)}
             isPending={isPending}
             handleOpenModal={openModal}
             isRequestTab={true}

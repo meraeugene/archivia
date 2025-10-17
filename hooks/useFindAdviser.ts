@@ -26,6 +26,17 @@ export function useFindAdviser() {
     setStudentData({ ...studentData, [field]: value });
   };
 
+  const handleConnect = (adviser: Adviser) => {
+    setSelectedAdviser(adviser);
+    setShowModal(true);
+    document.body.classList.add("modal-open");
+  };
+
+  const handleCancel = () => {
+    setShowModal(false);
+    document.body.classList.remove("modal-open");
+  };
+
   const handleGetRecommendations = async () => {
     if (!isValidText(studentData.title) || !isValidText(studentData.abstract)) {
       toast.error("Please enter a meaningful title and abstract.");
@@ -44,6 +55,11 @@ export function useFindAdviser() {
       }
 
       setRecommendations(result.recommendations);
+      toast.success(
+        `We've found ${result.recommendations.length} adviser${
+          result.recommendations.length !== 1 ? "s" : ""
+        } that best match your thesis proposal.`
+      );
     } catch (error) {
       console.error(error);
       toast.error("Failed to fetch recommendations.");
@@ -67,8 +83,11 @@ export function useFindAdviser() {
         return;
       }
 
-      toast.success("Adviser request sent successfully!");
+      toast.success(
+        "Adviser request sent successfully! Please check your my requests page for updates."
+      );
       setShowModal(false);
+      document.body.classList.remove("modal-open");
 
       // Re-fetch recommendations to refresh availability or request status
       const result = await getRecommendedAdvisers(
@@ -96,7 +115,7 @@ export function useFindAdviser() {
     handleInputChange,
     handleGetRecommendations,
     handleConfirmRequest,
-    setShowModal,
-    setSelectedAdviser,
+    handleConnect,
+    handleCancel,
   };
 }

@@ -1,7 +1,9 @@
-import React from "react";
+"use client";
+
 import { Adviser } from "@/types/advisers";
 import AdviserCard from "./AdviserCard";
 import { Info } from "lucide-react";
+import { useState } from "react";
 
 type Props = {
   recommendations: Adviser[];
@@ -9,7 +11,7 @@ type Props = {
 };
 
 const RecommendationsList = ({ recommendations, onConnect }: Props) => {
-  const [showAllMap, setShowAllMap] = React.useState<{
+  const [showAllMap, setShowAllMap] = useState<{
     [key: number]: boolean;
   }>({});
 

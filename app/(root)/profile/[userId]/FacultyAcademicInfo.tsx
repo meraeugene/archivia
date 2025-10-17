@@ -1,6 +1,8 @@
 "use client";
+
 import { CurrentUser } from "@/types/currentUser";
 import { GraduationCap, FileText, BookOpen, Award } from "lucide-react";
+
 const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
   return (
     <div className="pt-16">
