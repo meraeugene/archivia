@@ -1,89 +1,19 @@
 "use client";
 
-import React, { useState, useRef, DragEvent, ChangeEvent } from "react";
+import { useThesisUpload } from "@/hooks/useThesisUpload";
 import { Upload, X, Check, FileText, CheckCircle } from "lucide-react";
 
-type UploadStatus = "idle" | "uploading" | "success" | "error";
-
-interface UploadedFile {
-  file: File;
-  id: string;
-  status: "ready" | "uploading" | "completed";
-}
-
 const ThesisUploadUI: React.FC = () => {
-  const [dragActive, setDragActive] = useState(false);
-  const [uploadedFile, setUploadedFile] = useState<UploadedFile | null>(null);
-  const [uploadStatus, setUploadStatus] = useState<UploadStatus>("idle");
-
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-
-  //  Drag Handlers
-  const handleDrag = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-
-    if (e.type === "dragenter" || e.type === "dragover") {
-      setDragActive(true);
-    } else if (e.type === "dragleave") {
-      setDragActive(false);
-    }
-  };
-
-  const handleDrop = (e: DragEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setDragActive(false);
-
-    if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
-      const files = Array.from(e.dataTransfer.files);
-      handleFiles(files);
-      e.dataTransfer.clearData();
-    }
-  };
-
-  // File Input
-  const handleFileInput = (e: ChangeEvent<HTMLInputElement>) => {
-    if (!e.target.files) return;
-    const files = Array.from(e.target.files);
-    handleFiles(files);
-  };
-
-  //  Validate + Store File
-  const handleFiles = (files: File[]) => {
-    const file = files[0]; // only 1 file allowed
-    if (!file) return;
-
-    const fileExtension = "." + file.name.split(".").pop()?.toLowerCase();
-
-    if (fileExtension !== ".pdf") {
-      setUploadStatus("error");
-      return;
-    }
-
-    if (file.size > 10 * 1024 * 1024) {
-      // 10MB max for thesis
-      setUploadStatus("error");
-      return;
-    }
-
-    setUploadedFile({
-      file,
-      id: `${Date.now()}-${Math.random()}`,
-      status: "ready",
-    });
-
-    setUploadStatus("success"); // later hook up to backend
-  };
-
-  // Remove File
-  const removeFile = () => {
-    setUploadedFile(null);
-    setUploadStatus("idle");
-    if (fileInputRef.current) {
-      fileInputRef.current.value = "";
-    }
-  };
+  const {
+    dragActive,
+    uploadedFile,
+    uploadStatus,
+    fileInputRef,
+    handleDrag,
+    handleDrop,
+    handleFileInput,
+    removeFile,
+  } = useThesisUpload();
 
   return (
     <main className="flex-1 mx-auto bg-gray-50 text-black py-14">

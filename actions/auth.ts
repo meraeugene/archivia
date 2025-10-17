@@ -52,8 +52,6 @@ export async function login(userId: string, password: string) {
     sameSite: "strict", // CSRF protection
   });
 
-  // Redirect user to homepage after successful login
-
   if (user.role === "faculty") {
     redirect("/dashboard");
   }

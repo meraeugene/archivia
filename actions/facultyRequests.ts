@@ -227,15 +227,16 @@ export async function acceptRequest(
   if (updateReqError)
     return { success: false, error: "Error updating request" };
 
-  // 5️. Mark all other requests by this student as already_handled
+  // 5️. Mark all *other advisers’* requests by this student as already_handled
   const { error: updateOthersError } = await supabase
     .from("student_requests")
     .update({
       status: "already_handled",
-      feedback: `This student is already handled by ${adviserName}`,
+      feedback: `This student is already handled by ${adviserName}.`,
     })
     .eq("student_id", reqData.student_id)
-    .neq("id", requestId);
+    .neq("id", requestId)
+    .neq("adviser_id", reqData.adviser_id);
 
   if (updateOthersError)
     return { success: false, error: "Error updating other requests" };
@@ -251,7 +252,6 @@ export async function acceptRequest(
 
   revalidatePath("/requests");
   revalidatePath("/dashboard");
-  revalidatePath("/");
 
   return { success: true, message: "Request accepted successfully." };
 }
@@ -276,7 +276,8 @@ export async function rejectRequest(
   const { error } = await supabase
     .from("student_requests")
     .update({ status: "rejected", feedback })
-    .eq("id", requestId);
+    .eq("id", requestId)
+    .select();
 
   if (error) return { success: false, error: "Error rejecting request" };
 

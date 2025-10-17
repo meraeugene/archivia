@@ -116,12 +116,6 @@ const RequestCard = ({
           {request.feedback}
         </div>
       ) : null}
-
-      {request.status === "already_handled" && (
-        <div className="text-sm text-center mt-6 text-red-600 font-medium">
-          {request.feedback}
-        </div>
-      )}
     </div>
   );
 };

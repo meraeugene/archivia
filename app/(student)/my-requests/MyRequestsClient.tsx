@@ -5,8 +5,6 @@ import { Mail, X, User } from "lucide-react";
 import { formatDate } from "@/utils/formatDate";
 import { cancelRequest } from "@/actions/studentRequests";
 import { toast } from "sonner";
-import { useAdviserStore } from "@/store/adviserStore";
-import { getRecommendedAdvisers } from "@/actions/getRecommendedAdvisers";
 
 interface StudentRequest {
   id: string;
@@ -28,8 +26,6 @@ interface MyRequestsClientProps {
 }
 
 export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
-  const { studentData, setRecommendations } = useAdviserStore();
-
   const [expanded, setExpanded] = useState<string | null>(null);
   const [cancelling, setCancelling] = useState<string | null>(null);
 
@@ -49,18 +45,6 @@ export default function MyRequestsClient({ requests }: MyRequestsClientProps) {
     }
 
     setCancelling(null);
-
-    const response = await getRecommendedAdvisers(
-      studentData.title,
-      studentData.abstract
-    );
-
-    if (result.error) {
-      console.error(result.error);
-      return;
-    }
-
-    setRecommendations(response.recommendations || []);
   };
 
   if (requests.length === 0) {

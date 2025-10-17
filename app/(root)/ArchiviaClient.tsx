@@ -1,6 +1,5 @@
 "use client";
 
-import React, { useState, useTransition, useEffect } from "react";
 import { Thesis } from "@/types/thesis";
 import Hero from "@/sections/Hero";
 import ThesisCard from "@/components/ThesisCard";
@@ -9,59 +8,29 @@ import AdviserRecommender from "@/sections/AdviserRecommender";
 import Link from "next/link";
 import SearchFilter from "@/components/SearchFilter";
 import { filterOptions } from "@/data/options";
-import { toast } from "sonner";
-import { searchTheses } from "@/actions/theses";
 import { ArrowRight } from "lucide-react";
 import ThesisCardSkeleton from "@/components/ThesisCardSkeleton";
+import { useArchivia } from "@/hooks/useArchivia";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
 }
 
 const ArchiviaClient: React.FC<ArchiviaClientProps> = ({ initialTheses }) => {
-  const [displayedTheses, setDisplayedTheses] =
-    useState<Thesis[]>(initialTheses);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedThesis, setSelectedThesis] = useState<Thesis | null>(null);
-
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentFilter, setCurrentFilter] = useState("recent");
-  const [isPending, startTransition] = useTransition();
-
-  // Reset to initial theses if search input is cleared
-  useEffect(() => {
-    if (searchQuery.trim() === "") {
-      setDisplayedTheses(initialTheses);
-    }
-  }, [searchQuery, initialTheses]);
-
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return; // ignore empty search
-    startTransition(async () => {
-      const { data, error } = await searchTheses(searchQuery, currentFilter);
-      if (error) {
-        toast.error("Error searching theses");
-      } else {
-        setDisplayedTheses(data || []);
-      }
-    });
-  };
-
-  const handlePreview = (thesis: Thesis) => {
-    setSelectedThesis(thesis);
-    setIsModalOpen(true);
-    document.body.classList.add("modal-open");
-  };
-
-  const handleDownload = (thesis: Thesis) => {
-    alert(`Downloading: ${thesis.title}`);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-    setSelectedThesis(null);
-    document.body.classList.remove("modal-open");
-  };
+  const {
+    displayedTheses,
+    isModalOpen,
+    selectedThesis,
+    searchQuery,
+    currentFilter,
+    isPending,
+    setSearchQuery,
+    setCurrentFilter,
+    handleSearch,
+    handlePreview,
+    handleDownload,
+    closeModal,
+  } = useArchivia(initialTheses);
 
   return (
     <main className="min-h-screen bg-white text-black">

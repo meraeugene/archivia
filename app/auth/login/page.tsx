@@ -11,7 +11,7 @@ interface FormData {
   password: string;
 }
 
-export default function GreenThemedLogin() {
+export default function Login() {
   const { reset } = useAdviserStore();
 
   // Reset the store when the component mounts
