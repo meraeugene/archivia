@@ -130,7 +130,10 @@ const AdvisersClient = ({ advisers }: AdvisersClientProps) => {
           className="fixed inset-0 z-50 flex items-center justify-center  bg-black/20 backdrop-blur-sm "
           onClick={closeModal}
         >
-          <div className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[90vh] relative ">
+          <div
+            className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[90vh] relative "
+            onClick={(e) => e.stopPropagation()}
+          >
             {/* Close Button */}
             <button
               onClick={closeModal}

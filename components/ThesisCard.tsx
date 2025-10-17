@@ -7,40 +7,36 @@ interface ThesisCardProps {
   thesis: Thesis;
   onPreview: (t: Thesis) => void;
   onDownload: (t: Thesis) => void;
-  onBookmark: (t: Thesis) => void;
-  isBookmarked: boolean;
 }
 
 const ThesisCard: React.FC<ThesisCardProps> = ({
   thesis,
   onPreview,
   onDownload,
-  onBookmark,
-  isBookmarked,
 }) => (
   <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all duration-300">
     <div className="flex items-start justify-between mb-3">
-      <h3 className="text-lg font-bold leading-tight">{thesis.title}</h3>
-      <button
-        onClick={() => onBookmark(thesis)}
-        className="ml-3 text-gray-500 cursor-pointer hover:text-black transition-colors"
-      >
+      <h3 className="text-lg font-bold leading-tight ">{thesis.title}</h3>
+      <button className="ml-3 text-gray-500 cursor-pointer hover:text-black transition-colors">
         <Bookmark
           size={20}
-          className={isBookmarked ? "fill-black text-black" : ""}
+          // className={isBookmarked ? "fill-black text-black" : ""}
         />
       </button>
     </div>
 
     <div className="space-y-1 mb-4 text-sm text-gray-600">
       <div>
-        <strong>Author:</strong> {thesis.author}
+        <strong>Adviser:</strong> {thesis.adviser_name}
       </div>
       <div>
-        <strong>University:</strong> {thesis.university}
+        <strong>Proponents:</strong> {thesis.proponents.join(", ") || "N/A"}
       </div>
       <div>
-        <strong>Year:</strong> {thesis.year} • {thesis.pages} pages
+        <strong>Year:</strong> N/A
+      </div>
+      <div>
+        <strong>Pages:</strong> N/A
       </div>
     </div>
 

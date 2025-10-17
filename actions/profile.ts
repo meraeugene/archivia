@@ -46,6 +46,7 @@ export async function updateStudentProfile(formData: {
   year_level: number;
   section: string;
   bio: string;
+  profile_picture: string;
 }) {
   const session = await getSession();
   if (!session?.sub) {
@@ -62,6 +63,7 @@ export async function updateStudentProfile(formData: {
       year_level: formData.year_level,
       section: formData.section,
       bio: formData.bio,
+      profile_picture: formData.profile_picture,
     })
     .eq("user_id", session.sub);
 

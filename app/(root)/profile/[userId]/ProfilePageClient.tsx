@@ -1,20 +1,12 @@
 "use client";
 
-import { useState } from "react";
 import { CurrentUser } from "@/types/currentUser";
-import { getInitials } from "@/utils/getInitials";
-import {
-  Mail,
-  BookOpen,
-  GraduationCap,
-  Award,
-  FileText,
-  ArrowRight,
-  X,
-} from "lucide-react";
+import { Mail, ArrowRight, X } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { updateStudentProfile } from "@/actions/profile";
-import { toast } from "sonner";
+import { useProfileEditor } from "@/hooks/useProfileEditor";
+import ProfileImage from "./ProfileImage";
+import FacultyAcademicInfo from "./FacultyAcademicInfo";
+import { ActionButton } from "./ActionButton";
 
 export default function ProfilePageClient({
   profile,
@@ -24,45 +16,23 @@ export default function ProfilePageClient({
   const router = useRouter();
   const isFaculty = profile.role === "faculty";
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [formData, setFormData] = useState({
-    email: profile.email ?? "",
-    course: profile.course ?? "To be provided",
-    year_level: profile.year_level ?? 0,
-    section: profile.section ?? "",
-    bio: profile.bio ?? "To be provided",
-  });
+  const {
+    formData,
+    imagePreview,
+    isEditing,
+    setIsEditing,
+    isUploading,
+    handleChange,
+    handleFileSelect,
+    handleRemovePicture,
+    handleSave,
+  } = useProfileEditor(profile);
 
   const handleEditProfileClick = () => {
     if (isFaculty) {
       router.push(`/settings`);
     } else {
       setIsEditing(true);
-    }
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-
-  const handleSave = async () => {
-    try {
-      const result = await updateStudentProfile(formData);
-
-      if (result?.error) {
-        toast.error(result.error);
-        return;
-      }
-
-      toast.success("Profile updated successfully!");
-      setIsEditing(false);
-    } catch (err) {
-      console.log(err);
-      toast.error("Something went wrong while saving your profile.");
     }
   };
 
@@ -73,20 +43,13 @@ export default function ProfilePageClient({
         <div className="grid lg:grid-cols-3 gap-12 mb-16">
           {/* Left Column - Profile Picture */}
           <div className="lg:col-span-1">
-            <div className="relative">
-              {profile.profile_picture ? (
-                // eslint-disable-next-line @next/next/no-img-element
-                <img
-                  src={profile.profile_picture}
-                  alt={profile.full_name}
-                  className="w-full h-full object-cover"
-                />
-              ) : (
-                <div className="w-full h-[340px] flex items-center justify-center text-white bg-black font-bold text-8xl tracking-tighter">
-                  {getInitials(profile.full_name)}
-                </div>
-              )}
-            </div>
+            <ProfileImage
+              name={profile.full_name}
+              imagePreview={imagePreview}
+              isEditing={isEditing}
+              onFileSelect={handleFileSelect}
+              onRemove={handleRemovePicture}
+            />
 
             {/* Quick Contact */}
             {isEditing ? (
@@ -223,41 +186,27 @@ export default function ProfilePageClient({
             {/* Buttons */}
             {isEditing ? (
               <div className="flex flex-col sm:flex-row gap-4">
-                {/* Cancel Button */}
-                <button
+                <ActionButton
+                  label="Cancel"
                   onClick={() => setIsEditing(false)}
-                  className="group cursor-pointer relative px-12 py-5  text-black font-bold uppercase tracking-widest text-sm overflow-hidden transition-all duration-300 w-full sm:w-auto border"
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-3 transition-colors duration-300 group-hover:text-white">
-                    Cancel
-                    <X className="w-4 h-4 transition-transform duration-300 group-hover:rotate-90" />
-                  </span>
-                  <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                </button>
-
-                {/* Save Button */}
-                <button
+                  icon={<X className="w-4 h-4" />}
+                  hover="rotate-90"
+                />
+                <ActionButton
+                  label={isUploading ? "Saving..." : "Save"}
                   onClick={handleSave}
-                  className="group cursor-pointer relative px-12 py-5 bg-white text-black font-bold uppercase tracking-widest text-sm overflow-hidden transition-all duration-300 w-full sm:w-auto border"
-                >
-                  <span className="relative z-10 flex items-center justify-center gap-3 transition-colors duration-300 group-hover:text-white">
-                    Save
-                    <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-2" />
-                  </span>
-                  <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-                </button>
+                  disabled={isUploading}
+                  icon={<ArrowRight className="w-4 h-4" />}
+                  hover="translate-x-2"
+                />
               </div>
             ) : (
-              <button
+              <ActionButton
+                label="Edit Profile"
                 onClick={handleEditProfileClick}
-                className="group cursor-pointer relative px-12 py-5 bg-white text-black font-bold uppercase tracking-widest text-sm overflow-hidden transition-all duration-300 w-full sm:w-auto border"
-              >
-                <span className="relative z-10 flex items-center justify-center gap-3 transition-colors duration-300 group-hover:text-white">
-                  Edit Profile
-                  <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-2" />
-                </span>
-                <div className="absolute inset-0 bg-black transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
-              </button>
+                icon={<ArrowRight className="w-4 h-4" />}
+                hover="translate-x-2"
+              />
             )}
           </div>
         </div>
@@ -270,84 +219,7 @@ export default function ProfilePageClient({
         </div>
 
         {/* Faculty Academic Info */}
-        {isFaculty && (
-          <div className="pt-16">
-            <h2 className="text-4xl font-black mb-12 tracking-tight">
-              ACADEMIC PROFILE
-            </h2>
-
-            <div className="grid md:grid-cols-2 gap-8">
-              {profile.highest_educational_attainment && (
-                <div className="group cursor-pointer">
-                  <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
-                    <div className="flex items-center gap-3 mb-4">
-                      <GraduationCap className="w-6 h-6" />
-                      <h3 className="text-sm font-bold uppercase tracking-widest">
-                        Education
-                      </h3>
-                    </div>
-                    <p className="text-lg font-light leading-relaxed">
-                      {profile.highest_educational_attainment}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {profile.research_interest && (
-                <div className="group cursor-pointer">
-                  <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
-                    <div className="flex items-center gap-3 mb-4">
-                      <FileText className="w-6 h-6" />
-                      <h3 className="text-sm font-bold uppercase tracking-widest">
-                        Research Interest
-                      </h3>
-                    </div>
-                    <p className="text-lg font-light leading-relaxed">
-                      {profile.research_interest}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {profile.handled_subjects && (
-                <div className="group cursor-pointer">
-                  <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
-                    <div className="flex items-center gap-3 mb-4">
-                      <BookOpen className="w-6 h-6" />
-                      <h3 className="text-sm font-bold uppercase tracking-widest">
-                        Subjects Taught
-                      </h3>
-                    </div>
-                    <p className="text-lg font-light leading-relaxed">
-                      {profile.handled_subjects}
-                    </p>
-                  </div>
-                </div>
-              )}
-
-              {profile.orcid && (
-                <div className="group cursor-pointer">
-                  <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
-                    <div className="flex items-center gap-3 mb-4">
-                      <Award className="w-6 h-6" />
-                      <h3 className="text-sm font-bold uppercase tracking-widest">
-                        ORCID
-                      </h3>
-                    </div>
-                    <a
-                      href={`https://orcid.org/${profile.orcid}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-lg font-mono underline hover:no-underline"
-                    >
-                      {profile.orcid}
-                    </a>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-        )}
+        {isFaculty && <FacultyAcademicInfo profile={profile} />}
       </main>
     </div>
   );

@@ -21,7 +21,7 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-5 bg-black/20 backdrop-blur-sm">
-      <div className="bg-white/90 backdrop-blur-md rounded-lg max-w-4xl w-full max-h-[80vh] overflow-y-auto relative shadow-lg border border-white/30">
+      <div className="bg-white/90 backdrop-blur-md rounded-lg max-w-5xl w-full max-h-[80vh] overflow-y-auto relative shadow-lg border border-white/30">
         {/* Close Button */}
         <button
           onClick={onClose}
@@ -34,19 +34,27 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
           <h2 className="text-2xl font-bold mb-5">{thesis.title}</h2>
           <div className="mb-8 space-y-2 text-gray-700">
             <div>
-              <strong>Author:</strong> {thesis.author}
+              <strong>Adviser:</strong> {thesis.adviser_name}
             </div>
             <div>
-              <strong>University:</strong> {thesis.university}
+              <strong>Panel:</strong>{" "}
+              {thesis.panel_chair_name
+                ? `${thesis.panel_chair_name} (Chair)`
+                : ""}
+              {thesis.panel_members && thesis.panel_members.length > 0
+                ? `, ${thesis.panel_members.join(", ")}`
+                : ""}
+            </div>
+
+            <div>
+              <strong>Proponents:</strong>{" "}
+              {thesis.proponents.join(", ") || "N/A"}
             </div>
             <div>
-              <strong>Year:</strong> {thesis.year}
+              <strong>Year:</strong> N/A
             </div>
             <div>
-              <strong>Pages:</strong> {thesis.pages}
-            </div>
-            <div>
-              <strong>Keywords:</strong> {thesis.keywords.join(", ")}
+              <strong>Pages:</strong> N/A
             </div>
           </div>
 

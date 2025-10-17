@@ -1,11 +1,12 @@
 export interface Thesis {
   id: number;
   title: string;
-  author: string;
-  university: string;
-  year: number;
+  adviser_name: string;
+  keywords: string[];
+  panel_chair_name: string;
+  panel_members: string[];
+  proponents: string[];
+  defense_year: number;
   pages: number;
   abstract: string;
-  field: string;
-  keywords: string[];
 }
