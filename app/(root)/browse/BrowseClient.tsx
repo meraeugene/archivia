@@ -50,7 +50,7 @@ const BrowseClient = ({ initialTheses }: { initialTheses: Thesis[] }) => {
             <div className="flex w-full justify-between sm:items-center gap-4">
               <div className="mb-3 sm:mb-0 text-gray-700">
                 {isPending
-                  ? "Loading theses..."
+                  ? "Searching..."
                   : `Showing ${displayedTheses.length} theses`}
               </div>
 

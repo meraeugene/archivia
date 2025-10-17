@@ -26,6 +26,7 @@ const ThesisCardSkeleton = () => {
         <div className="h-3 bg-gray-200 rounded w-full"></div>
         <div className="h-3 bg-gray-200 rounded w-full"></div>
         <div className="h-3 bg-gray-200 rounded w-full"></div>
+        <div className="h-3 bg-gray-200 rounded w-full"></div>
       </div>
 
       {/* Buttons */}
