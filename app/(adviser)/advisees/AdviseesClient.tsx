@@ -11,11 +11,13 @@ interface Props {
 export default function AdviseesClient({ requests, adviserCapacity }: Props) {
   return (
     <main className="flex-1">
-      <div className="px-8 py-4 border-b bg-white border-gray-200 flex items-center space-x-3">
+      <div className="px-8 py-3 border-b bg-white border-gray-200 flex items-center  gap-4">
         <h1 className="text-lg font-bold text-gray-900">Advisees</h1>
-        <span className="inline-flex items-center justify-center px-4 py-1 rounded bg-gray-900 text-white  font-bold">
-          {adviserCapacity}
-        </span>
+        <div className=" bg-black px-4 py-1 rounded">
+          <span className="text-lg font-bold text-white">
+            {adviserCapacity}
+          </span>
+        </div>
       </div>
 
       {requests.length === 0 && (

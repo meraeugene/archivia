@@ -8,9 +8,8 @@ const Hero = () => {
           Digital Thesis Archive
         </h1>
         <p className="text-lg text-gray-600 max-w-2xl mx-auto ">
-          Discover, explore, and access thousands of academic thesis from
-          universities worldwide. Advanced search and filtering capabilities for
-          researchers and students.
+          Discover, explore, and access a growing collection of academic theses
+          from the University of Science and Technology of Southern Philippines.
         </p>
       </div>
     </section>

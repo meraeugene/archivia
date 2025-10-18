@@ -20,8 +20,16 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
   if (!isOpen || !thesis) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-5 bg-black/20 backdrop-blur-sm">
-      <div className="bg-white/90 backdrop-blur-md rounded-lg max-w-5xl w-full max-h-[80vh] overflow-y-auto relative shadow-lg border border-white/30">
+    <div
+      onClick={onClose}
+      className="fixed inset-0 z-50 flex items-center justify-center p-5 bg-black/20 backdrop-blur-sm"
+    >
+      <div
+        onClick={(e) => {
+          e.stopPropagation();
+        }}
+        className="bg-white/90 backdrop-blur-md rounded-lg max-w-5xl w-full max-h-[80vh] overflow-y-auto relative shadow-lg border border-white/30"
+      >
         {/* Close Button */}
         <button
           onClick={onClose}

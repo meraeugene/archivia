@@ -22,7 +22,7 @@ const RequestCard = ({
   handleOpenModal,
 }: RequestCardProps) => {
   return (
-    <div className=" bg-white  h-fit cursor-pointer border overflow-hidden border-gray-900 border-l-4 p-6 hover:shadow-md transition-shadow shadow-sm rounded-lg hover:bg-gray-50 ">
+    <div className=" bg-white  h-fit cursor-pointer border overflow-hidden border-gray-900 border-l-4 p-6 hover:shadow-md transition-shadow shadow-sm rounded-lg  ">
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-3">
           <div className="w-9 h-9 cursor-pointer rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">

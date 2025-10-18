@@ -5,7 +5,6 @@ import { Thesis } from "@/types/thesis";
 import ThesisCard from "@/components/ThesisCard";
 import ThesisCardSkeleton from "@/components/ThesisCardSkeleton";
 import ThesisModal from "@/components/ThesisModal";
-import { RefreshCw } from "lucide-react";
 import SearchCategory from "@/components/SearchFilter";
 import { categoryOptions } from "@/data/options";
 
@@ -37,10 +36,10 @@ const BrowseClient = ({ initialTheses }: { initialTheses: Thesis[] }) => {
           <h1 className="text-5xl text-black font-extrabold mb-5 tracking-tight">
             Browse Archive Thesis
           </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto ">
-            Discover, explore, and access thousands of academic thesis from
-            universities worldwide. Advanced search and filtering capabilities
-            for researchers and students.
+          <p className="text-lg text-gray-600 max-w-3xl mx-auto ">
+            Browse and access University of Science and Technology of Southern
+            Philippines academic theses with smart search and filtering designed
+            for students, researchers, and educators.
           </p>
         </div>
       </section>
@@ -100,16 +99,24 @@ const BrowseClient = ({ initialTheses }: { initialTheses: Thesis[] }) => {
             )}
           </div>
 
-          {/* View More Button */}
-          {hasMore && !loadingMore && (
-            <div className="flex justify-center mt-15">
-              <button
-                onClick={loadMore}
-                className="bg-black cursor-pointer text-white px-6 py-3 rounded font-medium hover:bg-gray-800 transition-colors flex items-center gap-2"
-              >
-                <RefreshCw size={20} /> Show 6 More Theses
-              </button>
-            </div>
+          {/* Infinite Scroll Trigger */}
+          {hasMore && (
+            <div
+              ref={(el) => {
+                if (!el) return;
+                const observer = new IntersectionObserver(
+                  (entries) => {
+                    if (entries[0].isIntersecting) {
+                      loadMore();
+                    }
+                  },
+                  { rootMargin: "300px" } // triggers before bottom
+                );
+                observer.observe(el);
+                return () => observer.disconnect();
+              }}
+              className="h-10"
+            />
           )}
         </div>
       </section>

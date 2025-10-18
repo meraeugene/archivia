@@ -11,12 +11,17 @@ import ThesisCardSkeleton from "@/components/ThesisCardSkeleton";
 import { useArchivia } from "@/hooks/useArchivia";
 import { categoryOptions } from "@/data/options";
 import SearchCategory from "@/components/SearchFilter";
+import { CurrentUser } from "@/types/currentUser";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
+  currentUser: CurrentUser | null;
 }
 
-const ArchiviaClient: React.FC<ArchiviaClientProps> = ({ initialTheses }) => {
+const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
+  initialTheses,
+  currentUser,
+}) => {
   const {
     displayedTheses,
     isModalOpen,
@@ -88,7 +93,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({ initialTheses }) => {
         </div>
       </section>
 
-      <AdviserRecommender />
+      {currentUser && currentUser.role === "student" && <AdviserRecommender />}
 
       <ThesisModal
         thesis={selectedThesis}
