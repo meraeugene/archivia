@@ -1,8 +1,9 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { cache } from "react";
 
-export async function getAllCategories() {
+export const getAllCategories = cache(async () => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -22,4 +23,4 @@ export async function getAllCategories() {
       label: row.category,
     })),
   ];
-}
+});

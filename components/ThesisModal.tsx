@@ -61,13 +61,14 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
               <strong>Proponents:</strong>{" "}
               {thesis.proponents.join(", ") || "N/A"}
             </div>
+
             <div>
               <strong>Year:</strong> {thesis.defense_year || "N/A"}
             </div>
 
             <div>
               <strong>Keywords:</strong>{" "}
-              {Array.isArray(thesis.keywords)
+              {Array.isArray(thesis.keywords) && thesis.keywords.length > 0
                 ? thesis.keywords.join(", ")
                 : "N/A"}
             </div>

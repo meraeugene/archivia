@@ -5,6 +5,27 @@ import { getSession } from "./auth";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
 
+export const getStudentSentRequests = cache(async () => {
+  const supabase = await createClient();
+  const user = await getSession();
+
+  if (!user) {
+    return { error: "User not authenticated" };
+  }
+
+  const { data, error } = await supabase
+    .from("student_sent_requests_view")
+    .select("*")
+    .eq("student_id", user.sub)
+    .order("submitted_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching sent requests:", error);
+  }
+
+  return { data };
+});
+
 export async function sendRequest(
   adviserId: string,
   title: string,
@@ -115,24 +136,3 @@ export async function cancelRequest(requestId: string) {
   revalidatePath("/my-requests");
   return { success: true };
 }
-
-export const getStudentSentRequests = cache(async () => {
-  const supabase = await createClient();
-  const user = await getSession();
-
-  if (!user) {
-    return { error: "User not authenticated" };
-  }
-
-  const { data, error } = await supabase
-    .from("student_sent_requests_view")
-    .select("*")
-    .eq("student_id", user.sub)
-    .order("submitted_at", { ascending: false });
-
-  if (error) {
-    console.error("Error fetching sent requests:", error);
-  }
-
-  return { data };
-});

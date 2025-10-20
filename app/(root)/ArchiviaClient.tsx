@@ -16,12 +16,14 @@ interface ArchiviaClientProps {
   initialTheses: Thesis[];
   session: JwtPayload | null;
   categoryOptions: { key: string; label: string }[];
+  userBookmarks?: number[];
 }
 
 const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
   initialTheses,
   session,
   categoryOptions,
+  userBookmarks = [],
 }) => {
   const {
     displayedTheses,
@@ -90,6 +92,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                     thesis={thesis}
                     onPreview={handlePreview}
                     onDownload={handleDownload}
+                    isInitiallyBookmarked={userBookmarks.includes(thesis.id)}
                   />
                 ))}
           </div>

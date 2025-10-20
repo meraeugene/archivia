@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { logout } from "@/actions/auth";
 import { getInitials } from "@/utils/getInitials";
-import { User } from "lucide-react";
+import { Bookmark, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogoutButton } from "./LogoutButton";
@@ -152,6 +152,17 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
                     >
                       <User size={16} className="text-gray-600" />
                       <span>Profile</span>
+                    </Link>
+
+                    {/* Bookmarks link */}
+                    <Link
+                      prefetch
+                      href={`/bookmarks`}
+                      className="flex text-sm items-center space-x-2 px-4 py-2 hover:bg-gray-100"
+                      onClick={() => setOpen(false)}
+                    >
+                      <Bookmark size={16} className="text-gray-600" />
+                      <span>Bookmarks</span>
                     </Link>
 
                     {/* Logout */}

@@ -10,9 +10,11 @@ import SearchCategory from "@/components/SearchFilter";
 const BrowseClient = ({
   initialTheses,
   categoryOptions,
+  userBookmarks,
 }: {
   initialTheses: Thesis[];
   categoryOptions: { key: string; label: string }[];
+  userBookmarks?: number[];
 }) => {
   const {
     displayedTheses,
@@ -97,6 +99,7 @@ const BrowseClient = ({
                 thesis={thesis}
                 onPreview={handlePreview}
                 onDownload={handleDownload}
+                isInitiallyBookmarked={userBookmarks?.includes(thesis.id)}
               />
             ))}
 

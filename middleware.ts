@@ -9,6 +9,7 @@ const PROTECTED_PATHS = [
   "/advisers",
   "/browse",
   "/profile",
+  "/bookmarks",
 
   // stuent
   "/find-adviser",

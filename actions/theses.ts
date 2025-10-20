@@ -24,87 +24,68 @@ export const getAllTheses = cache(async () => {
 });
 
 //  2. Infinite scroll - with optional sorting
-export async function getMoreTheses(
-  offset = 0,
-  sort = "recent",
-  category = "all"
-) {
-  const supabase = await createClient();
+export const getMoreTheses = cache(
+  async (offset = 0, sort = "recent", category = "all") => {
+    const supabase = await createClient();
 
-  let query = supabase.from("theses").select("*");
+    let query = supabase.from("theses").select("*");
 
-  if (category !== "all") {
-    // Match anywhere in comma-separated string (case-insensitive)
-    query = query.ilike("category", `%${category}%`);
+    if (category !== "all") {
+      // Match anywhere in comma-separated string (case-insensitive)
+      query = query.ilike("category", `%${category}%`);
+    }
+
+    switch (sort) {
+      case "title":
+        query = query
+          .order("title", { ascending: true })
+          .order("id", { ascending: true });
+        break;
+      case "adviser":
+        query = query
+          .order("adviser_name", { ascending: true })
+          .order("id", { ascending: true });
+        break;
+      default:
+        query = query
+          .order("created_at", { ascending: false })
+          .order("id", { ascending: false });
+    }
+
+    query = query.range(offset, offset + PAGE_SIZE - 1);
+
+    const { data, error } = await query;
+    if (error) {
+      console.error("Error fetching theses:", error.message);
+      return [];
+    }
+
+    return data;
   }
+);
 
-  switch (sort) {
-    case "title":
-      query = query
-        .order("title", { ascending: true })
-        .order("id", { ascending: true });
-      break;
-    case "adviser":
-      query = query
-        .order("adviser_name", { ascending: true })
-        .order("id", { ascending: true });
-      break;
-    default:
-      query = query
-        .order("created_at", { ascending: false })
-        .order("id", { ascending: false });
-  }
-
-  query = query.range(offset, offset + PAGE_SIZE - 1);
-
-  const { data, error } = await query;
-  if (error) {
-    console.error("Error fetching theses:", error.message);
-    return [];
-  }
-
-  return data;
-}
-
-//  3. Search with sorting (title, adviser, keywords)
 export async function searchTheses(
   query: string,
   sort: string,
   category: string
 ) {
   const supabase = await createClient();
-  let base = supabase.from("theses").select("*");
 
-  if (category !== "all") {
-    // Match anywhere in comma-separated string (case-insensitive)
-    base = base.ilike("category", `%${category}%`);
+  const { data, error } = await supabase.rpc("search_theses", {
+    query,
+    sort,
+    category,
+  });
+
+  if (error) {
+    console.error("Search error:", error);
   }
 
-  if (query.trim()) {
-    base = base.or(
-      `title.ilike.%${query}%,adviser_name.ilike.%${query}%,keywords.cs.{${query}}`
-    );
-  }
-
-  switch (sort) {
-    case "title":
-      base = base.order("title", { ascending: true });
-      break;
-    case "adviser":
-      base = base.order("adviser_name", { ascending: true });
-      break;
-    default:
-      base = base.order("created_at", { ascending: false });
-  }
-
-  const { data, error } = await base;
-
-  console.log(error);
   return { data, error };
 }
 
 //  4. Count (for pagination or total display)
-export async function getThesesCount(category = "all") {
+export const getThesesCount = cache(async (category = "all") => {
   const supabase = await createClient();
 
   let query = supabase
@@ -124,4 +105,4 @@ export async function getThesesCount(category = "all") {
   }
 
   return count ?? 0;
-}
+});

@@ -10,4 +10,6 @@ export interface Thesis {
   pages: number;
   abstract: string;
   category: string;
+  bookmark_id?: string;
+  bookmarked_at?: string;
 }

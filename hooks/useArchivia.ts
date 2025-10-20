@@ -5,9 +5,10 @@ import { Thesis } from "@/types/thesis";
 import { toast } from "sonner";
 import { searchTheses, getMoreTheses, getThesesCount } from "@/actions/theses";
 
-export function useArchivia(initialTheses: Thesis[]) {
-  const [displayedTheses, setDisplayedTheses] =
-    useState<Thesis[]>(initialTheses);
+export function useArchivia(initialTheses?: Thesis[]) {
+  const [displayedTheses, setDisplayedTheses] = useState<Thesis[]>(
+    initialTheses || []
+  );
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedThesis, setSelectedThesis] = useState<Thesis | null>(null);
 
@@ -16,11 +17,13 @@ export function useArchivia(initialTheses: Thesis[]) {
   const [sort, setSort] = useState("recent");
   const [isPending, startTransition] = useTransition();
 
-  const [offset, setOffset] = useState(initialTheses.length);
+  const [offset, setOffset] = useState(initialTheses?.length || 0);
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const [thesisCount, setThesisCount] = useState<number>(initialTheses.length);
+  const [thesisCount, setThesisCount] = useState<number>(
+    initialTheses?.length || 0
+  );
 
   const fetchTotalCount = useCallback(async (category: string) => {
     const count = await getThesesCount(category);
@@ -30,8 +33,8 @@ export function useArchivia(initialTheses: Thesis[]) {
   // Reset list when clearing search
   useEffect(() => {
     if (searchQuery.trim() === "") {
-      setDisplayedTheses(initialTheses);
-      setOffset(initialTheses.length);
+      setDisplayedTheses(initialTheses || []);
+      setOffset(initialTheses?.length || 0);
       setHasMore(true);
       fetchTotalCount(currentCategory);
     }
@@ -59,8 +62,8 @@ export function useArchivia(initialTheses: Thesis[]) {
   useEffect(() => {
     if (currentCategory === "all") {
       // reset to default (initial theses)
-      setDisplayedTheses(initialTheses);
-      setOffset(initialTheses.length);
+      setDisplayedTheses(initialTheses || []);
+      setOffset(initialTheses?.length || 0);
       setHasMore(true);
       fetchTotalCount("all");
     } else {
