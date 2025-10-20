@@ -68,21 +68,27 @@ export function useArchivia(initialTheses: Thesis[]) {
     }
   }, [currentCategory, handleCategoryChange, initialTheses, fetchTotalCount]);
 
-  // Search (respects current category)
+  // Search (always searches across all theses, ignoring category)
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
+
     startTransition(async () => {
       const { data, error } = await searchTheses(
         searchQuery,
         sort,
         currentCategory
       );
-      if (error) toast.error("Error searching theses");
-      else {
-        setDisplayedTheses(data || []);
-        setOffset((data || []).length);
+      if (error) {
+        toast.error("Error searching theses");
+      } else {
+        const results = data || [];
+
+        setDisplayedTheses(results);
+        setOffset(results.length);
         setHasMore(false);
-        setThesisCount((data || []).length);
+
+        // Update count based on search results
+        setThesisCount(results.length);
       }
     });
   };

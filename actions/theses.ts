@@ -66,7 +66,7 @@ export async function getMoreTheses(
   return data;
 }
 
-//  3. Search with sorting (title, adviser, keywords, proponents)
+//  3. Search with sorting (title, adviser, keywords)
 export async function searchTheses(
   query: string,
   sort: string,
@@ -82,7 +82,7 @@ export async function searchTheses(
 
   if (query.trim()) {
     base = base.or(
-      `title.ilike.%${query}%,adviser_name.ilike.%${query}%,keywords.cs.{${query}},proponents.cs.{${query}}`
+      `title.ilike.%${query}%,adviser_name.ilike.%${query}%,keywords.cs.{${query}}`
     );
   }
 
@@ -98,6 +98,8 @@ export async function searchTheses(
   }
 
   const { data, error } = await base;
+
+  console.log(error);
   return { data, error };
 }
 

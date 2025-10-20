@@ -40,14 +40,13 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
 
         <div className="p-10 mt-4">
           <h2 className="text-2xl font-bold mb-5">{thesis.title}</h2>
-          <div className="mb-8 space-y-2 text-gray-700">
+          <div className="mb-4 space-y-2 text-gray-700">
             <div>
-              <strong>Adviser:</strong>{" "}
-              <span className="font-semibold">{thesis.adviser_name}</span>{" "}
+              <strong>Adviser:</strong> <span>{thesis.adviser_name}</span>{" "}
             </div>
             <div className="flex items-center gap-2">
               <strong>Panel:</strong>
-              <div className="flex flex-wrap gap-2 font-semibold">
+              <div className="flex flex-wrap gap-2 ">
                 {[
                   thesis.panel_chair_name &&
                     `${thesis.panel_chair_name} (Chair)`,
@@ -63,10 +62,30 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
               {thesis.proponents.join(", ") || "N/A"}
             </div>
             <div>
-              <strong>Year:</strong> N/A
+              <strong>Year:</strong> {thesis.defense_year || "N/A"}
             </div>
+
             <div>
-              <strong>Pages:</strong> N/A
+              <strong>Keywords:</strong>{" "}
+              {Array.isArray(thesis.keywords)
+                ? thesis.keywords.join(", ")
+                : "N/A"}
+            </div>
+
+            <div className="flex gap-2 mt-3">
+              {/* <strong>Category:</strong> */}
+              <div className="flex flex-wrap gap-2 ">
+                {(thesis.category?.split(",") || ["Uncategorized"]).map(
+                  (cat, index) => (
+                    <span
+                      key={index}
+                      className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm font-medium rounded-full "
+                    >
+                      {cat.trim()}
+                    </span>
+                  )
+                )}
+              </div>
             </div>
           </div>
 

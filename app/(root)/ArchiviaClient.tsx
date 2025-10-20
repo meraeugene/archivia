@@ -36,6 +36,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
     closeModal,
     currentCategory,
     setCurrentCategory,
+    thesisCount,
   } = useArchivia(initialTheses);
 
   return (
@@ -54,10 +55,20 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
       <section className="py-15">
         <div className="max-w-6xl mx-auto px-5">
           <div className="mb-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <div className="mb-3 sm:mb-0">
-              {isPending
-                ? "Searching..."
-                : `Showing ${displayedTheses.length} theses`}
+            <div className="mb-3 sm:mb-0 text-gray-700">
+              {isPending ? (
+                "Searching..."
+              ) : currentCategory === "all" ? (
+                `Showing ${displayedTheses.length} of ${thesisCount} total theses`
+              ) : (
+                <>
+                  Showing {displayedTheses.length} of {thesisCount} total theses
+                  in{" "}
+                  <span className="font-semibold text-black">
+                    {currentCategory}
+                  </span>
+                </>
+              )}
             </div>
             <Link
               href="/browse"
