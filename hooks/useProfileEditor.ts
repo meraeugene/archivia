@@ -70,7 +70,7 @@ export function useProfileEditor(profile: CurrentUser) {
           formData.profile_picture
         );
         if (!uploadResult.success)
-          throw new Error(uploadResult.error || "Upload failed");
+          console.log(uploadResult.error || "Upload failed");
         profilePictureUrl = uploadResult.url ?? "";
       }
       // if removed
@@ -83,7 +83,7 @@ export function useProfileEditor(profile: CurrentUser) {
         profile_picture: profilePictureUrl,
       });
 
-      if (result?.error) throw new Error(result.error);
+      if (result?.error) console.log(result.error);
 
       toast.success("Profile updated successfully!");
       setIsEditing(false);

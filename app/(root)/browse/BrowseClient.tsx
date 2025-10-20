@@ -6,9 +6,14 @@ import ThesisCard from "@/components/ThesisCard";
 import ThesisCardSkeleton from "@/components/ThesisCardSkeleton";
 import ThesisModal from "@/components/ThesisModal";
 import SearchCategory from "@/components/SearchFilter";
-import { categoryOptions } from "@/data/options";
 
-const BrowseClient = ({ initialTheses }: { initialTheses: Thesis[] }) => {
+const BrowseClient = ({
+  initialTheses,
+  categoryOptions,
+}: {
+  initialTheses: Thesis[];
+  categoryOptions: { key: string; label: string }[];
+}) => {
   const {
     displayedTheses,
     isModalOpen,
@@ -27,6 +32,7 @@ const BrowseClient = ({ initialTheses }: { initialTheses: Thesis[] }) => {
     loadingMore,
     handleSortChange,
     sort,
+    thesisCount,
   } = useArchivia(initialTheses);
 
   return (
@@ -58,9 +64,19 @@ const BrowseClient = ({ initialTheses }: { initialTheses: Thesis[] }) => {
           <div className="mb-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
             <div className="flex w-full justify-between sm:items-center gap-4">
               <div className="mb-3 sm:mb-0 text-gray-700">
-                {isPending
-                  ? "Searching..."
-                  : `Showing ${displayedTheses.length} theses`}
+                {isPending ? (
+                  "Searching..."
+                ) : currentCategory === "all" ? (
+                  `Showing ${displayedTheses.length} of ${thesisCount} total theses`
+                ) : (
+                  <>
+                    Showing {displayedTheses.length} of {thesisCount} total
+                    theses in{" "}
+                    <span className="font-semibold text-black">
+                      {currentCategory}
+                    </span>
+                  </>
+                )}
               </div>
 
               <select
@@ -99,24 +115,44 @@ const BrowseClient = ({ initialTheses }: { initialTheses: Thesis[] }) => {
             )}
           </div>
 
-          {/* Infinite Scroll Trigger */}
-          {hasMore && (
-            <div
-              ref={(el) => {
-                if (!el) return;
-                const observer = new IntersectionObserver(
-                  (entries) => {
-                    if (entries[0].isIntersecting) {
-                      loadMore();
-                    }
-                  },
-                  { rootMargin: "300px" } // triggers before bottom
-                );
-                observer.observe(el);
-                return () => observer.disconnect();
-              }}
-              className="h-10"
-            />
+          {/* Infinite Scroll + End Message */}
+          <div
+            ref={(el) => {
+              if (!el) return;
+              const observer = new IntersectionObserver(
+                (entries) => {
+                  if (entries[0].isIntersecting && hasMore && !loadingMore) {
+                    loadMore();
+                  }
+                },
+                {
+                  rootMargin: "200px", // Trigger earlier for smoother load
+                  threshold: 0.5, // Fire when half visible, more precise
+                }
+              );
+              observer.observe(el);
+              return () => observer.disconnect();
+            }}
+            className="h-10"
+          ></div>
+
+          {!hasMore && !loadingMore && displayedTheses.length > 0 && (
+            <div className="text-center py-5 text-gray-500">
+              {currentCategory === "all" ? (
+                <>
+                  You’ve reached the end — all {displayedTheses.length} theses
+                  loaded.
+                </>
+              ) : (
+                <>
+                  You’ve reached the end of the{" "}
+                  <span className="font-semibold text-gray-700">
+                    {currentCategory}
+                  </span>{" "}
+                  category — all {displayedTheses.length} theses loaded.
+                </>
+              )}
+            </div>
           )}
         </div>
       </section>

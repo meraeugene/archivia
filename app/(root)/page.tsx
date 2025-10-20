@@ -1,12 +1,20 @@
 import { getAllTheses } from "@/actions/theses";
 import ArchiviaClient from "./ArchiviaClient";
-import { getCurrentUser } from "@/actions/auth";
+import { getSession } from "@/actions/auth";
+import { getAllCategories } from "@/actions/categories";
 
 export default async function Page() {
-  const [theses, currentUser] = await Promise.all([
+  const [theses, session, categoryOptions] = await Promise.all([
     getAllTheses(),
-    getCurrentUser(),
+    getSession(),
+    getAllCategories(),
   ]);
 
-  return <ArchiviaClient initialTheses={theses} currentUser={currentUser} />;
+  return (
+    <ArchiviaClient
+      initialTheses={theses}
+      session={session}
+      categoryOptions={categoryOptions}
+    />
+  );
 }

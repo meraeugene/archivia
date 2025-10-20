@@ -29,15 +29,13 @@ export async function getMoreTheses(
   sort = "recent",
   category = "all"
 ) {
-  console.log("sort:", sort);
-  console.log("category:", category);
-
   const supabase = await createClient();
 
   let query = supabase.from("theses").select("*");
 
   if (category !== "all") {
-    query = query.eq("category", category);
+    // Match anywhere in comma-separated string (case-insensitive)
+    query = query.ilike("category", `%${category}%`);
   }
 
   switch (sort) {
@@ -72,13 +70,14 @@ export async function getMoreTheses(
 export async function searchTheses(
   query: string,
   sort: string,
-  category = "all"
+  category: string
 ) {
   const supabase = await createClient();
   let base = supabase.from("theses").select("*");
 
   if (category !== "all") {
-    base = base.eq("category", category);
+    // Match anywhere in comma-separated string (case-insensitive)
+    base = base.ilike("category", `%${category}%`);
   }
 
   if (query.trim()) {
@@ -102,16 +101,23 @@ export async function searchTheses(
   return { data, error };
 }
 
-//  4. Count (for pagination)
-export async function getThesesCount() {
+//  4. Count (for pagination or total display)
+export async function getThesesCount(category = "all") {
   const supabase = await createClient();
 
-  const { count, error } = await supabase
+  let query = supabase
     .from("theses")
     .select("*", { count: "exact", head: true });
 
+  if (category !== "all") {
+    // Match if the category exists in the comma-separated field (case-insensitive)
+    query = query.ilike("category", `%${category}%`);
+  }
+
+  const { count, error } = await query;
+
   if (error) {
-    console.error(" Error counting theses:", error.message);
+    console.error("Error counting theses:", error.message);
     return 0;
   }
 

@@ -1,7 +1,6 @@
 "use client";
 
 import { Search } from "lucide-react";
-import React from "react";
 interface CategoryOption {
   key: string;
   label: string;
@@ -26,8 +25,8 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
 }) => {
   return (
     <section className="py-10 border-t border-b border-gray-200">
-      <div className="max-w-4xl mx-auto px-5">
-        <div className="relative mb-5">
+      <div className="max-w-6xl mx-auto px-5">
+        <div className="relative mb-5 max-w-4xl mx-auto">
           <input
             type="text"
             value={searchQuery}
@@ -52,10 +51,10 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
             <button
               key={option.key}
               onClick={() => setCurrentCategory(option.key)}
-              className={`px-4 py-2 cursor-pointer rounded-full text-sm font-medium transition-all ${
+              className={`px-4 cursor-pointer py-2 rounded-full text-xs font-medium transition-all ${
                 currentCategory === option.key
                   ? "bg-black text-white"
-                  : "bg-white border border-gray-200 hover:bg-gray-100"
+                  : "bg-gray-100 hover:bg-gray-200 text-gray-800"
               }`}
             >
               {option.label}

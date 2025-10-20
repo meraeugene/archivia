@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useTransition } from "react";
 import { Thesis } from "@/types/thesis";
 import { toast } from "sonner";
-import { searchTheses, getMoreTheses } from "@/actions/theses";
+import { searchTheses, getMoreTheses, getThesesCount } from "@/actions/theses";
 
 export function useArchivia(initialTheses: Thesis[]) {
   const [displayedTheses, setDisplayedTheses] =
@@ -20,14 +20,22 @@ export function useArchivia(initialTheses: Thesis[]) {
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
+  const [thesisCount, setThesisCount] = useState<number>(initialTheses.length);
+
+  const fetchTotalCount = useCallback(async (category: string) => {
+    const count = await getThesesCount(category);
+    setThesisCount(count);
+  }, []);
+
   // Reset list when clearing search
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setDisplayedTheses(initialTheses);
       setOffset(initialTheses.length);
       setHasMore(true);
+      fetchTotalCount(currentCategory);
     }
-  }, [searchQuery, initialTheses]);
+  }, [searchQuery, initialTheses, currentCategory, fetchTotalCount]);
 
   //  Fetch by category
   const handleCategoryChange = useCallback(
@@ -36,6 +44,7 @@ export function useArchivia(initialTheses: Thesis[]) {
       setDisplayedTheses([]);
       setOffset(0);
       setHasMore(true);
+      fetchTotalCount(newCategory);
 
       startTransition(async () => {
         const data = await getMoreTheses(0, sort, newCategory);
@@ -44,8 +53,20 @@ export function useArchivia(initialTheses: Thesis[]) {
         setHasMore(data.length > 0);
       });
     },
-    [sort]
+    [sort, fetchTotalCount]
   );
+
+  useEffect(() => {
+    if (currentCategory === "all") {
+      // reset to default (initial theses)
+      setDisplayedTheses(initialTheses);
+      setOffset(initialTheses.length);
+      setHasMore(true);
+      fetchTotalCount("all");
+    } else {
+      handleCategoryChange(currentCategory);
+    }
+  }, [currentCategory, handleCategoryChange, initialTheses, fetchTotalCount]);
 
   // Search (respects current category)
   const handleSearch = async () => {
@@ -61,6 +82,7 @@ export function useArchivia(initialTheses: Thesis[]) {
         setDisplayedTheses(data || []);
         setOffset((data || []).length);
         setHasMore(false);
+        setThesisCount((data || []).length);
       }
     });
   };
@@ -90,12 +112,7 @@ export function useArchivia(initialTheses: Thesis[]) {
     const newTheses = await getMoreTheses(offset, sort, currentCategory);
     if (newTheses.length === 0) setHasMore(false);
 
-    setDisplayedTheses((prev) => {
-      const merged = [...prev, ...newTheses];
-
-      return merged;
-    });
-
+    setDisplayedTheses((prev) => [...prev, ...newTheses]);
     setOffset((prev) => prev + newTheses.length);
     setLoadingMore(false);
   }, [offset, hasMore, loadingMore, searchQuery, sort, currentCategory]);
@@ -119,6 +136,7 @@ export function useArchivia(initialTheses: Thesis[]) {
   return {
     displayedTheses,
     isModalOpen,
+    thesisCount,
     selectedThesis,
     searchQuery,
     currentCategory,

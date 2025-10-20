@@ -9,18 +9,19 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import ThesisCardSkeleton from "@/components/ThesisCardSkeleton";
 import { useArchivia } from "@/hooks/useArchivia";
-import { categoryOptions } from "@/data/options";
 import SearchCategory from "@/components/SearchFilter";
-import { CurrentUser } from "@/types/currentUser";
+import { JwtPayload } from "jsonwebtoken";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
-  currentUser: CurrentUser | null;
+  session: JwtPayload | null;
+  categoryOptions: { key: string; label: string }[];
 }
 
 const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
   initialTheses,
-  currentUser,
+  session,
+  categoryOptions,
 }) => {
   const {
     displayedTheses,
@@ -93,7 +94,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         </div>
       </section>
 
-      {currentUser && currentUser.role === "student" && <AdviserRecommender />}
+      {session && session.role === "student" && <AdviserRecommender />}
 
       <ThesisModal
         thesis={selectedThesis}

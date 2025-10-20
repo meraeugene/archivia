@@ -43,28 +43,18 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
           <div className="mb-8 space-y-2 text-gray-700">
             <div>
               <strong>Adviser:</strong>{" "}
-              <span className="bg-black text-white px-2 py-1 rounded text-sm font-semibold">
-                {thesis.adviser_name}
-              </span>{" "}
+              <span className="font-semibold">{thesis.adviser_name}</span>{" "}
             </div>
-            <div className="flex  items-center gap-2">
-              <strong>Panel:</strong>{" "}
-              <div className="flex flex-wrap gap-2 mt-1">
-                {thesis.panel_chair_name && (
-                  <span className="bg-gray-800 text-white px-2 py-1 rounded text-sm font-semibold">
-                    {thesis.panel_chair_name} (Chair)
-                  </span>
-                )}
-                {thesis.panel_members &&
-                  thesis.panel_members.length > 0 &&
-                  thesis.panel_members.map((member, i) => (
-                    <span
-                      key={i}
-                      className="bg-gray-300 text-gray-800 px-2 py-1 rounded text-sm"
-                    >
-                      {member}
-                    </span>
-                  ))}
+            <div className="flex items-center gap-2">
+              <strong>Panel:</strong>
+              <div className="flex flex-wrap gap-2 font-semibold">
+                {[
+                  thesis.panel_chair_name &&
+                    `${thesis.panel_chair_name} (Chair)`,
+                  ...(thesis.panel_members || []),
+                ]
+                  .filter(Boolean)
+                  .join(", ")}
               </div>
             </div>
 

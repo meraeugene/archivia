@@ -9,4 +9,5 @@ export interface Thesis {
   defense_year: number;
   pages: number;
   abstract: string;
+  category: string;
 }

@@ -14,6 +14,7 @@ export async function updateAdviserProfile(formData: {
   highest_educational_attainment: string;
   research_interest: string;
   handled_subjects: string;
+  profile_picture: string;
 }) {
   const session = await getSession();
 
@@ -31,6 +32,7 @@ export async function updateAdviserProfile(formData: {
       highest_educational_attainment: formData.highest_educational_attainment,
       position: formData.position,
       research_interest: formData.research_interest,
+      profile_picture: formData.profile_picture,
     })
     .eq("user_id", session?.sub);
 
@@ -38,6 +40,8 @@ export async function updateAdviserProfile(formData: {
     console.error("Error updating profile:", error.message);
     return { error: "Failed to update profile." };
   }
+
+  revalidatePath("/settings");
 }
 
 export async function updateStudentProfile(formData: {
