@@ -71,6 +71,7 @@ export function useThesisUpload() {
     const fileExtension = "." + file.name.split(".").pop()?.toLowerCase();
     if (fileExtension !== ".pdf" || file.size > 5 * 1024 * 1024) {
       setUploadStatus("error");
+      toast.error("Please upload a PDF file not exceeding 5MB.");
       return;
     }
 

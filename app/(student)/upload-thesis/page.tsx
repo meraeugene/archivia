@@ -3,6 +3,7 @@
 import { useThesisUpload } from "@/hooks/useThesisUpload";
 import { Upload, X, Check, FileText, CheckCircle } from "lucide-react";
 import UploadThesisModal from "./UploadThesisModal";
+import UploadGuidelines from "./UploadGuidelines";
 
 const ThesisUploadUI: React.FC = () => {
   const {
@@ -27,7 +28,7 @@ const ThesisUploadUI: React.FC = () => {
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">Thesis Upload</h1>
         <p className="text-gray-600 text-lg">
-          Upload your thesis document (PDF only, max 10MB)
+          Upload your thesis document (PDF only, max 5MB)
         </p>
       </div>
 
@@ -74,7 +75,7 @@ const ThesisUploadUI: React.FC = () => {
               : "Click or drag your thesis PDF"}
           </h3>
           <p className="text-gray-500">
-            Only PDF format is supported (max 10MB)
+            Only PDF format is supported (max 5MB)
           </p>
 
           <input
@@ -135,47 +136,7 @@ const ThesisUploadUI: React.FC = () => {
         </div>
       )}
 
-      {/* Upload Guidelines */}
-      <div className="flex justify-center mt-12">
-        <div className="bg-white shadow-xs p-8 rounded-lg max-w-4xl w-full">
-          <h3 className="text-xl font-semibold text-gray-900 mb-6 text-center">
-            Thesis Upload Guidelines
-          </h3>
-
-          <div className="flex flex-col md:flex-row justify-between text-sm text-gray-700 gap-6">
-            {/* File Requirements */}
-            <div>
-              <h4 className="font-medium text-gray-900 mb-2">
-                File Requirements
-              </h4>
-              <ul className="space-y-1 list-disc list-inside">
-                <li>
-                  Accepted format: <span className="font-medium">PDF only</span>
-                </li>
-                <li>
-                  Maximum file size: <span className="font-medium">10MB</span>
-                </li>
-                <li>Only one file can be uploaded</li>
-              </ul>
-            </div>
-
-            {/* Submission Guidelines */}
-            <div>
-              <h4 className="font-medium text-gray-900 mb-2">
-                Submission Guidelines
-              </h4>
-              <ul className="space-y-1 list-disc list-inside">
-                <li>
-                  Ensure the thesis is the{" "}
-                  <span className="font-medium">final approved version</span>
-                </li>
-                <li>Include all necessary sections and appendices</li>
-                <li>Check formatting and content before uploading</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
+      <UploadGuidelines />
 
       <UploadThesisModal
         isOpen={modalOpen}
