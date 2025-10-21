@@ -28,7 +28,7 @@ export async function POST(req: NextRequest) {
       const uploadStream = cloudinary.uploader.upload_stream(
         {
           resource_type: "raw",
-          folder: "theses",
+          folder: "archivia/theses",
           use_filename: true, // keep the original name
           unique_filename: true, // append random string to avoid overwrite
           overwrite: false,

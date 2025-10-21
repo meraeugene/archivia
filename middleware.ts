@@ -82,8 +82,8 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // 6. Student without adviser → block /upload-thesis
-  if (user?.role === "student" && pathname.startsWith("/upload-thesis")) {
+  // 6. Student without adviser → block /publish-thesis
+  if (user?.role === "student" && pathname.startsWith("/publish-thesis")) {
     const { data: adviser } = await supabase
       .from("student_adviser_view")
       .select("adviser_id")
