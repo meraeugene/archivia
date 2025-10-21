@@ -3,9 +3,8 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { getSession } from "./auth";
-import { cache } from "react";
 
-export const getUserBookmarks = cache(async () => {
+export const getUserBookmarks = async () => {
   const supabase = await createClient();
 
   const session = await getSession();
@@ -22,9 +21,9 @@ export const getUserBookmarks = cache(async () => {
   }
 
   return { data, error: null };
-});
+};
 
-export const getUserBookmarksIds = cache(async () => {
+export const getUserBookmarksIds = async () => {
   const supabase = await createClient();
   const session = await getSession();
 
@@ -42,7 +41,7 @@ export const getUserBookmarksIds = cache(async () => {
   const thesisIds = data.map((item) => item.id);
 
   return { data: thesisIds, error: null };
-});
+};
 
 export async function toggleBookmark(thesisId: number) {
   const supabase = await createClient();
@@ -88,4 +87,5 @@ export async function toggleBookmark(thesisId: number) {
   }
 
   revalidatePath("/browse");
+  revalidatePath("/bookmarks");
 }

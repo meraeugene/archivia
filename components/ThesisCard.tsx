@@ -37,7 +37,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
 
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-md transition-all duration-300 h-fit ">
-      <div className="flex items-start justify-between mb-3">
+      <div className="flex items-start justify-between gap-2 mb-3">
         <h3 className="text-lg font-bold leading-tight ">{thesis.title}</h3>
         <button
           onClick={handleClick}
