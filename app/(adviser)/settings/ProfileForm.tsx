@@ -6,22 +6,11 @@ import { Camera, User } from "lucide-react";
 import { InputField } from "./InputField";
 import { TextAreaField } from "./TextAreaField";
 import { getInitials } from "@/utils/getInitials";
+import { ProfileFormFields } from "@/data/profileFormFields";
 
 interface ProfileFormProps {
   currentUser: CurrentUser | null;
 }
-
-const fields = [
-  { label: "Prefix", name: "prefix" },
-  { label: "Full Name", name: "full_name" },
-  { label: "Suffix", name: "suffix" },
-  { label: "Email Address", name: "email", type: "email" },
-  { label: "Position", name: "position" },
-  {
-    label: "Highest Educational Attainment",
-    name: "highest_educational_attainment",
-  },
-];
 
 export default function ProfileForm({ currentUser }: ProfileFormProps) {
   const {
@@ -112,7 +101,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
         </div>
         {/* Form fields */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {fields.map(({ label, name, type }) => (
+          {ProfileFormFields.map(({ label, name, type }) => (
             <InputField
               key={name}
               label={label}

@@ -5,12 +5,15 @@ import AdviserCard from "./AdviserCard";
 import { Info } from "lucide-react";
 import { useState } from "react";
 
-type Props = {
+interface RecommendationsListProps {
   recommendations: Adviser[];
   onConnect: (adviser: Adviser) => void;
-};
+}
 
-const RecommendationsList = ({ recommendations, onConnect }: Props) => {
+const RecommendationsList = ({
+  recommendations,
+  onConnect,
+}: RecommendationsListProps) => {
   const [showAllMap, setShowAllMap] = useState<{
     [key: number]: boolean;
   }>({});

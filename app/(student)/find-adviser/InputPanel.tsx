@@ -3,13 +3,13 @@
 import { FileText, Lightbulb, Tags } from "lucide-react";
 import { StudentData, StudentDataField } from "@/types/advisers";
 
-type Props = {
+interface InputPanelProps {
   studentData: StudentData;
   onChange: (field: StudentDataField, value: string) => void;
   onSubmit: () => void;
   isLoading: boolean;
   hasRecommendations: boolean;
-};
+}
 
 const InputPanel = ({
   studentData,
@@ -17,7 +17,7 @@ const InputPanel = ({
   onSubmit,
   isLoading,
   hasRecommendations,
-}: Props) => {
+}: InputPanelProps) => {
   return (
     <div
       className={`transition-all duration-700 ease-in-out ${

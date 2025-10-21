@@ -92,7 +92,10 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                     thesis={thesis}
                     onPreview={handlePreview}
                     onDownload={handleDownload}
-                    isInitiallyBookmarked={userBookmarks.includes(thesis.id)}
+                    isInitiallyBookmarked={
+                      thesis.id !== undefined &&
+                      userBookmarks.includes(thesis.id)
+                    }
                   />
                 ))}
           </div>

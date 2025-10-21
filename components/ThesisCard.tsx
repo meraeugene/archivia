@@ -19,7 +19,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
   isInitiallyBookmarked = false,
 }) => {
   const { isBookmarked, handleToggle, isPending } = useBookmark(
-    thesis.id,
+    thesis.id!,
     isInitiallyBookmarked
   );
 
@@ -41,7 +41,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
         <h3 className="text-lg font-bold leading-tight ">{thesis.title}</h3>
         <button
           onClick={handleClick}
-          disabled={isPending}
+          disabled={isPending || thesis.id === undefined}
           className=" text-gray-500 cursor-pointer hover:text-black transition-colors"
         >
           <Bookmark

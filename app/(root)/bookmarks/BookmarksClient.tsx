@@ -96,8 +96,8 @@ export default function BookmarksClient({
                 {thesis.title}
               </h3>
               <button
-                disabled={pendingIds.has(thesis.id)}
-                onClick={() => handleUnbookmark(thesis.id)}
+                disabled={thesis.id ? pendingIds.has(thesis.id) : false}
+                onClick={() => thesis.id && handleUnbookmark(thesis.id)}
                 className="cursor-pointer"
               >
                 <Bookmark className="fill-black text-black" size={20} />

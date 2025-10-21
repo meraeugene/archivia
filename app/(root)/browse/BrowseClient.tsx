@@ -99,7 +99,9 @@ const BrowseClient = ({
                 thesis={thesis}
                 onPreview={handlePreview}
                 onDownload={handleDownload}
-                isInitiallyBookmarked={userBookmarks?.includes(thesis.id)}
+                isInitiallyBookmarked={
+                  thesis.id !== undefined && userBookmarks?.includes(thesis.id)
+                }
               />
             ))}
 
