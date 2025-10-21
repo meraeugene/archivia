@@ -75,17 +75,18 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
 
             <div className="flex gap-2 mt-3">
               {/* <strong>Category:</strong> */}
-              <div className="flex flex-wrap gap-2 ">
-                {(thesis.category?.split(",") || ["Uncategorized"]).map(
-                  (cat, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm font-medium rounded-full "
-                    >
-                      {cat.trim()}
-                    </span>
-                  )
-                )}
+              <div className="flex flex-wrap gap-2">
+                {(thesis.category?.length
+                  ? thesis.category
+                  : ["Uncategorized"]
+                ).map((cat, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm font-medium rounded-full"
+                  >
+                    {cat.trim()}
+                  </span>
+                ))}
               </div>
             </div>
           </div>

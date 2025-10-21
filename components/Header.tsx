@@ -92,17 +92,19 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
                   My Requests
                 </Link>
 
-                <Link
-                  prefetch
-                  href="/upload-thesis"
-                  className={
-                    pathname === "/upload-thesis"
-                      ? "font-semibold text-black"
-                      : "text-gray-800 hover:text-black"
-                  }
-                >
-                  Submit Thesis
-                </Link>
+                {studentAdviser && (
+                  <Link
+                    prefetch
+                    href="/publish-thesis"
+                    className={
+                      pathname === "/publish-thesis"
+                        ? "font-semibold text-black"
+                        : "text-gray-800 hover:text-black"
+                    }
+                  >
+                    Publish Thesis
+                  </Link>
+                )}
               </>
             )}
 

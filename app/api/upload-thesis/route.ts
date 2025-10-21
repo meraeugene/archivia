@@ -43,7 +43,10 @@ export async function POST(req: NextRequest) {
       streamifier.createReadStream(buffer).pipe(uploadStream);
     });
 
-    return NextResponse.json({ url: result.secure_url });
+    return NextResponse.json({
+      url: result.secure_url,
+      public_id: result.public_id,
+    });
   } catch (err) {
     console.error(err);
     return NextResponse.json({ error: "Upload failed" });

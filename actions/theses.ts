@@ -31,8 +31,7 @@ export const getMoreTheses = cache(
     let query = supabase.from("theses").select("*");
 
     if (category !== "all") {
-      // Match anywhere in comma-separated string (case-insensitive)
-      query = query.ilike("category", `%${category}%`);
+      query = query.contains("category", [category]);
     }
 
     switch (sort) {
@@ -93,8 +92,7 @@ export const getThesesCount = cache(async (category = "all") => {
     .select("*", { count: "exact", head: true });
 
   if (category !== "all") {
-    // Match if the category exists in the comma-separated field (case-insensitive)
-    query = query.ilike("category", `%${category}%`);
+    query = query.contains("category", [category]);
   }
 
   const { count, error } = await query;

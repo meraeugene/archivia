@@ -3,8 +3,17 @@
 import { useThesisUpload } from "@/hooks/useThesisUpload";
 import { Upload, X, Check, FileText, CheckCircle } from "lucide-react";
 import UploadThesisModal from "./UploadThesisModal";
+import { StudentAdviser } from "@/types/studentAdviser";
 
-const ThesisUploadUI: React.FC = () => {
+interface UploadThesisClientProps {
+  categories: { key: string; label: string }[];
+  studentAdviser: StudentAdviser;
+}
+
+const UploadThesisClient = ({
+  categories,
+  studentAdviser,
+}: UploadThesisClientProps) => {
   const {
     dragActive,
     uploadedFile,
@@ -19,13 +28,16 @@ const ThesisUploadUI: React.FC = () => {
     handleSubmitMetadata,
     isPending,
     onClose,
+    isCancelPending,
   } = useThesisUpload();
 
   return (
     <main className="flex-1 mx-auto  bg-gray-50 text-black py-14">
       {/* Header */}
       <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold text-gray-900 mb-3">Thesis Upload</h1>
+        <h1 className="text-4xl font-bold text-gray-900 mb-3">
+          Publish Thesis
+        </h1>
         <p className="text-gray-600 text-lg">
           Upload your thesis document (PDF only, max 5MB)
         </p>
@@ -140,9 +152,12 @@ const ThesisUploadUI: React.FC = () => {
         onClose={onClose}
         onSubmit={handleSubmitMetadata}
         isPending={isPending}
+        categories={categories}
+        studentAdviser={studentAdviser}
+        isCancelPending={isCancelPending}
       />
     </main>
   );
 };
 
-export default ThesisUploadUI;
+export default UploadThesisClient;

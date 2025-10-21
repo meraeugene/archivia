@@ -25,7 +25,7 @@ interface ThesisInsert {
   panel_chair_name?: string | null;
   panel_members?: string[] | null;
   defense_year?: number | null;
-  category?: string | null;
+  category?: string[] | null;
 }
 
 // 3️⃣ Fetch adviser & faculty profiles
@@ -139,7 +139,10 @@ async function seedNewTheses(): Promise<void> {
         panel_chair_name: panelChairMatch.full_name,
         panel_members: panelMemberNames.length ? panelMemberNames : null,
         defense_year: row.Year ? parseInt(String(row.Year)) : null,
-        category: row.Category?.trim() || null,
+        category:
+          row.Category?.split(",")
+            .map((c) => c.trim())
+            .filter(Boolean) || null,
       };
     });
 

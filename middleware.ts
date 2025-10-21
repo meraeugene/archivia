@@ -11,10 +11,10 @@ const PROTECTED_PATHS = [
   "/profile",
   "/bookmarks",
 
-  // stuent
+  // student
   "/find-adviser",
   "/my-requests",
-  "/upload-thesis",
+  "/publish-thesis",
 
   // faculty
   "/advisees",
@@ -22,6 +22,7 @@ const PROTECTED_PATHS = [
   "/requests",
   "/settings",
 ];
+
 const STUDENT_ONLY_PATHS = ["/find-adviser", "/my-requests"];
 
 export async function middleware(request: NextRequest) {
@@ -54,7 +55,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // 4. Redirect faculty away from student-only pages
+  // 4. Faculty trying to access student-only page → redirect home
   if (
     user?.role === "faculty" &&
     STUDENT_ONLY_PATHS.some(
@@ -65,10 +66,10 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // 5. If student already has an adviser, redirect away from find-adviser page
-  if (user?.role === "student" && pathname.startsWith("/find-adviser")) {
-    const supabase = await createClient();
+  // 5.  Student with adviser → prevent access to /find-adviser
+  const supabase = await createClient();
 
+  if (user?.role === "student" && pathname.startsWith("/find-adviser")) {
     const { data: adviser } = await supabase
       .from("student_adviser_view")
       .select("adviser_id")
@@ -77,6 +78,20 @@ export async function middleware(request: NextRequest) {
 
     if (adviser) {
       url.pathname = "/my-requests";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // 6. Student without adviser → block /upload-thesis
+  if (user?.role === "student" && pathname.startsWith("/upload-thesis")) {
+    const { data: adviser } = await supabase
+      .from("student_adviser_view")
+      .select("adviser_id")
+      .eq("student_id", user.sub)
+      .maybeSingle();
+
+    if (!adviser) {
+      url.pathname = "/find-adviser";
       return NextResponse.redirect(url);
     }
   }

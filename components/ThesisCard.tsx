@@ -90,7 +90,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
 
         <div className="flex gap-2 mt-3">
           <div className="flex flex-wrap gap-2">
-            {(thesis.category?.split(",").slice(0, 2) || ["Uncategorized"]).map(
+            {(thesis.category?.slice(0, 2) ?? ["Uncategorized"]).map(
               (cat, index) => (
                 <span
                   key={index}
@@ -101,12 +101,12 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
               )
             )}
 
-            {thesis.category?.split(",").length > 2 && (
+            {thesis.category && thesis.category.length > 2 && (
               <span
                 onClick={() => onPreview(thesis)}
                 className="px-2 py-1 bg-gray-200 text-gray-700 text-xs font-medium rounded-full cursor-pointer hover:bg-gray-300 transition"
               >
-                +{thesis.category.split(",").length - 2} more
+                +{thesis.category.length - 2} more
               </span>
             )}
           </div>

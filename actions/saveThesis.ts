@@ -6,6 +6,8 @@ import { Thesis } from "@/types/thesis";
 export async function saveThesisToDB(
   thesisData: Thesis & { file_url: string }
 ) {
+  console.log(thesisData);
+
   const requiredFields: (keyof (Thesis & { file_url: string }))[] = [
     "title",
     "abstract",

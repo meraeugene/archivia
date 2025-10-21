@@ -23,7 +23,9 @@ export function useThesisUpload() {
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [cloudinaryUrl, setCloudinaryUrl] = useState<string | null>(null);
+  const [cloudinaryId, setCloudinaryId] = useState<string | null>(null);
   const [isPending, setIsPending] = useState(false);
+  const [isCancelPending, setIsCancelPending] = useState(false);
   const [errors, setErrors] = useState<Partial<Record<keyof Thesis, string>>>(
     {}
   );
@@ -37,7 +39,7 @@ export function useThesisUpload() {
     panel_chair_name: "",
     panel_members: [],
     defense_year: new Date().getFullYear(),
-    category: "",
+    category: [],
   });
 
   const handleDrag = (e: DragEvent<HTMLDivElement>) => {
@@ -89,11 +91,6 @@ export function useThesisUpload() {
     if (fileInputRef.current) fileInputRef.current.value = "";
   };
 
-  const onClose = () => {
-    setModalOpen(false);
-    document.body.classList.remove("modal-open");
-  };
-
   const handleSubmitThesis = async () => {
     if (!uploadedFile) return;
 
@@ -111,6 +108,7 @@ export function useThesisUpload() {
 
     if (data.url) {
       setCloudinaryUrl(data.url);
+      setCloudinaryId(data.public_id);
       setModalOpen(true);
       document.body.classList.add("modal-open");
     } else {
@@ -152,7 +150,20 @@ export function useThesisUpload() {
 
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof Thesis, string>> = {};
-    (Object.keys(form) as (keyof Thesis)[]).forEach((key) => {
+
+    // Define required fields manually
+    const requiredFields: (keyof Thesis)[] = [
+      "title",
+      "abstract",
+      "keywords",
+      "proponents",
+      "panel_chair_name",
+      "panel_members",
+      "defense_year",
+      "category",
+    ];
+
+    requiredFields.forEach((key) => {
       const value = form[key];
       if (
         (Array.isArray(value) && value.length === 0) ||
@@ -162,12 +173,40 @@ export function useThesisUpload() {
         newErrors[key] = "Required";
       }
     });
+
     setErrors(newErrors);
-    if (Object.keys(newErrors).length) {
+
+    if (Object.keys(newErrors).length > 0) {
       toast.error("Please fill all required fields!");
       return false;
     }
+
     return true;
+  };
+
+  const onClose = async () => {
+    if (isCancelPending) return; // prevent double clicks
+    setIsCancelPending(true);
+
+    try {
+      // If a file is uploaded but not submitted, delete it from Cloudinary
+      if (cloudinaryId) {
+        await fetch("/api/delete-thesis", {
+          method: "DELETE",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ public_id: cloudinaryId }),
+        });
+      }
+    } catch (err) {
+      console.error("Failed to delete Cloudinary file:", err);
+    } finally {
+      setCloudinaryId(null);
+      setCloudinaryUrl(null);
+      removeFile();
+      setModalOpen(false);
+      document.body.classList.remove("modal-open");
+      setIsCancelPending(false);
+    }
   };
 
   return {
@@ -188,5 +227,6 @@ export function useThesisUpload() {
     handleChange,
     errors,
     validate,
+    isCancelPending,
   };
 }
