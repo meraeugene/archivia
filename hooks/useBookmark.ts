@@ -15,7 +15,9 @@ export function useBookmark(thesisId: number, initialBookmarked = false) {
     setIsBookmarked(newState);
 
     // Show toast immediately
-    toast.success(newState ? "Added to bookmarks" : "Removed from bookmarks");
+    if (newState) {
+      toast.success("Added to bookmarks");
+    }
 
     try {
       setIsPending(true);

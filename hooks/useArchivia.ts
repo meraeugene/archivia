@@ -138,8 +138,30 @@ export function useArchivia(initialTheses?: Thesis[]) {
     document.body.classList.remove("modal-open");
   };
 
-  const handleDownload = (thesis: Thesis) => {
-    alert(`Downloading: ${thesis.title}`);
+  const handleDownload = async (thesis: Thesis) => {
+    if (!thesis.file_url) return;
+
+    try {
+      const response = await fetch(thesis.file_url);
+      if (!response.ok) throw new Error("Failed to fetch file");
+
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = url;
+
+      // Use a name ending with .pdf
+      link.download = (thesis.title || "thesis") + ".pdf";
+
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      window.URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Download failed:", err);
+    }
   };
 
   return {

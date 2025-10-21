@@ -79,17 +79,31 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
 
             {/* Student-only link */}
             {currentUser?.role === "student" && (
-              <Link
-                prefetch
-                href="/my-requests"
-                className={
-                  pathname === "/my-requests"
-                    ? "font-semibold text-black"
-                    : "text-gray-800 hover:text-black"
-                }
-              >
-                My Requests
-              </Link>
+              <>
+                <Link
+                  prefetch
+                  href="/my-requests"
+                  className={
+                    pathname === "/my-requests"
+                      ? "font-semibold text-black"
+                      : "text-gray-800 hover:text-black"
+                  }
+                >
+                  My Requests
+                </Link>
+
+                <Link
+                  prefetch
+                  href="/upload-thesis"
+                  className={
+                    pathname === "/upload-thesis"
+                      ? "font-semibold text-black"
+                      : "text-gray-800 hover:text-black"
+                  }
+                >
+                  Submit Thesis
+                </Link>
+              </>
             )}
 
             {/* Faculty-only link */}

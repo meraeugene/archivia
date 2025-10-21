@@ -21,8 +21,6 @@ export const getUserBookmarks = cache(async () => {
     return { data: [], error };
   }
 
-  console.log(data);
-
   return { data, error: null };
 });
 
@@ -89,6 +87,5 @@ export async function toggleBookmark(thesisId: number) {
     }
   }
 
-  revalidatePath("/");
   revalidatePath("/browse");
 }

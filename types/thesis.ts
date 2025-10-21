@@ -1,5 +1,5 @@
 export interface Thesis {
-  id: number;
+  id?: number;
   title: string;
   adviser_name: string;
   keywords: string[];
@@ -7,9 +7,10 @@ export interface Thesis {
   panel_members: string[];
   proponents: string[];
   defense_year: number;
-  pages: number;
+  pages?: number;
   abstract: string;
   category: string;
   bookmark_id?: string;
   bookmarked_at?: string;
+  file_url?: string;
 }

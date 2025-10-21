@@ -27,8 +27,12 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
 
   const handleClick = () => {
     setIsAnimating(true);
+
     handleToggle();
-    setTimeout(() => setIsAnimating(false), 300);
+
+    setTimeout(() => {
+      setIsAnimating(false);
+    }, 300);
   };
 
   return (

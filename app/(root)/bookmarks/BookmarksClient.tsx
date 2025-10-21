@@ -6,7 +6,6 @@ import { toggleBookmark } from "@/actions/bookmark";
 import { useArchivia } from "@/hooks/useArchivia";
 import { Thesis } from "@/types/thesis";
 import ThesisModal from "@/components/ThesisModal";
-import { toast } from "sonner";
 
 interface BookmarksClientProps {
   bookmarks: Thesis[];
@@ -16,7 +15,8 @@ export default function BookmarksClient({
   bookmarks: initialBookmarks,
 }: BookmarksClientProps) {
   const [bookmarks, setBookmarks] = useState(initialBookmarks);
-  const [isPending, startTransition] = useTransition();
+  const [, startTransition] = useTransition();
+  const [pendingIds, setPendingIds] = useState<Set<number>>(new Set());
 
   const {
     handlePreview: onPreview,
@@ -27,17 +27,24 @@ export default function BookmarksClient({
   } = useArchivia();
 
   const handleUnbookmark = (thesisId: number) => {
-    // Optimistic update — instantly remove from UI
+    // Optimistic removal
     setBookmarks((prev) => prev.filter((b) => b.id !== thesisId));
-    toast.success("Removed from bookmarks");
 
-    // Run the server action in background
+    // Mark this ID as pending
+    setPendingIds((prev) => new Set(prev).add(thesisId));
+
     startTransition(async () => {
       try {
         await toggleBookmark(thesisId);
       } catch (err) {
         console.error(err);
-        toast.error("Failed to update bookmark");
+      } finally {
+        // Remove from pending after action
+        setPendingIds((prev) => {
+          const newSet = new Set(prev);
+          newSet.delete(thesisId);
+          return newSet;
+        });
       }
     });
   };
@@ -89,7 +96,7 @@ export default function BookmarksClient({
                 {thesis.title}
               </h3>
               <button
-                disabled={isPending}
+                disabled={pendingIds.has(thesis.id)}
                 onClick={() => handleUnbookmark(thesis.id)}
                 className="cursor-pointer"
               >

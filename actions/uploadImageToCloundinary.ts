@@ -20,7 +20,7 @@ export async function uploadImageToCloudinary(file: File) {
     const data = await res.json();
 
     if (!res.ok) {
-      throw new Error(data.error?.message || "Upload failed");
+      console.error("Cloudinary upload error:", data.error);
     }
 
     return {

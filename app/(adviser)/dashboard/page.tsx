@@ -1,11 +1,4 @@
-import {
-  Clock,
-  FileText,
-  GraduationCap,
-  Settings,
-  Upload,
-  Users,
-} from "lucide-react";
+import { Clock, FileText, Settings, Users } from "lucide-react";
 import {
   getAdviserCapacity,
   getAdviserRequests,
@@ -68,16 +61,6 @@ export default async function FacultyDashboard() {
               iconClass="bg-green-100"
               textColorClass="text-green-600"
             />
-
-            <StatsCard
-              title="Graduate Thesis"
-              count={0}
-              icon={<GraduationCap className="h-6 w-6 text-blue-600" />}
-              desc="Completed graduate-level theses"
-              cardClass="bg-white border border-blue-600"
-              iconClass="bg-blue-100"
-              textColorClass="text-blue-600"
-            />
           </div>
         </section>
 
@@ -99,12 +82,7 @@ export default async function FacultyDashboard() {
               desc="View the students you are currently advising."
               icon={<Users className="h-6 w-6" />}
             />
-            <QuickActionsCard
-              title="Upload Thesis"
-              link="/upload-thesis"
-              desc="Submit a new thesis for review."
-              icon={<Upload className="h-6 w-6" />}
-            />
+
             <QuickActionsCard
               title="Account Settings"
               desc="Update your profile and preferences"

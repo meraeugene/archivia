@@ -14,13 +14,13 @@ const PROTECTED_PATHS = [
   // stuent
   "/find-adviser",
   "/my-requests",
+  "/upload-thesis",
 
   // faculty
   "/advisees",
   "/dashboard",
   "/requests",
   "/settings",
-  "/upload-thesis",
 ];
 const STUDENT_ONLY_PATHS = ["/find-adviser", "/my-requests"];
 
