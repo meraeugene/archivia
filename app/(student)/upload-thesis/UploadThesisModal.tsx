@@ -52,7 +52,7 @@ const UploadThesisModal = ({
             </label>
             <textarea
               rows={7}
-              className={`w-full border p-2 rounded resize-none ${
+              className={`w-full border border-gray-300 p-2 rounded resize-none ${
                 errors.abstract ? "border-red-500" : ""
               }`}
               value={form.abstract}
@@ -77,7 +77,7 @@ const UploadThesisModal = ({
                   </label>
                   <input
                     type={field.type || "text"}
-                    className={`w-full border p-2 rounded ${
+                    className={`w-full border border-gray-300 p-2 rounded ${
                       errors[key] ? "border-red-500" : ""
                     }`}
                     value={isArray ? (value as string[]).join(", ") : value}

@@ -3,7 +3,6 @@
 import { useThesisUpload } from "@/hooks/useThesisUpload";
 import { Upload, X, Check, FileText, CheckCircle } from "lucide-react";
 import UploadThesisModal from "./UploadThesisModal";
-import UploadGuidelines from "./UploadGuidelines";
 
 const ThesisUploadUI: React.FC = () => {
   const {
@@ -34,12 +33,12 @@ const ThesisUploadUI: React.FC = () => {
 
       {/* Upload Zone */}
       <div
-        className={`relative border-1 max-w-4xl bg-white mx-auto rounded-sm border-dashed transition-all duration-300 cursor-pointer ${
+        className={`relative border-1 max-w-4xl bg-white mx-auto rounded-xl shadow-xs transition-all duration-300 cursor-pointer  ${
           dragActive
             ? "border-blue-500 bg-blue-50"
             : uploadedFile
             ? "border-green-300 bg-green-50"
-            : "border-gray-300 hover:border-gray-400"
+            : "border-gray-50"
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -53,15 +52,15 @@ const ThesisUploadUI: React.FC = () => {
               dragActive
                 ? "bg-blue-100"
                 : uploadedFile
-                ? "bg-green-100"
-                : "bg-white border border-gray-100"
+                ? "bg-green-100 shadow-green-100"
+                : "bg-white border border-gray-100 hover:bg-gray-50"
             }`}
           >
             {uploadedFile ? (
               <Check className="text-green-600" size={32} />
             ) : (
               <Upload
-                className={`${dragActive ? "text-blue-600" : "text-gray-600"}`}
+                className={`${dragActive ? "text-blue-600" : "text-gray-600 "}`}
                 size={24}
               />
             )}
@@ -91,7 +90,7 @@ const ThesisUploadUI: React.FC = () => {
       {/* File Display */}
       {uploadedFile && (
         <div className="space-y-4 mb-8 mt-6 max-w-4xl mx-auto">
-          <div className="bg-gray-50 border border-gray-200 p-6 rounded">
+          <div className="bg-white  p-6 rounded-lg shadow-xs border border-gray-50">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-4">
                 <FileText className="text-blue-600" size={24} />
@@ -107,7 +106,7 @@ const ThesisUploadUI: React.FC = () => {
 
               <button
                 onClick={removeFile}
-                className="p-2 text-gray-400 cursor-pointer hover:text-red-500 hover:bg-red-50 rounded-full transition-colors duration-200"
+                className="p-2  cursor-pointer text-red-500 bg-red-50 rounded-full transition-colors duration-200 hover:bg-red-100 focus:outline-none"
               >
                 <X size={20} />
               </button>
@@ -135,8 +134,6 @@ const ThesisUploadUI: React.FC = () => {
           </button>
         </div>
       )}
-
-      <UploadGuidelines />
 
       <UploadThesisModal
         isOpen={modalOpen}
