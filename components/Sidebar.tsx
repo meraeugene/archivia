@@ -11,6 +11,7 @@ import {
   LayoutDashboard,
   LogOutIcon,
   Users,
+  FileCheck,
 } from "lucide-react";
 import { useTransition } from "react";
 import { CurrentUser } from "@/types/currentUser";
@@ -20,6 +21,7 @@ const adviserNavLinks = [
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Requests", href: "/requests", icon: FileText },
   { label: "Advisees", href: "/advisees", icon: Users },
+  { label: "Thesis Approval", href: "/thesis-approval", icon: FileCheck },
   { label: "Settings", href: "/settings", icon: Settings },
   { label: "Logout", href: "/", icon: LogOutIcon },
 ];
@@ -28,12 +30,14 @@ interface SidebarProps {
   currentUser: CurrentUser;
   pendingAdviserRequestCount: number;
   currentAdviserLeadersCount: string;
+  thesisSubmissionsCount: number | null;
 }
 
 const Sidebar = ({
   currentUser,
   pendingAdviserRequestCount,
   currentAdviserLeadersCount,
+  thesisSubmissionsCount,
 }: SidebarProps) => {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -128,6 +132,13 @@ const Sidebar = ({
                   currentAdviserLeadersCount !== "0" && (
                     <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
                       {currentAdviserLeadersCount}
+                    </span>
+                  )}
+
+                {item.label === "Thesis Approval" &&
+                  thesisSubmissionsCount !== 0 && (
+                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
+                      {thesisSubmissionsCount}
                     </span>
                   )}
               </Link>

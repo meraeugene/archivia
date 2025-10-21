@@ -20,6 +20,7 @@ const PROTECTED_PATHS = [
   "/advisees",
   "/dashboard",
   "/requests",
+  "/thesis-approval",
   "/settings",
 ];
 

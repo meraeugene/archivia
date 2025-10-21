@@ -68,7 +68,7 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
 
                 {/* Right: Adviser Info */}
                 <div className="flex items-center gap-2 rounded-tl-none rounded-bl-none rounded-md border border-gray-200 px-4 py-2 ">
-                  <span className="text-gray-900 font-medium">
+                  <span className="text-gray-900  ">
                     {studentAdviser.adviser_prefix}{" "}
                     {studentAdviser.adviser_name}{" "}
                     {studentAdviser.adviser_suffix}

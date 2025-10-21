@@ -1,0 +1,181 @@
+"use server";
+
+import { createClient } from "@/utils/supabase/server";
+import { Thesis } from "@/types/thesis";
+import { getSession } from "./auth";
+import { cache } from "react";
+
+// For adviser to get pending thesis submissions
+export const getPendingThesisSubmissions = cache(async () => {
+  const supabase = await createClient();
+
+  const session = await getSession();
+
+  if (!session?.sub) {
+    return [];
+  }
+
+  const { data, error } = await supabase
+    .from("thesis_submissions_with_student_view")
+    .select("*")
+    .eq("adviser_id", session.sub)
+    .eq("status", "pending")
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error("Error fetching submissions:", error);
+    return [];
+  }
+
+  return data;
+});
+
+// Only student can submit thesis for approval
+export async function submitThesisForApproval(
+  thesisData: Thesis & {
+    file_url: string;
+    adviser_id: string;
+  }
+) {
+  const requiredFields: (keyof (Thesis & { file_url: string }))[] = [
+    "title",
+    "abstract",
+    "keywords",
+    "proponents",
+    "adviser_id",
+    "panel_chair_name",
+    "panel_members",
+    "defense_year",
+    "category",
+    "file_url",
+  ];
+
+  const missingFields = requiredFields.filter((field) => {
+    const value = thesisData[field];
+    return (
+      value === undefined ||
+      value === null ||
+      value === "" ||
+      (Array.isArray(value) && value.length === 0)
+    );
+  });
+
+  if (missingFields.length > 0) {
+    return { error: `Missing required fields: ${missingFields.join(", ")}` };
+  }
+
+  const supabase = await createClient();
+  const session = await getSession();
+
+  if (!session?.sub) return { error: "Not authenticated" };
+
+  try {
+    const { data, error } = await supabase.from("thesis_submissions").insert([
+      {
+        student_id: session?.sub,
+        adviser_id: thesisData.adviser_id,
+        adviser_name: thesisData.adviser_name,
+        title: thesisData.title,
+        abstract: thesisData.abstract,
+        keywords: thesisData.keywords,
+        proponents: thesisData.proponents,
+        panel_chair_name: thesisData.panel_chair_name,
+        panel_members: thesisData.panel_members,
+        defense_year: thesisData.defense_year,
+        category: thesisData.category,
+        file_url: thesisData.file_url,
+        status: "pending",
+      },
+    ]);
+
+    if (error) {
+      console.error("Error submitting thesis for approval:", error);
+      return { error: error.message };
+    }
+
+    return { data };
+  } catch (err) {
+    console.error("Unexpected error:", err);
+    return { error: "Unexpected error while submitting thesis" };
+  }
+}
+
+// For adviser to approve or return thesis submissions
+export async function handleThesisApproval(
+  submissionId: string,
+  decision: "approve" | "return",
+  feedback?: string
+) {
+  const supabase = await createClient();
+
+  // Update submission status
+  const { data, error } = await supabase
+    .from("thesis_submissions")
+    .update({
+      status: decision === "approve" ? "approved" : "returned",
+      feedback: feedback || null,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", submissionId)
+    .select()
+    .single();
+
+  if (error) {
+    console.error("Error updating thesis submission:", error);
+    return { error: error.message };
+  }
+
+  // If approved, copy to `theses`
+  if (decision === "approve") {
+    const thesis = data;
+    const { error: insertError } = await supabase.from("theses").insert([
+      {
+        title: thesis.title,
+        abstract: thesis.abstract,
+        keywords: thesis.keywords,
+        proponents: thesis.proponents,
+        adviser_id: thesis.adviser_id,
+        adviser_name: thesis.adviser_name,
+        panel_chair_name: thesis.panel_chair_name,
+        panel_members: thesis.panel_members,
+        defense_year: thesis.defense_year,
+        category: thesis.category,
+        file_url: thesis.file_url,
+      },
+    ]);
+
+    if (insertError) {
+      console.error("Error inserting approved thesis:", insertError);
+      return { error: insertError.message };
+    }
+  }
+
+  return { data };
+}
+
+export const getThesisSubmissionCount = cache(
+  async (status?: "pending" | "approved" | "returned") => {
+    const supabase = await createClient();
+    const session = await getSession();
+
+    if (!session?.sub) return 0;
+
+    let query = supabase
+      .from("thesis_submissions")
+      .select("id", { count: "exact", head: true })
+      .eq("adviser_id", session.sub);
+
+    if (status) {
+      query = query.eq("status", status);
+    }
+
+    const { count, error } = await query;
+
+    if (error) {
+      console.error("Error fetching thesis submission count:", error);
+      return 0;
+    }
+
+    return count || 0;
+  }
+);

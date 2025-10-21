@@ -2,6 +2,7 @@ export type Thesis = {
   id?: number;
   title: string;
   adviser_name: string;
+  adviser_id: string;
   keywords: string[];
   panel_chair_name: string;
   panel_members: string[];

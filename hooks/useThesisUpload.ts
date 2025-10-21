@@ -1,6 +1,6 @@
 "use client";
 
-import { saveThesisToDB } from "@/actions/saveThesis";
+import { submitThesisForApproval } from "@/actions/thesisApproval";
 import { Thesis } from "@/types/thesis";
 import { useRouter } from "next/navigation";
 import { useState, useRef, DragEvent, ChangeEvent } from "react";
@@ -36,6 +36,7 @@ export function useThesisUpload() {
     keywords: [],
     proponents: [],
     adviser_name: "",
+    adviser_id: "",
     panel_chair_name: "",
     panel_members: [],
     defense_year: new Date().getFullYear(),
@@ -123,9 +124,10 @@ export function useThesisUpload() {
 
     setIsPending(true);
 
-    const result = await saveThesisToDB({
+    const result = await submitThesisForApproval({
       ...formData,
       file_url: cloudinaryUrl,
+      adviser_id: formData.adviser_id!,
     });
 
     setIsPending(false);
@@ -133,7 +135,9 @@ export function useThesisUpload() {
     if (result.error) {
       toast.error(result.error);
     } else {
-      toast.success("Thesis submitted successfully!");
+      toast.success(
+        `Thesis submitted successfully to ${formData.adviser_name}! Please wait for approval.`
+      );
       router.push("/");
       setModalOpen(false);
       document.body.classList.remove("modal-open");

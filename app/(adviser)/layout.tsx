@@ -3,6 +3,7 @@ import {
   getAdviserCurrentLeadersCount,
   getPendingAdviserRequestsCount,
 } from "@/actions/facultyRequests";
+import { getThesisSubmissionCount } from "@/actions/thesisApproval";
 import Sidebar from "@/components/Sidebar";
 import { redirect } from "next/navigation";
 
@@ -18,11 +19,15 @@ export default async function FacultyLayout({
     redirect("/");
   }
 
-  const [pendingAdviserRequestCount, currentAdviserLeadersCount] =
-    await Promise.all([
-      getPendingAdviserRequestsCount(),
-      getAdviserCurrentLeadersCount(),
-    ]);
+  const [
+    pendingAdviserRequestCount,
+    currentAdviserLeadersCount,
+    thesisSubmissionsCount,
+  ] = await Promise.all([
+    getPendingAdviserRequestsCount(),
+    getAdviserCurrentLeadersCount(),
+    getThesisSubmissionCount("pending"),
+  ]);
 
   return (
     <main className="min-h-screen bg-gray-50 flex ">
@@ -30,6 +35,7 @@ export default async function FacultyLayout({
         currentUser={currentUser}
         pendingAdviserRequestCount={pendingAdviserRequestCount}
         currentAdviserLeadersCount={currentAdviserLeadersCount}
+        thesisSubmissionsCount={thesisSubmissionsCount}
       />
       {children}
     </main>

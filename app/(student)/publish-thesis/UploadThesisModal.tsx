@@ -42,7 +42,7 @@ const UploadThesisModal = ({
 
     if (!validate()) return;
 
-    onSubmit(form);
+    onSubmit({ ...form, adviser_id: studentAdviser.adviser_id });
   };
 
   return (
