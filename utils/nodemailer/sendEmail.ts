@@ -51,23 +51,29 @@ export async function sendThesisEmail({
             <table width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e5e5;">
               
               <!-- Header -->
-             <tr>
+              <tr>
                 <td style="background: #000000; padding: 32px 40px; text-align: center;">
-                  <!-- Logo + Text -->
-                  <div style="display: inline-flex; align-items: center; justify-content: center; gap: 8px;">
-                    <img
-                      src="https://res.cloudinary.com/dhv8m7hau/image/upload/v1761142159/jazdbvag51u2csvgmk3l.png"
-                      alt="Archivia Logo"
-                      width="32"
-                      height="32"
-                      style="display: block;"
-                    />
-                    <span
-                      style="color: #ffffff; font-size: 24px; font-weight: 700; letter-spacing: -0.5px; font-family: Arial, Helvetica, sans-serif;"
-                    >
-                      RCHIVIA
-                    </span>
-                  </div>
+                  <!-- Logo + Text (table layout for Gmail compatibility) -->
+                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
+                    <tr>
+                      <td>
+                        <img
+                          src="https://res.cloudinary.com/dhv8m7hau/image/upload/v1761144268/nuguzjfvymzvjvk9iokn.png"
+                          alt="Archivia Logo"
+                          width="38"
+                          height="32"
+                          style="display: block;"
+                        />
+                      </td>
+                      <td>
+                        <span
+                          style="color: #ffffff; font-size: 26px; font-weight: 700; letter-spacing: 0.6px; font-family: Arial, Helvetica, sans-serif;"
+                        >
+                          RCHIVIA
+                        </span>
+                      </td>
+                    </tr>
+                  </table>
 
                   <p
                     style="color: #999999; margin: 8px 0 0 0; font-size: 13px; letter-spacing: 0.3px; font-family: Arial, Helvetica, sans-serif;"
@@ -76,6 +82,7 @@ export async function sendThesisEmail({
                   </p>
                 </td>
               </tr>
+
 
 
               <!-- Status Indicator -->

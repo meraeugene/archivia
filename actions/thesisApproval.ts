@@ -109,9 +109,7 @@ export async function approveThesis(
 ) {
   const supabase = await createClient();
 
-  console.log(studentEmail);
-
-  // Update submission status
+  // 1. Update submission status
   const { data: thesis, error } = await supabase
     .from("thesis_submissions")
     .update({
@@ -128,7 +126,7 @@ export async function approveThesis(
     return { success: false, error: error.message };
   }
 
-  // Insert into main `theses` table
+  // 2. Insert into main `theses` table
   const { error: insertError } = await supabase.from("theses").insert([
     {
       title: thesis.title,
@@ -150,6 +148,18 @@ export async function approveThesis(
     return { success: false, error: insertError.message };
   }
 
+  // 3️ Delete the student–adviser relationship
+  const { error: deleteError } = await supabase
+    .from("student_requests")
+    .delete()
+    .eq("student_id", thesis.student_id)
+    .eq("adviser_id", thesis.adviser_id);
+
+  if (deleteError) {
+    console.error("Error deleting student–adviser relationship:", deleteError);
+    return { success: false, error: deleteError.message };
+  }
+
   await sendThesisEmail({
     to: studentEmail,
     type: "approve",
@@ -158,6 +168,7 @@ export async function approveThesis(
   });
 
   revalidatePath("/thesis-approval");
+  revalidatePath("/");
 
   return {
     success: true,

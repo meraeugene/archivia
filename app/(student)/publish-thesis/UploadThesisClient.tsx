@@ -103,7 +103,7 @@ const UploadThesisClient = ({
       {uploadedFile && (
         <div className="space-y-4 mb-8 mt-6 max-w-4xl mx-auto">
           <div className="bg-white  p-6 rounded-lg shadow-xs border border-gray-50">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between gap-3">
               <div className="flex items-center space-x-4">
                 <FileText className="text-blue-600" size={24} />
                 <div>

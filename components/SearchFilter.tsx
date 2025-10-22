@@ -35,7 +35,7 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
               if (e.key === "Enter" && onSearch) onSearch();
             }}
             placeholder="Search theses by title, adviser, proponents, and keywords..."
-            className="w-full px-5 py-4 pr-24 text-base border border-gray-300 rounded-lg bg-white focus:border-gray-800 focus:outline-none transition-colors"
+            className="w-full pl-5   py-4 pr-34 text-base border border-gray-300 rounded-lg bg-white focus:border-gray-800 focus:outline-none transition-colors"
           />
           <button
             onClick={onSearch}
