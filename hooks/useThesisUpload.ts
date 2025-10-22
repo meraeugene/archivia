@@ -136,7 +136,7 @@ export function useThesisUpload() {
       toast.error(result.error);
     } else {
       toast.success(
-        `Thesis submitted successfully to ${formData.adviser_name}! Please wait for approval.`
+        "Thesis submitted successfully! Please check your email for approval status."
       );
       router.push("/");
       setModalOpen(false);
@@ -152,10 +152,8 @@ export function useThesisUpload() {
     setErrors((prev) => ({ ...prev, [key]: "" }));
   };
 
-  const validate = (): boolean => {
+  const validate = (data: Thesis = form): boolean => {
     const newErrors: Partial<Record<keyof Thesis, string>> = {};
-
-    // Define required fields manually
     const requiredFields: (keyof Thesis)[] = [
       "title",
       "abstract",
@@ -165,10 +163,11 @@ export function useThesisUpload() {
       "panel_members",
       "defense_year",
       "category",
+      "adviser_name",
     ];
 
     requiredFields.forEach((key) => {
-      const value = form[key];
+      const value = data[key];
       if (
         (Array.isArray(value) && value.length === 0) ||
         value === "" ||

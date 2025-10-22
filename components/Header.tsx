@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { useState } from "react";
@@ -29,9 +30,12 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
       <div className="max-w-6xl mx-auto px-5">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
-          <Link prefetch href="/" className="text-3xl font-bold tracking-tight">
-            Archivia
-          </Link>
+          <div className="flex items-center ">
+            <img src="/images/logo.png" alt="Archivia Logo" className="h-8" />
+            <Link prefetch href="/" className="text-xl font-bold tracking-wide">
+              RCHIVIA
+            </Link>
+          </div>
 
           {/* Navigation */}
           <nav className="hidden md:flex space-x-6 items-center">
@@ -131,7 +135,6 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
                   className="cursor-pointer"
                 >
                   {currentUser.profile_picture ? (
-                    // eslint-disable-next-line @next/next/no-img-element
                     <img
                       src={currentUser.profile_picture}
                       alt={currentUser.full_name}

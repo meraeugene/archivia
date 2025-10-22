@@ -4,6 +4,8 @@ import { createClient } from "@/utils/supabase/server";
 import { Thesis } from "@/types/thesis";
 import { getSession } from "./auth";
 import { cache } from "react";
+import { revalidatePath } from "next/cache";
+import { sendThesisEmail } from "@/utils/nodemailer/sendEmail";
 
 // For adviser to get pending thesis submissions
 export const getPendingThesisSubmissions = cache(async () => {
@@ -100,19 +102,20 @@ export async function submitThesisForApproval(
   }
 }
 
-// For adviser to approve or return thesis submissions
-export async function handleThesisApproval(
+export async function approveThesis(
   submissionId: string,
-  decision: "approve" | "return",
+  studentEmail: string,
   feedback?: string
 ) {
   const supabase = await createClient();
 
+  console.log(studentEmail);
+
   // Update submission status
-  const { data, error } = await supabase
+  const { data: thesis, error } = await supabase
     .from("thesis_submissions")
     .update({
-      status: decision === "approve" ? "approved" : "returned",
+      status: "approved",
       feedback: feedback || null,
       updated_at: new Date().toISOString(),
     })
@@ -121,36 +124,81 @@ export async function handleThesisApproval(
     .single();
 
   if (error) {
-    console.error("Error updating thesis submission:", error);
-    return { error: error.message };
+    console.error("Error approving thesis:", error);
+    return { success: false, error: error.message };
   }
 
-  // If approved, copy to `theses`
-  if (decision === "approve") {
-    const thesis = data;
-    const { error: insertError } = await supabase.from("theses").insert([
-      {
-        title: thesis.title,
-        abstract: thesis.abstract,
-        keywords: thesis.keywords,
-        proponents: thesis.proponents,
-        adviser_id: thesis.adviser_id,
-        adviser_name: thesis.adviser_name,
-        panel_chair_name: thesis.panel_chair_name,
-        panel_members: thesis.panel_members,
-        defense_year: thesis.defense_year,
-        category: thesis.category,
-        file_url: thesis.file_url,
-      },
-    ]);
+  // Insert into main `theses` table
+  const { error: insertError } = await supabase.from("theses").insert([
+    {
+      title: thesis.title,
+      abstract: thesis.abstract,
+      keywords: thesis.keywords,
+      proponents: thesis.proponents,
+      adviser_id: thesis.adviser_id,
+      adviser_name: thesis.adviser_name,
+      panel_chair_name: thesis.panel_chair_name,
+      panel_members: thesis.panel_members,
+      defense_year: thesis.defense_year,
+      category: thesis.category,
+      file_url: thesis.file_url,
+    },
+  ]);
 
-    if (insertError) {
-      console.error("Error inserting approved thesis:", insertError);
-      return { error: insertError.message };
-    }
+  if (insertError) {
+    console.error("Error inserting approved thesis:", insertError);
+    return { success: false, error: insertError.message };
   }
 
-  return { data };
+  await sendThesisEmail({
+    to: studentEmail,
+    type: "approve",
+    thesisTitle: thesis.title,
+    adviserName: thesis.adviser_name,
+  });
+
+  revalidatePath("/thesis-approval");
+
+  return {
+    success: true,
+    message: "Thesis approved successfully and email sent.",
+  };
+}
+
+export async function returnThesis(
+  submissionId: string,
+  studentEmail: string,
+  feedback: string
+) {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("thesis_submissions")
+    .update({
+      status: "returned",
+      feedback,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", submissionId)
+    .select("title, adviser_name")
+    .single();
+
+  if (error) {
+    console.error("Error returning thesis:", error);
+    return { success: false, error: error.message };
+  }
+
+  await sendThesisEmail({
+    to: studentEmail,
+    type: "return",
+    thesisTitle: data.title,
+    adviserName: data.adviser_name,
+    feedback,
+  });
+
+  revalidatePath("/thesis-approval");
+
+  return { success: true, message: "Thesis returned and email sent." };
 }
 
 export const getThesisSubmissionCount = cache(

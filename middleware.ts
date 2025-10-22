@@ -19,7 +19,7 @@ const PROTECTED_PATHS = [
   // faculty
   "/advisees",
   "/dashboard",
-  "/requests",
+  "/advisory-requests",
   "/thesis-approval",
   "/settings",
 ];

@@ -19,7 +19,7 @@ import { CurrentUser } from "@/types/currentUser";
 const adviserNavLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Requests", href: "/requests", icon: FileText },
+  { label: "Advisory Requests", href: "/advisory-requests", icon: FileText },
   { label: "Advisees", href: "/advisees", icon: Users },
   { label: "Thesis Approval", href: "/thesis-approval", icon: FileCheck },
   { label: "Settings", href: "/settings", icon: Settings },
@@ -121,7 +121,7 @@ const Sidebar = ({
                 <Icon className="h-5 w-5 mr-3" />
                 {item.label}
 
-                {item.label === "Requests" &&
+                {item.label === "Advisory Requests" &&
                   pendingAdviserRequestCount > 0 && (
                     <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
                       {pendingAdviserRequestCount}

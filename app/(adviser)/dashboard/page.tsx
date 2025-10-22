@@ -1,4 +1,4 @@
-import { Clock, FileText, Settings, Users } from "lucide-react";
+import { Clock, FileCheck, FileText, Settings, Users } from "lucide-react";
 import {
   getAdviserCapacity,
   getAdviserRequests,
@@ -33,17 +33,17 @@ export default async function FacultyDashboard() {
         <section className="mb-8">
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
             <StatsCard
-              title="Total Requests"
+              title="Total Advisory Requests"
               count={totalAdviserRequestCount}
               icon={<FileText className="h-6 w-6 text-gray-600" />}
-              desc="All requests received"
+              desc="All advisory requests received"
               cardClass="bg-white border border-gray-900"
               iconClass="bg-gray-100"
               textColorClass="text-gray-600"
             />
 
             <StatsCard
-              title="Pending"
+              title="Pending Advisory Requests"
               count={pendingAdviserRequestCount}
               icon={<Clock className="h-6 w-6 text-yellow-600" />}
               desc="Awaiting your review"
@@ -71,16 +71,22 @@ export default async function FacultyDashboard() {
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
             <QuickActionsCard
-              title="Review Requests"
+              title="Review Advisory Requests"
               desc="Review and manage pending student requests"
               icon={<FileText className="h-6 w-6" />}
-              link="/requests"
+              link="/advisory-requests"
             />
             <QuickActionsCard
               title="View Advisees"
               link="/advisees"
               desc="View the students you are currently advising."
               icon={<Users className="h-6 w-6" />}
+            />
+            <QuickActionsCard
+              title="Thesis Submissions"
+              link="/thesis-approval"
+              desc="Approve or return student thesis submissions"
+              icon={<FileCheck className="h-6 w-6" />}
             />
 
             <QuickActionsCard

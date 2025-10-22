@@ -36,13 +36,15 @@ const UploadThesisModal = ({
   if (!isOpen) return null;
 
   const handleSubmit = () => {
-    if (!form.adviser_name && studentAdviser?.adviser_name) {
-      handleChange("adviser_name", studentAdviser.adviser_name);
-    }
+    const finalForm = {
+      ...form,
+      adviser_name: form.adviser_name || studentAdviser.adviser_name || "",
+      adviser_id: studentAdviser.adviser_id,
+    };
 
-    if (!validate()) return;
+    if (!validate(finalForm)) return;
 
-    onSubmit({ ...form, adviser_id: studentAdviser.adviser_id });
+    onSubmit(finalForm);
   };
 
   return (

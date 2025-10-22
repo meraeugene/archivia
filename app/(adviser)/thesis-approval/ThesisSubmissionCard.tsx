@@ -5,9 +5,12 @@ import { ThesisSubmission } from "@/types/thesisSubmissions";
 interface ThesisSubmissionCardProps {
   thesis: ThesisSubmission;
   isExpanded: boolean;
-  toggleExpand: (id: string) => void;
   isPending?: boolean;
-  handleAction?: (thesis: ThesisSubmission, type: "approve" | "return") => void;
+  toggleExpand: (id: string) => void;
+  handleOpenModal?: (
+    thesis: ThesisSubmission,
+    type: "approve" | "return"
+  ) => void;
 }
 
 const ThesisSubmissionCard = ({
@@ -15,7 +18,7 @@ const ThesisSubmissionCard = ({
   isExpanded,
   toggleExpand,
   isPending,
-  handleAction,
+  handleOpenModal,
 }: ThesisSubmissionCardProps) => {
   const handleDownload = async (thesis: ThesisSubmission) => {
     if (!thesis.file_url) return;
@@ -99,7 +102,9 @@ const ThesisSubmissionCard = ({
       </div>
 
       {/* File Actions */}
-      <div className="flex items-center mb-8">
+      <div className="flex mb-8 flex-col">
+        <h4 className="font-medium text-gray-900 mb-2">Thesis Download Link</h4>
+
         {thesis.file_url && (
           <span
             onClick={() => handleDownload(thesis)}
@@ -112,19 +117,20 @@ const ThesisSubmissionCard = ({
       </div>
 
       {/* Approve / Return Buttons */}
-      {thesis.status === "pending" && handleAction && (
+      {thesis.status === "pending" && handleOpenModal && (
         <div className="flex space-x-3">
           <button
             disabled={isPending}
-            onClick={() => handleAction(thesis, "approve")}
-            className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors "
+            onClick={() => handleOpenModal(thesis, "approve")}
+            className="flex-1 cursor-pointer px-4 py-2 rounded-md bg-gray-900 text-white font-medium hover:bg-gray-800 transition-all flex items-center justify-center gap-2"
           >
             Approve
           </button>
+
           <button
             disabled={isPending}
-            onClick={() => handleAction(thesis, "return")}
-            className="flex-1 cursor-pointer bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors "
+            onClick={() => handleOpenModal(thesis, "return")}
+            className="flex-1 cursor-pointer px-4 py-2 rounded-md bg-gray-100 text-gray-700 border border-gray-300 font-medium hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
           >
             Return
           </button>

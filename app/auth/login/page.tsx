@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 import { useEffect, useState } from "react";
-import { GraduationCap, User, Lock, Eye, EyeOff } from "lucide-react";
+import { User, Lock, Eye, EyeOff } from "lucide-react";
 import { login } from "@/actions/auth";
 import { toast } from "sonner";
 import { useAdviserStore } from "@/store/adviserStore";
@@ -75,17 +75,23 @@ export default function Login() {
 
       <div className="w-full max-w-6xl h-[90vh] bg-white/10 backdrop-blur-lg  z-10  relative rounded-3xl  border border-gray-200    overflow-hidden flex">
         {/* Left Side - Login */}
-        <div className="flex flex-col px-20 py-16   w-[55%]">
+        <div className="flex flex-col px-20 py-34   w-[55%]">
           {/* Header */}
-          <div className="mb-8 ">
-            <div className="flex  mb-6">
-              <div className="bg-black/90 p-3 rounded-lg">
-                <GraduationCap className="w-8 h-8 text-white" />
-              </div>
+          <div className="mb-4 ">
+            <div className="flex items-center justify-center mb-18">
+              <img
+                src="/images/logo.png"
+                alt="Archivia Logo"
+                className="h-13 object-cover"
+              />
+              <h2 className="text-4xl font-bold tracking-wide  uppercase">
+                rchivia
+              </h2>
             </div>
-            <h2 className="text-3xl font-bold text-black mb-1">Archivia</h2>
-            <p className="text-gray-600">Sign in to your school account</p>
-            <div className="border-b border-purple-100 mt-8" />
+            <p className="text-gray-600 text-center">
+              Sign in to your school account
+            </p>
+            <div className="border-b border-purple-100 mt-4" />
           </div>
 
           {/* Form */}

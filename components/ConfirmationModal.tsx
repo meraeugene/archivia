@@ -1,18 +1,18 @@
 "use client";
 
 import React, { useState } from "react";
-import { X, Check, XCircle } from "lucide-react";
+import { Check, XCircle, RotateCcw } from "lucide-react";
 
 interface ConfirmModalProps {
   isOpen: boolean;
-  type: "accept" | "reject";
+  type: "accept" | "reject" | "approve" | "return";
   studentName: string;
   onClose: () => void;
   onConfirm: (feedback?: string) => void;
   isPending?: boolean;
 }
 
-const Modal: React.FC<ConfirmModalProps> = ({
+const ConfirmationModal: React.FC<ConfirmModalProps> = ({
   isOpen,
   type,
   studentName,
@@ -29,17 +29,66 @@ const Modal: React.FC<ConfirmModalProps> = ({
     onClose();
   };
 
+  // Determine modal texts based on type
+  const getModalContent = () => {
+    switch (type) {
+      case "accept":
+        return {
+          action: "accept",
+          subject: "this advisory request",
+          label: "Add a note (optional)",
+          placeholder: "Provide a note for the group thesis leader...",
+          icon: <Check className="text-white" size={28} />,
+          iconBg: "bg-gray-900",
+          confirmText: "Accept",
+        };
+      case "reject":
+        return {
+          action: "reject",
+          subject: "this advisory request",
+          label: "Reason for rejection",
+          placeholder: "Provide feedback to improve their thesis...",
+          icon: <XCircle className="text-white" size={28} />,
+          iconBg: "bg-gray-900",
+          confirmText: "Reject",
+        };
+      case "approve":
+        return {
+          action: "approve",
+          subject: "this thesis submission",
+          label: "Add remarks (optional)",
+          placeholder: "Provide remarks for the thesis group...",
+          icon: <Check className="text-white" size={28} />,
+          iconBg: "bg-gray-900",
+          confirmText: "Approve",
+        };
+      case "return":
+        return {
+          action: "return",
+          subject: "this thesis submission",
+          label: "Reason for return",
+          placeholder: "Provide feedback...",
+          icon: <RotateCcw className="text-white" size={28} />,
+          iconBg: "bg-gray-900",
+          confirmText: "Return",
+        };
+      default:
+        return null;
+    }
+  };
+
+  const content = getModalContent();
+  if (!content) return null;
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
       <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-200 relative">
         {/* Icon */}
         <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
-            {type === "accept" ? (
-              <Check className="text-white" size={28} />
-            ) : (
-              <XCircle className="text-white" size={28} />
-            )}
+          <div
+            className={`w-16 h-16 ${content.iconBg} rounded-2xl flex items-center justify-center mx-auto mb-4`}
+          >
+            {content.icon}
           </div>
         </div>
 
@@ -47,10 +96,8 @@ const Modal: React.FC<ConfirmModalProps> = ({
         <div className="text-center mb-8 space-y-5">
           <p className="text-gray-600 w-[80%] mx-auto">
             Are you sure you want to{" "}
-            <span className="font-semibold text-black">
-              {type === "accept" ? "accept" : "reject"}
-            </span>{" "}
-            this advisory request?
+            <span className="font-semibold text-black">{content.action}</span>{" "}
+            {content.subject}?
           </p>
 
           <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
@@ -60,18 +107,12 @@ const Modal: React.FC<ConfirmModalProps> = ({
           {/* Feedback textarea */}
           <div className="space-y-3">
             <label className="block text-left text-sm font-semibold text-black">
-              {type === "accept"
-                ? "Add a note (optional)"
-                : "Reason for rejection"}
+              {content.label}
             </label>
             <textarea
               value={feedback}
               onChange={(e) => setFeedback(e.target.value)}
-              placeholder={
-                type === "accept"
-                  ? "Provide a note for the group thesis leader..."
-                  : "Provide feedback to improve their thesis..."
-              }
+              placeholder={content.placeholder}
               className="w-full p-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm"
               rows={3}
               maxLength={300}
@@ -95,22 +136,18 @@ const Modal: React.FC<ConfirmModalProps> = ({
           <button
             disabled={isPending}
             onClick={() => onConfirm(feedback.trim() || undefined)}
-            className="flex-1 cursor-pointer px-5 py-3 rounded-xl bg-black text-white font-semibold hover:bg-black/90 transition-all flex items-center justify-center gap-2"
+            className={`flex-1  px-5 py-3 rounded-xl bg-black text-white font-semibold hover:bg-black/90 transition-all flex items-center justify-center gap-2 ${
+              isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
+            }`}
           >
             {isPending && (
               <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
             )}
             {isPending ? (
               "Loading..."
-            ) : type === "accept" ? (
-              <>
-                <Check size={18} />
-                <span>Accept</span>
-              </>
             ) : (
               <>
-                <X size={18} />
-                <span>Reject</span>
+                <span>{content.confirmText}</span>
               </>
             )}
           </button>
@@ -120,4 +157,4 @@ const Modal: React.FC<ConfirmModalProps> = ({
   );
 };
 
-export default Modal;
+export default ConfirmationModal;

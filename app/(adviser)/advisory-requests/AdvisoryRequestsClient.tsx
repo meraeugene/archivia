@@ -1,9 +1,9 @@
 "use client";
 
-import Modal from "./Modal";
 import { Request } from "@/types/request";
 import RequestCard from "../../../components/RequestCard";
 import { useAdvisoryRequests } from "@/hooks/useAdvisoryRequests";
+import ConfirmationModal from "../../../components/ConfirmationModal";
 
 export default function AdvisoryRequestsClient({
   requests,
@@ -49,7 +49,7 @@ export default function AdvisoryRequestsClient({
       </div>
 
       {/* Modal */}
-      <Modal
+      <ConfirmationModal
         isOpen={modalState.open}
         type={modalState.type}
         studentName={modalState.request?.studentName || ""}

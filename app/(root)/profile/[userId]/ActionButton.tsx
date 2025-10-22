@@ -19,7 +19,9 @@ export function ActionButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className="group cursor-pointer relative px-12 py-5 bg-white text-black font-bold uppercase tracking-widest text-sm overflow-hidden transition-all duration-300 w-full sm:w-auto border disabled:opacity-50"
+      className={`group  relative px-12 py-5 bg-white text-black font-bold uppercase tracking-widest text-sm overflow-hidden transition-all duration-300 w-full sm:w-auto border ${
+        disabled ? "cursor-not-allowed  disabled:opacity-50" : "cursor-pointer"
+      }`}
     >
       <span className="relative z-10 flex items-center justify-center gap-3 transition-colors duration-300 group-hover:text-white">
         {label}
