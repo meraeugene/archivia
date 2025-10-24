@@ -12,12 +12,15 @@ import {
 } from "lucide-react";
 import { getInitials } from "@/utils/getInitials";
 import { Adviser } from "@/types/advisers";
+import { AdviserCard } from "./AdviserCard";
+import { StudentAdviser } from "@/types/studentAdviser";
 
 interface AdvisersClientProps {
   advisers: Adviser[];
+  studentAdviser: StudentAdviser | null;
 }
 
-const AdvisersClient = ({ advisers }: AdvisersClientProps) => {
+const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
 
   const openModal = (adviser: Adviser) => {
@@ -31,26 +34,28 @@ const AdvisersClient = ({ advisers }: AdvisersClientProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <div className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
-        <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
-          <h1 className="text-5xl text-white font-extrabold mb-5 tracking-tight">
-            USTP Advisers
-          </h1>
-
-          <div className="w-32 h-1 bg-white mx-auto mb-8"></div>
-          <p className="text-lg text-gray-300 max-w-xl mx-auto ">
-            Meet our distinguished faculty members who are shaping the future of
-            research and innovation at USTP.
-          </p>
-        </div>
-      </div>
+    <div className="min-h-screen bg-white">
+      <AdviserCard adviser={studentAdviser} />
 
       {/* 3D Cards Grid */}
-      <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+      <div className="">
+        {/* Header */}
+        <div className="relative overflow-hidden">
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
+          <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
+            <h1 className="text-5xl text-white font-extrabold mb-5 tracking-tight">
+              USTP Advisers
+            </h1>
+
+            <div className="w-32 h-1 bg-white mx-auto mb-8"></div>
+            <p className="text-lg text-gray-300 max-w-xl mx-auto ">
+              Meet our distinguished faculty members who are shaping the future
+              of research and innovation at USTP.
+            </p>
+          </div>
+        </div>
+
+        <div className="grid max-w-7xl mx-auto  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8  py-12 ">
           {advisers.map((adviser) => (
             <div
               key={adviser.id}

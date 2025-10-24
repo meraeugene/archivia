@@ -48,7 +48,7 @@ export async function login(userId: string, password: string) {
     httpOnly: true, // not accessible via JS
     secure: process.env.NODE_ENV === "production", // only over HTTPS in prod
     path: "/", // valid for all routes
-    maxAge: 60 * 60, // 1 hour
+    // maxAge: 60 * 60, // 1 hour
     sameSite: "strict", // CSRF protection
   });
 

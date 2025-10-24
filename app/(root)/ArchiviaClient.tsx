@@ -11,12 +11,14 @@ import ThesisCardSkeleton from "@/components/ThesisCardSkeleton";
 import { useArchivia } from "@/hooks/useArchivia";
 import SearchCategory from "@/components/SearchFilter";
 import { JwtPayload } from "jsonwebtoken";
+import { StudentAdviser } from "@/types/studentAdviser";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
   session: JwtPayload | null;
   categoryOptions: { key: string; label: string }[];
   userBookmarks?: number[];
+  studentAdviser?: StudentAdviser | null;
 }
 
 const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
@@ -24,6 +26,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
   session,
   categoryOptions,
   userBookmarks = [],
+  studentAdviser,
 }) => {
   const {
     displayedTheses,
@@ -111,7 +114,9 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         </div>
       </section>
 
-      {session && session.role === "student" && <AdviserRecommender />}
+      {session && session.role === "student" && !studentAdviser && (
+        <AdviserRecommender />
+      )}
 
       <ThesisModal
         thesis={selectedThesis}
