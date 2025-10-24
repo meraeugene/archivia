@@ -1,7 +1,7 @@
 "use client";
 
 /* eslint-disable @next/next/no-img-element */
-import { UserPlus, Users, Mail, CheckCircle, XCircle } from "lucide-react";
+import { UserPlus, Users, Mail, CheckCircle } from "lucide-react";
 import { Adviser } from "@/types/advisers";
 import { getInitials } from "@/utils/getInitials";
 
@@ -81,17 +81,11 @@ const AdviserCard = ({
           <div className="flex items-center gap-4 text-sm ">
             <div className="flex items-center gap-1 font-semibold">
               <Users size={14} />
-              <span>{adviser.capacity} Groups Advised</span>
+              <span>{adviser.current_leaders} Groups Advised</span>
             </div>
-            {adviser.availability === "Available" ? (
-              <div className="flex items-center gap-1 text-green-600 text-sm">
-                <CheckCircle size={16} /> Available
-              </div>
-            ) : (
-              <div className="flex items-center gap-1 text-red-600 text-sm">
-                <XCircle size={16} /> Unavailable
-              </div>
-            )}
+            <div className="flex items-center gap-1 text-green-600 text-sm">
+              <CheckCircle size={16} /> Available
+            </div>
           </div>
         </div>
       </div>
@@ -166,15 +160,11 @@ const AdviserCard = ({
 
       {/* Connect Button */}
       <button
-        disabled={
-          adviser.availability !== "Available" || adviser.already_requested
-        }
+        disabled={adviser.already_requested}
         onClick={onConnect}
         className={`w-full flex items-center justify-center gap-2 font-semibold py-4 px-6 rounded-xl transition-all duration-200 
     ${
-      adviser.availability !== "Available"
-        ? "bg-gray-100 text-gray-500 border border-gray-100 cursor-not-allowed"
-        : adviser.already_requested
+      adviser.already_requested
         ? "bg-green-100 text-green-700 border border-green-200 cursor-not-allowed"
         : "bg-black text-white hover:bg-black/90 cursor-pointer"
     }`}

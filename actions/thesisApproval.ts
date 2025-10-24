@@ -5,7 +5,7 @@ import { Thesis } from "@/types/thesis";
 import { getSession } from "./auth";
 import { cache } from "react";
 import { revalidatePath } from "next/cache";
-import { sendThesisEmail } from "@/utils/nodemailer/sendEmail";
+import { sendThesisApprovalEmail } from "@/utils/nodemailer/sendThesisApprovalEmail";
 
 // For adviser to get pending thesis submissions
 export const getPendingThesisSubmissions = cache(async () => {
@@ -109,6 +109,8 @@ export async function approveThesis(
 ) {
   const supabase = await createClient();
 
+  const session = await getSession();
+
   // 1. Update submission status
   const { data: thesis, error } = await supabase
     .from("thesis_submissions")
@@ -160,7 +162,25 @@ export async function approveThesis(
     return { success: false, error: deleteError.message };
   }
 
-  await sendThesisEmail({
+  // 3 Fetch adviser current leaders count
+  const { data: advData, error: advError } = await supabase
+    .from("adviser_current_leaders")
+    .select("current_leaders")
+    .eq("adviser_id", session?.sub)
+    .single();
+
+  if (advError) return { success: false, error: advError.message };
+
+  // 4. Decrement adviser current_leaders
+  const { error: updateAdvError } = await supabase
+    .from("adviser_current_leaders")
+    .update({ current_leaders: advData.current_leaders - 1 })
+    .eq("adviser_id", session?.sub);
+
+  if (updateAdvError)
+    return { success: false, error: "Error updating adviser current leaders" };
+
+  await sendThesisApprovalEmail({
     to: studentEmail,
     type: "approve",
     thesisTitle: thesis.title,
@@ -168,7 +188,6 @@ export async function approveThesis(
   });
 
   revalidatePath("/thesis-approval");
-  revalidatePath("/");
 
   return {
     success: true,
@@ -199,7 +218,7 @@ export async function returnThesis(
     return { success: false, error: error.message };
   }
 
-  await sendThesisEmail({
+  await sendThesisApprovalEmail({
     to: studentEmail,
     type: "return",
     thesisTitle: data.title,

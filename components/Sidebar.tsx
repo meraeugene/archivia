@@ -12,6 +12,7 @@ import {
   LogOutIcon,
   Users,
   FileCheck,
+  BookOpen,
 } from "lucide-react";
 import { useTransition } from "react";
 import { CurrentUser } from "@/types/currentUser";
@@ -22,6 +23,7 @@ const adviserNavLinks = [
   { label: "Advisory Requests", href: "/advisory-requests", icon: FileText },
   { label: "Advisees", href: "/advisees", icon: Users },
   { label: "Thesis Approval", href: "/thesis-approval", icon: FileCheck },
+  { label: "Handled Thesis", href: "/handled-thesis", icon: BookOpen },
   { label: "Settings", href: "/settings", icon: Settings },
   { label: "Logout", href: "/", icon: LogOutIcon },
 ];
@@ -29,7 +31,7 @@ const adviserNavLinks = [
 interface SidebarProps {
   currentUser: CurrentUser;
   pendingAdviserRequestCount: number;
-  currentAdviserLeadersCount: string;
+  currentAdviserLeadersCount: number;
   thesisSubmissionsCount: number | null;
 }
 
@@ -49,7 +51,7 @@ const Sidebar = ({
   };
 
   return (
-    <aside className="-translate-x-full lg:translate-x-0 fixed lg:static inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 transition-transform duration-300 ease-in-out">
+    <aside className="-translate-x-full lg:translate-x-0  transition-transform duration-300 ease-in-out fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 overflow-y-auto">
       <div className="flex flex-col h-full">
         {/* Logo/Brand */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
@@ -129,7 +131,7 @@ const Sidebar = ({
                   )}
 
                 {item.label === "Advisees" &&
-                  currentAdviserLeadersCount !== "0" && (
+                  currentAdviserLeadersCount !== 0 && (
                     <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
                       {currentAdviserLeadersCount}
                     </span>

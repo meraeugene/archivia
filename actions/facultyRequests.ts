@@ -1,49 +1,30 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { getSession } from "./auth";
+import { getCurrentUser, getSession } from "./auth";
 import { cache } from "react";
 import { revalidatePath } from "next/cache";
-
-export const getAdviserCapacity = cache(async (): Promise<string> => {
-  const supabase = await createClient();
-  const currentUser = await getSession();
-
-  if (!currentUser) return "0/0";
-
-  const { data, error } = await supabase
-    .from("adviser_capacity")
-    .select("current_leaders, max_leaders")
-    .eq("adviser_id", currentUser.sub)
-    .single();
-
-  if (error || !data) {
-    console.error("Error fetching adviser capacity:", error?.message);
-    return "0/0";
-  }
-
-  return `${data.current_leaders}/${data.max_leaders}`;
-});
+import { sendStudentAcceptedEmail } from "@/utils/nodemailer/sendStudentAcceptedEmail";
 
 export const getAdviserCurrentLeadersCount = cache(
-  async (): Promise<string> => {
+  async (): Promise<number> => {
     const supabase = await createClient();
     const currentUser = await getSession();
 
-    if (!currentUser) return "0/0";
+    if (!currentUser) return 0;
 
     const { data, error } = await supabase
-      .from("adviser_capacity")
+      .from("adviser_current_leaders")
       .select("current_leaders")
       .eq("adviser_id", currentUser.sub)
       .single();
 
     if (error || !data) {
-      console.error("Error fetching adviser capacity:", error?.message);
-      return "0/0";
+      console.error("Error fetching adviser current leaders:", error?.message);
+      return 0;
     }
 
-    return `${data.current_leaders}`;
+    return data.current_leaders;
   }
 );
 
@@ -95,7 +76,8 @@ export const getAdviserRequests = cache(async () => {
     .from("adviser_requests_view")
     .select("*")
     .eq("adviser_id", currentUser?.sub)
-    .order("submitted_at", { ascending: false });
+    .order("submitted_at", { ascending: false })
+    .limit(3);
 
   if (error) throw new Error(error.message);
 
@@ -177,9 +159,13 @@ export const getAdviserAdvisees = cache(async () => {
 
 export async function acceptRequest(
   requestId: string,
+  studentEmail: string,
   feedback?: string
 ): Promise<{ success: boolean; error?: string; message?: string }> {
   const supabase = await createClient();
+
+  // Only adviser can login and use this function
+  const currentUser = await getCurrentUser();
 
   // 1️. Fetch the request being accepted
   const { data: reqData, error: reqError } = await supabase
@@ -192,33 +178,16 @@ export async function acceptRequest(
   if (reqData.status !== "pending")
     return { success: false, error: "Request already processed" };
 
-  // 2️. Fetch adviser capacity
+  // 2️. Fetch adviser current leaders count
   const { data: advData, error: advError } = await supabase
-    .from("adviser_capacity")
-    .select("*")
+    .from("adviser_current_leaders")
+    .select("current_leaders")
     .eq("adviser_id", reqData.adviser_id)
     .single();
 
   if (advError) return { success: false, error: advError.message };
-  if (advData.current_leaders >= advData.max_leaders)
-    return {
-      success: false,
-      error: "You have reached the maximum number of leaders.",
-    };
 
-  // 3️. Fetch adviser name (for feedback message in other requests)
-  const { data: adviserProfile, error: adviserError } = await supabase
-    .from("user_profiles")
-    .select("full_name")
-    .eq("user_id", reqData.adviser_id)
-    .single();
-
-  if (adviserError)
-    return { success: false, error: "Error fetching adviser details" };
-
-  const adviserName = adviserProfile.full_name;
-
-  // 4️. Update this request to accepted
+  // 3. Update this request to accepted
   const { error: updateReqError } = await supabase
     .from("student_requests")
     .update({ status: "accepted", feedback: feedback || null })
@@ -227,12 +196,12 @@ export async function acceptRequest(
   if (updateReqError)
     return { success: false, error: "Error updating request" };
 
-  // 5️. Mark all *other advisers’* requests by this student as already_handled
+  // 4. Mark all *other advisers’* requests by this student as already_handled
   const { error: updateOthersError } = await supabase
     .from("student_requests")
     .update({
       status: "already_handled",
-      feedback: `This student is already handled by ${adviserName}.`,
+      feedback: `This student is already handled by ${currentUser?.full_name}.`,
     })
     .eq("student_id", reqData.student_id)
     .neq("id", requestId)
@@ -241,19 +210,30 @@ export async function acceptRequest(
   if (updateOthersError)
     return { success: false, error: "Error updating other requests" };
 
-  // 6️. Increment adviser current_leaders
+  // 5. Increment adviser current_leaders
   const { error: updateAdvError } = await supabase
-    .from("adviser_capacity")
+    .from("adviser_current_leaders")
     .update({ current_leaders: advData.current_leaders + 1 })
     .eq("adviser_id", reqData.adviser_id);
 
   if (updateAdvError)
-    return { success: false, error: "Error updating adviser capacity" };
+    return { success: false, error: "Error updating adviser current leaders" };
+
+  await sendStudentAcceptedEmail({
+    to: studentEmail,
+    adviserName: currentUser?.full_name,
+    thesisTitle: reqData.title,
+    thesisAbstract: reqData.abstract,
+    feedback: feedback || "No additional feedback provided.",
+  });
 
   revalidatePath("/requests");
-  revalidatePath("/dashboard");
 
-  return { success: true, message: "Request accepted successfully." };
+  return {
+    success: true,
+    message:
+      "Request accepted successfully! The student has been notified via email.",
+  };
 }
 
 export async function rejectRequest(
@@ -282,7 +262,6 @@ export async function rejectRequest(
   if (error) return { success: false, error: "Error rejecting request" };
 
   revalidatePath("/requests");
-  revalidatePath("/dashboard");
   revalidatePath("/my-requests");
   return { success: true, message: "Request rejected successfully." };
 }

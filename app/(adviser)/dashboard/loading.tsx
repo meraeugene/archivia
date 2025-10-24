@@ -8,8 +8,8 @@ export default function Loading() {
       <div className="p-8 space-y-12">
         {/* Statistics Overview */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            {[...Array(4)].map((_, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+            {[...Array(5)].map((_, i) => (
               <div
                 key={i}
                 className="bg-white border border-gray-200 p-6 rounded-lg animate-pulse"

@@ -4,7 +4,7 @@
 import { useState } from "react";
 import { logout } from "@/actions/auth";
 import { getInitials } from "@/utils/getInitials";
-import { Bookmark, User } from "lucide-react";
+import { ClipboardList, User } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogoutButton } from "./LogoutButton";
@@ -62,54 +62,20 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
               })}
 
             {/* Student adviser badge */}
-            {currentUser?.role === "student" && studentAdviser && (
-              <div className="flex items-stretch px-2 ">
-                {/* Left: Label with icon */}
-                <div className="bg-black text-white px-4 rounded-md rounded-tr-none rounded-br-none  py-2 text-sm font-medium flex items-center gap-2">
-                  <User size={16} className="text-white" />
-                  Adviser
-                </div>
-
-                {/* Right: Adviser Info */}
-                <div className="flex items-center gap-2 rounded-tl-none rounded-bl-none rounded-md border border-gray-200 px-4 py-2 ">
-                  <span className="text-gray-900  ">
-                    {studentAdviser.adviser_prefix}{" "}
-                    {studentAdviser.adviser_name}{" "}
-                    {studentAdviser.adviser_suffix}
-                  </span>
-                </div>
-              </div>
-            )}
 
             {/* Student-only link */}
-            {currentUser?.role === "student" && (
-              <>
-                <Link
-                  prefetch
-                  href="/my-requests"
-                  className={
-                    pathname === "/my-requests"
-                      ? "font-semibold text-black"
-                      : "text-gray-800 hover:text-black"
-                  }
-                >
-                  My Requests
-                </Link>
-
-                {studentAdviser && (
-                  <Link
-                    prefetch
-                    href="/publish-thesis"
-                    className={
-                      pathname === "/publish-thesis"
-                        ? "font-semibold text-black"
-                        : "text-gray-800 hover:text-black"
-                    }
-                  >
-                    Publish Thesis
-                  </Link>
-                )}
-              </>
+            {currentUser?.role === "student" && studentAdviser && (
+              <Link
+                prefetch
+                href="/publish-thesis"
+                className={
+                  pathname === "/publish-thesis"
+                    ? "font-semibold text-black"
+                    : "text-gray-800 hover:text-black"
+                }
+              >
+                Publish Thesis
+              </Link>
             )}
 
             {/* Faculty-only link */}
@@ -174,15 +140,17 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
                     </Link>
 
                     {/* Bookmarks link */}
-                    <Link
-                      prefetch
-                      href={`/bookmarks`}
-                      className="flex text-sm items-center space-x-2 px-4 py-2 hover:bg-gray-100"
-                      onClick={() => setOpen(false)}
-                    >
-                      <Bookmark size={16} className="text-gray-600" />
-                      <span>Bookmarks</span>
-                    </Link>
+                    {currentUser.role === "student" && (
+                      <Link
+                        prefetch
+                        href={`/my-requests`}
+                        className="flex text-sm items-center space-x-2 px-4 py-2 hover:bg-gray-100"
+                        onClick={() => setOpen(false)}
+                      >
+                        <ClipboardList size={16} className="text-gray-600" />
+                        <span>My Requests</span>
+                      </Link>
+                    )}
 
                     {/* Logout */}
                     <form action={logout}>

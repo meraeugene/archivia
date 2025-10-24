@@ -212,7 +212,7 @@ export const users = [
     role: "faculty",
     profile: {
       prefix: null,
-      full_name: "Geraldine Blanco",
+      full_name: "Geraldine A. Blanco",
       suffix: "",
       position: "Instructor",
       bio: "I am a dedicated computer programmer with eight years of experience making software. Besides writing code, I have been an IT teacher for 5 years, sharing my love and understanding of technology with students. Besides my job, I love to read and am always looking for new ideas and ways to learn more about different topics.",
@@ -325,7 +325,7 @@ export const users = [
     role: "faculty",
     profile: {
       prefix: null,
-      full_name: "Dario C. Miñoza Jr.",
+      full_name: "Dario C. Miñoza Jr",
       suffix: null,
       position: "Instructor",
       bio: "Father of 5 and husband of one. I am a programmer and I have no life.",
@@ -394,6 +394,166 @@ export const users = [
       handled_subjects: "Computer Programming, Elective",
       email: "sigfred.tong@ustp.edu.ph",
       profile_picture: "/images/adviser_profiles/tong.png",
+    },
+  },
+  {
+    user_id: "2022329",
+    password: "2022329",
+    role: "faculty",
+    profile: {
+      prefix: null,
+      full_name: "Quinto A. Tan Jr",
+      suffix: "MIT",
+      position: "Instructor",
+      bio: "A small river named Duden flows by their place and supplies it with the necessary",
+      highest_educational_attainment: "Master in Information Technology",
+      research_interest: "System Development, Machine Learning, Deep Learning",
+      orcid: "To be provided",
+      handled_subjects: "To be provided",
+      email: "quinto.tan@ustp.edu.ph",
+      profile_picture: "/images/adviser_profiles/tan.png",
+    },
+  },
+  {
+    user_id: "2022331",
+    password: "2022331",
+    role: "faculty",
+    profile: {
+      prefix: null,
+      full_name: "Tyrone S. Battung",
+      suffix: null,
+      position: "Instructor",
+      bio: "I'm a naturally curious and simple guy with a deep passion for learning, especially in the fields of AI and machine learning. I love exploring new ideas, understanding complex systems, and continuously expanding my knowledge to keep up with the ever-evolving world of technology.",
+      highest_educational_attainment:
+        "Bachelor of Science in Information Technology",
+      research_interest:
+        "Explainable AI, Model Interpretability, Machine Learning and Deep Learning",
+      orcid: "To be provided",
+      handled_subjects:
+        "Elective, Fundamentals of Web Design, System Integration and Architecture",
+      email: "tyrone.battung@ustp.edu.ph",
+      profile_picture: "/images/adviser_profiles/battung.png",
+    },
+  },
+  {
+    user_id: "2022333",
+    password: "2022333",
+    role: "faculty",
+    profile: {
+      prefix: null,
+      full_name: "Junar A. Landicho",
+      suffix: "Ph.D.",
+      position: "Professor",
+      bio: "Junar Landicho is a professor at the University of Science and Technology of Southern Philippines and the Dean of the College of Information Technology and Computing. He holds a Ph.D. in Information Management from the Asian Institute of Technology and a Master's degree in Information Technology. His research focuses on machine learning, predictive modeling, and health information management, with published works on hospital readmission risk, water demand forecasting, and gamification in education.",
+      highest_educational_attainment:
+        "Doctor of Philosophy in Information Management",
+      research_interest:
+        "Health Informatics, Predictive Analytics, Database System, Web and Mobile Technologies",
+      orcid: "https://orcid.org/0000-0001-8530-4537",
+      handled_subjects:
+        "Algorithm and Complexity, Automata Theory and Formal Language, Fundamentals of Database Systems",
+      email: "junarlandicho@ustp.edu.ph",
+      profile_picture: "/images/adviser_profiles/landicho.png",
+    },
+  },
+  {
+    user_id: "2022334",
+    password: "2022334",
+    role: "faculty",
+    profile: {
+      prefix: null,
+      full_name: "Marylene S. Eder",
+      suffix: "MIT",
+      position: "Professor",
+      bio: "Marylene S. Eder is a researcher and faculty member at the University of Science and Technology of Southern Philippines, specializing in Information Management. Her work spans interactive mobile applications, game-based learning, and innovative technology solutions, including projects on assistive apps for children with autism, waste segregation games, and secure online transactions. With multiple publications in international journals, her research contributes to advancing mobile technology, artificial intelligence, and digital solutions for education and environmental sustainability.",
+      highest_educational_attainment: "Master in Information Technology",
+      research_interest:
+        "Augmented Analytics, Mobile programming, information security",
+      orcid: "https://orcid.org/0000-0002-9378-6027",
+      handled_subjects:
+        "Algorithm and Complexity, Automata Theory and Formal Language, Fundamentals of Database Systems",
+      email: "mseder@ustp.edu.ph",
+      profile_picture: "/images/adviser_profiles/eder.png",
+    },
+  },
+  {
+    user_id: "2022335",
+    password: "2022335",
+    role: "faculty",
+    profile: {
+      prefix: "Engr.",
+      full_name: "Maricel A. Esclamado",
+      suffix: "Ph.D.",
+      position: "Professor",
+      bio: "Dr. Maricel A. Esclamado has earned a PhD in Computer Science from Ateneo de Manila University. She is an Associate Professor in the Dept. of Computer Science in USTP. Her research interests are in the areas of learning analytics, AI and Machine Learning.",
+      highest_educational_attainment: "PhD in Computer Science",
+      research_interest:
+        "Artificial Intelligence, Machine Learning, Learning Analytics",
+      orcid: "https://orcid.org/0000-0003-0626-8684",
+      handled_subjects:
+        "Parallel and Distributed Computing, Machine Learning, Research Methods Information Technology, Specialization Course",
+      email: "maricel.esclamado@ustp.edu.ph",
+      profile_picture: "/images/adviser_profiles/esclamado.png",
+    },
+  },
+  {
+    user_id: "2022336",
+    password: "2022336",
+    role: "faculty",
+    profile: {
+      prefix: null,
+      full_name: "Kenneth Codera Ampolitod",
+      suffix: null,
+      position: "Instructor",
+      bio: "He is an IT Graduate student who possesses comprehensive knowledge of application development and design. He is a fast learner, highly motivated, exceptionally versatile, and an advocate for his work. In addition, he exhibit excellent leadership skills and are highly effective at collaborating with others as part of a team. His broad range of skills and expertise make them an asset to any organization looking to enhance its IT capabilities.",
+      highest_educational_attainment:
+        "Bachelor of Science in Information Technology",
+      research_interest:
+        "Artificial Intelligence, Machine Learning, Mobile Application Development, Quality Assurance",
+      orcid: "https://orcid.org/0009-0005-7442-5778",
+      handled_subjects: "Computer Programming, Networking",
+      email: "kenneth.ampolitod@ustp.edu.ph",
+      profile_picture: "/images/adviser_profiles/ampolitod.png",
+    },
+  },
+  {
+    user_id: "2022337",
+    password: "2022337",
+    role: "faculty",
+    profile: {
+      prefix: null,
+      full_name: "Love Jhoye M. Raboy",
+      suffix: "Ph.D.",
+      position: "Associate Professor | Department Head",
+      bio: "Love Jhoye M. Raboy is a dedicated scholar and academician who recently earned her PhD in Information and Communication Technologies from the Asian Institute of Technology in Thailand. She completed her undergraduate studies in Computer Science at Xavier University in 1997 and later earned a Master's degree in Information Technology from Ateneo de Davao University. Love Jhoye has an extensive background in teaching and has served as a faculty member in various private and public colleges and universities. In addition to her academic responsibilities, Love Jhoye has been actively involved in research and development projects. She recently led Project Bamboost, which was funded by the Department of Science and Technology. Her previous research primarily focused on system development in the context of Information Technology, covering a wide range of areas such as transportation, employment, education, and commerce.",
+      highest_educational_attainment:
+        "PhD in Information and Communication Technologies",
+      research_interest:
+        "Machine Learning, Deep Learning and Affective Computing",
+      orcid: "https://orcid.org/0000-0002-5542-8640",
+      handled_subjects:
+        "IT Elective (Data Mining), Decision Support Technologies, Object-Oriented Programming and Advanced OOP, Predictive Analytics and Text Mining, Parallel Computing",
+      email: "lovejhoye.raboy@ustp.edu.ph",
+      profile_picture: "/images/adviser_profiles/raboy.png",
+    },
+  },
+  {
+    user_id: "2022338",
+    password: "2022338",
+    role: "faculty",
+    profile: {
+      prefix: null,
+      full_name: "Loredel B. Tamayo",
+      suffix: null,
+      position: "Associate Professor | Department Head",
+      bio: "Passionate about empowering the next generation of IT professionals, I focus on fostering innovation, critical thinking, and a deep understanding of technology trends. My journey reflects a dedication to academic excellence and creating a transformative learning environment.",
+      highest_educational_attainment:
+        "Master of Science in Information Technology",
+      research_interest: "Educational Data Mining and Database",
+      orcid: "https://orcid.org/0009-0002-9100-8704",
+      handled_subjects: "Elective, Data Structures and Algorithms",
+      email: "loredel.tamayo@ustp.edu.ph",
+      profile_picture: "/images/adviser_profiles/tamayo.png",
     },
   },
   {

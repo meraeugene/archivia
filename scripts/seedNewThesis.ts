@@ -65,16 +65,28 @@ function findUserByName(
   byLastName: Map<string, { id: string; full_name: string }>
 ) {
   if (!name) return { id: null, full_name: name };
-  const lower = name.toLowerCase();
 
-  // Exact full name match
-  if (byFullName.has(lower)) return byFullName.get(lower)!;
+  // 🧩 Normalize name first
+  const lower = name.toLowerCase().trim();
 
-  // Try surname match (last word)
-  const last = lower.split(" ").slice(-1)[0];
+  // 🧩 Manual exceptions or abbreviations
+  const exceptions: Record<string, string> = {
+    "esclamado, m.": "maricel a. esclamado",
+    esclamado: "maricel a. esclamado",
+    // you can add more here if needed later
+    // e.g. "al-monte v.": "al-monte vince m. calo",
+  };
+
+  const normalized = exceptions[lower] || lower;
+
+  // 🧩 Try exact full name match
+  if (byFullName.has(normalized)) return byFullName.get(normalized)!;
+
+  // 🧩 Try surname match
+  const last = normalized.split(" ").slice(-1)[0];
   if (byLastName.has(last)) return byLastName.get(last)!;
 
-  // No match
+  // 🧩 No match found — return as-is
   return { id: null, full_name: name };
 }
 

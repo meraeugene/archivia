@@ -1,9 +1,10 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { getSession } from "./auth";
+import { getCurrentUser, getSession } from "./auth";
 import { revalidatePath } from "next/cache";
 import { cache } from "react";
+import { sendRequestAdviserEmail } from "@/utils/nodemailer/sendRequestAdvisorEmail";
 
 export const getStudentSentRequests = cache(async () => {
   const supabase = await createClient();
@@ -29,7 +30,8 @@ export const getStudentSentRequests = cache(async () => {
 export async function sendRequest(
   adviserId: string,
   title: string,
-  abstract: string
+  abstract: string,
+  adviserEmail: string
 ) {
   const supabase = await createClient();
   const user = await getSession();
@@ -42,23 +44,10 @@ export async function sendRequest(
     return { error: "Only students can send requests" };
   }
 
-  // 1️. Check adviser capacity
-  const { data: capacity, error: capError } = await supabase
-    .from("adviser_capacity")
-    .select("current_leaders, max_leaders")
-    .eq("adviser_id", adviserId)
-    .maybeSingle();
+  // 1. Get current user info
+  const currentUser = await getCurrentUser();
 
-  if (capError) {
-    console.error(capError);
-    return { error: "Unable to check adviser capacity" };
-  }
-
-  if (capacity && capacity.current_leaders >= capacity.max_leaders) {
-    return { error: "This adviser cannot take more students." };
-  }
-
-  // 2️. Check if student already sent a request to this adviser
+  // 2. Check if student already sent a request to this adviser
   const { data: existing } = await supabase
     .from("student_requests")
     .select("id, status")
@@ -74,7 +63,7 @@ export async function sendRequest(
     };
   }
 
-  // 3️. Insert request
+  // 3. Insert request
   const { data, error } = await supabase
     .from("student_requests")
     .insert({
@@ -87,9 +76,16 @@ export async function sendRequest(
     .single();
 
   if (error) {
-    console.error("nigga", error);
+    console.error("error", error);
     return { error: error.message };
   }
+
+  await sendRequestAdviserEmail({
+    to: adviserEmail,
+    studentName: currentUser?.full_name,
+    thesisTitle: title,
+    thesisAbstract: abstract,
+  });
 
   revalidatePath("/my-requests");
 

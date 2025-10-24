@@ -21,11 +21,11 @@ supabase = create_client(SUPABASE_URL, SUPABASE_KEY)
 try:
     test = supabase.table("users").select("id, user_id").limit(1).execute()
     if test.data:
-        print("✅ Supabase connected successfully. Sample user:", test.data[0])
+        print("Supabase connected successfully. Sample user:", test.data[0])
     else:
-        print("⚠️ Supabase connected but no users found.")
+        print("Supabase connected but no users found.")
 except Exception as e:
-    print("❌ Supabase connection failed:", e)
+    print("Supabase connection failed:", e)
 
 
 # ---------------- FastAPI setup ----------------
@@ -73,20 +73,20 @@ def get_sent_advisers(student_id: str) -> set[str]:
     return {r["adviser_id"] for r in response.data} if response.data else set()
 
 
-# ---------------- Helper: get adviser capacity ----------------
-def get_adviser_capacity(adviser_id: str) -> tuple[str, str]:
-    response = supabase.table("adviser_capacity") \
-        .select("current_leaders, max_leaders") \
+# ---------------- Helper: get adviser current leaders ----------------
+def get_adviser_current_leaders(adviser_id: str) -> tuple[int, str]:
+    response = supabase.table("adviser_current_leaders") \
+        .select("current_leaders") \
         .eq("adviser_id", adviser_id) \
         .execute()
 
     if response.data:
         cap = response.data[0]
-        capacity_str = f"{cap['current_leaders']}/{cap['max_leaders']}"
-        availability = "Unavailable" if cap['current_leaders'] >= cap['max_leaders'] else "Available"
-        return capacity_str, availability
+        currentLeaders = cap.get("current_leaders", 0)
+        availability = "Available" if currentLeaders > 0 else "Unavailable"
+        return currentLeaders, availability
 
-    return "0/0", "Available"  # fallback if no record exists
+    return 0, "Available"  
 
 @app.post("/recommend")
 def recommend(project: Project):
@@ -124,8 +124,8 @@ def recommend(project: Project):
                 print(f"Skipping adviser '{adviser_name}' — no matching Supabase ID")
                 continue
 
-            capacity, availability = get_adviser_capacity(adviser_id)
-            print(f"Capacity for {adviser_name}: {capacity} ({availability})")
+            currentLeaders, availability = get_adviser_current_leaders(adviser_id)
+            print(f"Capacity for {adviser_name}: {currentLeaders} ({availability})")
 
             supabase_user = supabase.table("user_profiles") \
                 .select("prefix, full_name, suffix, profile_picture, email, position, research_interest, bio") \
@@ -148,7 +148,7 @@ def recommend(project: Project):
                 "id": adviser_id,
                 "score": float(score),
                 "availability": availability,
-                "capacity": capacity,
+                "current_leaders": currentLeaders,
                 "projects": [
                     {"title": p["TITLE"], "abstract": p["ABSTRACT"], "similarity": float(p["similarity"])}
                     for p in adviser_projects
@@ -165,7 +165,7 @@ def recommend(project: Project):
             print("No advisers found in results.")
             raise HTTPException(status_code=404, detail="No advisers found in the database.")
 
-        print("✅ Successfully generated recommendations.")
+        print("Successfully generated recommendations.")
         return {"recommendations": results}
 
     except Exception as e:

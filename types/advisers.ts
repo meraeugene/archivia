@@ -25,9 +25,7 @@ export type Adviser = {
   research_interest: string | null;
   orcid: string | null;
   handled_subjects: string | null;
-  max_leaders: number;
   current_leaders: number;
-  capacity: string;
   projects: {
     abstract: string;
     title: string;

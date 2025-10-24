@@ -35,6 +35,7 @@ const FindAdviser = () => {
           isLoading={isLoading}
           hasRecommendations={hasRecommendations}
         />
+
         {hasRecommendations && (
           <RecommendationsList
             recommendations={recommendations}

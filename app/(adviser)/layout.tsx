@@ -37,7 +37,7 @@ export default async function FacultyLayout({
         currentAdviserLeadersCount={currentAdviserLeadersCount}
         thesisSubmissionsCount={thesisSubmissionsCount}
       />
-      {children}
+      <div className="flex-1 ml-64">{children}</div>
     </main>
   );
 }

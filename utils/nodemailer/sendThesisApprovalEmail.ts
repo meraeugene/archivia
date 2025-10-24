@@ -1,12 +1,4 @@
-import nodemailer from "nodemailer";
-
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER,
-    pass: process.env.EMAIL_PASS,
-  },
-});
+import { transporter } from "../transporter";
 
 interface SendEmailOptions {
   to: string;
@@ -20,7 +12,7 @@ interface SendEmailOptions {
  * Sends a thesis notification email to the student.
  * Clean black & white minimalist design with Archivia branding.
  */
-export async function sendThesisEmail({
+export async function sendThesisApprovalEmail({
   to,
   type,
   thesisTitle,
@@ -50,39 +42,23 @@ export async function sendThesisEmail({
             <!-- Email Container -->
             <table width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e5e5;">
               
-              <!-- Header -->
-              <tr>
-                <td style="background: #000000; padding: 32px 40px; text-align: center;">
-                  <!-- Logo + Text (table layout for Gmail compatibility) -->
-                  <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
-                    <tr>
-                      <td>
-                        <img
-                          src="https://res.cloudinary.com/dhv8m7hau/image/upload/v1761144268/nuguzjfvymzvjvk9iokn.png"
-                          alt="Archivia Logo"
-                          width="38"
-                          height="32"
-                          style="display: block;"
-                        />
-                      </td>
-                      <td>
-                        <span
-                          style="color: #ffffff; font-size: 26px; font-weight: 700; letter-spacing: 0.6px; font-family: Arial, Helvetica, sans-serif;"
-                        >
-                          RCHIVIA
-                        </span>
-                      </td>
-                    </tr>
-                  </table>
-
-                  <p
-                    style="color: #999999; margin: 8px 0 0 0; font-size: 13px; letter-spacing: 0.3px; font-family: Arial, Helvetica, sans-serif;"
-                  >
-                    Digital Thesis Archive
-                  </p>
-                </td>
-              </tr>
-
+            <!-- Header -->
+            <tr>
+              <td style="background: #000000; padding: 32px 40px; text-align: center;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
+                  <tr>
+                  <td>
+                    <img 
+                      src="https://res.cloudinary.com/dhv8m7hau/image/upload/v1761307366/nborvww6hh8xlbcnhrar.png" 
+                      alt="Archivia Logo" 
+                      style="display: block; width: auto; height: 48px; max-width: 100%;"
+                    />
+                  </td>
+                  </tr>
+                </table>
+                <p style="color: #999999; margin: 0; font-size: 13px; letter-spacing: 0.3px;">Digital Thesis Archive</p>
+              </td>
+            </tr>
 
 
               <!-- Status Indicator -->

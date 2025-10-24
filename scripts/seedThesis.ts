@@ -39,9 +39,17 @@ async function getAdviserMap(): Promise<Map<string, string>> {
   }
 
   const map = new Map<string, string>();
+
   data.forEach((user) => {
-    // normalize names (case-insensitive comparison)
-    map.set(user.full_name.trim().toLowerCase(), user.user_id);
+    // Normalize name for consistent comparison
+    const normalizedName = user.full_name
+      .replace(/[\u2010-\u2015]/g, "-") // normalize different dash types
+      .trim()
+      .toLowerCase();
+
+    if (normalizedName) {
+      map.set(normalizedName, user.user_id);
+    }
   });
 
   console.log(`👥 Loaded ${map.size} user profiles for adviser matching`);

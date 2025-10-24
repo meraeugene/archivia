@@ -28,11 +28,12 @@ export function useAdvisoryRequests() {
   const handleAction = (
     type: "accept" | "reject",
     id: string,
-    feedback: string
+    feedback: string,
+    studentEmail: string
   ) => {
     startTransition(async () => {
       const action = type === "accept" ? acceptRequest : rejectRequest;
-      const result = await action(id, feedback);
+      const result = await action(id, studentEmail, feedback);
 
       if (!result.success) {
         toast.error(result.error);
@@ -49,7 +50,12 @@ export function useAdvisoryRequests() {
       toast.error("Feedback is required when rejecting a request.");
       return;
     }
-    handleAction(modalState.type, modalState.request.id, feedback ?? "");
+    handleAction(
+      modalState.type,
+      modalState.request.id,
+      feedback ?? "",
+      modalState.request.studentEmail
+    );
   };
 
   return {

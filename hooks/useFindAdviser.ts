@@ -75,7 +75,8 @@ export function useFindAdviser() {
       const res = await sendRequest(
         selectedAdviser.id,
         studentData.title,
-        studentData.abstract
+        studentData.abstract,
+        selectedAdviser.email ?? ""
       );
 
       if (res.error) {
@@ -84,7 +85,7 @@ export function useFindAdviser() {
       }
 
       toast.success(
-        "Adviser request sent successfully! Please check your my requests page for updates."
+        "Adviser request sent successfully! We already notified them via email. Please check your my requests page for updates."
       );
       setShowModal(false);
       document.body.classList.remove("modal-open");

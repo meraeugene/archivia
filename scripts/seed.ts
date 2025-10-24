@@ -4,14 +4,14 @@ import { supabase } from "@/utils/supabase/seedClient";
 
 async function seed() {
   for (const user of users) {
-    // 🔹 Make sure old user (and profile) is deleted first
+    // Make sure old user (and profile) is deleted first
     const { error: deleteError } = await supabase
       .from("users")
       .delete()
       .eq("user_id", user.user_id);
 
     if (deleteError) {
-      console.error(`❌ Error deleting existing ${user.user_id}:`, deleteError);
+      console.error(` Error deleting existing ${user.user_id}:`, deleteError);
     }
 
     // Hash password
@@ -29,7 +29,7 @@ async function seed() {
       .single();
 
     if (error) {
-      console.error("❌ Error inserting user:", error);
+      console.error("Error inserting user:", error);
       continue;
     }
 
@@ -52,9 +52,8 @@ async function seed() {
         handled_subjects: user.profile.handled_subjects,
       });
 
-    if (profileError)
-      console.error("❌ Error inserting profile:", profileError);
-    else console.log(`✅ Seeded ${user.user_id} with profile`);
+    if (profileError) console.error("Error inserting profile:", profileError);
+    else console.log(` Seeded ${user.user_id} with profile`);
   }
 
   process.exit(0);
