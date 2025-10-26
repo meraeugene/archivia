@@ -6,17 +6,18 @@ import {
   FileText,
   Users,
 } from "lucide-react";
-import {
-  getAdviserCurrentLeadersCount,
-  getAdviserRequests,
-  getAdviserRequestsCount,
-  getPendingAdviserRequestsCount,
-} from "@/actions/facultyRequests";
+import { getAdviserRequests } from "@/actions/facultyRequests";
 import RequestsList from "@/components/RequestsList";
 import StatsCard from "./StatsCard";
 import QuickActionsCard from "./QuickActionsCard";
-import { getThesisSubmissionCount } from "@/actions/thesisApproval";
 import { getHandledThesisCount } from "@/actions/handledThesis";
+import Link from "next/link";
+import {
+  getAdviserCurrentLeadersCount,
+  getAdviserRequestsCount,
+  getPendingAdviserRequestsCount,
+  getThesisSubmissionCount,
+} from "@/actions/count";
 
 export default async function FacultyDashboard() {
   const [
@@ -135,9 +136,18 @@ export default async function FacultyDashboard() {
         {/* Recent Activity */}
         <section>
           <div className=" mb-6">
-            <h2 className="text-xl font-semibold text-gray-900">
-              Advisory Requests Log
-            </h2>
+            <div className="flex items-center justify-between">
+              <h2 className="text-xl font-semibold text-gray-900">
+                Advisory Requests Log
+              </h2>
+
+              <Link
+                href="/advisory-requests"
+                className="text-sm font-medium text-gray-800 hover:underline"
+              >
+                View All
+              </Link>
+            </div>
 
             {adviserRequests.length === 0 && (
               <p className="text-gray-600 mt-2">

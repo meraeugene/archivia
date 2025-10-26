@@ -14,6 +14,10 @@ export const getStudentSentRequests = cache(async () => {
     return { error: "User not authenticated" };
   }
 
+  if (user.role !== "student") {
+    return { error: "Only students can view sent requests" };
+  }
+
   const { data, error } = await supabase
     .from("student_sent_requests_view")
     .select("*")
@@ -42,6 +46,10 @@ export async function sendRequest(
 
   if (user.role !== "student") {
     return { error: "Only students can send requests" };
+  }
+
+  if (!adviserId || !title || !abstract || !adviserEmail) {
+    return { error: "All fields are required" };
   }
 
   // 1. Get current user info
@@ -98,6 +106,10 @@ export async function cancelRequest(requestId: string) {
 
   if (!user) {
     return { error: "User not authenticated" };
+  }
+
+  if (user.role !== "student") {
+    return { error: "Only students can cancel requests" };
   }
 
   // Ensure the request belongs to the student

@@ -5,72 +5,19 @@ import { getCurrentUser, getSession } from "./auth";
 import { cache } from "react";
 import { revalidatePath } from "next/cache";
 import { sendStudentAcceptedEmail } from "@/utils/nodemailer/sendStudentAcceptedEmail";
-
-export const getAdviserCurrentLeadersCount = cache(
-  async (): Promise<number> => {
-    const supabase = await createClient();
-    const currentUser = await getSession();
-
-    if (!currentUser) return 0;
-
-    const { data, error } = await supabase
-      .from("adviser_current_leaders")
-      .select("current_leaders")
-      .eq("adviser_id", currentUser.sub)
-      .single();
-
-    if (error || !data) {
-      console.error("Error fetching adviser current leaders:", error?.message);
-      return 0;
-    }
-
-    return data.current_leaders;
-  }
-);
-
-export const getAdviserRequestsCount = cache(async () => {
-  const supabase = await createClient();
-  const currentUser = await getSession();
-
-  if (!currentUser) return 0;
-
-  const { count, error } = await supabase
-    .from("adviser_requests_view")
-    .select("*", { count: "exact", head: true })
-    .eq("adviser_id", currentUser.sub);
-
-  if (error) {
-    console.error("Error fetching adviser requests count:", error.message);
-    return 0;
-  }
-
-  return count ?? 0;
-});
-
-export const getPendingAdviserRequestsCount = cache(async () => {
-  const supabase = await createClient();
-  const currentUser = await getSession();
-
-  if (!currentUser) return 0;
-
-  const { count, error } = await supabase
-    .from("adviser_requests_view")
-    .select("*", { count: "exact", head: true })
-    .eq("adviser_id", currentUser.sub)
-    .eq("status", "pending");
-
-  if (error) {
-    console.error("Error fetching adviser requests count:", error.message);
-    return 0;
-  }
-
-  return count ?? 0;
-});
+import { sendStudentReturnedEmail } from "@/utils/nodemailer/sendStudentReturnedEmail";
+import { sendStudentReservedEmail } from "@/utils/nodemailer/sendStudentReservedEmail";
 
 export const getAdviserRequests = cache(async () => {
   const supabase = await createClient();
 
   const currentUser = await getSession();
+
+  if (!currentUser) return [];
+
+  if (currentUser.role !== "faculty") {
+    return [];
+  }
 
   const { data, error } = await supabase
     .from("adviser_requests_view")
@@ -94,6 +41,8 @@ export const getAdviserRequests = cache(async () => {
     adviserId: req.adviser_id,
     feedback: req.feedback,
     studentUserId: req.student_user_id,
+    referred_to: req.referred_to,
+    referred_by: req.referred_by,
   }));
 });
 
@@ -102,14 +51,24 @@ export const getPendingAdviserRequests = cache(async () => {
 
   const currentUser = await getSession();
 
+  if (!currentUser) {
+    return [];
+  }
+
+  if (currentUser.role !== "faculty") {
+    return [];
+  }
+
   const { data, error } = await supabase
     .from("adviser_requests_view")
     .select("*")
     .eq("adviser_id", currentUser?.sub)
-    .in("status", ["pending", "already_handled"])
+    .in("status", ["pending", "already_handled", "reserved"])
     .order("submitted_at", { ascending: false });
 
-  if (error) throw new Error(error.message);
+  if (error) {
+    throw new Error(error.message);
+  }
 
   return data.map((req) => ({
     id: req.id,
@@ -124,6 +83,8 @@ export const getPendingAdviserRequests = cache(async () => {
     abstract: req.abstract,
     adviserId: req.adviser_id,
     feedback: req.feedback,
+    referred_to: req.referred_to,
+    referred_by: req.referred_by,
   }));
 });
 
@@ -131,6 +92,12 @@ export const getAdviserAdvisees = cache(async () => {
   const supabase = await createClient();
 
   const currentUser = await getSession();
+
+  if (!currentUser) return [];
+
+  if (currentUser.role !== "faculty") {
+    return [];
+  }
 
   const { data, error } = await supabase
     .from("adviser_requests_view")
@@ -154,40 +121,46 @@ export const getAdviserAdvisees = cache(async () => {
     abstract: req.abstract,
     adviserId: req.adviser_id,
     feedback: req.feedback,
+    referred_to: req.referred_to,
+    referred_by: req.referred_by,
   }));
 });
 
 export async function acceptRequest(
   requestId: string,
   studentEmail: string,
+  studentId: string,
+  adviserId: string,
+  title: string,
+  abstract: string,
   feedback?: string
 ): Promise<{ success: boolean; error?: string; message?: string }> {
   const supabase = await createClient();
 
+  if (!requestId || !studentEmail) {
+    return { success: false, error: "Missing required fields." };
+  }
+
   // Only adviser can login and use this function
   const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    return { success: false, error: "Unauthorized access." };
+  }
 
-  // 1️. Fetch the request being accepted
-  const { data: reqData, error: reqError } = await supabase
-    .from("student_requests")
-    .select("*")
-    .eq("id", requestId)
-    .single();
+  if (currentUser.role !== "faculty") {
+    return { success: false, error: "Unauthorized access." };
+  }
 
-  if (reqError) return { success: false, error: reqError.message };
-  if (reqData.status !== "pending")
-    return { success: false, error: "Request already processed" };
-
-  // 2️. Fetch adviser current leaders count
+  // 1. Fetch adviser current leaders count
   const { data: advData, error: advError } = await supabase
     .from("adviser_current_leaders")
     .select("current_leaders")
-    .eq("adviser_id", reqData.adviser_id)
+    .eq("adviser_id", adviserId)
     .single();
 
   if (advError) return { success: false, error: advError.message };
 
-  // 3. Update this request to accepted
+  // 2. Update this request to accepted
   const { error: updateReqError } = await supabase
     .from("student_requests")
     .update({ status: "accepted", feedback: feedback || null })
@@ -196,25 +169,25 @@ export async function acceptRequest(
   if (updateReqError)
     return { success: false, error: "Error updating request" };
 
-  // 4. Mark all *other advisers’* requests by this student as already_handled
+  // 3. Mark all *other advisers’* requests by this student as already_handled
   const { error: updateOthersError } = await supabase
     .from("student_requests")
     .update({
       status: "already_handled",
       feedback: `This student is already handled by ${currentUser?.full_name}.`,
     })
-    .eq("student_id", reqData.student_id)
+    .eq("student_id", studentId)
     .neq("id", requestId)
-    .neq("adviser_id", reqData.adviser_id);
+    .neq("adviser_id", adviserId);
 
   if (updateOthersError)
-    return { success: false, error: "Error updating other requests" };
+    return { success: false, error: "Error updating other adviser requests" };
 
-  // 5. Increment adviser current_leaders
+  // 4. Increment adviser current_leaders
   const { error: updateAdvError } = await supabase
     .from("adviser_current_leaders")
     .update({ current_leaders: advData.current_leaders + 1 })
-    .eq("adviser_id", reqData.adviser_id);
+    .eq("adviser_id", adviserId);
 
   if (updateAdvError)
     return { success: false, error: "Error updating adviser current leaders" };
@@ -222,12 +195,13 @@ export async function acceptRequest(
   await sendStudentAcceptedEmail({
     to: studentEmail,
     adviserName: currentUser?.full_name,
-    thesisTitle: reqData.title,
-    thesisAbstract: reqData.abstract,
+    thesisTitle: title,
+    thesisAbstract: abstract,
     feedback: feedback || "No additional feedback provided.",
   });
 
   revalidatePath("/requests");
+  revalidatePath("/my-requests");
 
   return {
     success: true,
@@ -236,32 +210,167 @@ export async function acceptRequest(
   };
 }
 
-export async function rejectRequest(
+export async function returnRequest(
   requestId: string,
+  title: string,
+  abstract: string,
+  studentEmail: string,
   feedback: string
-): Promise<{ success: boolean; error?: string; message?: string }> {
+) {
   const supabase = await createClient();
 
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return { success: false, error: "Unauthorized access." };
+  }
+
+  if (currentUser.role !== "faculty") {
+    return { success: false, error: "Unauthorized access." };
+  }
+
+  // Make sure both values exist
+  if (!requestId || !feedback) {
+    return { success: false, error: "Missing required fields." };
+  }
+
+  // Update the request record
+  const { error } = await supabase
+    .from("student_requests")
+    .update({
+      status: "returned",
+      feedback,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", requestId);
+
+  if (error) {
+    console.error("Error returning request:", error.message);
+    return { success: false, error: error.message };
+  }
+
+  await sendStudentReturnedEmail({
+    to: studentEmail,
+    adviserName: currentUser.full_name,
+    thesisTitle: title,
+    thesisAbstract: abstract,
+    feedback: feedback || "No additional feedback provided.",
+  });
+
+  revalidatePath("/requests");
+  revalidatePath("/my-requests");
+
+  return {
+    success: true,
+    message:
+      "Request returned successfully! The student has been notified via email.",
+  };
+}
+
+export async function markAsReserved(
+  requestId: string,
+  studentEmail: string,
+  thesisTitle: string,
+  thesisAbstract: string
+) {
+  const supabase = await createClient();
+
+  if (!requestId) {
+    return { success: false, error: "Request ID is required." };
+  }
+
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return { success: false, error: "Unauthorized access." };
+  }
+
+  if (currentUser.role !== "faculty") {
+    return { success: false, error: "Unauthorized access." };
+  }
+
+  const { error } = await supabase
+    .from("student_requests")
+    .update({
+      status: "reserved",
+      feedback: "This request has been marked as reserved.",
+    })
+    .eq("id", requestId);
+
+  if (error) {
+    return { success: false, error: error.message };
+  }
+
+  await sendStudentReservedEmail({
+    to: studentEmail,
+    adviserName: currentUser.full_name,
+    thesisTitle,
+    thesisAbstract,
+  });
+
+  revalidatePath("/requests");
+  revalidatePath("/my-requests");
+
+  return {
+    success: true,
+    message:
+      "Request successfully marked as reserved. The student has been notified via email.",
+  };
+}
+
+export async function referRequest(
+  requestId: string,
+  studentEmail: string,
+  feedback: string
+) {
+  const supabase = await createClient();
+  const session = await getSession();
+
+  if (!session) {
+    return { success: false, error: "Unauthorized access." };
+  }
+
+  if (session.role !== "faculty") {
+    return { success: false, error: "Unauthorized access." };
+  }
+
+  if (!requestId || !studentEmail || !feedback) {
+    return { success: false, error: "Missing required fields." };
+  }
+
   if (!feedback.trim()) {
-    return { success: false, error: "Feedback is required for rejection." };
+    return {
+      success: false,
+      error: "Referral note is required when referring a request.",
+    };
   }
 
   if (feedback.length > 300) {
     return {
       success: false,
-      error: "Feedback must be less than 300 characters.",
+      error: "Referral note must be less than 300 characters.",
     };
   }
 
-  const { error } = await supabase
+  const { data, error } = await supabase
     .from("student_requests")
-    .update({ status: "rejected", feedback })
-    .eq("id", requestId)
-    .select();
+    .update({
+      status: "referred",
+      feedback,
+      referred_by: session?.sub,
+      // You may add referred_to dynamically if your UI selects an adviser
+    })
+    .eq("id", requestId);
 
-  if (error) return { success: false, error: "Error rejecting request" };
+  if (error) {
+    return { success: false, error: "Error referring request." };
+  }
+
+  // Optionally send email notification
+  // await sendReferralEmail(studentEmail, feedback);
 
   revalidatePath("/requests");
   revalidatePath("/my-requests");
-  return { success: true, message: "Request rejected successfully." };
+
+  return { success: true, message: "Request successfully referred." };
 }

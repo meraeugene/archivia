@@ -3,26 +3,36 @@
 import { Request } from "@/types/request";
 import { formatDate } from "@/utils/formatDate";
 import { getInitials } from "@/utils/getInitials";
-import { Calendar, Check, Mail, X } from "lucide-react";
+import {
+  Calendar,
+  CalendarClock,
+  Check,
+  CornerUpRight,
+  Mail,
+  X,
+} from "lucide-react";
 
 interface RequestCardProps {
   request: Request;
   isExpanded: boolean;
   toggleExpand: (text: string) => void;
-  isRequestTab?: boolean;
   isPending?: boolean;
-  handleOpenModal?: (request: Request, type: "accept" | "reject") => void;
+  handleOpenModal?: (
+    request: Request,
+    type: "accept" | "refer" | "reserve" | "returned"
+  ) => void;
 }
+
 const RequestCard = ({
   request,
   isExpanded,
   toggleExpand,
-  isRequestTab,
   isPending,
   handleOpenModal,
 }: RequestCardProps) => {
   return (
-    <div className=" bg-white  h-fit cursor-pointer border overflow-hidden border-gray-900 border-l-4 p-6 hover:shadow-md transition-shadow shadow-sm rounded-lg  ">
+    <div className="bg-white h-fit  border overflow-hidden border-gray-900 border-l-4 p-6 hover:shadow-md transition-shadow shadow-sm rounded-lg">
+      {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-3">
           <div className="w-9 h-9 cursor-pointer rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">
@@ -43,20 +53,32 @@ const RequestCard = ({
           </div>
         </div>
 
-        <span
-          className={`text-xs font-medium px-2 py-1 rounded-full ${
-            request.status === "pending"
-              ? "bg-yellow-100 text-yellow-800"
-              : request.status === "accepted"
-              ? "bg-green-100 text-green-800"
-              : "bg-red-100 text-red-800"
-          }`}
-        >
-          {request.status.replace(/_/g, " ").toUpperCase()}
-        </span>
+        {/* Mark as Reserved Button */}
+        {request.status === "pending" && (
+          <button
+            disabled={isPending}
+            onClick={() => handleOpenModal?.(request, "reserve")}
+            className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-black bg-gray-50 hover:bg-gray-100 px-2 py-1 rounded-md transition-colors border border-gray-200 cursor-pointer"
+            title="Mark as Reserved"
+          >
+            <CalendarClock className="h-3.5 w-3.5" />
+            Mark As Reserved
+          </button>
+        )}
+
+        {request.status === "reserved" && (
+          <button
+            className="flex items-center gap-1 text-xs font-medium text-white bg-black  px-2 py-1 rounded-md transition-colors border border-gray-200"
+            title="Mark as Reserved"
+          >
+            <CalendarClock className="h-3.5 w-3.5" />
+            Reserved
+          </button>
+        )}
       </div>
 
-      <div className="space-y-3 mb-4 ">
+      {/* Info Section */}
+      <div className="space-y-3 mb-4">
         <div className="flex items-center text-sm text-gray-600">
           <Mail className="h-4 w-4 mr-2" />
           <a
@@ -73,7 +95,7 @@ const RequestCard = ({
         </div>
       </div>
 
-      {/* Title and Abstract with ellipsis */}
+      {/* Title + Abstract */}
       <div className="mb-4">
         <h4 className="font-medium text-gray-900 mb-2">{request.title}</h4>
         <p
@@ -92,8 +114,9 @@ const RequestCard = ({
       </div>
 
       {/* Actions */}
-      {request.status === "pending" && isRequestTab ? (
+      {request.status === "pending" || request.status === "reserved" ? (
         <div className="flex space-x-3">
+          {/* Accept */}
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "accept")}
@@ -102,18 +125,26 @@ const RequestCard = ({
             <Check className="h-4 w-4 mr-2" />
             Accept
           </button>
-          <button
-            disabled={isPending}
-            onClick={() => handleOpenModal?.(request, "reject")}
-            className="flex-1 cursor-pointer bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
-          >
-            <X className="h-4 w-4 mr-2" />
-            Reject
-          </button>
-        </div>
-      ) : request.status === "already_handled" ? (
-        <div className="text-sm text-center text-red-600 font-medium">
-          {request.feedback}
+
+          {request.status === "reserved" ? (
+            <button
+              disabled={isPending}
+              onClick={() => handleOpenModal?.(request, "refer")}
+              className="flex-1 cursor-pointer bg-white text-black border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-100 transition-colors flex items-center justify-center"
+            >
+              <CornerUpRight className="h-4 w-4 mr-2" />
+              Refer Adviser
+            </button>
+          ) : (
+            <button
+              disabled={isPending}
+              onClick={() => handleOpenModal?.(request, "returned")}
+              className="flex-1 cursor-pointer bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
+            >
+              <X className="h-4 w-4 mr-2" />
+              Return
+            </button>
+          )}
         </div>
       ) : null}
     </div>

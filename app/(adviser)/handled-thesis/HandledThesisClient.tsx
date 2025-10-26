@@ -65,6 +65,7 @@ export default function HandledThesisClient({
               key={thesis.thesis_id}
               className="bg-white break-inside-avoid border border-gray-900 border-l-4 p-6 hover:shadow-lg transition-shadow shadow-sm rounded-lg cursor-pointer"
               onClick={() => openModal(thesis)}
+              title="Click to preview"
             >
               <h1 className="font-medium text-gray-900 mb-4">{thesis.title}</h1>
 

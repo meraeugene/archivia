@@ -2,7 +2,7 @@
 
 import { useState, ChangeEvent } from "react";
 import { toast } from "sonner";
-import { uploadImageToCloudinary } from "@/actions/uploadImageToCloundinary";
+import { uploadImageToCloudinary } from "@/utils/cloudinary/uploadImageToCloundinary";
 import { updateStudentProfile } from "@/actions/profile";
 import { CurrentUser } from "@/types/currentUser";
 

@@ -17,6 +17,10 @@ export const getPendingThesisSubmissions = cache(async () => {
     return [];
   }
 
+  if (session.role !== "faculty") {
+    return [];
+  }
+
   const { data, error } = await supabase
     .from("thesis_submissions_with_student_view")
     .select("*")
@@ -71,6 +75,10 @@ export async function submitThesisForApproval(
 
   if (!session?.sub) return { error: "Not authenticated" };
 
+  if (session.role !== "student") {
+    return { error: "Only students can submit thesis for approval." };
+  }
+
   try {
     const { data, error } = await supabase.from("thesis_submissions").insert([
       {
@@ -109,7 +117,18 @@ export async function approveThesis(
 ) {
   const supabase = await createClient();
 
+  if (!submissionId || !studentEmail) {
+    return { success: false, error: "Missing required fields." };
+  }
+
   const session = await getSession();
+  if (!session?.sub) {
+    return { success: false, error: "Unauthorized access." };
+  }
+
+  if (session.role !== "faculty") {
+    return { success: false, error: "Only faculty can approve theses." };
+  }
 
   // 1. Update submission status
   const { data: thesis, error } = await supabase
@@ -202,6 +221,10 @@ export async function returnThesis(
 ) {
   const supabase = await createClient();
 
+  if (!submissionId || !studentEmail || !feedback) {
+    return { success: false, error: "Missing required fields." };
+  }
+
   const { data, error } = await supabase
     .from("thesis_submissions")
     .update({
@@ -230,30 +253,3 @@ export async function returnThesis(
 
   return { success: true, message: "Thesis returned and email sent." };
 }
-
-export const getThesisSubmissionCount = cache(
-  async (status?: "pending" | "approved" | "returned") => {
-    const supabase = await createClient();
-    const session = await getSession();
-
-    if (!session?.sub) return 0;
-
-    let query = supabase
-      .from("thesis_submissions")
-      .select("id", { count: "exact", head: true })
-      .eq("adviser_id", session.sub);
-
-    if (status) {
-      query = query.eq("status", status);
-    }
-
-    const { count, error } = await query;
-
-    if (error) {
-      console.error("Error fetching thesis submission count:", error);
-      return 0;
-    }
-
-    return count || 0;
-  }
-);

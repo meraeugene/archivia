@@ -47,13 +47,23 @@ export function useStudentRequests() {
 
   const handleResendConfirm = (data: { title: string; abstract: string }) => {
     if (!selectedRequest) return;
-    setShowResendModal(false);
+
+    if (!data.title.trim()) {
+      toast.error("Thesis title cannot be empty.");
+      return;
+    }
+
+    if (!data.abstract.trim()) {
+      toast.error("Thesis abstract cannot be empty.");
+      return;
+    }
 
     startTransition(async () => {
       const res = await sendRequest(
         selectedRequest.adviser_id,
         data.title,
-        data.abstract
+        data.abstract,
+        selectedRequest.adviser_email
       );
 
       if (res.error) {

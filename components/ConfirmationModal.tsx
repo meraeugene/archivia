@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Check, XCircle, RotateCcw } from "lucide-react";
+import { CalendarClock, Check, CornerUpRight, RotateCcw } from "lucide-react";
 
 interface ConfirmModalProps {
   isOpen: boolean;
-  type: "accept" | "reject" | "approve" | "return";
+  type: "accept" | "refer" | "approve" | "returned" | "reserve";
   studentName: string;
   onClose: () => void;
   onConfirm: (feedback?: string) => void;
@@ -42,15 +42,15 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
           iconBg: "bg-gray-900",
           confirmText: "Accept",
         };
-      case "reject":
+      case "refer":
         return {
-          action: "reject",
-          subject: "this advisory request",
-          label: "Reason for rejection",
-          placeholder: "Provide feedback to improve their thesis...",
-          icon: <XCircle className="text-white" size={28} />,
+          action: "refer",
+          subject: "this advisory request to another adviser",
+          label: "Referral note (required)",
+          placeholder: "Provide a note or reason for referring this request...",
+          icon: <CornerUpRight className="text-white" size={28} />,
           iconBg: "bg-gray-900",
-          confirmText: "Reject",
+          confirmText: "Refer",
         };
       case "approve":
         return {
@@ -62,15 +62,24 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
           iconBg: "bg-gray-900",
           confirmText: "Approve",
         };
-      case "return":
+      case "returned":
         return {
           action: "return",
           subject: "this thesis submission",
-          label: "Reason for return",
+          label: "Reason for return (required)",
           placeholder: "Provide feedback...",
           icon: <RotateCcw className="text-white" size={28} />,
           iconBg: "bg-gray-900",
           confirmText: "Return",
+        };
+      case "reserve":
+        return {
+          action: "reserve",
+          label: "Reason for reservation",
+          placeholder: "Provide feedback...",
+          icon: <CalendarClock className="text-white" size={28} />,
+          iconBg: "bg-gray-900",
+          confirmText: "Reserve",
         };
       default:
         return null;
@@ -95,9 +104,23 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
         {/* Message */}
         <div className="text-center mb-8 space-y-5">
           <p className="text-gray-600 w-[80%] mx-auto">
-            Are you sure you want to{" "}
-            <span className="font-semibold text-black">{content.action}</span>{" "}
-            {content.subject}?
+            {content.action === "reserve" ? (
+              <>
+                Are you sure about marking this as{" "}
+                <span className="font-semibold text-black">reserved</span> ?{" "}
+                <span className="text-gray-500">
+                  This action cannot be undo once marked as reserved.
+                </span>
+              </>
+            ) : (
+              <>
+                Are you sure you want to{" "}
+                <span className="font-semibold text-black">
+                  {content.action}{" "}
+                </span>
+                {content.subject}?
+              </>
+            )}
           </p>
 
           <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
@@ -105,24 +128,26 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
           </div>
 
           {/* Feedback textarea */}
-          <div className="space-y-3">
-            <label className="block text-left text-sm font-semibold text-black">
-              {content.label}
-            </label>
-            <textarea
-              value={feedback}
-              onChange={(e) => setFeedback(e.target.value)}
-              placeholder={content.placeholder}
-              className="w-full p-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm"
-              rows={3}
-              maxLength={300}
-            />
-            <div className="text-right">
-              <span className="text-xs text-gray-500">
-                {feedback.length}/300
-              </span>
+          {content.action !== "reserve" && (
+            <div className="space-y-3">
+              <label className="block text-left text-sm font-semibold text-gray-600">
+                {content.label}
+              </label>
+              <textarea
+                value={feedback}
+                onChange={(e) => setFeedback(e.target.value)}
+                placeholder={content.placeholder}
+                className="w-full p-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm"
+                rows={3}
+                maxLength={300}
+              />
+              <div className="text-right">
+                <span className="text-xs text-gray-500">
+                  {feedback.length}/300
+                </span>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         {/* Actions */}

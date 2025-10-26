@@ -1,33 +1,48 @@
 "use client";
 
-import React, { useState } from "react";
 import RequestCard from "./RequestCard";
 import { Request } from "@/types/request";
+import { useAdvisoryRequests } from "@/hooks/useAdvisoryRequests";
+import ConfirmationModal from "./ConfirmationModal";
 
 interface RequestsListProps {
   adviserRequests: Request[];
 }
 const RequestsList = ({ adviserRequests }: RequestsListProps) => {
-  const [expandedId, setExpandedId] = useState<string | null>(null);
+  const {
+    expandedId,
+    isPending,
+    toggleExpand,
+    openModal,
+    modalState,
+    closeModal,
+    handleConfirmModal,
+  } = useAdvisoryRequests();
 
-  const toggleExpand = (id: string) => {
-    setExpandedId(expandedId === id ? null : id);
-  };
-
+  console.log(adviserRequests);
   return (
-    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
-      {adviserRequests.map((request) => {
-        const isExpanded = expandedId === request.id;
-
-        return (
+    <div>
+      <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-2 xl:grid-cols-3">
+        {adviserRequests.map((request) => (
           <RequestCard
             key={request.id}
             request={request}
-            isExpanded={isExpanded}
-            toggleExpand={toggleExpand}
+            isExpanded={expandedId === request.id}
+            toggleExpand={() => toggleExpand(request.id)}
+            isPending={isPending}
+            handleOpenModal={openModal}
           />
-        );
-      })}
+        ))}
+      </div>
+
+      <ConfirmationModal
+        isOpen={modalState.open}
+        type={modalState.type}
+        studentName={modalState.request?.studentName || ""}
+        isPending={isPending}
+        onClose={closeModal}
+        onConfirm={handleConfirmModal}
+      />
     </div>
   );
 };

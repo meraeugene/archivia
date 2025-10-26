@@ -38,7 +38,7 @@ const UploadThesisModal = ({
   const handleSubmit = () => {
     const finalForm = {
       ...form,
-      adviser_name: form.adviser_name || studentAdviser.adviser_name || "",
+      adviser_name: form.adviser_name || studentAdviser.full_name || "",
       adviser_id: studentAdviser.adviser_id,
     };
 
@@ -112,9 +112,9 @@ const UploadThesisModal = ({
 
             <FormField
               label="Adviser"
-              value={`${studentAdviser.adviser_prefix ?? ""} ${
-                studentAdviser.adviser_name
-              } ${studentAdviser.adviser_suffix ?? ""}`.trim()}
+              value={`${studentAdviser.prefix ?? ""} ${
+                studentAdviser.full_name
+              } ${studentAdviser.suffix ?? ""}`.trim()}
               readOnly
             />
           </div>

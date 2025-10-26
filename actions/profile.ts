@@ -17,6 +17,9 @@ export async function updateAdviserProfile(formData: {
   profile_picture: string;
 }) {
   const session = await getSession();
+  if (!session?.sub) {
+    return { error: "No active session found." };
+  }
 
   const supabase = await createClient();
 

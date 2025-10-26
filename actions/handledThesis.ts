@@ -19,8 +19,6 @@ export const getHandledTheses = cache(async () => {
     .eq("adviser_id", session.sub)
     .order("created_at", { ascending: false });
 
-  console.log(data);
-
   if (error) {
     console.error("Error fetching handled theses:", error.message);
     return [];

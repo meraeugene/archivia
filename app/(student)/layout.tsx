@@ -13,6 +13,7 @@ export default async function UserLayout({
     getCurrentUser(),
     getStudentAdviser(),
   ]);
+
   return (
     <main>
       <Header

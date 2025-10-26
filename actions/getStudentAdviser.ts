@@ -13,6 +13,13 @@ export const getStudentAdviser = cache(async () => {
     return { success: false, message: "User not authenticated" };
   }
 
+  if (session.role !== "student") {
+    return {
+      success: false,
+      message: "Only students can access their adviser information",
+    };
+  }
+
   const { data: adviser, error } = await supabase
     .from("student_adviser_view")
     .select("*")

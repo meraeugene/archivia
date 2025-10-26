@@ -9,6 +9,10 @@ export const getUserBookmarks = async () => {
 
   const session = await getSession();
 
+  if (!session) {
+    return { data: [], error: null };
+  }
+
   const { data, error } = await supabase
     .from("bookmarked_theses_view")
     .select("*")
@@ -26,6 +30,10 @@ export const getUserBookmarks = async () => {
 export const getUserBookmarksIds = async () => {
   const supabase = await createClient();
   const session = await getSession();
+
+  if (!session) {
+    return { data: [], error: null };
+  }
 
   const { data, error } = await supabase
     .from("bookmarked_theses_view")
@@ -46,7 +54,15 @@ export const getUserBookmarksIds = async () => {
 export async function toggleBookmark(thesisId: number) {
   const supabase = await createClient();
 
+  if (!thesisId) {
+    return { error: "Thesis ID is required" };
+  }
+
   const session = await getSession();
+
+  if (!session) {
+    return { error: "User not authenticated" };
+  }
 
   // check if it already exists
   const { data: existing, error: checkError } = await supabase

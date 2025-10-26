@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, X, User, RotateCcw } from "lucide-react";
+import { Mail, User, RotateCcw } from "lucide-react";
 import { formatDate } from "@/utils/formatDate";
 import { StudentRequest } from "@/types/studentRequests";
 import ResendModal from "./ResendModal";
@@ -20,8 +20,8 @@ export default function MyRequestsClient({
   const {
     expanded,
     toggleExpand,
-    cancelling,
-    handleCancel,
+    // cancelling,
+    // handleCancel,
     showResendModal,
     handleOpenResendModal,
     handleCloseResendModal,
@@ -97,7 +97,8 @@ export default function MyRequestsClient({
                     className={`text-xs font-medium px-2 py-1 rounded-full ${
                       request.status === "pending"
                         ? "bg-yellow-100 text-yellow-800"
-                        : request.status === "accepted"
+                        : request.status === "accepted" ||
+                          request.status === "reserved"
                         ? "bg-green-100 text-green-800"
                         : "bg-red-100 text-red-800"
                     }`}
@@ -106,7 +107,7 @@ export default function MyRequestsClient({
                   </span>
                 )}
 
-                {request.status === "pending" && (
+                {/* {request.status === "pending" && (
                   <button
                     onClick={() => handleCancel(request.id)}
                     disabled={cancelling === request.id}
@@ -123,7 +124,7 @@ export default function MyRequestsClient({
                       {cancelling === request.id ? "Cancelling..." : "Cancel"}
                     </span>
                   </button>
-                )}
+                )} */}
               </div>
             </div>
 
@@ -154,7 +155,7 @@ export default function MyRequestsClient({
               </button>
             </div>
 
-            {request.status === "accepted" ? (
+            {request.status === "accepted" || request.status === "reserved" ? (
               <div className="mt-6 border border-green-100 bg-green-50 rounded-md p-4">
                 <h3 className="text-sm  font-medium text-green-800 mb-1 flex items-center gap-2">
                   Feedback
@@ -164,7 +165,7 @@ export default function MyRequestsClient({
                   {request.feedback || "No feedback provided."}
                 </p>
               </div>
-            ) : request.status === "rejected" ? (
+            ) : request.status === "returned" ? (
               <>
                 <div className="mt-6 border border-red-100 bg-red-50 rounded-md p-4">
                   <h3 className="text-sm font-medium text-red-800 mb-1 flex items-center gap-2">

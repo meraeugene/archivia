@@ -114,6 +114,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         </div>
       </section>
 
+      {/* Only show if login, student role and no adviser */}
       {session && session.role === "student" && !studentAdviser && (
         <AdviserRecommender />
       )}

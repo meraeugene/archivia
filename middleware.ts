@@ -7,9 +7,9 @@ const PROTECTED_PATHS = [
   // root
   "/",
   "/advisers",
+  "/bookmarks",
   "/browse",
   "/profile",
-  "/bookmarks",
 
   // student
   "/find-adviser",
@@ -18,14 +18,17 @@ const PROTECTED_PATHS = [
 
   // faculty
   "/advisees",
-  "/dashboard",
   "/advisory-requests",
-  "/thesis-approval",
+  "/dashboard",
   "/handled-thesis",
   "/settings",
+  "/thesis-approval",
+
+  // admin
+  "/manage-thesis",
 ];
 
-const STUDENT_ONLY_PATHS = ["/find-adviser", "/my-requests"];
+const STUDENT_ONLY_PATHS = ["/find-adviser", "/my-requests", "/publish-thesis"];
 
 export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
@@ -57,9 +60,9 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // 4. Faculty trying to access student-only page → redirect home
+  // 4. Faculty or Admin trying to access student-only page → redirect home
   if (
-    user?.role === "faculty" &&
+    (user?.role === "faculty" || user?.role === "admin") &&
     STUDENT_ONLY_PATHS.some(
       (path) => pathname === path || pathname.startsWith(`${path}/`)
     )

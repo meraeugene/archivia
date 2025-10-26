@@ -23,6 +23,7 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
 
   const hideFindAdviser =
     currentUser?.role === "faculty" ||
+    currentUser?.role === "admin" ||
     (currentUser?.role === "student" && studentAdviser);
 
   return (
@@ -60,8 +61,6 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
                   </Link>
                 );
               })}
-
-            {/* Student adviser badge */}
 
             {/* Student-only link */}
             {currentUser?.role === "student" && studentAdviser && (

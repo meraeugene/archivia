@@ -2,7 +2,14 @@ export type Request = {
   id: string;
   adviserId: string;
   studentId: string;
-  status: "pending" | "accepted" | "rejected" | "already_handled";
+  status:
+    | "pending"
+    | "accepted"
+    | "rejected"
+    | "already_handled"
+    | "referred"
+    | "reserved"
+    | "returned";
   submittedAt: string;
   studentUserId: string;
   studentName: string;
@@ -11,4 +18,6 @@ export type Request = {
   title: string;
   abstract: string;
   feedback: string | null;
+  referred_to: string | null;
+  referred_by: string | null;
 };

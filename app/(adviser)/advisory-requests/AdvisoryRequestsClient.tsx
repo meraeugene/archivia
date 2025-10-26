@@ -43,7 +43,6 @@ export default function AdvisoryRequestsClient({
             toggleExpand={() => toggleExpand(request.id)}
             isPending={isPending}
             handleOpenModal={openModal}
-            isRequestTab={true}
           />
         ))}
       </div>
