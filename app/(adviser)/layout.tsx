@@ -2,8 +2,8 @@ import { getCurrentUser } from "@/actions/auth";
 import {
   getAdviserCurrentLeadersCount,
   getPendingAdviserRequestsCount,
-} from "@/actions/facultyRequests";
-import { getThesisSubmissionCount } from "@/actions/thesisApproval";
+  getThesisSubmissionCount,
+} from "@/actions/count";
 import Sidebar from "@/components/Sidebar";
 import { redirect } from "next/navigation";
 
