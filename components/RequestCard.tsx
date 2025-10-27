@@ -114,7 +114,9 @@ const RequestCard = ({
       </div>
 
       {/* Actions */}
-      {request.status === "pending" || request.status === "reserved" ? (
+      {request.status === "pending" ||
+      request.status === "reserved" ||
+      request.status === "referred" ? (
         <div className="flex space-x-3">
           {/* Accept */}
           <button

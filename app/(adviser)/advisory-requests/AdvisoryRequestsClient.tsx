@@ -4,11 +4,14 @@ import { Request } from "@/types/request";
 import RequestCard from "../../../components/RequestCard";
 import { useAdvisoryRequests } from "@/hooks/useAdvisoryRequests";
 import ConfirmationModal from "../../../components/ConfirmationModal";
+import { ReferredAdviser } from "@/types/referredAdvisers";
 
 export default function AdvisoryRequestsClient({
   requests,
+  referredAdvisers,
 }: {
   requests: Request[];
+  referredAdvisers: ReferredAdviser[];
 }) {
   const {
     expandedId,
@@ -18,6 +21,8 @@ export default function AdvisoryRequestsClient({
     openModal,
     closeModal,
     handleConfirmModal,
+    selectedAdviser,
+    setSelectedAdviser,
   } = useAdvisoryRequests();
 
   return (
@@ -55,6 +60,9 @@ export default function AdvisoryRequestsClient({
         isPending={isPending}
         onClose={closeModal}
         onConfirm={handleConfirmModal}
+        referredAdvisers={referredAdvisers}
+        selectedAdviser={selectedAdviser}
+        setSelectedAdviser={setSelectedAdviser}
       />
     </main>
   );

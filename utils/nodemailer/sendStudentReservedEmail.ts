@@ -47,7 +47,7 @@ export async function sendStudentReservedEmail({
 
             <!-- Tag -->
             <tr>
-              <td style="padding: 40px;">
+              <td style="padding: 35px;">
                 <div style="display: inline-block; background: #ffffff; border: 2px solid #000000; border-radius: 6px; padding: 6px 16px;">
                   <span style="color: #000000; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">Request Reserved</span>
                 </div>

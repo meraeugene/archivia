@@ -11,18 +11,18 @@ import { sendStudentReservedEmail } from "@/utils/nodemailer/sendStudentReserved
 export const getAdviserRequests = cache(async () => {
   const supabase = await createClient();
 
-  const currentUser = await getSession();
+  const session = await getSession();
 
-  if (!currentUser) return [];
+  if (!session) return [];
 
-  if (currentUser.role !== "faculty") {
+  if (session.role !== "faculty") {
     return [];
   }
 
   const { data, error } = await supabase
     .from("adviser_requests_view")
     .select("*")
-    .eq("adviser_id", currentUser?.sub)
+    .eq("adviser_id", session?.sub)
     .order("submitted_at", { ascending: false })
     .limit(3);
 
@@ -49,21 +49,21 @@ export const getAdviserRequests = cache(async () => {
 export const getPendingAdviserRequests = cache(async () => {
   const supabase = await createClient();
 
-  const currentUser = await getSession();
+  const session = await getSession();
 
-  if (!currentUser) {
+  if (!session) {
     return [];
   }
 
-  if (currentUser.role !== "faculty") {
+  if (session.role !== "faculty") {
     return [];
   }
 
   const { data, error } = await supabase
     .from("adviser_requests_view")
     .select("*")
-    .eq("adviser_id", currentUser?.sub)
-    .in("status", ["pending", "already_handled", "reserved"])
+    .eq("adviser_id", session?.sub)
+    .in("status", ["pending", "already_handled", "reserved", "referred"])
     .order("submitted_at", { ascending: false });
 
   if (error) {
@@ -91,18 +91,18 @@ export const getPendingAdviserRequests = cache(async () => {
 export const getAdviserAdvisees = cache(async () => {
   const supabase = await createClient();
 
-  const currentUser = await getSession();
+  const session = await getSession();
 
-  if (!currentUser) return [];
+  if (!session) return [];
 
-  if (currentUser.role !== "faculty") {
+  if (session.role !== "faculty") {
     return [];
   }
 
   const { data, error } = await supabase
     .from("adviser_requests_view")
     .select("*")
-    .eq("adviser_id", currentUser?.sub)
+    .eq("adviser_id", session?.sub)
     .eq("status", "accepted")
     .order("submitted_at", { ascending: false });
 
@@ -316,61 +316,4 @@ export async function markAsReserved(
     message:
       "Request successfully marked as reserved. The student has been notified via email.",
   };
-}
-
-export async function referRequest(
-  requestId: string,
-  studentEmail: string,
-  feedback: string
-) {
-  const supabase = await createClient();
-  const session = await getSession();
-
-  if (!session) {
-    return { success: false, error: "Unauthorized access." };
-  }
-
-  if (session.role !== "faculty") {
-    return { success: false, error: "Unauthorized access." };
-  }
-
-  if (!requestId || !studentEmail || !feedback) {
-    return { success: false, error: "Missing required fields." };
-  }
-
-  if (!feedback.trim()) {
-    return {
-      success: false,
-      error: "Referral note is required when referring a request.",
-    };
-  }
-
-  if (feedback.length > 300) {
-    return {
-      success: false,
-      error: "Referral note must be less than 300 characters.",
-    };
-  }
-
-  const { data, error } = await supabase
-    .from("student_requests")
-    .update({
-      status: "referred",
-      feedback,
-      referred_by: session?.sub,
-      // You may add referred_to dynamically if your UI selects an adviser
-    })
-    .eq("id", requestId);
-
-  if (error) {
-    return { success: false, error: "Error referring request." };
-  }
-
-  // Optionally send email notification
-  // await sendReferralEmail(studentEmail, feedback);
-
-  revalidatePath("/requests");
-  revalidatePath("/my-requests");
-
-  return { success: true, message: "Request successfully referred." };
 }

@@ -5,14 +5,19 @@ import { toast } from "sonner";
 import {
   acceptRequest,
   markAsReserved,
-  referRequest,
   returnRequest,
 } from "@/actions/facultyRequests";
 import { Request } from "@/types/request";
+import { referRequest } from "@/actions/referAdviser";
 
 export function useAdvisoryRequests() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
+  const [selectedAdviser, setSelectedAdviser] = useState<{
+    id: string;
+    email: string;
+    full_name: string;
+  }>({ id: "", email: "", full_name: "" });
 
   const [modalState, setModalState] = useState<{
     open: boolean;
@@ -36,11 +41,12 @@ export function useAdvisoryRequests() {
     title: string,
     abstract: string,
     type: "accept" | "refer" | "reserve" | "returned",
-    id: string,
+    requestId: string,
     feedback: string,
     studentEmail: string,
     studentId: string,
-    adviserId: string
+    adviserId: string,
+    studentName: string
   ) => {
     startTransition(async () => {
       let result;
@@ -48,7 +54,7 @@ export function useAdvisoryRequests() {
       switch (type) {
         case "accept":
           result = await acceptRequest(
-            id,
+            requestId,
             studentEmail,
             studentId,
             adviserId,
@@ -58,11 +64,22 @@ export function useAdvisoryRequests() {
           );
           break;
         case "refer":
-          result = await referRequest(id, studentEmail, feedback);
+          result = await referRequest(
+            requestId,
+            studentEmail,
+            selectedAdviser.id,
+            selectedAdviser.email,
+            selectedAdviser.full_name,
+            adviserId,
+            studentName,
+            title,
+            abstract,
+            feedback
+          );
           break;
         case "returned":
           result = await returnRequest(
-            id,
+            requestId,
             title,
             abstract,
             studentEmail,
@@ -70,7 +87,12 @@ export function useAdvisoryRequests() {
           );
           break;
         case "reserve":
-          result = await markAsReserved(id, studentEmail, title, abstract);
+          result = await markAsReserved(
+            requestId,
+            studentEmail,
+            title,
+            abstract
+          );
           break;
         default:
           toast.error("Invalid action type.");
@@ -89,13 +111,8 @@ export function useAdvisoryRequests() {
   const handleConfirmModal = (feedback?: string) => {
     if (!modalState.request) return;
 
-    if (modalState.type === "refer" && !feedback?.trim()) {
-      toast.error("Referral note is required when referring a request.");
-      return;
-    }
-
     if (modalState.type === "returned" && !feedback?.trim()) {
-      toast.error("Return note is required when returning a request.");
+      toast.error("Return note is required.");
       return;
     }
 
@@ -107,7 +124,8 @@ export function useAdvisoryRequests() {
       feedback ?? "",
       modalState.request.studentEmail,
       modalState.request.studentId,
-      modalState.request.adviserId
+      modalState.request.adviserId,
+      modalState.request.studentName
     );
   };
 
@@ -122,5 +140,9 @@ export function useAdvisoryRequests() {
     openModal,
     closeModal,
     handleConfirmModal,
+
+    // selected adviser
+    selectedAdviser,
+    setSelectedAdviser,
   };
 }

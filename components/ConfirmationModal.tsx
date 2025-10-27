@@ -1,7 +1,14 @@
 "use client";
 
 import React, { useState } from "react";
-import { CalendarClock, Check, CornerUpRight, RotateCcw } from "lucide-react";
+import {
+  CalendarClock,
+  Check,
+  ChevronDown,
+  CornerUpRight,
+  RotateCcw,
+} from "lucide-react";
+import { ReferredAdviser } from "@/types/referredAdvisers";
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -10,6 +17,17 @@ interface ConfirmModalProps {
   onClose: () => void;
   onConfirm: (feedback?: string) => void;
   isPending?: boolean;
+  referredAdvisers: ReferredAdviser[];
+  selectedAdviser: {
+    id: string;
+    email: string;
+    full_name: string;
+  };
+  setSelectedAdviser: (adviser: {
+    id: string;
+    email: string;
+    full_name: string;
+  }) => void;
 }
 
 const ConfirmationModal: React.FC<ConfirmModalProps> = ({
@@ -19,8 +37,12 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
   onClose,
   onConfirm,
   isPending = false,
+  referredAdvisers,
+  selectedAdviser,
+  setSelectedAdviser,
 }) => {
   const [feedback, setFeedback] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
 
   if (!isOpen) return null;
 
@@ -46,7 +68,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
         return {
           action: "refer",
           subject: "this advisory request to another adviser",
-          label: "Referral note (required)",
+          label: "Referral note (optional)",
           placeholder: "Provide a note or reason for referring this request...",
           icon: <CornerUpRight className="text-white" size={28} />,
           iconBg: "bg-gray-900",
@@ -90,8 +112,8 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
   if (!content) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
-      <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-200 relative">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm  ">
+      <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-200 relative ">
         {/* Icon */}
         <div className="text-center mb-6">
           <div
@@ -126,6 +148,70 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
           <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
             <p className="font-bold text-black text-lg">{studentName}</p>
           </div>
+
+          {type === "refer" && (
+            <div className="space-y-3 relative">
+              <label className="block text-left text-sm font-semibold text-gray-600">
+                Select Adviser to Refer
+              </label>
+
+              {/* Dropdown button */}
+              <button
+                type="button"
+                onClick={() => setShowDropdown((prev) => !prev)}
+                className="w-full p-3  cursor-pointer border border-gray-200 rounded-xl text-sm flex justify-between items-center hover:ring focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black bg-white"
+              >
+                <span className="truncate text-gray-800">
+                  {referredAdvisers.find((a) => a.id === selectedAdviser.id)
+                    ?.full_name || "-- Select an adviser --"}
+                </span>
+                <ChevronDown
+                  size={18}
+                  className={`text-gray-500 transition-transform duration-200 ${
+                    showDropdown ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {/* Dropdown list */}
+              {showDropdown && (
+                <div className="absolute z-50 mt-2 w-full max-h-64 overflow-y-auto bg-white border border-gray-200 rounded-xl shadow-lg animate-in fade-in slide-in-from-top-1">
+                  {referredAdvisers.length === 0 ? (
+                    <div className="p-3 text-gray-500 text-sm text-center">
+                      No advisers available
+                    </div>
+                  ) : (
+                    referredAdvisers.map((adviser) => (
+                      <div
+                        key={adviser.id}
+                        onClick={() => {
+                          setSelectedAdviser({
+                            id: adviser.id,
+                            email: adviser.email,
+                            full_name: adviser.full_name,
+                          });
+                          setShowDropdown(false);
+                        }}
+                        className={`p-3 text-sm cursor-pointer flex justify-between  hover:bg-gray-100 transition ${
+                          selectedAdviser.id === adviser.id ? "bg-gray-100" : ""
+                        }`}
+                      >
+                        <div className="flex flex-col gap-2 text-left">
+                          <span className="font-semibold">
+                            {adviser.full_name}
+                          </span>
+                          <span className="text-gray-500">{adviser.email}</span>
+                        </div>
+                        {selectedAdviser.id === adviser.id && (
+                          <Check size={16} className="text-gray-700" />
+                        )}
+                      </div>
+                    ))
+                  )}
+                </div>
+              )}
+            </div>
+          )}
 
           {/* Feedback textarea */}
           {content.action !== "reserve" && (

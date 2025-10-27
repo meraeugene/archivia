@@ -7,18 +7,18 @@ import { createClient } from "@/utils/supabase/server";
 export const getAdviserCurrentLeadersCount = cache(
   async (): Promise<number> => {
     const supabase = await createClient();
-    const currentUser = await getSession();
+    const session = await getSession();
 
-    if (!currentUser) return 0;
+    if (!session) return 0;
 
-    if (currentUser.role !== "faculty") {
+    if (session.role !== "faculty") {
       return 0;
     }
 
     const { data, error } = await supabase
       .from("adviser_current_leaders")
       .select("current_leaders")
-      .eq("adviser_id", currentUser.sub)
+      .eq("adviser_id", session.sub)
       .single();
 
     if (error || !data) {
@@ -32,18 +32,18 @@ export const getAdviserCurrentLeadersCount = cache(
 
 export const getAdviserRequestsCount = cache(async () => {
   const supabase = await createClient();
-  const currentUser = await getSession();
+  const session = await getSession();
 
-  if (!currentUser) return 0;
+  if (!session) return 0;
 
-  if (currentUser.role !== "faculty") {
+  if (session.role !== "faculty") {
     return 0;
   }
 
   const { count, error } = await supabase
     .from("adviser_requests_view")
     .select("*", { count: "exact", head: true })
-    .eq("adviser_id", currentUser.sub);
+    .eq("adviser_id", session.sub);
 
   if (error) {
     console.error("Error fetching adviser requests count:", error.message);
@@ -55,19 +55,19 @@ export const getAdviserRequestsCount = cache(async () => {
 
 export const getPendingAdviserRequestsCount = cache(async () => {
   const supabase = await createClient();
-  const currentUser = await getSession();
+  const session = await getSession();
 
-  if (!currentUser) return 0;
+  if (!session) return 0;
 
-  if (currentUser.role !== "faculty") {
+  if (session.role !== "faculty") {
     return 0;
   }
 
   const { count, error } = await supabase
     .from("adviser_requests_view")
     .select("*", { count: "exact", head: true })
-    .eq("adviser_id", currentUser.sub)
-    .in("status", ["pending", "reserved"]);
+    .eq("adviser_id", session.sub)
+    .in("status", ["pending", "reserved", "referred"]);
 
   if (error) {
     console.error("Error fetching adviser requests count:", error.message);

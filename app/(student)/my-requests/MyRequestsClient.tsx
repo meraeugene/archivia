@@ -100,6 +100,8 @@ export default function MyRequestsClient({
                         : request.status === "accepted" ||
                           request.status === "reserved"
                         ? "bg-green-100 text-green-800"
+                        : request.status === "referred"
+                        ? "bg-orange-100 text-orange-800"
                         : "bg-red-100 text-red-800"
                     }`}
                   >
@@ -187,6 +189,16 @@ export default function MyRequestsClient({
                   </button>
                 )}
               </>
+            ) : request.status === "referred" ? (
+              <div className="mt-6 border border-orange-100 bg-orange-50 rounded-md p-4">
+                <h3 className="text-sm font-medium text-orange-800 mb-1 flex items-center gap-2">
+                  Feedback
+                </h3>
+                <p className="text-base flex items-center gap-2 text-orange-700 leading-relaxed">
+                  <span className="inline-block w-1 h-1 bg-orange-600 rounded-full"></span>
+                  {request.feedback || "No feedback provided."}
+                </p>
+              </div>
             ) : null}
           </div>
         ))}
