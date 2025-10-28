@@ -15,8 +15,10 @@ import { cache } from "react";
  * - Stores session in a secure HTTP-only cookie
  */
 export async function login(userId: string, password: string) {
-  // Check if both username and password are provided
-  if (!userId || !password) {
+  const sanitizedUserId = userId.trim();
+  const sanitizedPassword = password.trim();
+
+  if (!sanitizedUserId || !sanitizedPassword) {
     return { error: "Username and password are required" };
   }
 
@@ -26,7 +28,7 @@ export async function login(userId: string, password: string) {
   const { data: user, error } = await supabase
     .from("users")
     .select("id,role,password")
-    .eq("user_id", userId)
+    .eq("user_id", sanitizedUserId)
     .single();
 
   if (error || !user) {
@@ -35,7 +37,7 @@ export async function login(userId: string, password: string) {
   }
 
   // 2. Verify the password by comparing hash
-  const valid = await comparePassword(password, user.password);
+  const valid = await comparePassword(sanitizedPassword, user.password);
   if (!valid) {
     return { error: "Invalid credentials" }; // incorrect password
   }
@@ -53,11 +55,7 @@ export async function login(userId: string, password: string) {
     sameSite: "strict", // CSRF protection
   });
 
-  if (user.role === "faculty") {
-    redirect("/dashboard");
-  }
-
-  redirect("/");
+  redirect(user.role === "faculty" ? "/dashboard" : "/");
 }
 
 /**

@@ -107,7 +107,7 @@ const RequestCard = ({
         </p>
         <button
           onClick={() => toggleExpand(request.id)}
-          className="mt-2 text-xs text-gray-600 cursor-pointer hover:underline"
+          className="mt-2 text-xs text-gray-700 cursor-pointer hover:underline"
         >
           {isExpanded ? "Show less" : "Read more"}
         </button>

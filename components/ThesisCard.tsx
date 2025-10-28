@@ -47,8 +47,12 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
           <Bookmark
             size={20}
             className={`
-    ${isBookmarked ? "fill-black text-black" : "text-gray-500"}
-    transition-transform duration-300
+    ${
+      isBookmarked
+        ? "fill-black text-black "
+        : "text-gray-500 hover:fill-black hover:text-black"
+    }
+    transition-transform duration-300  
     ${isAnimating ? "scale-125 rotate-12" : "scale-100 rotate-0"}
   `}
           />
@@ -120,7 +124,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
       <div className="flex gap-3 mt-6">
         <button
           onClick={() => onPreview(thesis)}
-          className="flex-1 bg-gray-50 border cursor-pointer border-gray-200 text-black px-4 py-2.5 rounded font-medium hover:bg-gray-100 transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-gray-50 border cursor-pointer border-gray-200 text-black px-4 py-2.5 rounded font-medium  hover:shadow-md transition-colors flex items-center justify-center gap-2"
         >
           <Eye size={16} /> Preview
         </button>

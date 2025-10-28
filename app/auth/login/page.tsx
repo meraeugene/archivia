@@ -35,12 +35,15 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!formData.userId.trim()) {
+    const sanitizedUserId = formData.userId.trim();
+    const sanitizedPassword = formData.password.trim();
+
+    if (!sanitizedUserId) {
       toast.error("Username is required");
       return;
     }
 
-    if (!formData.password.trim()) {
+    if (!sanitizedPassword) {
       toast.error("Password is required");
       return;
     }
@@ -48,7 +51,7 @@ export default function Login() {
     setLoading(true);
 
     try {
-      const result = await login(formData.userId, formData.password);
+      const result = await login(sanitizedUserId, sanitizedPassword);
       if (result?.error) {
         toast.error(result.error);
         setLoading(false);

@@ -38,8 +38,13 @@ export function useFindAdviser() {
   };
 
   const handleGetRecommendations = async () => {
-    if (!isValidText(studentData.title) || !isValidText(studentData.abstract)) {
-      toast.error("Please enter a meaningful title and abstract.");
+    if (!isValidText(studentData.title)) {
+      toast.error("Please enter a meaningful research topics.");
+      return;
+    }
+
+    if (!isValidText(studentData.abstract)) {
+      toast.error("Please enter a meaningful research overview.");
       return;
     }
 
