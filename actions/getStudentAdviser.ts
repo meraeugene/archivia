@@ -14,10 +14,7 @@ export const getStudentAdviser = cache(async () => {
   }
 
   if (session.role !== "student") {
-    return {
-      success: false,
-      message: "Only students can access their adviser information",
-    };
+    return null;
   }
 
   const { data: adviser, error } = await supabase
