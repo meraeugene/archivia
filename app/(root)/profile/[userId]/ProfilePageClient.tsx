@@ -7,6 +7,7 @@ import { useProfileEditor } from "@/hooks/useProfileEditor";
 import ProfileImage from "./ProfileImage";
 import FacultyAcademicInfo from "./FacultyAcademicInfo";
 import { ActionButton } from "./ActionButton";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 export default function ProfilePageClient({
   profile,
@@ -54,7 +55,7 @@ export default function ProfilePageClient({
             {/* Quick Contact */}
             {isEditing ? (
               <div className="mt-8 p-6 border border-black">
-                <label className="block text-sm font-bold mb-1">Email</label>
+                <label className="block text-sm font-bold mb-1">EMAIL</label>
                 <input
                   type="email"
                   name="email"
@@ -220,6 +221,14 @@ export default function ProfilePageClient({
 
         {/* Faculty Academic Info */}
         {isFaculty && <FacultyAcademicInfo profile={profile} />}
+
+        {/* Student Password Change Section */}
+        {!isFaculty && (
+          <div className="mt-16 w-1/2">
+            <h2 className="text-3xl font-bold mb-6">Change Password</h2>
+            <ChangePasswordForm />
+          </div>
+        )}
       </main>
     </div>
   );

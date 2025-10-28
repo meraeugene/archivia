@@ -1,5 +1,6 @@
 import { getCurrentUser } from "@/actions/auth";
 import ProfileForm from "./ProfileForm";
+import ChangePasswordForm from "./ChangePasswordForm";
 
 export default async function page() {
   const currentUser = await getCurrentUser();
@@ -12,6 +13,8 @@ export default async function page() {
 
       <div className="space-y-8 p-8 max-w-5xl ">
         <ProfileForm currentUser={currentUser} />
+
+        <ChangePasswordForm />
       </div>
     </main>
   );
