@@ -20,16 +20,16 @@ export const metadata: Metadata = {
     icon: "/icon.ico",
   },
   description:
-    "Browse past thesis papers and discover your ideal adviser. Archivia, made exclusively for the IT Department of the University of Science and Technology of Southern Philippines, provides a centralized and secure platform for accessing research works. With its intelligent adviser recommender, students can easily connect with the most suitable adviser based on their thesis title and study overview, making the research process smoother and more efficient.",
+    "Browse past thesis papers and find your ideal adviser with Archivia — a secure platform by the USTP IT Department that centralizes research access and uses smart recommendations to match students with the best advisers for their study.",
   openGraph: {
     title: "Archivia | Digital Thesis Archive",
     description:
-      "Browse past thesis papers and discover your ideal adviser. Archivia, made exclusively for the IT Department of the University of Science and Technology of Southern Philippines, provides a centralized and secure platform for accessing research works. With its intelligent adviser recommender, students can easily connect with the most suitable adviser based on their thesis title and study overview, making the research process smoother and more efficient.",
+      "Browse past thesis papers and find your ideal adviser with Archivia — a secure platform by the USTP IT Department that centralizes research access and uses smart recommendations to match students with the best advisers for their study.",
     url: "https://archivia-official.vercel.app/", // replace with your actual domain
     siteName: "Archivia",
     images: [
       {
-        url: "/thumbnail.png", // replace with your actual OG image URL
+        url: "/thumbnail-v2.png", // replace with your actual OG image URL
         width: 1200,
         height: 630,
         alt: "Archivia | Digital Thesis Archive",
@@ -41,8 +41,8 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Archivia | Digital Thesis Archive",
     description:
-      "Browse past thesis papers and discover your ideal adviser. Archivia, made exclusively for the IT Department of the University of Science and Technology of Southern Philippines, provides a centralized and secure platform for accessing research works. With its intelligent adviser recommender, students can easily connect with the most suitable adviser based on their thesis title and study overview, making the research process smoother and more efficient.",
-    images: ["/thumbnail.png"], // replace with your actual image
+      "Browse past thesis papers and find your ideal adviser with Archivia — a secure platform by the USTP IT Department that centralizes research access and uses smart recommendations to match students with the best advisers for their study.",
+    images: ["/thumbnail-v2.png"], // replace with your actual image
   },
 };
 
