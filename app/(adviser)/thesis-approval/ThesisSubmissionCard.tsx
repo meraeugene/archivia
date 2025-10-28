@@ -9,7 +9,7 @@ interface ThesisSubmissionCardProps {
   toggleExpand: (id: string) => void;
   handleOpenModal?: (
     thesis: ThesisSubmission,
-    type: "approve" | "return"
+    type: "approve" | "returned"
   ) => void;
 }
 
@@ -129,7 +129,7 @@ const ThesisSubmissionCard = ({
 
           <button
             disabled={isPending}
-            onClick={() => handleOpenModal(thesis, "return")}
+            onClick={() => handleOpenModal(thesis, "returned")}
             className="flex-1 cursor-pointer px-4 py-2 rounded-md bg-gray-100 text-gray-700 border border-gray-300 font-medium hover:bg-gray-50 transition-all flex items-center justify-center gap-2"
           >
             Return

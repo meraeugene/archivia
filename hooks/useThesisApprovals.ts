@@ -11,7 +11,7 @@ export function useThesisApprovals() {
 
   const [modalState, setModalState] = useState<{
     open: boolean;
-    type: "approve" | "return";
+    type: "approve" | "returned";
     thesis: ThesisSubmission | null;
   }>({ open: false, type: "approve", thesis: null });
 
@@ -19,14 +19,14 @@ export function useThesisApprovals() {
     setExpandedId((prev) => (prev === id ? null : id));
   };
 
-  const openModal = (thesis: ThesisSubmission, type: "approve" | "return") =>
+  const openModal = (thesis: ThesisSubmission, type: "approve" | "returned") =>
     setModalState({ open: true, type, thesis });
 
   const closeModal = () =>
     setModalState({ open: false, type: "approve", thesis: null });
 
   const handleAction = (
-    type: "approve" | "return",
+    type: "approve" | "returned",
     id: string,
     feedback: string,
     studentEmail: string
@@ -46,7 +46,7 @@ export function useThesisApprovals() {
 
   const handleConfirmModal = (feedback?: string) => {
     if (!modalState.thesis) return;
-    if (modalState.type === "return" && !feedback?.trim()) {
+    if (modalState.type === "returned" && !feedback?.trim()) {
       toast.error("Feedback is required when returning a thesis.");
       return;
     }

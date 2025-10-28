@@ -17,13 +17,13 @@ interface ConfirmModalProps {
   onClose: () => void;
   onConfirm: (feedback?: string) => void;
   isPending?: boolean;
-  referredAdvisers: ReferredAdviser[];
-  selectedAdviser: {
+  referredAdvisers?: ReferredAdviser[];
+  selectedAdviser?: {
     id: string;
     email: string;
     full_name: string;
   };
-  setSelectedAdviser: (adviser: {
+  setSelectedAdviser?: (adviser: {
     id: string;
     email: string;
     full_name: string;
@@ -162,7 +162,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                 className="w-full p-3  cursor-pointer border border-gray-200 rounded-xl text-sm flex justify-between items-center hover:ring focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black bg-white"
               >
                 <span className="truncate text-gray-800">
-                  {referredAdvisers.find((a) => a.id === selectedAdviser.id)
+                  {referredAdvisers?.find((a) => a.id === selectedAdviser?.id)
                     ?.full_name || "-- Select an adviser --"}
                 </span>
                 <ChevronDown
@@ -176,16 +176,16 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
               {/* Dropdown list */}
               {showDropdown && (
                 <div className="absolute z-50 mt-2 w-full max-h-64 overflow-y-auto bg-white border border-gray-200 rounded-xl shadow-lg animate-in fade-in slide-in-from-top-1">
-                  {referredAdvisers.length === 0 ? (
+                  {referredAdvisers?.length === 0 ? (
                     <div className="p-3 text-gray-500 text-sm text-center">
                       No advisers available
                     </div>
                   ) : (
-                    referredAdvisers.map((adviser) => (
+                    referredAdvisers?.map((adviser) => (
                       <div
                         key={adviser.id}
                         onClick={() => {
-                          setSelectedAdviser({
+                          setSelectedAdviser?.({
                             id: adviser.id,
                             email: adviser.email,
                             full_name: adviser.full_name,
@@ -193,7 +193,9 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                           setShowDropdown(false);
                         }}
                         className={`p-3 text-sm cursor-pointer flex justify-between  hover:bg-gray-100 transition ${
-                          selectedAdviser.id === adviser.id ? "bg-gray-100" : ""
+                          selectedAdviser?.id === adviser.id
+                            ? "bg-gray-100"
+                            : ""
                         }`}
                       >
                         <div className="flex flex-col gap-2 text-left">
@@ -202,7 +204,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                           </span>
                           <span className="text-gray-500">{adviser.email}</span>
                         </div>
-                        {selectedAdviser.id === adviser.id && (
+                        {selectedAdviser?.id === adviser.id && (
                           <Check size={16} className="text-gray-700" />
                         )}
                       </div>
