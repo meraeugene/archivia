@@ -77,7 +77,7 @@ export async function sendStudentReturnedEmail({
               </div>
 
               <div style="text-align:center;">
-                <a href="http://localhost:3000/my-requests" style="display:inline-block;background:#000;color:#fff;text-decoration:none;padding:12px 32px;border-radius:8px;font-weight:600;font-size:15px;">
+                <a href="https://archivia-official.vercel.app/my-requests" style="display:inline-block;background:#000;color:#fff;text-decoration:none;padding:12px 32px;border-radius:8px;font-weight:600;font-size:15px;">
                   View Request
                 </a>
               </div>

@@ -36,8 +36,12 @@ export async function sendReferralEmail({
       : "View Your Request in Archivia";
 
     const buttonLink = isForAdviser
-      ? "http://localhost:3000/advisory-requests"
-      : "http://localhost:3000/my-requests";
+      ? "https://archivia-official.vercel.app/advisory-requests"
+      : "https://archivia-official.vercel.app/my-requests";
+
+    // const buttonLink = isForAdviser
+    //   ? "http://localhost:3000/advisory-requests"
+    //   : "http://localhost:3000/my-requests";
 
     return `
     <!DOCTYPE html>

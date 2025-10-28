@@ -109,7 +109,7 @@ export async function sendThesisApprovalEmail({
 
                   <!-- CTA Button -->
                   <div style="text-align: center; margin: 0 0 32px 0;">
-                    <a href="http://localhost:3000/browse" style="display: inline-block; background: #000000; color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 8px; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">
+                    <a href="https://archivia-official.vercel.app/browse" style="display: inline-block; background: #000000; color: #ffffff; text-decoration: none; padding: 16px 48px; border-radius: 8px; font-weight: 600; font-size: 15px; letter-spacing: 0.3px;">
                       View Your Publication
                     </a>
                   </div>
