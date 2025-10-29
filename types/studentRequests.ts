@@ -1,6 +1,13 @@
 export type StudentRequest = {
   id: string;
-  status: string;
+  status:
+    | "pending"
+    | "accepted"
+    | "rejected"
+    | "already_handled"
+    | "referred"
+    | "reserved"
+    | "returned";
   submitted_at: string;
   updated_at: string;
   title: string;

@@ -8,8 +8,8 @@ import {
 } from "lucide-react";
 import { getAdviserRequests } from "@/actions/facultyRequests";
 import RequestsList from "@/components/RequestsList";
-import StatsCard from "./StatsCard";
-import QuickActionsCard from "./QuickActionsCard";
+import StatsCard from "../../../components/StatsCard";
+import QuickActionsCard from "../../../components/QuickActionsCard";
 import { getHandledThesisCount } from "@/actions/handledThesis";
 import Link from "next/link";
 import {
@@ -51,7 +51,6 @@ export default async function FacultyDashboard() {
               count={totalAdviserRequestCount}
               icon={<FileText className="h-6 w-6 text-gray-600" />}
               desc="All advisory requests received"
-              cardClass="bg-white border border-gray-900"
               iconClass="bg-gray-100"
               textColorClass="text-gray-600"
             />
@@ -59,41 +58,37 @@ export default async function FacultyDashboard() {
             <StatsCard
               title="Pending Advisory Requests"
               count={pendingAdviserRequestCount}
-              icon={<Clock className="h-6 w-6 text-yellow-600" />}
+              icon={<Clock className="h-6 w-6 text-gray-600" />}
               desc="Awaiting your review"
-              cardClass="bg-white border border-yellow-600"
-              iconClass="bg-yellow-100"
-              textColorClass="text-yellow-600"
+              iconClass="bg-gray-100"
+              textColorClass="text-gray-600"
             />
 
             <StatsCard
               title="Advisees"
               count={adviserCurrentLeadersCount}
-              icon={<Users className="h-6 w-6 text-green-600" />}
+              icon={<Users className="h-6 w-6 text-gray-600" />}
               desc="Accepted student leaders"
-              cardClass="bg-white border border-green-600"
-              iconClass="bg-green-100"
-              textColorClass="text-green-600"
+              iconClass="bg-gray-100"
+              textColorClass="text-gray-600"
             />
 
             <StatsCard
               title="Approval Requests"
               count={thesisApprovedCount}
-              icon={<FileCheck className="h-6 w-6 text-purple-600" />}
+              icon={<FileCheck className="h-6 w-6 text-gray-600" />}
               desc="Thesis awaiting your approval"
-              cardClass="bg-white border border-purple-600"
-              iconClass="bg-purple-100"
-              textColorClass="text-purple-600"
+              iconClass="bg-gray-100"
+              textColorClass="text-gray-600"
             />
 
             <StatsCard
               title="Handled Thesis"
               count={handleThesisCount}
-              icon={<BookCopy className="h-6 w-6 text-blue-600" />}
+              icon={<BookCopy className="h-6 w-6 text-gray-600" />}
               desc="Thesis you have advised"
-              cardClass="bg-white border border-blue-600"
-              iconClass="bg-blue-100"
-              textColorClass="text-blue-600"
+              iconClass="bg-gray-100"
+              textColorClass="text-gray-600"
             />
           </div>
         </section>

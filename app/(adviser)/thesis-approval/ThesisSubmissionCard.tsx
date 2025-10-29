@@ -45,7 +45,7 @@ const ThesisSubmissionCard = ({
   };
 
   return (
-    <div className="bg-white h-fit  border overflow-hidden border-gray-900 border-l-4 p-6 hover:shadow-md transition-shadow shadow-sm rounded-lg">
+    <div className="bg-white h-fit  overflow-hidden border p-6 hover:shadow-sm transition-shadow  rounded-lg">
       {/* Header */}
       <h1 className="font-medium text-gray-900 mb-4">{thesis.title}</h1>
 

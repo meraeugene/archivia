@@ -45,12 +45,12 @@ const UploadThesisClient = ({
 
       {/* Upload Zone */}
       <div
-        className={`relative border-1 max-w-4xl bg-white mx-auto rounded-xl shadow-xs transition-all duration-300 cursor-pointer  ${
+        className={`relative border max-w-4xl bg-white mx-auto rounded-xl  transition-all duration-300 cursor-pointer  ${
           dragActive
             ? "border-blue-500 bg-blue-50"
             : uploadedFile
-            ? "border-green-300 bg-green-50"
-            : "border-gray-50"
+            ? "border-green-200 bg-green-50"
+            : "border"
         }`}
         onDragEnter={handleDrag}
         onDragLeave={handleDrag}
@@ -102,7 +102,7 @@ const UploadThesisClient = ({
       {/* File Display */}
       {uploadedFile && (
         <div className="space-y-4 mb-8 mt-6 max-w-4xl mx-auto">
-          <div className="bg-white  p-6 rounded-lg shadow-xs border border-gray-50">
+          <div className="bg-white  p-6 rounded-lg  border">
             <div className="flex items-center justify-between gap-3">
               <div className="flex items-center space-x-4">
                 <FileText className="text-blue-600" size={24} />

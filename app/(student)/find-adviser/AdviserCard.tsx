@@ -19,7 +19,7 @@ const AdviserCard = ({
   onConnect,
 }: Props) => {
   return (
-    <div className="bg-white border border-gray-200 rounded-2xl p-6">
+    <div className="bg-white border  rounded-2xl p-6">
       {/* Header */}
       <div className="flex items-start justify-between mb-5">
         <div className="flex-1">

@@ -7,13 +7,11 @@ interface StatsCardProps {
   count: string | number;
   icon: ReactNode;
   desc: string;
-  cardClass: string;
   iconClass: string;
   textColorClass: string;
 }
 
 const StatsCard = ({
-  cardClass,
   title,
   count,
   icon,
@@ -22,7 +20,7 @@ const StatsCard = ({
   textColorClass,
 }: StatsCardProps) => {
   return (
-    <div className={`${cardClass} border-l-4 p-6 rounded-lg`}>
+    <div className=" p-6 border rounded-lg bg-white">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium text-gray-600">{title}</p>

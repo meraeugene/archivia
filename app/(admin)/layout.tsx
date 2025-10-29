@@ -1,8 +1,6 @@
 import { getCurrentUser } from "@/actions/auth";
-import Footer from "@/components/Footer";
-import Header from "@/components/Header";
-import { navLinks } from "@/data/links";
 import { redirect } from "next/navigation";
+import AdminSidebar from "./AdminSidebar";
 
 export default async function AdminLayout({
   children,
@@ -11,16 +9,15 @@ export default async function AdminLayout({
 }) {
   const currentUser = await getCurrentUser();
 
-  // Redirect if not admin user
+  // Redirect if not faculty user
   if (currentUser?.role !== "admin") {
     redirect("/");
   }
 
   return (
-    <main>
-      <Header currentUser={currentUser} navLinks={navLinks} />
-      {children}
-      <Footer />
+    <main className="min-h-screen bg-gray-50 flex ">
+      <AdminSidebar currentUser={currentUser} />
+      <div className="flex-1 ml-64">{children}</div>
     </main>
   );
 }

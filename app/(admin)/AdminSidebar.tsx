@@ -6,41 +6,33 @@ import { usePathname } from "next/navigation";
 import { logout } from "@/actions/auth";
 import {
   Home,
-  FileText,
   Settings,
   LayoutDashboard,
   LogOutIcon,
   Users,
-  FileCheck,
   BookOpen,
+  Inbox,
+  Database,
 } from "lucide-react";
 import { useTransition } from "react";
 import { CurrentUser } from "@/types/currentUser";
 
-const adviserNavLinks = [
+const adminNavLinks = [
   { label: "Home", href: "/", icon: Home },
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Advisory Requests", href: "/advisory-requests", icon: FileText },
-  { label: "Advisees", href: "/advisees", icon: Users },
-  { label: "Thesis Approval", href: "/thesis-approval", icon: FileCheck },
-  { label: "Handled Thesis", href: "/handled-thesis", icon: BookOpen },
-  { label: "Settings", href: "/settings", icon: Settings },
+  { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { label: "Users", href: "/admin/users", icon: Users },
+  { label: "Theses", href: "/admin/theses", icon: BookOpen },
+  { label: "Requests", href: "/admin/requests", icon: Inbox },
+  { label: "Settings", href: "/admin/settings", icon: Settings },
+  { label: "Backups", href: "/admin/backups", icon: Database },
   { label: "Logout", href: "/", icon: LogOutIcon },
 ];
 
 interface SidebarProps {
   currentUser: CurrentUser;
-  pendingAdviserRequestCount: number;
-  currentAdviserLeadersCount: number;
-  thesisSubmissionsCount: number | null;
 }
 
-const Sidebar = ({
-  currentUser,
-  pendingAdviserRequestCount,
-  currentAdviserLeadersCount,
-  thesisSubmissionsCount,
-}: SidebarProps) => {
+const AdminSidebar = ({ currentUser }: SidebarProps) => {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
 
@@ -55,7 +47,7 @@ const Sidebar = ({
       <div className="flex flex-col h-full">
         {/* Logo/Brand */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
-          <h1 className="text-lg font-bold text-gray-900">Faculty Portal</h1>
+          <h1 className="text-lg font-bold text-gray-900">Admin Portal</h1>
         </div>
 
         <div className="flex items-center space-x-3 border-b py-4 border-gray-200 px-4">
@@ -82,7 +74,7 @@ const Sidebar = ({
 
         {/* Navigation */}
         <nav className="flex-1 p-4 space-y-2">
-          {adviserNavLinks.map((item) => {
+          {adminNavLinks.map((item) => {
             const isActive = pathname === item.href;
             const Icon = item.icon;
 
@@ -122,27 +114,6 @@ const Sidebar = ({
               >
                 <Icon className="h-5 w-5 mr-3" />
                 {item.label}
-
-                {item.label === "Advisory Requests" &&
-                  pendingAdviserRequestCount > 0 && (
-                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
-                      {pendingAdviserRequestCount}
-                    </span>
-                  )}
-
-                {item.label === "Advisees" &&
-                  currentAdviserLeadersCount !== 0 && (
-                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
-                      {currentAdviserLeadersCount}
-                    </span>
-                  )}
-
-                {item.label === "Thesis Approval" &&
-                  thesisSubmissionsCount !== 0 && (
-                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
-                      {thesisSubmissionsCount}
-                    </span>
-                  )}
               </Link>
             );
           })}
@@ -152,4 +123,4 @@ const Sidebar = ({
   );
 };
 
-export default Sidebar;
+export default AdminSidebar;

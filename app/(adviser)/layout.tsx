@@ -4,7 +4,7 @@ import {
   getPendingAdviserRequestsCount,
   getThesisSubmissionCount,
 } from "@/actions/count";
-import Sidebar from "@/components/Sidebar";
+import FacultySidebar from "@/app/(adviser)/FacultySidebar";
 import { redirect } from "next/navigation";
 
 export default async function FacultyLayout({
@@ -30,8 +30,8 @@ export default async function FacultyLayout({
   ]);
 
   return (
-    <main className="min-h-screen bg-gray-50 flex ">
-      <Sidebar
+    <main className="min-h-screen flex ">
+      <FacultySidebar
         currentUser={currentUser}
         pendingAdviserRequestCount={pendingAdviserRequestCount}
         currentAdviserLeadersCount={currentAdviserLeadersCount}

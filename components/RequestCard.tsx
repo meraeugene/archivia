@@ -30,8 +30,9 @@ const RequestCard = ({
   isPending,
   handleOpenModal,
 }: RequestCardProps) => {
+  console.log(request);
   return (
-    <div className="bg-white h-fit  border overflow-hidden border-gray-900 border-l-4 p-6 hover:shadow-md transition-shadow shadow-sm rounded-lg">
+    <div className="bg-white h-fit border overflow-hidden  p-6 hover:shadow-sm transition-shadow  rounded-lg">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-3">
@@ -58,7 +59,7 @@ const RequestCard = ({
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "reserve")}
-            className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-black bg-gray-50 hover:bg-gray-100 px-2 py-1 rounded-md transition-colors border border-gray-200 cursor-pointer"
+            className="flex items-center gap-1 text-xs font-medium text-gray-600 hover:text-black bg-gray-50 hover:bg-gray-100 px-2 py-1 rounded-sm transition-colors border border-gray-200 cursor-pointer"
             title="Mark as Reserved"
           >
             <CalendarClock className="h-3.5 w-3.5" />
@@ -96,7 +97,7 @@ const RequestCard = ({
       </div>
 
       {/* Title + Abstract */}
-      <div className="mb-4">
+      <div className="mb-5">
         <h4 className="font-medium text-gray-900 mb-2">{request.title}</h4>
         <p
           className={`text-sm text-gray-600 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
@@ -107,11 +108,23 @@ const RequestCard = ({
         </p>
         <button
           onClick={() => toggleExpand(request.id)}
-          className="mt-2 text-xs text-gray-700 cursor-pointer hover:underline"
+          className="mt-2 text-xs text-gray-900 font-semibold cursor-pointer hover:underline"
         >
           {isExpanded ? "Show less" : "Read more"}
         </button>
       </div>
+
+      {request.status === "already_handled" && (
+        <div className="mt-6 border border-blue-100 bg-blue-50 rounded-md p-4">
+          <h3 className="text-sm font-medium text-blue-800 mb-1 flex items-center gap-2">
+            Feedback
+          </h3>
+          <p className="text-base flex items-center gap-2 text-blue-700 leading-relaxed">
+            <span className="inline-block w-1 h-1 bg-blue-600 rounded-full"></span>
+            {request.feedback || "No feedback provided."}
+          </p>
+        </div>
+      )}
 
       {/* Actions */}
       {request.status === "pending" ||

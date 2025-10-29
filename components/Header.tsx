@@ -77,6 +77,21 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
               </Link>
             )}
 
+            {/* Admin- link */}
+            {currentUser?.role === "admin" && (
+              <Link
+                prefetch
+                href="/admin/dashboard"
+                className={
+                  pathname === "/admin/dashboard"
+                    ? "font-semibold text-black"
+                    : "text-gray-800 hover:text-black"
+                }
+              >
+                Dashboard
+              </Link>
+            )}
+
             {/* Faculty-only link */}
             {currentUser?.role === "faculty" && (
               <Link
@@ -113,7 +128,7 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
                 </div>
 
                 {open && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white border border-gray-200 rounded-lg shadow-lg">
+                  <div className="absolute right-0 mt-2 w-56 bg-white border rounded-md ">
                     {/* User info */}
                     <div className="px-4 py-3 border-b border-gray-100 text-sm">
                       <div className="font-medium text-gray-900 ">

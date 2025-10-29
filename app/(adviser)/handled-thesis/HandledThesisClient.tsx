@@ -63,7 +63,7 @@ export default function HandledThesisClient({
           {handledTheses.map((thesis) => (
             <div
               key={thesis.thesis_id}
-              className="bg-white break-inside-avoid border border-gray-900 border-l-4 p-6 hover:shadow-lg transition-shadow shadow-sm rounded-lg cursor-pointer"
+              className="bg-white break-inside-avoid border  p-6 hover:shadow-sm transition-shadow rounded-lg cursor-pointer"
               onClick={() => openModal(thesis)}
               title="Click to preview"
             >

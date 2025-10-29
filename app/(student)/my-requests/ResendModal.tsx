@@ -66,7 +66,7 @@ const ResendModal = ({
             <textarea
               value={abstract}
               onChange={(e) => setAbstract(e.target.value)}
-              rows={6}
+              rows={14}
               className="w-full border border-gray-300 rounded-xl px-3 py-2 resize-none focus:outline-none focus:ring-2 focus:ring-black/70"
               placeholder="Enter your thesis abstract"
             />

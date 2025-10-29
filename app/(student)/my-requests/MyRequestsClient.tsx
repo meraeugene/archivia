@@ -56,8 +56,8 @@ export default function MyRequestsClient({
           <div
             key={request.id}
             className="break-inside-avoid mb-8 bg-white border overflow-hidden 
-                 border-gray-900 border-l-4 p-6 hover:shadow-md 
-                 transition-shadow shadow-sm rounded-lg"
+                  p-6 hover:shadow-sm 
+                 transition-shadow  rounded-lg"
           >
             {/* Adviser Info + Status + Cancel */}
             <div className="flex items-start justify-between mb-3">
@@ -151,7 +151,7 @@ export default function MyRequestsClient({
               </p>
               <button
                 onClick={() => toggleExpand(request.id)}
-                className="mt-2 text-xs text-gray-600 cursor-pointer hover:underline"
+                className="mt-2 text-xs text-gray-900 font-semibold cursor-pointer hover:underline"
               >
                 {expanded === request.id ? "Show less" : "Read more"}
               </button>
