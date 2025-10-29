@@ -9,10 +9,10 @@ export default async function AdminDashboard() {
     totalUsers,
     totalAdvisers,
     totalStudents,
-    thesisUploads,
-    userDistribution,
-    topBookmarked,
-    newUsers,
+    // thesisUploads,
+    // userDistribution,
+    // topBookmarked,
+    // newUsers,
   } = await getAdminDashboardStats();
 
   return (
