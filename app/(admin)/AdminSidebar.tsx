@@ -11,8 +11,8 @@ import {
   LogOutIcon,
   Users,
   BookOpen,
-  Inbox,
   Database,
+  BrainCircuit,
 } from "lucide-react";
 import { useTransition } from "react";
 import { CurrentUser } from "@/types/currentUser";
@@ -20,11 +20,11 @@ import { CurrentUser } from "@/types/currentUser";
 const adminNavLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
-  { label: "Users", href: "/admin/users", icon: Users },
-  { label: "Theses", href: "/admin/theses", icon: BookOpen },
-  { label: "Requests", href: "/admin/requests", icon: Inbox },
+  { label: "Manage Users", href: "/admin/manage-users", icon: Users },
+  { label: "Manage Theses", href: "/admin/manage-theses", icon: BookOpen },
+  { label: "Backup & Recovery", href: "/admin/backups", icon: Database },
+  { label: "Retrain Model", href: "/admin/retrain-model", icon: BrainCircuit },
   { label: "Settings", href: "/admin/settings", icon: Settings },
-  { label: "Backups", href: "/admin/backups", icon: Database },
   { label: "Logout", href: "/", icon: LogOutIcon },
 ];
 

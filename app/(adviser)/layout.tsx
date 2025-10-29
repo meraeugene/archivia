@@ -5,6 +5,7 @@ import {
   getThesisSubmissionCount,
 } from "@/actions/count";
 import FacultySidebar from "@/app/(adviser)/FacultySidebar";
+import BackToTopButton from "@/components/BackToTopButton";
 import { redirect } from "next/navigation";
 
 export default async function FacultyLayout({
@@ -37,6 +38,7 @@ export default async function FacultyLayout({
         currentAdviserLeadersCount={currentAdviserLeadersCount}
         thesisSubmissionsCount={thesisSubmissionsCount}
       />
+      <BackToTopButton />
       <div className="flex-1 ml-64">{children}</div>
     </main>
   );

@@ -55,7 +55,13 @@ export async function login(userId: string, password: string) {
     sameSite: "strict", // CSRF protection
   });
 
-  redirect(user.role === "faculty" ? "/dashboard" : "/");
+  redirect(
+    user.role === "faculty"
+      ? "/dashboard"
+      : user.role === "admin"
+      ? "/admin/dashboard"
+      : "/"
+  );
 }
 
 /**

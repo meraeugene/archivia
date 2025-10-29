@@ -1,5 +1,6 @@
 import { getCurrentUser } from "@/actions/auth";
 import { getStudentAdviser } from "@/actions/getStudentAdviser";
+import BackToTopButton from "@/components/BackToTopButton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
 import { navLinks } from "@/data/links";
@@ -21,6 +22,7 @@ export default async function UserLayout({
         navLinks={navLinks}
         studentAdviser={studentAdviser}
       />{" "}
+      <BackToTopButton />
       {children}
       <Footer />
     </main>
