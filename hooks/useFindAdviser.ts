@@ -16,6 +16,7 @@ export function useFindAdviser() {
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
+  const [recommendedIds, setRecommendedIds] = useState<string[]>([]);
 
   const hasRecommendations = recommendations.length > 0;
 
@@ -60,6 +61,8 @@ export function useFindAdviser() {
       }
 
       setRecommendations(result.recommendations);
+      setRecommendedIds(result.recommended_adviser_ids || []);
+
       toast.success(
         `We've found ${result.recommendations.length} adviser${
           result.recommendations.length !== 1 ? "s" : ""
@@ -73,7 +76,7 @@ export function useFindAdviser() {
     }
   };
 
-  const handleConfirmRequest = async () => {
+  const handleConfirmRequest = async (url: string) => {
     if (!selectedAdviser) return;
 
     startTransition(async () => {
@@ -81,7 +84,9 @@ export function useFindAdviser() {
         selectedAdviser.id,
         studentData.title,
         studentData.abstract,
-        selectedAdviser.email ?? ""
+        selectedAdviser.email ?? "",
+        url,
+        recommendedIds
       );
 
       if (res.error) {

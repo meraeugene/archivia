@@ -45,12 +45,14 @@ const HandledThesisModal: React.FC<HandledThesisModalProps> = ({
             </div>
 
             <div>
-              <strong>Panel Chair:</strong> {thesis.panel_chair_name || "N/A"}
+              <strong>Panel Chair:</strong> {thesis.panel_member1 || "N/A"}
             </div>
 
             <div>
               <strong>Panel Members:</strong>{" "}
-              {thesis.panel_members?.join(", ") || "N/A"}
+              {[thesis.panel_member2, thesis.panel_member3]
+                .filter(Boolean)
+                .join(", ") || "N/A"}
             </div>
 
             <div>

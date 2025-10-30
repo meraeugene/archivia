@@ -4,8 +4,9 @@ export type Thesis = {
   adviser_name: string;
   adviser_id: string;
   keywords: string[];
-  panel_chair_name: string;
-  panel_members: string[];
+  panel_member1: string;
+  panel_member2: string;
+  panel_member3: string;
   proponents: string[];
   defense_year: number;
   pages?: number;

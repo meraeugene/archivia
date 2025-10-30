@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { cancelRequest, sendRequest } from "@/actions/studentRequests";
 import { StudentRequest } from "@/types/studentRequests";
+import isValidUrl from "@/utils/isValidUrl";
 
 export function useStudentRequests() {
   const [expanded, setExpanded] = useState<string | null>(null);
@@ -45,7 +46,11 @@ export function useStudentRequests() {
     document.body.classList.remove("modal-open");
   };
 
-  const handleResendConfirm = (data: { title: string; abstract: string }) => {
+  const handleResendConfirm = (data: {
+    title: string;
+    abstract: string;
+    url: string;
+  }) => {
     if (!selectedRequest) return;
 
     if (!data.title.trim()) {
@@ -58,12 +63,23 @@ export function useStudentRequests() {
       return;
     }
 
+    if (!data.url.trim()) {
+      toast.error("Thesis URL cannot be empty.");
+      return;
+    }
+
+    if (!isValidUrl(data.url.trim())) {
+      toast.error("Please enter a valid link.");
+      return;
+    }
+
     startTransition(async () => {
       const res = await sendRequest(
         selectedRequest.adviser_id,
         data.title,
         data.abstract,
-        selectedRequest.adviser_email
+        selectedRequest.adviser_email,
+        data.url
       );
 
       if (res.error) {

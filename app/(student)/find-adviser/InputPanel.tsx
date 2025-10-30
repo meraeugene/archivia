@@ -1,6 +1,6 @@
 "use client";
 
-import { FileText, Lightbulb, Tags } from "lucide-react";
+import { BookOpenText, FileText, Lightbulb } from "lucide-react";
 import { StudentData, StudentDataField } from "@/types/advisers";
 
 interface InputPanelProps {
@@ -39,8 +39,8 @@ const InputPanel = ({
               Find Your Adviser
             </h1>
             <p className="text-gray-600">
-              Match with research mentors based on your thesis topic and
-              research overview
+              Match with research advisers based on your research title and
+              overview
             </p>
           </div>
         )}
@@ -55,13 +55,13 @@ const InputPanel = ({
           {/* Thesis Title */}
           <div className="group">
             <label className="flex items-center text-sm font-semibold text-gray-700 mb-3">
-              <Tags className="mr-2" size={20} />
-              Research Topics
+              <FileText className="mr-2" size={20} />
+              Research Title
             </label>
             <input
               type="text"
               className="w-full p-4 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-black outline-none transition-all duration-200 text-black placeholder-gray-400"
-              placeholder="e.g., Machine Learning, Crop Yield Prediction, Climate Data"
+              placeholder="e.g., Exploring Machine Learning Techniques for Predictive Analytics"
               value={studentData.title}
               onChange={(e) => onChange("title", e.target.value)}
             />
@@ -70,7 +70,7 @@ const InputPanel = ({
           {/* Abstract */}
           <div className="group">
             <label className="flex items-center text-sm font-semibold text-gray-700 mb-3">
-              <FileText className="mr-2" size={20} />
+              <BookOpenText className="mr-2" size={20} />
               Research Overview
             </label>
             <textarea
@@ -105,10 +105,10 @@ const InputPanel = ({
               <div>
                 <h4 className="font-semibold text-black mb-2">How it works</h4>
                 <p className="text-gray-600 text-sm leading-relaxed">
-                  Our AI Model analyzes your research topic and overview to
+                  Our AI Model analyzes your research title and overview to
                   match you with advisers who have experience in similar
-                  projects. The more detailed your description, the better the
-                  recommendations.
+                  projects. The more detailed your research title and overview,
+                  the better the recommendations.
                 </p>
               </div>
             </div>
@@ -120,9 +120,7 @@ const InputPanel = ({
             <Lightbulb className="text-blue-600 mt-0.5" size={18} />
             <p>
               Start typing your{" "}
-              <span className="font-medium">
-                research topics, research overview
-              </span>{" "}
+              <span className="font-medium">research title, and overview</span>{" "}
               to see your recommended advisers.
             </p>
           </div>

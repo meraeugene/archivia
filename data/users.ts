@@ -118,10 +118,10 @@ export const users = [
     password: "2022308",
     role: "faculty",
     profile: {
-      full_name: "Arlene A. Baldevolar",
+      full_name: "Arlene A. Baldelovar",
       suffix: "MAEd, MIT",
       position: "Assistant Professor",
-      bio: "Arlene A. Baldevolar, MAEd, MIT, is a faculty member and instructor in the IT Department at the University of Science and Technology of Southern Philippines. With expertise in education and information technology, he is dedicated to teaching and mentoring students in the field. His work focuses on integrating technology into education to enhance learning and innovation.",
+      bio: "Arlene A. Baldelovar, MAEd, MIT, is a faculty member and instructor in the IT Department at the University of Science and Technology of Southern Philippines. With expertise in education and information technology, he is dedicated to teaching and mentoring students in the field. His work focuses on integrating technology into education to enhance learning and innovation.",
       highest_educational_attainment: "To be provided",
       research_interest: "To be provided",
       orcid: "To be provided",

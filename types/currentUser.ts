@@ -1,6 +1,8 @@
 export type CurrentUser = {
+  id: string;
   user_id: string;
   role: "student" | "faculty" | "admin";
+  status: "active" | "inactive";
   email: string;
   full_name: string;
   prefix: string | null;

@@ -138,7 +138,7 @@ export async function sendThesisApprovalEmail({
 
                   <!-- Support -->
                   <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0;">
-                    Questions? Contact your adviser or reach out to <a href="mailto:archivia.capstone@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">archivia.capstone@gmail.com</a>
+                    Questions? Contact your adviser or reach out to <a href="mailto:capstone.archivia@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">capstone.archivia@gmail.com</a>
                   </p>
 
                 </td>

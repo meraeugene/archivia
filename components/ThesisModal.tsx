@@ -46,14 +46,14 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
             </div>
             <div className="flex items-center gap-2">
               <strong>Panel:</strong>
-              <div className="flex flex-wrap gap-2 ">
+              <div className="flex flex-wrap gap-2">
                 {[
-                  thesis.panel_chair_name &&
-                    `${thesis.panel_chair_name} (Chair)`,
-                  ...(thesis.panel_members || []),
+                  thesis.panel_member1 && `${thesis.panel_member1} (Chair)`,
+                  thesis.panel_member2,
+                  thesis.panel_member3,
                 ]
                   .filter(Boolean)
-                  .join(", ")}
+                  .join(", ") || "N/A"}
               </div>
             </div>
 

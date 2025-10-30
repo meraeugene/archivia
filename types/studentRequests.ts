@@ -8,6 +8,7 @@ export type StudentRequest = {
     | "referred"
     | "reserved"
     | "returned";
+  thesis_url: string;
   submitted_at: string;
   updated_at: string;
   title: string;

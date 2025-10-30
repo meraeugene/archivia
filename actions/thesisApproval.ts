@@ -49,8 +49,9 @@ export async function submitThesisForApproval(
     "keywords",
     "proponents",
     "adviser_id",
-    "panel_chair_name",
-    "panel_members",
+    "panel_member1",
+    "panel_member2",
+    "panel_member3",
     "defense_year",
     "category",
     "file_url",
@@ -89,8 +90,9 @@ export async function submitThesisForApproval(
         abstract: thesisData.abstract,
         keywords: thesisData.keywords,
         proponents: thesisData.proponents,
-        panel_chair_name: thesisData.panel_chair_name,
-        panel_members: thesisData.panel_members,
+        panel_member1: thesisData.panel_member1,
+        panel_member2: thesisData.panel_member2,
+        panel_member3: thesisData.panel_member3,
         defense_year: thesisData.defense_year,
         category: thesisData.category,
         file_url: thesisData.file_url,
@@ -156,8 +158,9 @@ export async function approveThesis(
       proponents: thesis.proponents,
       adviser_id: thesis.adviser_id,
       adviser_name: thesis.adviser_name,
-      panel_chair_name: thesis.panel_chair_name,
-      panel_members: thesis.panel_members,
+      panel_member1: thesis.panel_member1,
+      panel_member2: thesis.panel_member2,
+      panel_member3: thesis.panel_member3,
       defense_year: thesis.defense_year,
       category: thesis.category,
       file_url: thesis.file_url,
@@ -220,6 +223,15 @@ export async function returnThesis(
   feedback: string
 ) {
   const supabase = await createClient();
+
+  const session = await getSession();
+  if (!session?.sub) {
+    return { success: false, error: "Unauthorized access." };
+  }
+
+  if (session.role !== "faculty") {
+    return { success: false, error: "Only faculty can return theses." };
+  }
 
   if (!submissionId || !studentEmail || !feedback) {
     return { success: false, error: "Missing required fields." };

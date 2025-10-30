@@ -41,6 +41,7 @@ const RequestsList = ({ adviserRequests }: RequestsListProps) => {
         isPending={isPending}
         onClose={closeModal}
         onConfirm={handleConfirmModal}
+        recommendedAdviserIds={modalState.request?.recommendedAdviserIds || []}
       />
     </div>
   );

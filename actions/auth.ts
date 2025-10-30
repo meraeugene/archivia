@@ -101,8 +101,10 @@ export const getCurrentUser = cache(async () => {
   }
 
   return {
+    id: data.id,
     user_id: data.user_id,
     role: data.role as "student" | "faculty" | "admin",
+    status: data.status as "active" | "inactive",
     email: data.email,
     full_name: data.full_name,
     prefix: data.prefix,

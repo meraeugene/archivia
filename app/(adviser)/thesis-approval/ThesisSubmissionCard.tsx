@@ -57,11 +57,11 @@ const ThesisSubmissionCard = ({
         </div>
         <div>
           <span className="font-medium">Panel Chair:</span>{" "}
-          {thesis.panel_chair_name || "-"}
+          {thesis.panel_member1}
         </div>
         <div>
           <span className="font-medium">Panel Members:</span>{" "}
-          {thesis.panel_members?.join(", ") || "-"}
+          {thesis.panel_member2 || "-"}, {thesis.panel_member3 || "-"}
         </div>
         <div>
           <span className="font-medium">Proponents:</span>{" "}

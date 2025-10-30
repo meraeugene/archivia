@@ -8,9 +8,9 @@ interface RawThesisRow {
   KEYWORDS?: string;
   PROPONENTS?: string;
   ADVISER?: string;
-  PANEL1?: string;
-  PANEL2?: string;
-  PANEL3?: string;
+  PANEL1: string;
+  PANEL2: string;
+  PANEL3: string;
   "DEFENSE YEAR"?: string | number;
 }
 
@@ -22,8 +22,9 @@ interface ThesisInsert {
   proponents: string[];
   adviser_id?: string | null;
   adviser_name?: string | null;
-  panel_chair_name?: string | null;
-  panel_members: string[];
+  panel_member1: string;
+  panel_member2: string;
+  panel_member3: string;
   defense_year?: number | null;
 }
 
@@ -85,10 +86,9 @@ async function seedTheses(): Promise<void> {
           : [],
         adviser_id: adviserId,
         adviser_name: adviserName,
-        panel_chair_name: row.PANEL1?.trim() || null,
-        panel_members: [row.PANEL2, row.PANEL3]
-          .filter((m): m is string => !!m && m.trim() !== "")
-          .map((m) => m.trim()),
+        panel_member1: row.PANEL1?.trim(),
+        panel_member2: row.PANEL2?.trim(),
+        panel_member3: row.PANEL3?.trim(),
         defense_year: row["DEFENSE YEAR"]
           ? parseInt(String(row["DEFENSE YEAR"]))
           : null,

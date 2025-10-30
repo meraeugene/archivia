@@ -72,11 +72,13 @@ export default function HandledThesisClient({
               <div className="space-y-2 mb-4 text-sm text-gray-600">
                 <div>
                   <span className="font-medium">Panel Chair:</span>{" "}
-                  {thesis.panel_chair_name || "-"}
+                  {thesis.panel_member1 || "-"}
                 </div>
                 <div>
                   <span className="font-medium">Panel Members:</span>{" "}
-                  {thesis.panel_members?.join(", ") || "-"}
+                  {[thesis.panel_member2, thesis.panel_member3]
+                    .filter(Boolean)
+                    .join(", ") || "-"}
                 </div>
                 <div>
                   <span className="font-medium">Proponents:</span>{" "}

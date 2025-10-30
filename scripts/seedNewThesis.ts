@@ -22,8 +22,9 @@ interface ThesisInsert {
   proponents?: string[] | null;
   adviser_id?: string | null;
   adviser_name?: string | null;
-  panel_chair_name?: string | null;
-  panel_members?: string[] | null;
+  panel_member1?: string | null;
+  panel_member2?: string | null;
+  panel_member3?: string | null;
   defense_year?: number | null;
   category?: string[] | null;
 }
@@ -103,33 +104,29 @@ async function seedNewTheses(): Promise<void> {
     console.log(`📚 Found ${rows.length} theses rows in Excel`);
 
     const mappedRows: ThesisInsert[] = rows.map((row) => {
-      // 🧩 Adviser lookup
+      // Adviser lookup
       const adviserRaw = row.Adviser?.trim() || null;
       const adviserMatch = findUserByName(adviserRaw, byFullName, byLastName);
 
-      // 🧩 Parse panelists (e.g. "Rojo, Esclamado, Baconguis")
+      // Parse panelists into separate columns
       const panelList = row.Panelists
-        ? row.Panelists.split(",")
-            .map((p) => p.trim())
-            .filter(Boolean)
+        ? row.Panelists.split(",").map((p) => p.trim())
         : [];
 
-      const panelChairRaw = panelList[0] || null;
-      const panelMembersRaw = panelList.slice(1);
+      const panel_member1 = panelList[0] || null;
+      const panel_member2 = panelList[1] || null;
+      const panel_member3 = panelList[2] || null;
 
-      // Try to replace with full names if found
-      const panelChairMatch = findUserByName(
-        panelChairRaw,
-        byFullName,
-        byLastName
-      );
-      const panelMemberMatches = panelMembersRaw.map((m) =>
-        findUserByName(m, byFullName, byLastName)
-      );
-      // Ensure panel_members is string[] (filter out nulls) or null when empty
-      const panelMemberNames = panelMemberMatches
-        .map((p) => p.full_name)
-        .filter((name): name is string => Boolean(name));
+      // Optional: match to full names in user_profiles
+      const panelMember1Match = panel_member1
+        ? findUserByName(panel_member1, byFullName, byLastName).full_name
+        : null;
+      const panelMember2Match = panel_member2
+        ? findUserByName(panel_member2, byFullName, byLastName).full_name
+        : null;
+      const panelMember3Match = panel_member3
+        ? findUserByName(panel_member3, byFullName, byLastName).full_name
+        : null;
 
       const keywords =
         row.Keywords?.split(",")
@@ -148,8 +145,9 @@ async function seedNewTheses(): Promise<void> {
         proponents: proponents.length ? proponents : null,
         adviser_id: adviserMatch.id,
         adviser_name: adviserMatch.full_name,
-        panel_chair_name: panelChairMatch.full_name,
-        panel_members: panelMemberNames.length ? panelMemberNames : null,
+        panel_member1: panelMember1Match,
+        panel_member2: panelMember2Match,
+        panel_member3: panelMember3Match,
         defense_year: row.Year ? parseInt(String(row.Year)) : null,
         category:
           row.Category?.split(",")

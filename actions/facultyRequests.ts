@@ -6,7 +6,7 @@ import { cache } from "react";
 import { revalidatePath } from "next/cache";
 import { sendStudentAcceptedEmail } from "@/utils/nodemailer/sendStudentAcceptedEmail";
 import { sendStudentReturnedEmail } from "@/utils/nodemailer/sendStudentReturnedEmail";
-import { sendStudentReservedEmail } from "@/utils/nodemailer/sendStudentReservedEmail";
+// import { sendStudentReservedEmail } from "@/utils/nodemailer/sendStudentReservedEmail";
 
 export const getAdviserRequests = cache(async () => {
   const supabase = await createClient();
@@ -43,6 +43,8 @@ export const getAdviserRequests = cache(async () => {
     studentUserId: req.student_user_id,
     referred_to: req.referred_to,
     referred_by: req.referred_by,
+    thesisUrl: req.thesis_url,
+    recommendedAdviserIds: req.recommended_adviser_ids,
   }));
 });
 
@@ -85,6 +87,8 @@ export const getPendingAdviserRequests = cache(async () => {
     feedback: req.feedback,
     referred_to: req.referred_to,
     referred_by: req.referred_by,
+    thesisUrl: req.thesis_url,
+    recommendedAdviserIds: req.recommended_adviser_ids,
   }));
 });
 
@@ -123,6 +127,8 @@ export const getAdviserAdvisees = cache(async () => {
     feedback: req.feedback,
     referred_to: req.referred_to,
     referred_by: req.referred_by,
+    thesisUrl: req.thesis_url,
+    recommendedAdviserIds: req.recommended_adviser_ids,
   }));
 });
 
@@ -268,10 +274,10 @@ export async function returnRequest(
 }
 
 export async function markAsReserved(
-  requestId: string,
-  studentEmail: string,
-  thesisTitle: string,
-  thesisAbstract: string
+  requestId: string
+  // studentEmail: string,
+  // thesisTitle: string,
+  // thesisAbstract: string
 ) {
   const supabase = await createClient();
 
@@ -301,12 +307,12 @@ export async function markAsReserved(
     return { success: false, error: error.message };
   }
 
-  await sendStudentReservedEmail({
-    to: studentEmail,
-    adviserName: currentUser.full_name,
-    thesisTitle,
-    thesisAbstract,
-  });
+  // await sendStudentReservedEmail({
+  //   to: studentEmail,
+  //   adviserName: currentUser.full_name,
+  //   thesisTitle,
+  //   thesisAbstract,
+  // });
 
   revalidatePath("/requests");
   revalidatePath("/my-requests");

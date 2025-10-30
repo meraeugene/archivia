@@ -80,10 +80,11 @@ export async function sendStudentReservedEmail({
 
           <!-- Footer -->
           <tr>
-            <td style="background:#fafafa;padding:20px;text-align:center;border-top:1px solid #e5e5e5;color:#888;font-size:13px;">
-              This is an automated message from Archivia.
-            </td>
-          </tr>
+              <td style="background: #fafafa; padding: 32px 40px; text-align: center; border-top: 1px solid #e5e5e5;">
+                <p style="color: #737373; font-size: 13px; line-height: 1.5; margin: 0 0 8px 0;">This is an automated message from Archivia</p>
+                <p style="color: #a3a3a3; font-size: 12px; line-height: 1.5; margin: 0;">© ${new Date().getFullYear()} Archivia. All rights reserved.</p>
+              </td>
+            </tr>
         </table>
       </td></tr>
     </table>

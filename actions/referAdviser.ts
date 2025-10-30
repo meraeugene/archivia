@@ -8,20 +8,20 @@ import { sendReferralEmail } from "@/utils/nodemailer/sendReferralEmail";
 
 export const getReferAdvisers = cache(async () => {
   const supabase = await createClient();
-  const currentUser = await getSession();
+  const session = await getSession();
 
-  if (!currentUser) {
+  if (!session) {
     return { success: false, error: "Unauthorized" };
   }
 
-  if (currentUser.role !== "faculty") {
+  if (session.role !== "faculty") {
     return { success: false, error: "Unauthorized" };
   }
 
   const { data, error } = await supabase
     .from("all_advisers_view")
     .select("id, full_name, email")
-    .neq("id", currentUser.sub)
+    .neq("id", session.sub)
     .order("full_name");
 
   if (error) {

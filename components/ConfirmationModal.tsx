@@ -7,8 +7,10 @@ import {
   ChevronDown,
   CornerUpRight,
   RotateCcw,
+  Star,
 } from "lucide-react";
 import { ReferredAdviser } from "@/types/referredAdvisers";
+import { sortAdvisersByRecommendation } from "@/utils/sortedRecommendAdvisers";
 
 interface ConfirmModalProps {
   isOpen: boolean;
@@ -28,6 +30,7 @@ interface ConfirmModalProps {
     email: string;
     full_name: string;
   }) => void;
+  recommendedAdviserIds?: string[];
 }
 
 const ConfirmationModal: React.FC<ConfirmModalProps> = ({
@@ -40,6 +43,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
   referredAdvisers,
   selectedAdviser,
   setSelectedAdviser,
+  recommendedAdviserIds,
 }) => {
   const [feedback, setFeedback] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -111,6 +115,11 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
   const content = getModalContent();
   if (!content) return null;
 
+  const sortedAdvisers = sortAdvisersByRecommendation(
+    referredAdvisers,
+    recommendedAdviserIds
+  );
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm  ">
       <div className="bg-white rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-200 relative ">
@@ -181,7 +190,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                       No advisers available
                     </div>
                   ) : (
-                    referredAdvisers?.map((adviser) => (
+                    sortedAdvisers?.map((adviser) => (
                       <div
                         key={adviser.id}
                         onClick={() => {
@@ -192,20 +201,42 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                           });
                           setShowDropdown(false);
                         }}
-                        className={`p-3 text-sm cursor-pointer flex justify-between  hover:bg-gray-100 transition ${
+                        className={`p-3 w-full text-sm cursor-pointer justify-between flex items-center transition hover:bg-gray-50
+                        ${
                           selectedAdviser?.id === adviser.id
                             ? "bg-gray-100"
                             : ""
-                        }`}
+                        }
+                      `}
                       >
-                        <div className="flex flex-col gap-2 text-left">
-                          <span className="font-semibold">
-                            {adviser.full_name}
+                        <div className="flex flex-col text-left">
+                          <div className="flex items-center gap-3 ">
+                            <span className="font-semibold text-gray-900">
+                              {adviser.full_name}
+                            </span>
+
+                            {recommendedAdviserIds?.includes(adviser.id) && (
+                              <span className="flex items-center gap-1 text-yellow-500 text-xs font-medium">
+                                <Star
+                                  size={12}
+                                  className="fill-yellow-500 text-yellow-500"
+                                />
+                                Recommended
+                              </span>
+                            )}
+                          </div>
+
+                          {/* Adviser email */}
+                          <span className="text-gray-500 text-xs">
+                            {adviser.email}
                           </span>
-                          <span className="text-gray-500">{adviser.email}</span>
                         </div>
+
                         {selectedAdviser?.id === adviser.id && (
-                          <Check size={16} className="text-gray-700" />
+                          <Check
+                            size={16}
+                            className="text-gray-800 font-bold"
+                          />
                         )}
                       </div>
                     ))

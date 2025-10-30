@@ -63,6 +63,7 @@ export default function AdvisoryRequestsClient({
         referredAdvisers={referredAdvisers}
         selectedAdviser={selectedAdviser}
         setSelectedAdviser={setSelectedAdviser}
+        recommendedAdviserIds={modalState.request?.recommendedAdviserIds || []}
       />
     </main>
   );

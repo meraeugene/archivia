@@ -66,13 +66,14 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
 
         <div className="flex  gap-2">
           <strong>Panel:</strong>
-          <div className="flex flex-wrap gap-2 ">
+          <div className="flex flex-wrap gap-2">
             {[
-              thesis.panel_chair_name && `${thesis.panel_chair_name} (Chair)`,
-              ...(thesis.panel_members || []),
+              thesis.panel_member1 && `${thesis.panel_member1} (Chair)`,
+              thesis.panel_member2,
+              thesis.panel_member3,
             ]
               .filter(Boolean)
-              .join(", ") || "N/A"}{" "}
+              .join(", ") || "N/A"}
           </div>
         </div>
 

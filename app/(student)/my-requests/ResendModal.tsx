@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 interface ResendModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: (data: { title: string; abstract: string }) => void;
+  onConfirm: (data: { title: string; abstract: string; url: string }) => void;
   request?: StudentRequest | null;
   isPending?: boolean;
 }
@@ -21,11 +21,13 @@ const ResendModal = ({
 }: ResendModalProps) => {
   const [title, setTitle] = useState("");
   const [abstract, setAbstract] = useState("");
+  const [url, setUrl] = useState("");
 
   useEffect(() => {
     if (request) {
       setTitle(request.title || "");
       setAbstract(request.abstract || "");
+      setUrl(request.thesis_url || "");
     }
   }, [request]);
 
@@ -71,6 +73,18 @@ const ResendModal = ({
               placeholder="Enter your thesis abstract"
             />
           </div>
+
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              URL
+            </label>
+            <input
+              type="url"
+              onChange={(e) => setUrl(e.target.value)}
+              className="w-full border border-gray-300 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-black/70"
+              placeholder="Enter a URL related to your thesis (e.g., Google Drive link)"
+            />
+          </div>
         </div>
 
         {/* Action Buttons */}
@@ -83,7 +97,7 @@ const ResendModal = ({
           </button>
           <button
             disabled={isPending}
-            onClick={() => onConfirm({ title, abstract })}
+            onClick={() => onConfirm({ title, abstract, url })}
             className="flex-1 cursor-pointer px-5 py-3 rounded-xl bg-black text-white font-semibold hover:bg-black/90 transition-all flex items-center justify-center gap-2"
           >
             {isPending ? (

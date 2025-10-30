@@ -6,10 +6,9 @@ import { getInitials } from "@/utils/getInitials";
 import {
   Calendar,
   CalendarClock,
-  Check,
   CornerUpRight,
+  Link,
   Mail,
-  X,
 } from "lucide-react";
 
 interface RequestCardProps {
@@ -30,7 +29,6 @@ const RequestCard = ({
   isPending,
   handleOpenModal,
 }: RequestCardProps) => {
-  console.log(request);
   return (
     <div className="bg-white h-fit border overflow-hidden  p-6 hover:shadow-sm transition-shadow  rounded-lg">
       {/* Header */}
@@ -55,7 +53,7 @@ const RequestCard = ({
         </div>
 
         {/* Mark as Reserved Button */}
-        {request.status === "pending" && (
+        {/* {request.status === "pending" && (
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "reserve")}
@@ -65,7 +63,7 @@ const RequestCard = ({
             <CalendarClock className="h-3.5 w-3.5" />
             Mark As Reserved
           </button>
-        )}
+        )} */}
 
         {request.status === "reserved" && (
           <button
@@ -97,7 +95,7 @@ const RequestCard = ({
       </div>
 
       {/* Title + Abstract */}
-      <div className="mb-5">
+      <div className="mb-2">
         <h4 className="font-medium text-gray-900 mb-2">{request.title}</h4>
         <p
           className={`text-sm text-gray-600 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
@@ -113,6 +111,22 @@ const RequestCard = ({
           {isExpanded ? "Show less" : "Read more"}
         </button>
       </div>
+
+      {/* Thesis URL */}
+      {request.thesisUrl && (
+        <div className="mb-5 flex items-center gap-2">
+          <Link className="h-4 w-4 text-gray-600 " />
+          <a
+            href={request.thesisUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-blue-600 hover:underline break-all line-clamp-1"
+            title={request.thesisUrl}
+          >
+            {request.thesisUrl}
+          </a>
+        </div>
+      )}
 
       {request.status === "already_handled" && (
         <div className="mt-6 border border-blue-100 bg-blue-50 rounded-md p-4">
@@ -134,14 +148,23 @@ const RequestCard = ({
           {/* Accept */}
           <button
             disabled={isPending}
-            onClick={() => handleOpenModal?.(request, "accept")}
+            onClick={() => handleOpenModal?.(request, "reserve")}
             className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
           >
-            <Check className="h-4 w-4 mr-2" />
-            Accept
+            <CalendarClock className="h-4 w-4 mr-2" />
+            Mark as Reserve
           </button>
 
-          {request.status === "reserved" ? (
+          <button
+            disabled={isPending}
+            onClick={() => handleOpenModal?.(request, "refer")}
+            className="flex-1 cursor-pointer bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
+          >
+            <CornerUpRight className="h-4 w-4 mr-2" />
+            Refer Adviser
+          </button>
+
+          {/* {request.status === "reserved" ? (
             <button
               disabled={isPending}
               onClick={() => handleOpenModal?.(request, "refer")}
@@ -159,7 +182,7 @@ const RequestCard = ({
               <X className="h-4 w-4 mr-2" />
               Return
             </button>
-          )}
+          )} */}
         </div>
       ) : null}
     </div>

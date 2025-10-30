@@ -30,7 +30,6 @@ const UploadThesisModal = ({
   const { form, handleChange, errors, validate } = useThesisUpload();
 
   const [rawProponents, setRawProponents] = useState("");
-  const [rawPanelMembers, setRawPanelMembers] = useState("");
   const [rawKeywords, setRawKeywords] = useState("");
 
   if (!isOpen) return null;
@@ -124,27 +123,25 @@ const UploadThesisModal = ({
             <FormField
               label="Panel Chair"
               placeholder="e.g. John Harvey C. Babia"
-              value={form.panel_chair_name}
-              onChange={(e) => handleChange("panel_chair_name", e.target.value)}
-              error={errors.panel_chair_name}
+              value={form.panel_member1}
+              onChange={(e) => handleChange("panel_member1", e.target.value)}
+              error={errors.panel_member1}
             />
 
             <FormField
-              label="Panel Members (comma separated)"
-              placeholder="e.g. John Harvel C. Babia, Arnel L. Edo"
-              value={rawPanelMembers}
-              onChange={(e) => {
-                const value = e.target.value;
-                setRawPanelMembers(value);
-                handleChange(
-                  "panel_members",
-                  value
-                    .split(",")
-                    .map((v) => v.trim())
-                    .filter(Boolean)
-                );
-              }}
-              error={errors.panel_members}
+              label="Panel Member 2"
+              placeholder="e.g. Jane Doe"
+              value={form.panel_member2}
+              onChange={(e) => handleChange("panel_member2", e.target.value)}
+              error={errors.panel_member2}
+            />
+
+            <FormField
+              label="Panel Member 3"
+              placeholder="e.g. John Smith"
+              value={form.panel_member3}
+              onChange={(e) => handleChange("panel_member3", e.target.value)}
+              error={errors.panel_member3}
             />
           </div>
 

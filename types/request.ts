@@ -20,4 +20,6 @@ export type Request = {
   feedback: string | null;
   referred_to: string | null;
   referred_by: string | null;
+  thesisUrl: string;
+  recommendedAdviserIds: string[] | null;
 };

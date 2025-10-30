@@ -88,10 +88,10 @@ export function useAdvisoryRequests() {
           break;
         case "reserve":
           result = await markAsReserved(
-            requestId,
-            studentEmail,
-            title,
-            abstract
+            requestId
+            // studentEmail,
+            // title,
+            // abstract
           );
           break;
         default:

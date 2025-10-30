@@ -9,8 +9,9 @@ export type HandledThesis = {
   adviser_full_name: string | null;
   adviser_email: string | null;
   adviser_position: string | null;
-  panel_chair_name: string | null;
-  panel_members: string[] | null;
+  panel_member1: string;
+  panel_member2: string;
+  panel_member3: string;
   defense_year: number | null;
   category: string[] | null;
   file_url: string | null;

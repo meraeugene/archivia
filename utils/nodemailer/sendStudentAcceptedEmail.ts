@@ -95,7 +95,7 @@ export async function sendStudentAcceptedEmail({
                 <div style="height: 1px; background: #e5e5e5; margin: 40px 0;"></div>
 
                 <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0;">
-                  Questions? Contact <a href="mailto:archivia.capstone@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">archivia.capstone@gmail.com</a>
+                  Questions? Contact <a href="mailto:capstone.archivia@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">capstone.archivia@gmail.com</a>
                 </p>
               </td>
             </tr>

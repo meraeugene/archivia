@@ -7,9 +7,10 @@ export type ThesisSubmission = {
   abstract: string;
   keywords: string[];
   proponents: string[];
-  panel_chair_name?: string | null;
-  panel_members?: string[] | null;
-  defense_year?: number | null;
+  panel_member1: string;
+  panel_member2: string;
+  panel_member3: string;
+  defense_year: number;
   category: string[];
   file_url: string;
   status: "pending" | "approved" | "returned";

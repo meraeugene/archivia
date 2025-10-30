@@ -35,16 +35,18 @@ export async function sendRequest(
   adviserId: string,
   title: string,
   abstract: string,
-  adviserEmail: string
+  adviserEmail: string,
+  url: string,
+  recommendedIds?: string[]
 ) {
   const supabase = await createClient();
-  const user = await getSession();
+  const currentUser = await getCurrentUser();
 
-  if (!user) {
+  if (!currentUser) {
     return { error: "User not authenticated" };
   }
 
-  if (user.role !== "student") {
+  if (currentUser.role !== "student") {
     return { error: "Only students can send requests" };
   }
 
@@ -52,14 +54,11 @@ export async function sendRequest(
     return { error: "All fields are required" };
   }
 
-  // 1. Get current user info
-  const currentUser = await getCurrentUser();
-
-  // 2. Check if student already sent a request to this adviser
+  // 1. Check if student already sent a request to this adviser
   const { data: existing } = await supabase
     .from("student_requests")
     .select("id, status")
-    .eq("student_id", user.sub)
+    .eq("student_id", currentUser.id)
     .eq("adviser_id", adviserId)
     .in("status", ["pending", "accepted"])
     .maybeSingle();
@@ -71,14 +70,16 @@ export async function sendRequest(
     };
   }
 
-  // 3. Insert request
+  // 2. Insert request
   const { data, error } = await supabase
     .from("student_requests")
     .insert({
-      student_id: user.sub,
+      student_id: currentUser.id,
       adviser_id: adviserId,
       title,
       abstract,
+      thesis_url: url,
+      recommended_adviser_ids: recommendedIds,
     })
     .select()
     .single();
@@ -93,6 +94,7 @@ export async function sendRequest(
     studentName: currentUser?.full_name,
     thesisTitle: title,
     thesisAbstract: abstract,
+    thesisLink: url,
   });
 
   revalidatePath("/my-requests");

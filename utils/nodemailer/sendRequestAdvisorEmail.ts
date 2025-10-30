@@ -5,6 +5,7 @@ interface SendRequestAdviserEmailOptions {
   studentName: string;
   thesisTitle: string;
   thesisAbstract: string;
+  thesisLink: string;
 }
 
 /**
@@ -16,6 +17,7 @@ export async function sendRequestAdviserEmail({
   studentName,
   thesisTitle,
   thesisAbstract,
+  thesisLink,
 }: SendRequestAdviserEmailOptions) {
   const subject = `New Thesis Request - Archivia`;
 
@@ -76,7 +78,19 @@ export async function sendRequestAdviserEmail({
                   <p style="color: #404040; font-size: 15px; line-height: 1.6; margin: 0 0 20px 0;">${thesisTitle}</p>
 
                   <p style="color: #000000; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px 0;">Research Overview</p>
-                  <p style="color: #404040; font-size: 15px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${thesisAbstract}</p>
+                  <p style="color: #404040; font-size: 15px; line-height: 1.6; margin: 0 0 20px 0; white-space: pre-wrap;">${thesisAbstract}</p>
+
+                  <p style="color: #000000; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px 0;">
+                  Research Link
+                  </p>
+                  <a 
+                    href="${thesisLink}" 
+                    target="_blank" 
+                    rel="noopener noreferrer" 
+                    style="color: #1D4ED8; font-size: 15px; line-height: 1.6; margin: 0; "
+                  >
+                    ${thesisLink}
+                  </a>
                 </div>
 
                 <div style="text-align: center; margin: 0 0 32px 0;">
@@ -88,7 +102,7 @@ export async function sendRequestAdviserEmail({
                 <div style="height: 1px; background: #e5e5e5; margin: 40px 0;"></div>
 
                 <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0;">
-                  Questions? Contact <a href="mailto:archivia.capstone@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">archivia.capstone@gmail.com</a>
+                  Questions? Contact <a href="mailto:capstone.archivia@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">capstone.archivia@gmail.com</a>
                 </p>
               </td>
             </tr>
