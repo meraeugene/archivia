@@ -15,7 +15,7 @@ export default function Preloader({ redirectTo }: { redirectTo: string }) {
       setTimeout(() => {
         window.location.href = redirectTo;
       }, 0); // fade-out duration
-    }, 300); // minimal delay before fade-out, or 0 for immediate
+    }, 500); // minimal delay before fade-out
 
     return () => clearTimeout(timer);
   }, [redirectTo]);
