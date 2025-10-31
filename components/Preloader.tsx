@@ -14,7 +14,7 @@ export default function Preloader({ redirectTo }: { redirectTo: string }) {
       // Redirect after fade-out duration (matches CSS transition)
       setTimeout(() => {
         window.location.href = redirectTo;
-      }, 500); // fade-out duration
+      }, 0); // fade-out duration
     }, 300); // minimal delay before fade-out, or 0 for immediate
 
     return () => clearTimeout(timer);
