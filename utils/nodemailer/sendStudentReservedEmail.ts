@@ -1,4 +1,4 @@
-import { transporter } from "../transporter";
+import { transporter } from "./transporter";
 
 interface SendStudentReturnedEmailOptions {
   to: string;

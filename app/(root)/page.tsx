@@ -1,9 +1,9 @@
-import { getAllTheses } from "@/actions/theses";
+import { getAllTheses } from "@/actions/common/theses";
 import ArchiviaClient from "./ArchiviaClient";
-import { getSession } from "@/actions/auth";
-import { getAllCategories } from "@/actions/categories";
-import { getUserBookmarksIds } from "@/actions/bookmark";
-import { getStudentAdviser } from "@/actions/getStudentAdviser";
+import { getAllCategories } from "@/actions/common/getAllCategories";
+import { getStudentAdviser } from "@/actions/student/getStudentAdviser";
+import { getUserBookmarksIds } from "@/actions/common/getUserBookmarksIds";
+import { getSession } from "@/actions/auth/getSession";
 
 export default async function Page() {
   const [

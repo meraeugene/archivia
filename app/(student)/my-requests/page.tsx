@@ -1,6 +1,6 @@
-import { getStudentSentRequests } from "@/actions/studentRequests";
+import { getStudentSentRequests } from "@/actions/student/getStudentRequests";
 import MyRequestsClient from "./MyRequestsClient";
-import { getStudentAdviser } from "@/actions/getStudentAdviser";
+import { getStudentAdviser } from "@/actions/student/getStudentAdviser";
 
 export default async function SentRequestsPage() {
   const [{ data }, studentAdviser] = await Promise.all([

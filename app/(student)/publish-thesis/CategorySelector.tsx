@@ -47,7 +47,9 @@ export const CategorySelector = ({
       </div>
 
       <select
-        className="w-full border border-gray-300 p-2 rounded bg-white"
+        className={`w-full border border-gray-300 p-2 rounded bg-white ${
+          error ? "border-red-500" : ""
+        }`}
         onChange={(e) => {
           const selected = e.target.value;
           if (selected && !form.category.includes(selected)) {

@@ -1,7 +1,7 @@
 "use client";
 
+import { toggleBookmark } from "@/actions/common/toggleBookmark";
 import { useState } from "react";
-import { toggleBookmark } from "@/actions/bookmark";
 import { toast } from "sonner";
 
 export function useBookmark(thesisId: number, initialBookmarked = false) {

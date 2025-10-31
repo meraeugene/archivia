@@ -1,55 +1,8 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { getSession } from "../auth/getSession";
 import { revalidatePath } from "next/cache";
-import { getSession } from "./auth";
-
-export const getUserBookmarks = async () => {
-  const supabase = await createClient();
-
-  const session = await getSession();
-
-  if (!session) {
-    return { data: [], error: null };
-  }
-
-  const { data, error } = await supabase
-    .from("bookmarked_theses_view")
-    .select("*")
-    .eq("user_id", session?.sub)
-    .order("bookmarked_at", { ascending: false });
-
-  if (error) {
-    console.error(error);
-    return { data: [], error };
-  }
-
-  return { data, error: null };
-};
-
-export const getUserBookmarksIds = async () => {
-  const supabase = await createClient();
-  const session = await getSession();
-
-  if (!session) {
-    return { data: [], error: null };
-  }
-
-  const { data, error } = await supabase
-    .from("bookmarked_theses_view")
-    .select("id")
-    .eq("user_id", session?.sub)
-    .order("bookmarked_at", { ascending: false });
-
-  if (error) {
-    console.error("Error fetching bookmarks:", error);
-    return { data: [], error };
-  }
-
-  const thesisIds = data.map((item) => item.id);
-
-  return { data: thesisIds, error: null };
-};
 
 export async function toggleBookmark(thesisId: number) {
   const supabase = await createClient();

@@ -30,7 +30,7 @@ export default function MyRequestsClient({
     isPending,
   } = useStudentRequests();
 
-  if (requests.length === 0) {
+  if (!requests || requests.length === 0) {
     return <NoRequests />;
   }
 

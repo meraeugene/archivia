@@ -2,10 +2,10 @@
 
 import { Bookmark, Download, Eye } from "lucide-react";
 import { useState, useTransition } from "react";
-import { toggleBookmark } from "@/actions/bookmark";
 import { useArchivia } from "@/hooks/useArchivia";
 import { Thesis } from "@/types/thesis";
 import ThesisModal from "@/components/ThesisModal";
+import { toggleBookmark } from "@/actions/common/toggleBookmark";
 
 interface BookmarksClientProps {
   bookmarks: Thesis[];

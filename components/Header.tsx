@@ -2,7 +2,6 @@
 "use client";
 
 import { useState } from "react";
-import { logout } from "@/actions/auth";
 import { getInitials } from "@/utils/getInitials";
 import { ClipboardList, User } from "lucide-react";
 import Link from "next/link";
@@ -10,16 +9,25 @@ import { usePathname } from "next/navigation";
 import { LogoutButton } from "./LogoutButton";
 import { CurrentUser } from "@/types/currentUser";
 import { StudentAdviser } from "@/types/studentAdviser";
+import { logout } from "@/actions/auth/logout";
 
 interface HeaderProps {
   currentUser: CurrentUser | null;
   navLinks: { label: string; href: string }[];
   studentAdviser?: StudentAdviser | null;
+  isAuthorizedToUploadThesis?: boolean;
 }
 
-const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
+const Header = ({
+  currentUser,
+  navLinks,
+  studentAdviser,
+  isAuthorizedToUploadThesis,
+}: HeaderProps) => {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+
+  console.log(isAuthorizedToUploadThesis);
 
   const hideFindAdviser =
     currentUser?.role === "faculty" ||
@@ -63,19 +71,21 @@ const Header = ({ currentUser, navLinks, studentAdviser }: HeaderProps) => {
               })}
 
             {/* Student-only link */}
-            {currentUser?.role === "student" && studentAdviser && (
-              <Link
-                prefetch
-                href="/publish-thesis"
-                className={
-                  pathname === "/publish-thesis"
-                    ? "font-semibold text-black"
-                    : "text-gray-800 hover:text-black"
-                }
-              >
-                Publish Thesis
-              </Link>
-            )}
+            {currentUser?.role === "student" &&
+              studentAdviser &&
+              isAuthorizedToUploadThesis && (
+                <Link
+                  prefetch
+                  href="/publish-thesis"
+                  className={
+                    pathname === "/publish-thesis"
+                      ? "font-semibold text-black"
+                      : "text-gray-800 hover:text-black"
+                  }
+                >
+                  Publish Thesis
+                </Link>
+              )}
 
             {/* Admin- link */}
             {currentUser?.role === "admin" && (

@@ -1,6 +1,6 @@
-import { getCurrentUser } from "@/actions/auth";
 import { redirect } from "next/navigation";
 import AdminSidebar from "./AdminSidebar";
+import { getCurrentUser } from "@/actions/auth/getCurrentUser";
 
 export default async function AdminLayout({
   children,

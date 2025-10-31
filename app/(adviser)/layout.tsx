@@ -1,9 +1,9 @@
-import { getCurrentUser } from "@/actions/auth";
+import { getCurrentUser } from "@/actions/auth/getCurrentUser";
 import {
   getAdviserCurrentLeadersCount,
   getPendingAdviserRequestsCount,
   getThesisSubmissionCount,
-} from "@/actions/count";
+} from "@/actions/faculty/count";
 import FacultySidebar from "@/app/(adviser)/FacultySidebar";
 import BackToTopButton from "@/components/BackToTopButton";
 import { redirect } from "next/navigation";

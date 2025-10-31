@@ -3,7 +3,6 @@
 import { getInitials } from "@/utils/getInitials";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { logout } from "@/actions/auth";
 import {
   Home,
   FileText,
@@ -11,18 +10,20 @@ import {
   LayoutDashboard,
   LogOutIcon,
   Users,
-  FileCheck,
+  // FileCheck,
   BookOpen,
+  Lock,
 } from "lucide-react";
 import { useTransition } from "react";
 import { CurrentUser } from "@/types/currentUser";
+import { logout } from "@/actions/auth/logout";
 
 const adviserNavLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Advisory Requests", href: "/advisory-requests", icon: FileText },
   { label: "Advisees", href: "/advisees", icon: Users },
-  { label: "Thesis Approval", href: "/thesis-approval", icon: FileCheck },
+  // { label: "Thesis Approval", href: "/thesis-approval", icon: FileCheck },
   { label: "Handled Thesis", href: "/handled-thesis", icon: BookOpen },
   { label: "Settings", href: "/settings", icon: Settings },
   { label: "Logout", href: "/", icon: LogOutIcon },
@@ -86,6 +87,7 @@ const FacultySidebar = ({
             const isActive = pathname === item.href;
             const Icon = item.icon;
 
+            // Handle Logout separately
             if (item.label === "Logout") {
               return (
                 <button
@@ -93,7 +95,7 @@ const FacultySidebar = ({
                   onClick={handleLogout}
                   disabled={isPending}
                   className={`w-full flex cursor-pointer items-center px-3 py-2 text-sm font-medium rounded-md transition-colors
-                    text-gray-600 hover:bg-gray-50 hover:text-gray-900 disabled:opacity-50`}
+          text-gray-600 hover:bg-gray-50 hover:text-gray-900 disabled:opacity-50`}
                 >
                   <Icon className="h-5 w-5 mr-3" />
                   {isPending ? (
@@ -108,17 +110,48 @@ const FacultySidebar = ({
               );
             }
 
+            // Special case for Advisees
+            if (item.label === "Advisees") {
+              const isDisabled = currentAdviserLeadersCount === 0;
+              return (
+                <Link
+                  href={isDisabled ? "#" : item.href}
+                  key={item.href}
+                  className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors
+          ${
+            isDisabled
+              ? "cursor-pointer hover:bg-gray-50 hover:text-gray-900 text-gray-600"
+              : isActive
+              ? "bg-gray-100 text-gray-900"
+              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          }`}
+                >
+                  <Icon className="h-5 w-5 mr-3" />
+                  {item.label}
+                  {isDisabled && (
+                    <Lock className="ml-auto h-4 w-4 text-black " />
+                  )}
+                  {!isDisabled && currentAdviserLeadersCount > 0 && (
+                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
+                      {currentAdviserLeadersCount}
+                    </span>
+                  )}
+                </Link>
+              );
+            }
+
+            // Default rendering for other links
             return (
               <Link
                 prefetch
                 key={item.href}
                 href={item.href}
                 className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors
-                  ${
-                    isActive
-                      ? "bg-gray-100 text-gray-900"
-                      : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
-                  }`}
+        ${
+          isActive
+            ? "bg-gray-100 text-gray-900"
+            : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+        }`}
               >
                 <Icon className="h-5 w-5 mr-3" />
                 {item.label}
@@ -127,13 +160,6 @@ const FacultySidebar = ({
                   pendingAdviserRequestCount > 0 && (
                     <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
                       {pendingAdviserRequestCount}
-                    </span>
-                  )}
-
-                {item.label === "Advisees" &&
-                  currentAdviserLeadersCount !== 0 && (
-                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
-                      {currentAdviserLeadersCount}
                     </span>
                   )}
 

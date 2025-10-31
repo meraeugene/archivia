@@ -1,4 +1,4 @@
-import { getAdviserAdvisees } from "@/actions/facultyRequests";
+import { getAdviserAdvisees } from "@/actions/faculty/getAdviserAdvisees";
 import AdviseesClient from "./AdviseesClient";
 
 export default async function Page() {

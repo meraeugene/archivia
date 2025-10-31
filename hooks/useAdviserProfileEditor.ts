@@ -3,7 +3,7 @@
 import { useState, ChangeEvent, useTransition } from "react";
 import { toast } from "sonner";
 import { uploadImageToCloudinary } from "@/utils/cloudinary/uploadImageToCloundinary";
-import { updateAdviserProfile } from "@/actions/profile";
+import { updateAdviserProfile } from "@/actions/faculty/updateAdviserProfile";
 import { CurrentUser } from "@/types/currentUser";
 
 type AdviserFormState = {

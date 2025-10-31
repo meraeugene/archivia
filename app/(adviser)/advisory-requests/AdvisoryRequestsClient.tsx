@@ -56,14 +56,16 @@ export default function AdvisoryRequestsClient({
       <ConfirmationModal
         isOpen={modalState.open}
         type={modalState.type}
-        studentName={modalState.request?.studentName || ""}
+        studentName={modalState.request?.student_name || ""}
         isPending={isPending}
         onClose={closeModal}
         onConfirm={handleConfirmModal}
-        referredAdvisers={referredAdvisers}
         selectedAdviser={selectedAdviser}
         setSelectedAdviser={setSelectedAdviser}
-        recommendedAdviserIds={modalState.request?.recommendedAdviserIds || []}
+        referredAdvisers={referredAdvisers}
+        recommendedAdviserIds={
+          modalState.request?.recommended_adviser_ids || []
+        }
       />
     </main>
   );

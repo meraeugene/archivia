@@ -3,10 +3,10 @@
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
 import { useAdviserStore } from "@/store/adviserStore";
-import { sendRequest } from "@/actions/studentRequests";
-import { getRecommendedAdvisers } from "@/actions/getRecommendedAdvisers";
+import { getRecommendedAdvisers } from "@/actions/student/getRecommendedAdvisers";
 import { isValidText } from "@/utils/isValidText";
 import { Adviser } from "@/types/advisers";
+import { sendRequest } from "@/actions/student/sendRequest";
 
 export function useFindAdviser() {
   const { studentData, setStudentData } = useAdviserStore();

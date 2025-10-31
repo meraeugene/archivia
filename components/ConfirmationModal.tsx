@@ -6,6 +6,7 @@ import {
   Check,
   ChevronDown,
   CornerUpRight,
+  LockOpen,
   RotateCcw,
   Star,
 } from "lucide-react";
@@ -14,7 +15,7 @@ import { sortAdvisersByRecommendation } from "@/utils/sortedRecommendAdvisers";
 
 interface ConfirmModalProps {
   isOpen: boolean;
-  type: "accept" | "refer" | "approve" | "returned" | "reserve";
+  type: "accept" | "refer" | "approve" | "returned" | "reserve" | "authorize";
   studentName: string;
   onClose: () => void;
   onConfirm: (feedback?: string) => void;
@@ -72,7 +73,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
         return {
           action: "refer",
           subject: "this advisory request to another adviser",
-          label: "Referral note (optional)",
+          label: "Reason for referral.(optional)",
           placeholder: "Provide a note or reason for referring this request...",
           icon: <CornerUpRight className="text-white" size={28} />,
           iconBg: "bg-gray-900",
@@ -107,6 +108,15 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
           iconBg: "bg-gray-900",
           confirmText: "Reserve",
         };
+      case "authorize":
+        return {
+          action: "authorize",
+          subject: "this student leader to upload thesis",
+          label: "Add a note (optional)",
+          icon: <LockOpen className="text-white" size={28} />,
+          iconBg: "bg-gray-900",
+          confirmText: "Authorize",
+        };
       default:
         return null;
     }
@@ -134,7 +144,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
 
         {/* Message */}
         <div className="text-center mb-8 space-y-5">
-          <p className="text-gray-600 w-[80%] mx-auto">
+          <p className="text-gray-600 w-[90%] mx-auto">
             {content.action === "reserve" ? (
               <>
                 Are you sure about marking this as{" "}
@@ -150,6 +160,11 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                   {content.action}{" "}
                 </span>
                 {content.subject}?
+                {content.action === "authorize" && (
+                  <span className="text-gray-500 block mt-2">
+                    This action cannot be undo once authorized.
+                  </span>
+                )}
               </>
             )}
           </p>
@@ -201,7 +216,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                           });
                           setShowDropdown(false);
                         }}
-                        className={`p-3 w-full text-sm cursor-pointer justify-between flex items-center transition hover:bg-gray-50
+                        className={`p-3 text-sm cursor-pointer  flex items-center transition hover:bg-gray-50
                         ${
                           selectedAdviser?.id === adviser.id
                             ? "bg-gray-100"
@@ -209,20 +224,19 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                         }
                       `}
                       >
-                        <div className="flex flex-col text-left">
-                          <div className="flex items-center gap-3 ">
+                        <div className="flex flex-col  text-left w-full">
+                          <div className="flex items-center justify-between ">
                             <span className="font-semibold text-gray-900">
                               {adviser.full_name}
                             </span>
-
                             {recommendedAdviserIds?.includes(adviser.id) && (
-                              <span className="flex items-center gap-1 text-yellow-500 text-xs font-medium">
+                              <p className="flex items-center  gap-1 text-yellow-500 text-xs font-medium">
                                 <Star
                                   size={12}
                                   className="fill-yellow-500 text-yellow-500"
                                 />
-                                Recommended
-                              </span>
+                                <span>Recommended</span>
+                              </p>
                             )}
                           </div>
 
@@ -231,13 +245,6 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                             {adviser.email}
                           </span>
                         </div>
-
-                        {selectedAdviser?.id === adviser.id && (
-                          <Check
-                            size={16}
-                            className="text-gray-800 font-bold"
-                          />
-                        )}
                       </div>
                     ))
                   )}
@@ -247,26 +254,28 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
           )}
 
           {/* Feedback textarea */}
-          {content.action !== "reserve" && (
-            <div className="space-y-3">
-              <label className="block text-left text-sm font-semibold text-gray-600">
-                {content.label}
-              </label>
-              <textarea
-                value={feedback}
-                onChange={(e) => setFeedback(e.target.value)}
-                placeholder={content.placeholder}
-                className="w-full p-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm"
-                rows={3}
-                maxLength={300}
-              />
-              <div className="text-right">
-                <span className="text-xs text-gray-500">
-                  {feedback.length}/300
-                </span>
+          {content.action !== "reserve" &&
+            content.action !== "unauthorize" &&
+            content.action !== "authorize" && (
+              <div className="space-y-3">
+                <label className="block text-left text-sm font-semibold text-gray-600">
+                  {content.label}
+                </label>
+                <textarea
+                  value={feedback}
+                  onChange={(e) => setFeedback(e.target.value)}
+                  placeholder={content.placeholder}
+                  className="w-full p-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm"
+                  rows={3}
+                  maxLength={300}
+                />
+                <div className="text-right">
+                  <span className="text-xs text-gray-500">
+                    {feedback.length}/300
+                  </span>
+                </div>
               </div>
-            </div>
-          )}
+            )}
         </div>
 
         {/* Actions */}

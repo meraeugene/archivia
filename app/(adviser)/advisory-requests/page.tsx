@@ -1,6 +1,6 @@
-import { getPendingAdviserRequests } from "@/actions/facultyRequests";
+import { getReferAdvisers } from "@/actions/faculty/getReferAdvisers";
 import AdvisoryRequestsClient from "./AdvisoryRequestsClient";
-import { getReferAdvisers } from "@/actions/referAdviser";
+import { getPendingAdviserRequests } from "@/actions/faculty/getPendingAdviserRequests";
 
 export default async function Page() {
   const [requests, { advisers: referredAdvisers = [] }] = await Promise.all([

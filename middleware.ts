@@ -10,6 +10,7 @@ const PROTECTED_PATHS = [
   "/bookmarks",
   "/browse",
   "/profile",
+  "/settings",
 
   // student
   "/find-adviser",
@@ -21,7 +22,6 @@ const PROTECTED_PATHS = [
   "/advisory-requests",
   "/dashboard",
   "/handled-thesis",
-  "/settings",
   "/thesis-approval",
 
   // admin
@@ -97,6 +97,31 @@ export async function middleware(request: NextRequest) {
 
     if (!adviser) {
       url.pathname = "/find-adviser";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // 7. Student without authorization → block /publish-thesis
+  if (user?.role === "student" && pathname.startsWith("/publish-thesis")) {
+    // query student_requests where status = 'accepted' and is_authorized = true
+    const { data: authorizedRequests, error } = await supabase
+      .from("student_requests")
+      .select("id")
+      .eq("student_id", user.sub)
+      .eq("status", "accepted")
+      .eq("is_authorized", true)
+      .limit(1);
+
+    if (error) {
+      console.error("Error checking authorization:", error);
+      // fail-safe: block access if error
+      url.pathname = "/my-requests";
+      return NextResponse.redirect(url);
+    }
+
+    if (!authorizedRequests || authorizedRequests.length === 0) {
+      // Student is not authorized → redirect
+      url.pathname = "/my-requests";
       return NextResponse.redirect(url);
     }
   }

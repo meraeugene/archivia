@@ -1,7 +1,7 @@
 import React from "react";
 import AdvisersClient from "./AdvisersClient";
-import { getAllAdvisers } from "@/actions/advisers";
-import { getStudentAdviser } from "@/actions/getStudentAdviser";
+import { getStudentAdviser } from "@/actions/student/getStudentAdviser";
+import { getAllAdvisers } from "@/actions/faculty/getAllAdvisers";
 
 const page = async () => {
   const [advisers, studentAdviser] = await Promise.all([

@@ -1,6 +1,6 @@
 "use client";
 
-import { submitThesisForApproval } from "@/actions/thesisApproval";
+import { submitThesisForApproval } from "@/actions/student/submitThesis";
 import { Thesis } from "@/types/thesis";
 import { useRouter } from "next/navigation";
 import { useState, useRef, DragEvent, ChangeEvent } from "react";

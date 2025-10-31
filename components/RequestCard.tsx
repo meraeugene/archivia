@@ -8,6 +8,7 @@ import {
   CalendarClock,
   CornerUpRight,
   Link,
+  LockOpen,
   Mail,
 } from "lucide-react";
 
@@ -18,7 +19,7 @@ interface RequestCardProps {
   isPending?: boolean;
   handleOpenModal?: (
     request: Request,
-    type: "accept" | "refer" | "reserve" | "returned"
+    type: "accept" | "refer" | "reserve" | "returned" | "authorize"
   ) => void;
 }
 
@@ -35,20 +36,22 @@ const RequestCard = ({
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-3">
           <div className="w-9 h-9 cursor-pointer rounded-full overflow-hidden flex items-center justify-center bg-black text-white font-bold">
-            {request?.studentProfilePicture ? (
+            {request?.student_profile_picture ? (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                src={request.studentProfilePicture}
-                alt={request.studentName}
+                src={request.student_profile_picture}
+                alt={request.student_name}
                 className="w-full h-full object-cover"
               />
             ) : (
-              getInitials(request?.studentName)
+              getInitials(request?.student_name)
             )}
           </div>
           <div>
-            <h3 className="font-medium text-gray-900">{request.studentName}</h3>
-            <p className="text-sm text-gray-500">{request.studentUserId}</p>
+            <h3 className="font-medium text-gray-900">
+              {request.student_name}
+            </h3>
+            <p className="text-sm text-gray-500">{request.student_user_id}</p>
           </div>
         </div>
 
@@ -81,16 +84,16 @@ const RequestCard = ({
         <div className="flex items-center text-sm text-gray-600">
           <Mail className="h-4 w-4 mr-2" />
           <a
-            href={`mailto:${request.studentEmail}`}
+            href={`mailto:${request.student_email}`}
             className="text-blue-600 hover:underline"
           >
-            {request.studentEmail}
+            {request.student_email}
           </a>
         </div>
 
         <div className="flex items-center text-sm text-gray-600">
           <Calendar className="h-4 w-4 mr-2" />
-          <span>{formatDate(request.submittedAt)}</span>
+          <span>{formatDate(request.submitted_at)}</span>
         </div>
       </div>
 
@@ -113,17 +116,17 @@ const RequestCard = ({
       </div>
 
       {/* Thesis URL */}
-      {request.thesisUrl && (
+      {request.thesis_url && (
         <div className="mb-5 flex items-center gap-2">
           <Link className="h-4 w-4 text-gray-600 " />
           <a
-            href={request.thesisUrl}
+            href={request.thesis_url}
             target="_blank"
             rel="noopener noreferrer"
             className="text-sm text-blue-600 hover:underline break-all line-clamp-1"
-            title={request.thesisUrl}
+            title={request.thesis_url}
           >
-            {request.thesisUrl}
+            {request.thesis_url}
           </a>
         </div>
       )}
@@ -141,6 +144,31 @@ const RequestCard = ({
       )}
 
       {/* Actions */}
+
+      {request.status === "accepted" && (
+        <button
+          disabled={isPending}
+          onClick={() => handleOpenModal?.(request, "authorize")}
+          className={`flex  w-full justify-center items-center gap-2 py-3 rounded-md text-sm font-medium transition-colors border
+      ${
+        request.is_authorized
+          ? "bg-black text-white border  "
+          : "bg-white text-gray-700 cursor-pointer border-gray-300 hover:bg-gray-50"
+      }`}
+        >
+          {request.is_authorized ? (
+            <>
+              <LockOpen className="h-4 w-4" /> Authorized
+            </>
+          ) : (
+            <>
+              <LockOpen className="h-4 w-4" />
+              Authorize Upload
+            </>
+          )}{" "}
+        </button>
+      )}
+
       {request.status === "pending" ||
       request.status === "reserved" ||
       request.status === "referred" ? (
@@ -152,7 +180,7 @@ const RequestCard = ({
             className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
           >
             <CalendarClock className="h-4 w-4 mr-2" />
-            Mark as Reserve
+            Reserve
           </button>
 
           <button

@@ -119,7 +119,7 @@ const UploadThesisModal = ({
           </div>
 
           {/* Panel Chair | Panel Members */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <FormField
               label="Panel Chair"
               placeholder="e.g. John Harvey C. Babia"

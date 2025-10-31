@@ -1,5 +1,5 @@
-import { getCurrentUser } from "@/actions/auth";
-import { getStudentAdviser } from "@/actions/getStudentAdviser";
+import { getCurrentUser } from "@/actions/auth/getCurrentUser";
+import { getStudentAdviser } from "@/actions/student/getStudentAdviser";
 import BackToTopButton from "@/components/BackToTopButton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";

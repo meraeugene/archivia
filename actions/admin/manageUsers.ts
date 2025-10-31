@@ -2,9 +2,9 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { getSession } from "../auth";
 import { isValidEmail } from "@/utils/isValidEmail";
 import bcrypt from "bcryptjs";
+import { getSession } from "../auth/getSession";
 
 export async function getAllUsers() {
   const supabase = await createClient();

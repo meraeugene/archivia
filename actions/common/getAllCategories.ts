@@ -11,10 +11,7 @@ export const getAllCategories = cache(async () => {
     .select("category")
     .order("category", { ascending: true });
 
-  if (error) {
-    console.error("Error fetching categories:", error.message);
-    return [];
-  }
+  if (error) throw error;
 
   return [
     { key: "all", label: "All" },

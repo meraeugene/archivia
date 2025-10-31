@@ -6,18 +6,19 @@ import {
   FileText,
   Users,
 } from "lucide-react";
-import { getAdviserRequests } from "@/actions/facultyRequests";
 import RequestsList from "@/components/RequestsList";
 import StatsCard from "../../../components/StatsCard";
 import QuickActionsCard from "../../../components/QuickActionsCard";
-import { getHandledThesisCount } from "@/actions/handledThesis";
 import Link from "next/link";
 import {
   getAdviserCurrentLeadersCount,
   getAdviserRequestsCount,
+  getHandledThesisCount,
   getPendingAdviserRequestsCount,
   getThesisSubmissionCount,
-} from "@/actions/count";
+} from "@/actions/faculty/count";
+import { getAdviserRequests } from "@/actions/faculty/getAdviserRequests";
+import { getReferAdvisers } from "@/actions/faculty/getReferAdvisers";
 
 export default async function FacultyDashboard() {
   const [
@@ -25,8 +26,9 @@ export default async function FacultyDashboard() {
     pendingAdviserRequestCount,
     totalAdviserRequestCount,
     thesisApprovedCount,
-    handleThesisCount,
+    handledThesisCount,
     adviserCurrentLeadersCount,
+    { advisers: referredAdvisers = [] },
   ] = await Promise.all([
     getAdviserRequests(),
     getPendingAdviserRequestsCount(),
@@ -34,6 +36,7 @@ export default async function FacultyDashboard() {
     getThesisSubmissionCount(),
     getHandledThesisCount(),
     getAdviserCurrentLeadersCount(),
+    getReferAdvisers(),
   ]);
 
   return (
@@ -49,46 +52,41 @@ export default async function FacultyDashboard() {
             <StatsCard
               title="Total Advisory Requests"
               count={totalAdviserRequestCount}
-              icon={<FileText className="h-6 w-6 text-gray-600" />}
+              icon={<FileText className="h-6 w-6 " />}
               desc="All advisory requests received"
               iconClass="bg-gray-100"
-              textColorClass="text-gray-600"
             />
 
             <StatsCard
               title="Pending Advisory Requests"
               count={pendingAdviserRequestCount}
-              icon={<Clock className="h-6 w-6 text-gray-600" />}
+              icon={<Clock className="h-6 w-6 " />}
               desc="Awaiting your review"
               iconClass="bg-gray-100"
-              textColorClass="text-gray-600"
             />
 
             <StatsCard
               title="Advisees"
               count={adviserCurrentLeadersCount}
-              icon={<Users className="h-6 w-6 text-gray-600" />}
+              icon={<Users className="h-6 w-6 " />}
               desc="Accepted student leaders"
               iconClass="bg-gray-100"
-              textColorClass="text-gray-600"
             />
 
             <StatsCard
               title="Approval Requests"
               count={thesisApprovedCount}
-              icon={<FileCheck className="h-6 w-6 text-gray-600" />}
+              icon={<FileCheck className="h-6 w-6 " />}
               desc="Thesis awaiting your approval"
               iconClass="bg-gray-100"
-              textColorClass="text-gray-600"
             />
 
             <StatsCard
               title="Handled Thesis"
-              count={handleThesisCount}
-              icon={<BookCopy className="h-6 w-6 text-gray-600" />}
+              count={handledThesisCount}
+              icon={<BookCopy className="h-6 w-6 " />}
               desc="Thesis you have advised"
               iconClass="bg-gray-100"
-              textColorClass="text-gray-600"
             />
           </div>
         </section>
@@ -151,7 +149,10 @@ export default async function FacultyDashboard() {
             )}
           </div>
 
-          <RequestsList adviserRequests={adviserRequests} />
+          <RequestsList
+            adviserRequests={adviserRequests}
+            referredAdvisers={referredAdvisers}
+          />
         </section>
       </div>
     </main>

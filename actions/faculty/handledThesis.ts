@@ -2,7 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { cache } from "react";
-import { getSession } from "./auth";
+import { getSession } from "../auth/getSession";
 
 export const getHandledTheses = cache(async () => {
   const supabase = await createClient();
@@ -25,25 +25,4 @@ export const getHandledTheses = cache(async () => {
   }
 
   return data;
-});
-
-export const getHandledThesisCount = cache(async () => {
-  const supabase = await createClient();
-  const session = await getSession();
-
-  if (session?.role !== "faculty") {
-    return 0;
-  }
-
-  const { count, error } = await supabase
-    .from("adviser_handled_theses_view")
-    .select("*", { count: "exact", head: true })
-    .eq("adviser_id", session.sub);
-
-  if (error) {
-    console.error("Error fetching handled thesis count:", error.message);
-    return 0;
-  }
-
-  return count || 0;
 });

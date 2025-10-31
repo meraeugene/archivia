@@ -1,7 +1,7 @@
 export type Request = {
   id: string;
-  adviserId: string;
-  studentId: string;
+  adviser_id: string;
+  student_id: string;
   status:
     | "pending"
     | "accepted"
@@ -10,16 +10,17 @@ export type Request = {
     | "referred"
     | "reserved"
     | "returned";
-  submittedAt: string;
-  studentUserId: string;
-  studentName: string;
-  studentEmail: string;
-  studentProfilePicture: string | null;
+  submitted_at: string;
+  student_user_id: string;
+  student_name: string;
+  student_email: string;
+  student_profile_picture: string | null;
   title: string;
   abstract: string;
   feedback: string | null;
   referred_to: string | null;
   referred_by: string | null;
-  thesisUrl: string;
-  recommendedAdviserIds: string[] | null;
+  thesis_url: string;
+  recommended_adviser_ids: string[] | null;
+  is_authorized: boolean;
 };

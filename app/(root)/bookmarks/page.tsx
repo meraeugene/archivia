@@ -1,4 +1,4 @@
-import { getUserBookmarks } from "@/actions/bookmark";
+import { getUserBookmarks } from "@/actions/common/getUserBookmarks";
 import BookmarksClient from "./BookmarksClient";
 
 export default async function BookmarksPage() {

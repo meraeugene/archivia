@@ -4,11 +4,16 @@ import RequestCard from "./RequestCard";
 import { Request } from "@/types/request";
 import { useAdvisoryRequests } from "@/hooks/useAdvisoryRequests";
 import ConfirmationModal from "./ConfirmationModal";
+import { ReferredAdviser } from "@/types/referredAdvisers";
 
 interface RequestsListProps {
   adviserRequests: Request[];
+  referredAdvisers?: ReferredAdviser[];
 }
-const RequestsList = ({ adviserRequests }: RequestsListProps) => {
+const RequestsList = ({
+  adviserRequests,
+  referredAdvisers,
+}: RequestsListProps) => {
   const {
     expandedId,
     isPending,
@@ -37,11 +42,14 @@ const RequestsList = ({ adviserRequests }: RequestsListProps) => {
       <ConfirmationModal
         isOpen={modalState.open}
         type={modalState.type}
-        studentName={modalState.request?.studentName || ""}
+        studentName={modalState.request?.student_name || ""}
         isPending={isPending}
         onClose={closeModal}
         onConfirm={handleConfirmModal}
-        recommendedAdviserIds={modalState.request?.recommendedAdviserIds || []}
+        recommendedAdviserIds={
+          modalState.request?.recommended_adviser_ids || []
+        }
+        referredAdvisers={referredAdvisers || []}
       />
     </div>
   );

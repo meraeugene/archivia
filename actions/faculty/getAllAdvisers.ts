@@ -9,8 +9,7 @@ export const getAllAdvisers = cache(async () => {
   const { data, error } = await supabase.from("all_advisers_view").select("*");
 
   if (error) {
-    console.error("Error fetching all advisers:", error.message);
-    return [];
+    throw new Error(error.message);
   }
 
   return data;

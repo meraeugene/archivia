@@ -1,10 +1,12 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
+
 import { useEffect, useState } from "react";
 import { User, Lock, Eye, EyeOff } from "lucide-react";
-import { login } from "@/actions/auth";
 import { toast } from "sonner";
 import { useAdviserStore } from "@/store/adviserStore";
+import { login } from "@/actions/auth/login";
+import Preloader from "@/components/Preloader";
 
 interface FormData {
   userId: string;
@@ -13,6 +15,7 @@ interface FormData {
 
 export default function Login() {
   const { reset } = useAdviserStore();
+  const [showPreloader, setShowPreloader] = useState<string | null>(null);
 
   useEffect(() => {
     reset();
@@ -57,12 +60,18 @@ export default function Login() {
         setLoading(false);
         return;
       }
+
+      if (result.redirectTo) {
+        setShowPreloader(result.redirectTo);
+      }
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
+
+  if (showPreloader) return <Preloader redirectTo={showPreloader} />;
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-white px-4 relative">

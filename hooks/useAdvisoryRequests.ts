@@ -2,13 +2,13 @@
 
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import {
-  acceptRequest,
-  markAsReserved,
-  returnRequest,
-} from "@/actions/facultyRequests";
+
 import { Request } from "@/types/request";
-import { referRequest } from "@/actions/referAdviser";
+import { referRequest } from "@/actions/faculty/referRequest";
+import { acceptRequest } from "@/actions/faculty/acceptRequest";
+import { returnRequest } from "@/actions/faculty/returnRequest";
+import { authorizeUpload } from "@/actions/faculty/authorizeUpload";
+// import { markAsReserved } from "@/actions/faculty/markAsReserved";
 
 export function useAdvisoryRequests() {
   const [expandedId, setExpandedId] = useState<string | null>(null);
@@ -21,7 +21,7 @@ export function useAdvisoryRequests() {
 
   const [modalState, setModalState] = useState<{
     open: boolean;
-    type: "accept" | "reserve" | "refer" | "returned";
+    type: "accept" | "reserve" | "refer" | "returned" | "authorize";
     request: Request | null;
   }>({ open: false, type: "accept", request: null });
 
@@ -31,7 +31,7 @@ export function useAdvisoryRequests() {
 
   const openModal = (
     request: Request,
-    type: "accept" | "reserve" | "refer" | "returned"
+    type: "accept" | "reserve" | "refer" | "returned" | "authorize"
   ) => setModalState({ open: true, type, request });
 
   const closeModal = () =>
@@ -40,7 +40,7 @@ export function useAdvisoryRequests() {
   const handleAction = async (
     title: string,
     abstract: string,
-    type: "accept" | "refer" | "reserve" | "returned",
+    type: "accept" | "refer" | "reserve" | "returned" | "authorize",
     requestId: string,
     feedback: string,
     studentEmail: string,
@@ -87,12 +87,24 @@ export function useAdvisoryRequests() {
           );
           break;
         case "reserve":
-          result = await markAsReserved(
-            requestId
-            // studentEmail,
-            // title,
-            // abstract
+          // result = await markAsReserved(
+          //   requestId
+          //   // studentEmail,
+          //   // title,
+          //   // abstract
+          // );
+          result = await acceptRequest(
+            requestId,
+            studentEmail,
+            studentId,
+            adviserId,
+            title,
+            abstract,
+            feedback
           );
+          break;
+        case "authorize":
+          result = await authorizeUpload(requestId);
           break;
         default:
           toast.error("Invalid action type.");
@@ -116,16 +128,21 @@ export function useAdvisoryRequests() {
       return;
     }
 
+    if (modalState.type === "refer" && !selectedAdviser.id) {
+      toast.error("Please select an adviser to refer to.");
+      return;
+    }
+
     handleAction(
       modalState.request.title,
       modalState.request.abstract,
       modalState.type,
       modalState.request.id,
       feedback ?? "",
-      modalState.request.studentEmail,
-      modalState.request.studentId,
-      modalState.request.adviserId,
-      modalState.request.studentName
+      modalState.request.student_email,
+      modalState.request.student_id,
+      modalState.request.adviser_id,
+      modalState.request.student_name
     );
   };
 

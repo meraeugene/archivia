@@ -1,14 +1,13 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
-import { getSession } from "./auth";
 import { cache } from "react";
+import { getSession } from "../auth/getSession";
 
 export const getStudentAdviser = cache(async () => {
   const supabase = await createClient();
 
   const session = await getSession();
-
   if (!session) {
     return { success: false, message: "User not authenticated" };
   }

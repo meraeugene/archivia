@@ -15,6 +15,7 @@ import AddUserModal from "./AddUserModal";
 import EditUserModal from "./EditUserModal";
 import { ManageUser } from "@/types/manageUser";
 import { UseManageUsers } from "@/hooks/useManageUsers";
+import { Search } from "lucide-react";
 
 export default function ManageUsersClient({ users }: { users: ManageUser[] }) {
   const {
@@ -80,12 +81,15 @@ export default function ManageUsersClient({ users }: { users: ManageUser[] }) {
         <div className="flex justify-between items-center flex-wrap gap-3">
           {/* Left: Search and Sort */}
           <div className="flex items-center gap-3 flex-wrap">
-            <Input
-              type="text"
-              placeholder="Search user by ID, name, or email"
-              className="w-[250px] py-5 rounded border focus:ring-gray-500"
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
+            <div className="relative w-[300px]">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
+              <Input
+                type="text"
+                placeholder="Search user by ID, name, or email"
+                className="w-full py-5 pl-9 rounded border focus:ring-gray-500"
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+            </div>
 
             <Select
               onValueChange={(value) => setSortBy(value)}

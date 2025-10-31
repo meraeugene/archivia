@@ -3,7 +3,6 @@
 import { getInitials } from "@/utils/getInitials";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { logout } from "@/actions/auth";
 import {
   Home,
   Settings,
@@ -16,6 +15,7 @@ import {
 } from "lucide-react";
 import { useTransition } from "react";
 import { CurrentUser } from "@/types/currentUser";
+import { logout } from "@/actions/auth/logout";
 
 const adminNavLinks = [
   { label: "Home", href: "/", icon: Home },

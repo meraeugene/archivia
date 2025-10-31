@@ -25,7 +25,6 @@ export const navLinks = [
   { label: "Bookmarks", href: "/bookmarks" },
   { label: "Find Adviser", href: "/find-adviser" },
   { label: "Advisers", href: "/advisers" },
-  // { label: "Submit Thesis", href: "/submit-thesis" },
   // { label: "Create Group", href: "/create-group" },
   { label: "Login", href: "/auth/login" },
 ];

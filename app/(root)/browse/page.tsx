@@ -1,7 +1,7 @@
-import { getAllCategories } from "@/actions/categories";
+import { getAllCategories } from "@/actions/common/getAllCategories";
 import BrowseClient from "./BrowseClient";
-import { getMoreTheses } from "@/actions/theses";
-import { getUserBookmarksIds } from "@/actions/bookmark";
+import { getMoreTheses } from "@/actions/common/theses";
+import { getUserBookmarksIds } from "@/actions/common/getUserBookmarksIds";
 
 export default async function BrowsePage() {
   const [initialTheses, categoryOptions, { data: userBookmarks = [] }] =

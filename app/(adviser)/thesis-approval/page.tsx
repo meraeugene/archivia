@@ -1,4 +1,4 @@
-import { getPendingThesisSubmissions } from "@/actions/thesisApproval";
+import { getPendingThesisSubmissions } from "@/actions/faculty/getPendingThesisSubmissions";
 import ThesisApprovalClient from "./ThesisApprovalClient";
 
 const ThesisApprovalPage = async () => {

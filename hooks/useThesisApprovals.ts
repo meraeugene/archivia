@@ -2,8 +2,9 @@
 
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { approveThesis, returnThesis } from "@/actions/thesisApproval";
 import { ThesisSubmission } from "@/types/thesisSubmissions";
+import { approveThesis } from "@/actions/faculty/approveThesis";
+import { returnThesis } from "@/actions/faculty/returnThesis";
 
 export function useThesisApprovals() {
   const [expandedId, setExpandedId] = useState<string | null>(null);

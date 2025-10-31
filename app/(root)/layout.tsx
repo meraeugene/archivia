@@ -1,5 +1,6 @@
-import { getCurrentUser } from "@/actions/auth";
-import { getStudentAdviser } from "@/actions/getStudentAdviser";
+import { getCurrentUser } from "@/actions/auth/getCurrentUser";
+import { getStudentAdviser } from "@/actions/student/getStudentAdviser";
+import { isStudentAuthorizedToUploadThesis } from "@/actions/student/isAuthorizedToUploadThesis";
 import BackToTopButton from "@/components/BackToTopButton";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
@@ -11,9 +12,10 @@ export default async function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [currentUser, studentAdviser] = await Promise.all([
+  const [currentUser, studentAdviser, isAuthorized] = await Promise.all([
     getCurrentUser(),
     getStudentAdviser(),
+    isStudentAuthorizedToUploadThesis(),
   ]);
 
   return (
@@ -22,6 +24,7 @@ export default async function UserLayout({
         currentUser={currentUser}
         navLinks={navLinks}
         studentAdviser={studentAdviser}
+        isAuthorizedToUploadThesis={isAuthorized}
       />
       <BackToTopButton />
       {children}

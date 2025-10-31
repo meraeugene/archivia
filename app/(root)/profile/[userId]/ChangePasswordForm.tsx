@@ -1,11 +1,11 @@
 "use client";
 
 import { useState, useTransition, FormEvent } from "react";
-import { changePassword } from "@/actions/auth";
 import { toast } from "sonner";
 import { ArrowRight, Eye, EyeOff } from "lucide-react";
 import { ActionButton } from "./ActionButton";
 import { isStrongPassword } from "@/utils/isStrongPassword";
+import { changePassword } from "@/actions/auth/changePassword";
 
 export default function ChangePasswordForm() {
   const [oldPassword, setOldPassword] = useState("");

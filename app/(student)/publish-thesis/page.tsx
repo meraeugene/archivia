@@ -1,6 +1,6 @@
-import { getAllCategories } from "@/actions/categories";
+import { getAllCategories } from "@/actions/common/getAllCategories";
 import UploadThesisClient from "./UploadThesisClient";
-import { getStudentAdviser } from "@/actions/getStudentAdviser";
+import { getStudentAdviser } from "@/actions/student/getStudentAdviser";
 
 const UploadThesisPage = async () => {
   const [categories, studentAdviser] = await Promise.all([

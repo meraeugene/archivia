@@ -3,7 +3,11 @@
 import { useState, useEffect, useCallback, useTransition } from "react";
 import { Thesis } from "@/types/thesis";
 import { toast } from "sonner";
-import { searchTheses, getMoreTheses, getThesesCount } from "@/actions/theses";
+import {
+  searchTheses,
+  getMoreTheses,
+  getThesesCount,
+} from "@/actions/common/theses";
 
 export function useArchivia(initialTheses?: Thesis[]) {
   const [displayedTheses, setDisplayedTheses] = useState<Thesis[]>(

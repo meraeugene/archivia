@@ -3,8 +3,8 @@
 import { useState, ChangeEvent } from "react";
 import { toast } from "sonner";
 import { uploadImageToCloudinary } from "@/utils/cloudinary/uploadImageToCloundinary";
-import { updateStudentProfile } from "@/actions/profile";
 import { CurrentUser } from "@/types/currentUser";
+import { updateStudentProfile } from "@/actions/student/updateStudentProfile";
 
 type FormDataState = {
   email: string;

@@ -8,7 +8,7 @@ interface StatsCardProps {
   icon: ReactNode;
   desc: string;
   iconClass: string;
-  textColorClass: string;
+  textColorClass?: string;
 }
 
 const StatsCard = ({
@@ -23,7 +23,7 @@ const StatsCard = ({
     <div className=" p-6 border rounded-lg bg-white">
       <div className="flex items-center justify-between">
         <div>
-          <p className="text-sm font-medium text-gray-600">{title}</p>
+          <p className="text-sm font-medium">{title}</p>
           <p className={`text-3xl font-bold ${textColorClass}`}>{count}</p>
         </div>
         <div className={`${iconClass} p-3 rounded-lg`}>{icon}</div>

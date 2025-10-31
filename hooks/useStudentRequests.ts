@@ -2,9 +2,10 @@
 
 import { useState, useTransition } from "react";
 import { toast } from "sonner";
-import { cancelRequest, sendRequest } from "@/actions/studentRequests";
 import { StudentRequest } from "@/types/studentRequests";
 import isValidUrl from "@/utils/isValidUrl";
+import { cancelRequest } from "@/actions/student/cancelRequest";
+import { sendRequest } from "@/actions/student/sendRequest";
 
 export function useStudentRequests() {
   const [expanded, setExpanded] = useState<string | null>(null);
