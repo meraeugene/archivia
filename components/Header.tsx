@@ -27,12 +27,18 @@ const Header = ({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
-  console.log(isAuthorizedToUploadThesis);
-
   const hideFindAdviser =
     currentUser?.role === "faculty" ||
     currentUser?.role === "admin" ||
     (currentUser?.role === "student" && studentAdviser);
+
+  const showPublishThesis =
+    currentUser?.role === "student" &&
+    studentAdviser &&
+    isAuthorizedToUploadThesis;
+
+  console.log(isAuthorizedToUploadThesis);
+  console.log(showPublishThesis);
 
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md">
@@ -71,21 +77,19 @@ const Header = ({
               })}
 
             {/* Student-only link */}
-            {currentUser?.role === "student" &&
-              studentAdviser &&
-              isAuthorizedToUploadThesis && (
-                <Link
-                  prefetch
-                  href="/publish-thesis"
-                  className={
-                    pathname === "/publish-thesis"
-                      ? "font-semibold text-black"
-                      : "text-gray-800 hover:text-black"
-                  }
-                >
-                  Publish Thesis
-                </Link>
-              )}
+            {showPublishThesis && (
+              <Link
+                prefetch
+                href="/publish-thesis"
+                className={
+                  pathname === "/publish-thesis"
+                    ? "font-semibold text-black"
+                    : "text-gray-800 hover:text-black"
+                }
+              >
+                Publish Thesis
+              </Link>
+            )}
 
             {/* Admin- link */}
             {currentUser?.role === "admin" && (

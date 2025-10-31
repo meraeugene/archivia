@@ -12,11 +12,12 @@ export default async function UserLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [currentUser, studentAdviser, isAuthorized] = await Promise.all([
-    getCurrentUser(),
-    getStudentAdviser(),
-    isStudentAuthorizedToUploadThesis(),
-  ]);
+  const [currentUser, studentAdviser, isAuthorizedToUploadThesis] =
+    await Promise.all([
+      getCurrentUser(),
+      getStudentAdviser(),
+      isStudentAuthorizedToUploadThesis(),
+    ]);
 
   return (
     <main>
@@ -24,7 +25,7 @@ export default async function UserLayout({
         currentUser={currentUser}
         navLinks={navLinks}
         studentAdviser={studentAdviser}
-        isAuthorizedToUploadThesis={isAuthorized}
+        isAuthorizedToUploadThesis={isAuthorizedToUploadThesis}
       />
       <BackToTopButton />
       {children}
