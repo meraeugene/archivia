@@ -25,7 +25,12 @@ const PROTECTED_PATHS = [
   "/thesis-approval",
 
   // admin
-  "/manage-thesis",
+  "/backup",
+  "/admin/dashboard",
+  "/manage-theses",
+  "/manage-users",
+  "/retrain-model",
+  "/admin/settings",
 ];
 
 const STUDENT_ONLY_PATHS = ["/find-adviser", "/my-requests", "/publish-thesis"];
