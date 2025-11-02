@@ -39,7 +39,7 @@ export default function ProfilePageClient({
 
   return (
     <div className="bg-white">
-      <main className="max-w-6xl mx-auto px-4 py-16">
+      <main className="max-w-6xl mx-auto px-4 md:py-16 py-12">
         {/* Profile Header */}
         <div className="grid lg:grid-cols-3 gap-12 mb-16">
           {/* Left Column - Profile Picture */}
@@ -54,7 +54,7 @@ export default function ProfilePageClient({
 
             {/* Quick Contact */}
             {isEditing ? (
-              <div className="mt-8 p-6 border border-black">
+              <div className="mt-8 p-6 border ">
                 <label className="block text-sm font-bold mb-1">EMAIL</label>
                 <input
                   type="email"
@@ -66,7 +66,7 @@ export default function ProfilePageClient({
               </div>
             ) : (
               profile.email && (
-                <div className="mt-8 p-6 border border-black">
+                <div className="mt-8 md:p-6 p-4 border ">
                   <div className="flex items-start gap-3">
                     <Mail className="w-5 h-5 mt-1 flex-shrink-0" />
                     <a
@@ -85,7 +85,7 @@ export default function ProfilePageClient({
           <div className="lg:col-span-2">
             {/* Name */}
             <div className="mb-8">
-              <h1 className="text-6xl lg:text-7xl font-black tracking-tight leading-none">
+              <h1 className="text-4xl lg:text-7xl font-black tracking-tight leading-none">
                 {profile.prefix} {profile.full_name} {profile.suffix}
               </h1>
 
@@ -224,7 +224,7 @@ export default function ProfilePageClient({
 
         {/* Student Password Change Section */}
         {!isFaculty && (
-          <div className="mt-16 w-1/2">
+          <div className="md:mt-16 mt-12 md:w-1/2">
             <h2 className="text-3xl font-bold mb-6">Change Password</h2>
             <ChangePasswordForm />
           </div>

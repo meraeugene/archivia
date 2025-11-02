@@ -38,8 +38,8 @@ export default function MyRequestsClient({
     <main className=" mx-auto ">
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
-        <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
-          <h1 className="text-5xl text-white font-extrabold mb-5 tracking-tight">
+        <div className="relative max-w-7xl mx-auto px-6 md:py-20 py-12 text-center">
+          <h1 className="text-3xl md:text-5xl text-white font-extrabold mb-5 tracking-tight">
             My Requests
           </h1>
 

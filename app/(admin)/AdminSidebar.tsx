@@ -22,7 +22,7 @@ const adminNavLinks = [
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
   { label: "Manage Users", href: "/admin/manage-users", icon: Users },
   { label: "Manage Theses", href: "/admin/manage-theses", icon: BookOpen },
-  { label: "Backup & Recovery", href: "/admin/backups", icon: Database },
+  { label: "Backup & Recovery", href: "/admin/backup", icon: Database },
   { label: "Retrain Model", href: "/admin/retrain-model", icon: BrainCircuit },
   { label: "Settings", href: "/admin/settings", icon: Settings },
   { label: "Logout", href: "/", icon: LogOutIcon },

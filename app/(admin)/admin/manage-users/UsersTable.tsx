@@ -51,7 +51,7 @@ const UsersTable = ({
               <td className="px-4 py-2 font-medium text-gray-900">
                 {user.user_id}
               </td>
-              <td className="px-4 py-3 text-gray-900">
+              <td className="px-4 py-3 text-gray-900 text-nowrap">
                 {user.full_name || "—"}
               </td>
               <td className="px-4 py-3 text-gray-700">{user.email || "—"}</td>

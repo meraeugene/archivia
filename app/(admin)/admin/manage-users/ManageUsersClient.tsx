@@ -67,7 +67,7 @@ export default function ManageUsersClient({
         <div className="flex justify-between items-center flex-wrap gap-3">
           {/* Left: Search and Sort */}
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="relative w-[300px]">
+            <div className="relative md:w-[300px] w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 type="text"
@@ -90,7 +90,7 @@ export default function ManageUsersClient({
               }}
               defaultValue={searchParams.get("sortBy") || "newest"}
             >
-              <SelectTrigger className="w-[150px] py-5 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
+              <SelectTrigger className="md:w-[150px] w-full py-5 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -108,14 +108,14 @@ export default function ManageUsersClient({
               setIsAddOpen(true);
               document.body.classList.add("modal-open");
             }}
-            className="bg-black text-white py-5 hover:bg-gray-800 rounded shadow-sm transition-all"
+            className="bg-black text-white py-5 hover:bg-gray-800 rounded shadow-sm transition-all w-full md:w-fit"
           >
             Add User
           </Button>
         </div>
 
         {/* Users Table */}
-        <div className="mt-8 w-full bg-white rounded overflow-hidden border">
+        <div className="mt-8 w-full bg-white rounded overflow-scroll lg:overflow-hidden  border">
           <UsersTable
             filteredUsers={users}
             setIsEditOpen={setIsEditOpen}

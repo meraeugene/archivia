@@ -61,7 +61,7 @@ export default function ManageThesisClient({
       {/* Content */}
       <div className="p-8">
         <div className="flex items-center gap-3 flex-wrap">
-          <div className="relative w-[300px]">
+          <div className="relative md:w-[300px] w-full">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
             <Input
               type="text"
@@ -84,7 +84,7 @@ export default function ManageThesisClient({
             }}
             defaultValue={searchParams.get("sortBy") || "newest"}
           >
-            <SelectTrigger className="w-[150px] py-5 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
+            <SelectTrigger className="md:w-[150px] w-full py-5 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -97,7 +97,7 @@ export default function ManageThesisClient({
         </div>
 
         {/* Theses Table */}
-        <div className="mt-8 w-full bg-white rounded overflow-hidden border">
+        <div className="mt-8 w-full bg-white rounded overflow-scroll lg:overflow-hidden border">
           <ThesesTable
             filteredTheses={theses}
             setIsEditOpen={setIsEditOpen}

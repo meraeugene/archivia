@@ -31,7 +31,7 @@ export default async function FacultyLayout({
   ]);
 
   return (
-    <main className="min-h-screen flex ">
+    <main className="min-h-screen lg:flex ">
       <FacultySidebar
         currentUser={currentUser}
         pendingAdviserRequestCount={pendingAdviserRequestCount}
@@ -39,7 +39,7 @@ export default async function FacultyLayout({
         thesisSubmissionsCount={thesisSubmissionsCount}
       />
       <BackToTopButton />
-      <div className="flex-1 ml-64">{children}</div>
+      <div className="flex-1 lg:ml-64">{children}</div>
     </main>
   );
 }

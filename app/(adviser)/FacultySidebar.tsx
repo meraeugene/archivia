@@ -52,7 +52,7 @@ const FacultySidebar = ({
   };
 
   return (
-    <aside className="-translate-x-full lg:translate-x-0  transition-transform duration-300 ease-in-out fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 overflow-y-auto">
+    <aside className="-translate-x-full lg:translate-x-0  transition-transform duration-300 ease-in-out fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-gray-200 overflow-y-auto hidden lg:block">
       <div className="flex flex-col h-full">
         {/* Logo/Brand */}
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">

@@ -57,19 +57,19 @@ const ThesesTable = ({
                 {thesis.title}
               </td>
 
-              <td className="px-4 py-3 text-gray-900">
+              <td className="px-4 py-3 text-gray-900 text-nowrap">
                 {thesis.adviser_name || "—"}
               </td>
-              <td className="px-4 py-3 text-gray-900">
+              <td className="px-4 py-3 text-gray-900  text-nowrap">
                 {thesis.panel_member1 || "—"}
               </td>
-              <td className="px-4 py-3 text-gray-900">
+              <td className="px-4 py-3 text-gray-900  text-nowrap">
                 {thesis.panel_member2 || "—"}
               </td>
-              <td className="px-4 py-3 text-gray-900">
+              <td className="px-4 py-3 text-gray-900  text-nowrap">
                 {thesis.panel_member3 || "—"}
               </td>
-              <td className="px-4 py-3 text-gray-700 truncate max-w-[100px] whitespace-nowrap">
+              <td className="px-4 py-3 text-gray-700 truncate lg:max-w-[100px] lg:whitespace-nowrap">
                 {thesis.proponents?.join(", ") || "—"}
               </td>
               <td className="px-4 py-2 text-gray-700 w-[50px]">

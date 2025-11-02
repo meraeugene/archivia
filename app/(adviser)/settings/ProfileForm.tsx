@@ -39,7 +39,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
 
       <div className="p-6">
         {/* Profile picture */}
-        <div className="flex items-center space-x-6 mb-6">
+        <div className="flex items-center space-x-6 mb-6  flex-wrap gap-4 lg:gap-0">
           <div className="relative">
             <div className="w-20 h-20 bg-gray-100 rounded-full overflow-hidden flex items-center justify-center">
               {imagePreview ? (

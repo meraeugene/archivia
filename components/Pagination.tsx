@@ -16,37 +16,39 @@ export default function Pagination({
   if (totalPages <= 1) return null; // hide pagination if only one page
 
   return (
-    <div className="flex flex-wrap justify-center items-center gap-2 gap-y-3 pt-4 ">
+    <div className="flex justify-center  gap-2 pt-4 lg:flex ">
       {/* Previous Button */}
       <Button
         variant="outline"
         disabled={page <= 1}
         onClick={() => onPageChange(page - 1)}
-        className="rounded"
+        className="rounded lg:hidden"
       >
         Previous
       </Button>
 
-      {/* Page Numbers */}
-      {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-        <Button
-          key={p}
-          variant={p === page ? "default" : "outline"}
-          className={`px-4 rounded ${
-            p === page ? "bg-black text-white hover:bg-gray-800" : ""
-          }`}
-          onClick={() => onPageChange(p)}
-        >
-          {p}
-        </Button>
-      ))}
+      <div className="overflow-scroll flex gap-1 lg:overflow-auto lg:block lg:gap-0 lg:space-x-2 lg:space-y-2">
+        {/* Page Numbers */}
+        {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
+          <Button
+            key={p}
+            variant={p === page ? "default" : "outline"}
+            className={`px-4 rounded ${
+              p === page ? "bg-black text-white hover:bg-gray-800" : ""
+            }`}
+            onClick={() => onPageChange(p)}
+          >
+            {p}
+          </Button>
+        ))}
+      </div>
 
       {/* Next Button */}
       <Button
         variant="outline"
         disabled={page >= totalPages}
         onClick={() => onPageChange(page + 1)}
-        className="rounded"
+        className="rounded lg:hidden"
       >
         Next
       </Button>
