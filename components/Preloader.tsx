@@ -28,10 +28,16 @@ export default function Preloader({ redirectTo }: { redirectTo: string }) {
     >
       {/* Logo */}
       <div className="flex items-center">
-        <img src="/images/logo.png" alt="Archivia Logo" className="h-22" />
-        <h1 className="text-6xl font-bold tracking-wide">ARCHIVIA</h1>
+        <img
+          src="/images/logo.png"
+          alt="Archivia Logo"
+          className="h-18 md:h-22"
+        />
+        <h1 className="text-5xl md:text-6xl font-bold tracking-wide">
+          RCHIVIA
+        </h1>
       </div>
-      <p className="text-lg text-gray-600 tracking-wide">
+      <p className=" md:text-lg mt-1 md:mt-0 text-gray-600 tracking-wide">
         Digital Thesis Archive
       </p>
     </div>

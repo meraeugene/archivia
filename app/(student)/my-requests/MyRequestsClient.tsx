@@ -51,7 +51,7 @@ export default function MyRequestsClient({
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto py-14 columns-1 sm:columns-2 lg:columns-2 gap-6 px-5">
+      <div className="max-w-6xl mx-auto py-14 columns-1 sm:columns-2 lg:columns-2 gap-6 px-4">
         {requests.map((request) => (
           <div
             key={request.id}

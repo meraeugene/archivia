@@ -10,8 +10,9 @@ import { sendRequest } from "@/actions/student/sendRequest";
 
 export function useFindAdviser() {
   const { studentData, setStudentData } = useAdviserStore();
-
   const [recommendations, setRecommendations] = useState<Adviser[]>([]);
+
+  const [wildcardAdvisers, setWildcardAdvisers] = useState<Adviser[]>([]);
   const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
   const [showModal, setShowModal] = useState(false);
@@ -60,8 +61,11 @@ export function useFindAdviser() {
         return;
       }
 
+      console.log(result);
+
       setRecommendations(result.recommendations);
       setRecommendedIds(result.recommended_adviser_ids || []);
+      setWildcardAdvisers(result.wildcard_advisers || []);
 
       toast.success(
         `We've found ${result.recommendations.length} adviser${
@@ -111,6 +115,8 @@ export function useFindAdviser() {
         return;
       }
 
+      console.log(result);
+
       setRecommendations(result.recommendations || []);
     });
   };
@@ -118,6 +124,7 @@ export function useFindAdviser() {
   return {
     studentData,
     recommendations,
+    wildcardAdvisers,
     isPending,
     isLoading,
     showModal,

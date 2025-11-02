@@ -39,12 +39,12 @@ const BrowseClient = ({
 
   return (
     <main className="min-h-screen bg-white text-black">
-      <section className="py-20 text-center ">
-        <div className="max-w-6xl mx-auto px-5">
-          <h1 className="text-5xl text-black font-extrabold mb-5 tracking-tight">
+      <section className="md:py-20 py-12  text-center ">
+        <div className="max-w-6xl mx-auto px-4">
+          <h1 className="text-3xl md:text-5xl text-black font-extrabold mb-3 md:mb-5 tracking-tight">
             Browse Archive Thesis
           </h1>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto ">
+          <p className="text-sm md:text-lg text-gray-600 max-w-3xl mx-auto ">
             Browse and access University of Science and Technology of Southern
             Philippines academic theses with smart search and filtering designed
             for students, researchers, and educators.
@@ -61,10 +61,10 @@ const BrowseClient = ({
         onSearch={handleSearch}
       />
 
-      <section className="py-15">
-        <div className="max-w-6xl mx-auto px-5">
-          <div className="mb-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <div className="flex w-full justify-between sm:items-center gap-4">
+      <section className="md:py-15 py-8">
+        <div className="max-w-6xl mx-auto px-4">
+          <div className="mb-6 md:mb-10 flex flex-col gap-4">
+            <div className="flex w-full justify-between flex-col-reverse md:flex-row gap-4">
               <div className="mb-3 sm:mb-0 text-gray-700">
                 {isPending ? (
                   "Searching..."
@@ -84,7 +84,7 @@ const BrowseClient = ({
               <select
                 value={sort}
                 onChange={(e) => handleSortChange(e.target.value)}
-                className="border border-gray-300 rounded px-3 py-2 text-sm bg-white hover:border-black transition-all cursor-pointer"
+                className="border w-auto border-gray-300 rounded px-3 py-2 text-sm bg-white hover:border-black transition-all cursor-pointer"
               >
                 <option value="recent">Newest</option>
                 <option value="title">Title (A–Z)</option>

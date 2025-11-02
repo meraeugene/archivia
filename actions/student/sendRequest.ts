@@ -63,13 +63,13 @@ export async function sendRequest(
     return { error: error.message };
   }
 
-  await sendRequestAdviserEmail({
-    to: adviserEmail,
-    studentName: currentUser?.full_name,
-    thesisTitle: title,
-    thesisAbstract: abstract,
-    thesisLink: url,
-  });
+  // await sendRequestAdviserEmail({
+  //   to: adviserEmail,
+  //   studentName: currentUser?.full_name,
+  //   thesisTitle: title,
+  //   thesisAbstract: abstract,
+  //   thesisLink: url,
+  // });
 
   revalidatePath("/my-requests");
 

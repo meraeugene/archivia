@@ -38,13 +38,13 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
           <X size={24} />
         </button>
 
-        <div className="p-10 mt-4">
-          <h2 className="text-2xl font-bold mb-5">{thesis.title}</h2>
+        <div className="md:p-10 py-10 px-6 mt-4">
+          <h2 className="text-lg md:text-2xl font-bold mb-5">{thesis.title}</h2>
           <div className="mb-4 space-y-2 text-gray-700">
             <div>
               <strong>Adviser:</strong> <span>{thesis.adviser_name}</span>{" "}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex  gap-2">
               <strong>Panel:</strong>
               <div className="flex flex-wrap gap-2">
                 {[
@@ -82,7 +82,7 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
                 ).map((cat, index) => (
                   <span
                     key={index}
-                    className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm font-medium rounded-full"
+                    className="px-2 py-1 bg-gray-700 text-white shadow-sm text-xs md:text-sm md:font-medium rounded-full"
                   >
                     {cat.trim()}
                   </span>
@@ -91,7 +91,7 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
             </div>
           </div>
 
-          <h3 className="text-xl font-semibold mb-4">Abstract</h3>
+          <h3 className="md:text-xl font-semibold md:mb-4 mb-2">Abstract</h3>
           <p className="leading-relaxed text-gray-800 mb-8">
             {thesis.abstract}
           </p>

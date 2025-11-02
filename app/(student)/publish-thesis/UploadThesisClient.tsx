@@ -32,13 +32,13 @@ const UploadThesisClient = ({
   } = useThesisUpload();
 
   return (
-    <main className="flex-1 mx-auto  bg-gray-50 text-black py-14">
+    <main className="flex-1 mx-auto  bg-gray-50 text-black py-14 px-4 md:px-0">
       {/* Header */}
-      <div className="text-center mb-12">
+      <div className="text-center md:mb-12 mb-8">
         <h1 className="text-4xl font-bold text-gray-900 mb-3">
           Publish Thesis
         </h1>
-        <p className="text-gray-600 text-lg">
+        <p className="text-gray-600 md:text-lg text-sm">
           Upload your thesis document (PDF only, max 5MB)
         </p>
       </div>
@@ -58,9 +58,9 @@ const UploadThesisClient = ({
         onDrop={handleDrop}
         onClick={() => fileInputRef.current?.click()}
       >
-        <div className="p-16 text-center">
+        <div className="md:p-16 p-8 text-center">
           <div
-            className={`inline-flex items-center justify-center w-16 h-16 rounded-full mb-6 ${
+            className={`inline-flex items-center justify-center w-12 h-12 md:w-16 md:h-16 rounded-full mb-6 ${
               dragActive
                 ? "bg-blue-100"
                 : uploadedFile
@@ -78,14 +78,14 @@ const UploadThesisClient = ({
             )}
           </div>
 
-          <h3 className="text-xl font-medium text-gray-900 mb-2">
+          <h3 className=" md:text-xl font-medium text-gray-900 mb-2">
             {dragActive
               ? "Drop your thesis here"
               : uploadedFile
               ? uploadedFile.file.name
               : "Click or drag your thesis PDF"}
           </h3>
-          <p className="text-gray-500">
+          <p className="text-gray-500 text-sm">
             Only PDF format is supported (max 5MB)
           </p>
 
@@ -103,14 +103,14 @@ const UploadThesisClient = ({
       {uploadedFile && (
         <div className="space-y-4 mb-8 mt-6 max-w-4xl mx-auto">
           <div className="bg-white  p-6 rounded-lg  border">
-            <div className="flex items-center justify-between gap-3">
+            <div className="flex items-start md:items-center justify-between gap-3">
               <div className="flex items-center space-x-4">
-                <FileText className="text-blue-600" size={24} />
+                <FileText className="text-blue-600 hidden md:block" size={24} />
                 <div>
-                  <h3 className="text-lg font-medium text-gray-900">
+                  <h3 className="text-xs md:text-lg font-medium text-gray-900">
                     {uploadedFile.file.name}
                   </h3>
-                  <p className="text-gray-500">
+                  <p className="text-gray-500 mt-2 md:mt-0 text-xs">
                     {new Date().toLocaleDateString()}
                   </p>
                 </div>

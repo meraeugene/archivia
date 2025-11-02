@@ -39,7 +39,7 @@ export default function ProfilePageClient({
 
   return (
     <div className="bg-white">
-      <main className="max-w-6xl mx-auto px-5 py-16">
+      <main className="max-w-6xl mx-auto px-4 py-16">
         {/* Profile Header */}
         <div className="grid lg:grid-cols-3 gap-12 mb-16">
           {/* Left Column - Profile Picture */}

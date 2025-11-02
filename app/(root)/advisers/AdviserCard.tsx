@@ -24,7 +24,7 @@ export const AdviserCard = ({
       {/* Header */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
-        <div className="relative max-w-7xl mx-auto px-6 py-20 text-center">
+        <div className="relative max-w-7xl mx-auto px-6 py-12 md:py-20 text-center">
           <h1 className="text-5xl text-white font-extrabold mb-5 tracking-tight">
             My Adviser
           </h1>
@@ -37,7 +37,7 @@ export const AdviserCard = ({
         </div>
       </div>
 
-      <div className="py-12 px-24  flex items-center justify-center">
+      <div className="py-12 md:px-24 px-4  flex items-center justify-center">
         <div className="max-w-8xl w-full">
           {/* Three Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 border rounded-xl overflow-hidden border-gray-300">
@@ -61,7 +61,7 @@ export const AdviserCard = ({
             </div>
 
             {/* COLUMN 2 - Information */}
-            <div className="bg-white p-8 md:p-10 border-b-2 lg:border-b-0 lg:border-r border-gray-300">
+            <div className="bg-white p-8 md:p-10 md:border-b-2 lg:border-b-0 lg:border-r border-gray-300">
               {/* Name & Title */}
               <div className="mb-8 pb-6 border-b border-gray-300">
                 <h1 className="text-3xl md:text-4xl font-bold text-black mb-2">

@@ -16,15 +16,21 @@ import EditUserModal from "./EditUserModal";
 import { ManageUser } from "@/types/manageUser";
 import { UseManageUsers } from "@/hooks/useManageUsers";
 import { Search } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
+import Pagination from "@/components/Pagination";
 
-export default function ManageUsersClient({ users }: { users: ManageUser[] }) {
+export default function ManageUsersClient({
+  users,
+  page,
+  totalPages,
+}: {
+  users: ManageUser[];
+  page: number;
+  totalPages: number;
+}) {
   const {
     selectedUser,
     setSelectedUser,
-    searchQuery,
-    setSearchQuery,
-    sortBy,
-    setSortBy,
     isAddOpen,
     setIsAddOpen,
     isDeleteOpen,
@@ -40,34 +46,14 @@ export default function ManageUsersClient({ users }: { users: ManageUser[] }) {
     handleConfirmDelete,
   } = UseManageUsers();
 
-  const filteredUsers = users
-    .filter((user) => {
-      const query = searchQuery.toLowerCase();
-      return (
-        user.user_id.toLowerCase().includes(query) ||
-        (user.full_name?.toLowerCase() || "").includes(query) ||
-        (user.email?.toLowerCase() || "").includes(query)
-      );
-    })
-    .sort((a, b) => {
-      if (sortBy === "newest") {
-        return (
-          new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
-        );
-      }
-      if (sortBy === "oldest") {
-        return (
-          new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
-        );
-      }
-      if (sortBy === "role") {
-        return a.role.localeCompare(b.role);
-      }
-      if (sortBy === "name") {
-        return (a.full_name || "").localeCompare(b.full_name || "");
-      }
-      return 0;
-    });
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
+  const handlePageChange = (newPage: number) => {
+    const params = new URLSearchParams(searchParams);
+    params.set("page", newPage.toString());
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <main className="flex-1 bg-gray-50 min-h-screen">
@@ -87,13 +73,22 @@ export default function ManageUsersClient({ users }: { users: ManageUser[] }) {
                 type="text"
                 placeholder="Search user by ID, name, or email"
                 className="w-full py-5 pl-9 rounded border focus:ring-gray-500"
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => {
+                  const params = new URLSearchParams(searchParams);
+                  params.set("search", e.target.value);
+                  params.set("page", "1");
+                  router.push(`?${params.toString()}`);
+                }}
               />
             </div>
 
             <Select
-              onValueChange={(value) => setSortBy(value)}
-              defaultValue="newest"
+              onValueChange={(value) => {
+                const params = new URLSearchParams(searchParams);
+                params.set("sortBy", value);
+                router.push(`?${params.toString()}`);
+              }}
+              defaultValue={searchParams.get("sortBy") || "newest"}
             >
               <SelectTrigger className="w-[150px] py-5 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
                 <SelectValue placeholder="Sort by" />
@@ -120,52 +115,59 @@ export default function ManageUsersClient({ users }: { users: ManageUser[] }) {
         </div>
 
         {/* Users Table */}
-        <div className=" mt-8 w-full bg-white rounded overflow-hidden border ">
+        <div className="mt-8 w-full bg-white rounded overflow-hidden border">
           <UsersTable
-            filteredUsers={filteredUsers}
+            filteredUsers={users}
             setIsEditOpen={setIsEditOpen}
             setSelectedUser={setSelectedUser}
             setEditData={setEditData}
             setIsDeleteOpen={setIsDeleteOpen}
           />
-
-          {/* Add User Modal */}
-          <AddUserModal
-            isAddOpen={isAddOpen}
-            setIsAddOpen={setIsAddOpen}
-            addData={addData}
-            setAddData={setAddData}
-            setIsLoading={setIsLoading}
-            isLoading={isLoading}
-          />
-
-          {/* Edit Modal */}
-          <EditUserModal
-            isEditOpen={isEditOpen}
-            setIsEditOpen={setIsEditOpen}
-            selectedUser={selectedUser}
-            editData={editData}
-            setEditData={setEditData}
-            isLoading={isLoading}
-            setIsLoading={setIsLoading}
-          />
-
-          {/* Delete Confirmation Modal */}
-          <CustomModal
-            isOpen={isDeleteOpen}
-            title="Delete User"
-            message={`Are you sure you want to delete "${
-              selectedUser?.full_name || selectedUser?.user_id
-            }"? This action cannot be undone.`}
-            confirmText="Delete"
-            isLoading={isLoading}
-            onConfirm={handleConfirmDelete}
-            onClose={() => {
-              setIsDeleteOpen(false);
-              document.body.classList.remove("modal-open");
-            }}
-          />
         </div>
+
+        {/* Pagination */}
+        <Pagination
+          page={page}
+          totalPages={totalPages}
+          onPageChange={handlePageChange}
+        />
+
+        {/* Add User Modal */}
+        <AddUserModal
+          isAddOpen={isAddOpen}
+          setIsAddOpen={setIsAddOpen}
+          addData={addData}
+          setAddData={setAddData}
+          setIsLoading={setIsLoading}
+          isLoading={isLoading}
+        />
+
+        {/* Edit Modal */}
+        <EditUserModal
+          isEditOpen={isEditOpen}
+          setIsEditOpen={setIsEditOpen}
+          selectedUser={selectedUser}
+          editData={editData}
+          setEditData={setEditData}
+          isLoading={isLoading}
+          setIsLoading={setIsLoading}
+        />
+
+        {/* Delete Confirmation Modal */}
+        <CustomModal
+          isOpen={isDeleteOpen}
+          title="Delete User"
+          message={`Are you sure you want to delete "${
+            selectedUser?.full_name || selectedUser?.user_id
+          }"? This action cannot be undone.`}
+          confirmText="Delete"
+          isLoading={isLoading}
+          onConfirm={handleConfirmDelete}
+          onClose={() => {
+            setIsDeleteOpen(false);
+            document.body.classList.remove("modal-open");
+          }}
+        />
       </div>
     </main>
   );

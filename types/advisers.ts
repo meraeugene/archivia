@@ -11,6 +11,19 @@ export interface Project {
   abstract: string;
 }
 
+export interface WildcardThesis {
+  title: string;
+  abstract: string;
+  similarity: number;
+  status: string;
+}
+
+export type WildcardAdviser = {
+  adviser: string;
+  research_interest: string;
+  top_theses: WildcardThesis[];
+};
+
 export type Adviser = {
   id: string;
   availability: string;

@@ -19,10 +19,11 @@ const FindAdviser = () => {
     handleConfirmRequest,
     handleConnect,
     handleCancel,
+    wildcardAdvisers,
   } = useFindAdviser();
 
   return (
-    <div className="bg-gray-50">
+    <div className="bg-gray-50 px-4">
       <div
         className={`transition-all duration-700 ease-in-out ${
           hasRecommendations ? "max-w-6xl mx-auto flex" : ""
@@ -36,10 +37,11 @@ const FindAdviser = () => {
           hasRecommendations={hasRecommendations}
         />
 
-        {hasRecommendations && (
+        {hasRecommendations && wildcardAdvisers && (
           <RecommendationsList
             recommendations={recommendations}
             onConnect={handleConnect}
+            wildcardAdvisers={wildcardAdvisers}
           />
         )}
       </div>

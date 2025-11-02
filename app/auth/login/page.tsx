@@ -85,12 +85,12 @@ export default function Login() {
         }}
       />
 
-      <div className="w-full max-w-6xl h-[90vh] bg-white/10 backdrop-blur-lg  z-10  relative rounded-3xl  border border-gray-200    overflow-hidden flex">
+      <div className="w-full md:max-w-6xl h-[90vh] bg-white/10 backdrop-blur-lg  z-10  relative rounded-3xl  md:border border-gray-200    overflow-hidden flex items-center justify-center">
         {/* Left Side - Login */}
-        <div className="flex flex-col px-20 py-34   w-[55%]">
+        <div className="flex flex-col md:px-20 md:py-34    md:w-[55%]">
           {/* Header */}
           <div className="mb-4 ">
-            <div className="flex items-center justify-center mb-18">
+            <div className="flex items-center justify-center md:mb-18 mb-4">
               <img
                 src="/images/logo.png"
                 alt="Archivia Logo"
@@ -107,7 +107,7 @@ export default function Login() {
           </div>
 
           {/* Form */}
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="md:space-y-6 space-y-4 ">
             {/* School ID */}
             <div>
               <label
@@ -173,7 +173,7 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full mt-2 text-white bg-black hover:bg-black/90 py-3 px-4 rounded-md cursor-pointer font-medium disabled:opacity-80 flex items-center justify-center gap-2"
+              className="w-full mt-7 md:mt-2 text-white bg-black hover:bg-black/90 py-3 px-4 rounded-md cursor-pointer font-medium disabled:opacity-80 flex items-center justify-center gap-2"
             >
               {loading && (
                 <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
@@ -193,7 +193,7 @@ export default function Login() {
         </div>
 
         {/* Right Side - Image */}
-        <div className="hidden  md:flex items-center justify-center w-[45%] ">
+        <div className="hidden  md:flex items-center justify-center md:w-[45%]  ">
           <img
             src="/images/login.jpg"
             alt="Login Illustration"

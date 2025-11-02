@@ -37,12 +37,9 @@ const Header = ({
     studentAdviser &&
     isAuthorizedToUploadThesis;
 
-  console.log(isAuthorizedToUploadThesis);
-  console.log(showPublishThesis);
-
   return (
     <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-5">
+      <div className="max-w-6xl mx-auto px-4">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
           <div className="flex items-center ">

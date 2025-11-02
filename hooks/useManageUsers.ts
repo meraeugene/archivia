@@ -7,8 +7,6 @@ import { toast } from "sonner";
 
 export function UseManageUsers() {
   const [selectedUser, setSelectedUser] = useState<ManageUser | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [sortBy, setSortBy] = useState("newest");
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
@@ -50,10 +48,6 @@ export function UseManageUsers() {
   return {
     selectedUser,
     setSelectedUser,
-    searchQuery,
-    setSearchQuery,
-    sortBy,
-    setSortBy,
     isAddOpen,
     setIsAddOpen,
     isDeleteOpen,

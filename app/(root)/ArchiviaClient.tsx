@@ -57,10 +57,10 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         onSearch={handleSearch}
       />
 
-      <section className="py-15">
-        <div className="max-w-6xl mx-auto px-5">
+      <section className="md:py-15 py-8">
+        <div className="max-w-6xl mx-auto px-4">
           <div className="mb-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <div className="mb-3 sm:mb-0 text-gray-700">
+            <div className="md:mb-3 text-gray-700">
               {isPending ? (
                 "Searching..."
               ) : currentCategory === "all" ? (

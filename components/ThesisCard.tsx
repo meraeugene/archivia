@@ -38,7 +38,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
   return (
     <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-sm transition-all duration-300 h-fit ">
       <div className="flex items-start justify-between gap-2 mb-3">
-        <h3 className="text-lg font-bold leading-tight ">{thesis.title}</h3>
+        <h3 className="md:text-lg font-bold leading-tight ">{thesis.title}</h3>
         <button
           onClick={handleClick}
           disabled={isPending || thesis.id === undefined}
@@ -99,7 +99,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
               (cat, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-gray-700 text-white shadow-sm text-xs font-medium rounded-full"
+                  className="px-2 py-1 bg-gray-700 text-white shadow-sm text-xs md:font-medium rounded-full"
                 >
                   {cat.trim()}
                 </span>
@@ -125,13 +125,13 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
       <div className="flex gap-3 mt-6">
         <button
           onClick={() => onPreview(thesis)}
-          className="flex-1 bg-gray-50 border cursor-pointer border-gray-200 text-black px-4 py-2.5 rounded font-medium  hover:shadow-md transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-gray-50 border cursor-pointer border-gray-200 text-black px-4 py-2.5 rounded font-medium  text-sm md:text-base hover:shadow-md transition-colors flex items-center justify-center gap-2"
         >
           <Eye size={16} /> Preview
         </button>
         <button
           onClick={() => onDownload(thesis)}
-          className="flex-1 text-white bg-black hover:bg-black/90 cursor-pointer px-4 py-2.5 rounded font-medium transition-colors flex items-center justify-center gap-2"
+          className="flex-1 text-white bg-black hover:bg-black/90 cursor-pointer px-4 py-2.5 rounded font-medium transition-colors text-sm md:text-base flex items-center justify-center gap-2"
         >
           <Download size={16} /> Download
         </button>
