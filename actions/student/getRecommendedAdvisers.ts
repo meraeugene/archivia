@@ -44,7 +44,6 @@ export async function getRecommendedAdvisers(title: string, abstract: string) {
       recommendations: data.recommendations,
       recommended_adviser_ids: data.recommended_adviser_ids,
       wildcard_advisers: data.wildcard_advisers,
-      most_similar_thesis: data.most_similar_thesis,
     };
   } catch (err) {
     console.error("Fetch error:", err);

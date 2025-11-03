@@ -2,7 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getCurrentUser } from "../auth/getCurrentUser";
-import { sendRequestAdviserEmail } from "@/utils/nodemailer/sendRequestAdvisorEmail";
+// import { sendRequestAdviserEmail } from "@/utils/nodemailer/sendRequestAdvisorEmail";
 import { revalidatePath } from "next/cache";
 
 export async function sendRequest(

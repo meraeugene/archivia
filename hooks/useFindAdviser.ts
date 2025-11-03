@@ -61,8 +61,6 @@ export function useFindAdviser() {
         return;
       }
 
-      console.log(result);
-
       setRecommendations(result.recommendations);
       setRecommendedIds(result.recommended_adviser_ids || []);
       setWildcardAdvisers(result.wildcard_advisers || []);
@@ -115,9 +113,8 @@ export function useFindAdviser() {
         return;
       }
 
-      console.log(result);
-
       setRecommendations(result.recommendations || []);
+      setWildcardAdvisers(result.wildcard_advisers || []);
     });
   };
 

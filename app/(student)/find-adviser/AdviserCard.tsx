@@ -18,6 +18,8 @@ const AdviserCard = ({
   onToggleShowAll,
   onConnect,
 }: Props) => {
+  const projects = adviser.projects || [];
+
   return (
     <div className="bg-white border  rounded-2xl p-6">
       {/* Header */}
@@ -115,7 +117,7 @@ const AdviserCard = ({
       {/* Past Projects */}
       <div className="mb-8">
         <h4 className="text-sm font-semibold text-black mb-3">
-          Past Projects ({adviser.projects.length})
+          Past Projects ({projects.length})
         </h4>
         <div className="space-y-3">
           {(showAll ? adviser.projects : adviser.projects.slice(0, 3)).map(
@@ -146,14 +148,14 @@ const AdviserCard = ({
         </div>
 
         {/* Show More / Less */}
-        {adviser.projects.length > 3 && (
+        {projects.length > 3 && (
           <button
             onClick={onToggleShowAll}
             className="mt-3 text-sm font-medium text-gray-500 hover:underline cursor-pointer"
           >
             {showAll
               ? "Show less"
-              : `Show +${adviser.projects.length - 3} more projects`}
+              : `Show +${projects.length - 3} more projects`}
           </button>
         )}
       </div>
