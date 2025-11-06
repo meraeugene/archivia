@@ -7,7 +7,7 @@ export default async function page() {
         <h1 className="text-lg font-bold text-gray-900">Settings</h1>
       </div>
 
-      <div className="space-y-8 p-8 max-w-5xl ">
+      <div className="space-y-8 p-8 w-1/2 ">
         <ChangePasswordForm />
       </div>
     </main>

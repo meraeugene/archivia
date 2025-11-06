@@ -18,7 +18,7 @@ export default function Page() {
       {/* Content */}
       <div className="p-8 space-y-8">
         {/*  Warning Note */}
-        <div className="flex items-start gap-3 bg-yellow-50 w-1/2 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-lg">
+        <div className="flex items-start gap-3 bg-yellow-50 w-1/2 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-sm">
           <AlertTriangle className="w-5 h-5 mt-0.5 text-yellow-500 shrink-0" />
           <div>
             <strong>Important Note:</strong> Restoring data will directly insert
