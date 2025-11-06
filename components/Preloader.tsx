@@ -2,31 +2,31 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Preloader({ redirectTo }: { redirectTo: string }) {
-  const [visible, setVisible] = useState(true); // start visible
+  const [visible, setVisible] = useState(true);
+  const router = useRouter();
 
   useEffect(() => {
-    // Fade out after a short delay (optional)
     const timer = setTimeout(() => {
       setVisible(false);
 
-      // Redirect after fade-out duration (matches CSS transition)
+      // Wait for fade-out (e.g. 300ms), then navigate
       setTimeout(() => {
-        window.location.href = redirectTo;
-      }, 0); // fade-out duration
-    }, 500); // minimal delay before fade-out
+        router.push(redirectTo); // 🔥 fast client-side route change
+      }, 300);
+    }, 200); // shorter delay before fade-out
 
     return () => clearTimeout(timer);
-  }, [redirectTo]);
+  }, [redirectTo, router]);
 
   return (
     <div
-      className={`fixed inset-0 flex flex-col items-center justify-center bg-white z-50 transition-opacity duration-500 ${
+      className={`fixed inset-0 flex flex-col items-center justify-center bg-white z-50 transition-opacity duration-300 ${
         visible ? "opacity-100" : "opacity-0"
       }`}
     >
-      {/* Logo */}
       <div className="flex items-center">
         <img
           src="/images/logo.png"
@@ -37,7 +37,7 @@ export default function Preloader({ redirectTo }: { redirectTo: string }) {
           RCHIVIA
         </h1>
       </div>
-      <p className=" md:text-lg mt-1 md:mt-0 text-gray-600 tracking-wide">
+      <p className="md:text-lg mt-1 md:mt-0 text-gray-600 tracking-wide">
         Digital Thesis Archive
       </p>
     </div>
