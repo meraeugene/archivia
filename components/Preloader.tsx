@@ -15,8 +15,8 @@ export default function Preloader({ redirectTo }: { redirectTo: string }) {
       // Wait for fade-out (e.g. 300ms), then navigate
       setTimeout(() => {
         router.push(redirectTo); // 🔥 fast client-side route change
-      }, 300);
-    }, 200); // shorter delay before fade-out
+      }, 0);
+    }, 500); // shorter delay before fade-out
 
     return () => clearTimeout(timer);
   }, [redirectTo, router]);
