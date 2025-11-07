@@ -52,46 +52,41 @@ export default async function FacultyDashboard() {
             <StatsCard
               title="Total Advisory Requests"
               count={totalAdviserRequestCount}
-              icon={<FileText className="h-6 w-6 text-blue-600" />}
+              icon={<FileText className="h-6 w-6 " />}
               desc="All advisory requests received"
-              iconClass="bg-blue-100"
-              textColorClass="text-blue-600"
+              iconClass="bg-gray-100"
             />
 
             <StatsCard
               title="Pending Advisory Requests"
               count={pendingAdviserRequestCount}
-              icon={<Clock className="h-6 w-6 text-yellow-600" />}
+              icon={<Clock className="h-6 w-6 " />}
               desc="Awaiting your review"
-              iconClass="bg-yellow-100"
-              textColorClass="text-yellow-600"
+              iconClass="bg-gray-100"
             />
 
             <StatsCard
               title="Advisees"
               count={adviserCurrentLeadersCount}
-              icon={<Users className="h-6 w-6 text-green-600" />}
+              icon={<Users className="h-6 w-6 " />}
               desc="Accepted student leaders"
-              iconClass="bg-green-100"
-              textColorClass="text-green-600"
+              iconClass="bg-gray-100"
             />
 
             <StatsCard
               title="Approval Requests"
               count={thesisApprovedCount}
-              icon={<FileCheck className="h-6 w-6 text-purple-600" />}
+              icon={<FileCheck className="h-6 w-6 " />}
               desc="Thesis awaiting your approval"
-              iconClass="bg-purple-100"
-              textColorClass="text-purple-600"
+              iconClass="bg-gray-100"
             />
 
             <StatsCard
               title="Handled Thesis"
               count={handledThesisCount}
-              icon={<BookCopy className="h-6 w-6 text-pink-600" />}
+              icon={<BookCopy className="h-6 w-6 " />}
               desc="Thesis you have advised"
-              iconClass="bg-pink-100"
-              textColorClass="text-pink-600"
+              iconClass="bg-gray-100"
             />
           </div>
         </section>
