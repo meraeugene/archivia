@@ -193,7 +193,7 @@ export default function Login() {
         </div>
 
         {/* Right Side - Image */}
-        <div className="hidden  md:flex items-center justify-center md:w-[45%]  ">
+        <div className="hidden  md:flex items-center justify-center md:w-[45%] h-full  ">
           <img
             src="/images/login.jpg"
             alt="Login Illustration"
