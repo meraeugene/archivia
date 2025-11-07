@@ -11,6 +11,7 @@ import { getAdminDashboardStats } from "@/actions/admin/dashboardStats";
 import { ChartBarMultiple } from "@/components/admin/ChartBarMultiple";
 import { getAdviserRequestsPerMonth } from "@/actions/admin/getAdviserRequestsPerMonth";
 import QuickActionsCard from "@/components/QuickActionsCard";
+import TopBookmarksCard from "./TopBookmarksCard";
 
 export default async function AdminDashboard() {
   const [
@@ -20,6 +21,7 @@ export default async function AdminDashboard() {
       totalUsers,
       totalAdvisers,
       totalStudents,
+      topBookmarked,
     },
     adviserRequestsPerMonth,
   ] = await Promise.all([
@@ -73,6 +75,10 @@ export default async function AdminDashboard() {
           />
         </div>
 
+        <section className="pt-8">
+          <TopBookmarksCard bookmarks={topBookmarked} />
+        </section>
+
         <div className="space-y-8 py-8">
           <ChartBarMultiple adviserRequest={adviserRequestsPerMonth} />
         </div>
@@ -86,25 +92,25 @@ export default async function AdminDashboard() {
               title="Manage users"
               desc="View and manage all users in the system."
               icon={<Users className="h-6 w-6" />}
-              link="/manage-users"
+              link="/admin/manage-users"
             />
             <QuickActionsCard
               title="Manage Theses"
-              link="/manage-theses"
+              link="/admin/manage-theses"
               desc="View and manage all theses submissions"
               icon={<BookOpen className="h-6 w-6" />}
             />
 
             <QuickActionsCard
               title="Backup & Recovery"
-              link="/backup"
+              link="/admin/backup"
               desc="Backup and restore system data"
               icon={<Database className="h-6 w-6" />}
             />
 
             <QuickActionsCard
               title="Retrain Model"
-              link="/retrain-model"
+              link="/admin/retrain-model"
               desc="Retrain the AI model with new data"
               icon={<BrainCircuit className="h-6 w-6" />}
             />

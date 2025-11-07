@@ -17,8 +17,9 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { TrendingUp } from "lucide-react";
-
-export const description = "A multiple bar chart";
+import { useState } from "react";
+import { Select, SelectContent, SelectItem, SelectTrigger } from "../ui/select";
+import { SelectValue } from "@radix-ui/react-select";
 
 const chartConfig = {
   pending: {
@@ -33,6 +34,7 @@ const chartConfig = {
 
 interface ChartBarMultipleProps {
   adviserRequest: Array<{
+    year: number;
     month: string;
     pending: number;
     accepted: number;
@@ -40,39 +42,52 @@ interface ChartBarMultipleProps {
 }
 
 export function ChartBarMultiple({ adviserRequest }: ChartBarMultipleProps) {
+  const [selectedYear, setSelectedYear] = useState(2025);
+
+  const chartData = adviserRequest.filter((d) => d.year === selectedYear);
+
   const currentYear = new Date().getFullYear();
-
-  // All months in order
-  const allMonths = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
-
-  const monthMap = Object.fromEntries(
-    adviserRequest.map((item) => [item.month.trim(), item])
-  );
-
-  const chartData = allMonths.map((month) => ({
-    month,
-    pending: monthMap[month]?.pending ?? 0,
-    accepted: monthMap[month]?.accepted ?? 0,
-  }));
 
   return (
     <Card className="shadow-none">
-      <CardHeader>
-        <CardTitle>Monthly Adviser Requests </CardTitle>
-        <CardDescription>January - December {currentYear}</CardDescription>
+      <CardHeader className="flex flex-row items-center justify-between">
+        <div>
+          <CardTitle>Monthly Adviser Requests</CardTitle>
+          <CardDescription>January - December {selectedYear}</CardDescription>
+        </div>
+
+        <div className="flex items-center gap-6">
+          <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-full bg-[var(--chart-1)]"></span>
+              <span className="text-muted-foreground">Pending</span>
+            </div>
+            <div className="flex items-center gap-1.5">
+              <span className="w-3 h-3 rounded-full bg-[var(--chart-3)]"></span>
+              <span className="text-muted-foreground">Accepted</span>
+            </div>
+          </div>
+
+          <Select
+            value={String(selectedYear)}
+            onValueChange={(value) => setSelectedYear(Number(value))}
+          >
+            <SelectTrigger className="w-[120px]  cursor-pointer">
+              <SelectValue placeholder="Select Year" />
+            </SelectTrigger>
+            <SelectContent>
+              {[...new Set(adviserRequest.map((d) => d.year))].map((year) => (
+                <SelectItem
+                  key={year}
+                  value={String(year)}
+                  className="cursor-pointer"
+                >
+                  {year}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </CardHeader>
 
       <CardContent>
