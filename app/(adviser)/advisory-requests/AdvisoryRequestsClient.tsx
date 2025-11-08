@@ -27,7 +27,7 @@ export default function AdvisoryRequestsClient({
 
   return (
     <main className="flex-1">
-      <div className="sticky top-0 z-40 px-8 py-4 border-b bg-white border-gray-200">
+      <div className="sticky shadow-xs top-0 z-40 px-8 py-4 bg-white ">
         <h1 className="text-lg font-bold text-gray-900">Advisory Requests</h1>
       </div>
 

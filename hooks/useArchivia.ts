@@ -17,7 +17,7 @@ export function useArchivia(initialTheses?: Thesis[]) {
   const [selectedThesis, setSelectedThesis] = useState<Thesis | null>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentCategory, setCurrentCategory] = useState("all");
+  const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [sort, setSort] = useState("recent");
   const [isPending, startTransition] = useTransition();
 

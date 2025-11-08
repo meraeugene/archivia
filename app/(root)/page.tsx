@@ -1,4 +1,4 @@
-import { getAllTheses } from "@/actions/common/theses";
+import { getMoreTheses } from "@/actions/common/theses";
 import ArchiviaClient from "./ArchiviaClient";
 import { getAllCategories } from "@/actions/common/getAllCategories";
 import { getStudentAdviser } from "@/actions/student/getStudentAdviser";
@@ -7,13 +7,13 @@ import { getSession } from "@/actions/auth/getSession";
 
 export default async function Page() {
   const [
-    theses,
+    initialTheses,
     session,
     categoryOptions,
     { data: userBookmarks = [] },
     studentAdviser,
   ] = await Promise.all([
-    getAllTheses(),
+    getMoreTheses(0),
     getSession(),
     getAllCategories(),
     getUserBookmarksIds(),
@@ -22,7 +22,7 @@ export default async function Page() {
 
   return (
     <ArchiviaClient
-      initialTheses={theses}
+      initialTheses={initialTheses}
       session={session}
       categoryOptions={categoryOptions}
       userBookmarks={userBookmarks}

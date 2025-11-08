@@ -28,12 +28,14 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
         onClick={(e) => {
           e.stopPropagation();
         }}
-        className="bg-white/90 backdrop-blur-md rounded-lg max-w-5xl w-full max-h-[80vh] overflow-y-auto relative shadow-lg border border-white/30"
+        className="bg-white/90 backdrop-blur-md rounded-lg max-w-5xl w-full max-h-[80vh]
+  overflow-y-auto relative shadow-lg border border-white/30
+  animate-fadeInScale"
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-5 cursor-pointer right-5 text-gray-600 hover:text-black transition-colors"
+          className="absolute top-5 cursor-pointer right-5 text-gray-600 hover:text-black transition-colors "
         >
           <X size={24} />
         </button>

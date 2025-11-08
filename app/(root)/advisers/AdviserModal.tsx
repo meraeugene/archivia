@@ -24,7 +24,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
       onClick={closeModal}
     >
       <div
-        className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[90vh] relative "
+        className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[90vh] relative animate-fadeInScale"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}

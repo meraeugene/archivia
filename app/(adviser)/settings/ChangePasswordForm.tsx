@@ -44,8 +44,8 @@ export default function ChangePasswordPage() {
 
   return (
     <main className="flex-1">
-      <div className="bg-white rounded-lg border  overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-200">
+      <div className="bg-white rounded-lg border border-gray-100 shadow-xs  overflow-hidden">
+        <div className="px-6 py-4 border-b border-gray-100">
           <h3 className="text-lg font-semibold text-gray-900 flex items-center">
             <Lock className="h-5 w-5 mr-2" />
             Security
@@ -66,7 +66,7 @@ export default function ChangePasswordPage() {
                 type={showOldPassword ? "text" : "password"}
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:ring-2 focus:ring-gray-900 focus:outline-none"
+                className="w-full border border-gray-50 focus:shadow-md focus:border-gray-100  shadow-sm  rounded-lg px-4 py-3 pr-10 focus:outline-none"
                 placeholder="Enter your current password"
               />
               <button
@@ -94,7 +94,7 @@ export default function ChangePasswordPage() {
                 type={showNewPassword ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full border border-gray-300 rounded-lg px-3 py-2 pr-10 focus:ring-2 focus:ring-gray-900 focus:outline-none"
+                className="w-full border border-gray-100 shadow-sm rounded-lg px-4 py-3 focus:shadow-md focus:border-gray-100  pr-10  focus:outline-none"
                 placeholder="Enter your new password"
               />
               <button
@@ -110,7 +110,7 @@ export default function ChangePasswordPage() {
                 )}
               </button>
             </div>
-            <p className="text-xs text-gray-500 mt-1">
+            <p className="text-xs text-gray-500 mt-3">
               Must be at least 8 characters long and include uppercase,
               lowercase, number, and special character.
             </p>

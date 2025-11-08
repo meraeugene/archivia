@@ -20,7 +20,7 @@ export const TextAreaField = ({
       rows={rows}
       value={value}
       onChange={onChange}
-      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900 focus:border-transparent resize-none"
+      className="w-full px-4 py-3 border border-gray-100 shadow-sm rounded-lg focus:outline-none focus:shadow-md focus:border-gray-100  resize-none"
     />
   </div>
 );

@@ -49,7 +49,7 @@ export function ChartBarMultiple({ adviserRequest }: ChartBarMultipleProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <Card className="shadow-none">
+    <Card className="shadow-xs border border-gray-100">
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
           <CardTitle>Monthly Adviser Requests</CardTitle>

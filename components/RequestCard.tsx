@@ -31,7 +31,7 @@ const RequestCard = ({
   handleOpenModal,
 }: RequestCardProps) => {
   return (
-    <div className="bg-white h-fit border overflow-hidden  p-6 hover:shadow-sm transition-shadow  rounded-lg">
+    <div className="bg-white h-fit border border-gray-100 overflow-hidden  p-6 transition-shadow  rounded-lg shadow-lg hover:shadow-xl tra">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-3">
@@ -99,9 +99,11 @@ const RequestCard = ({
 
       {/* Title + Abstract */}
       <div className="mb-2">
-        <h4 className="font-medium text-gray-900 mb-2">{request.title}</h4>
+        <h4 className="font-extrabold text-lg leading-tight  uppercase text-gray-900 mb-2">
+          {request.title}
+        </h4>
         <p
-          className={`text-sm text-gray-600 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
+          className={` text-gray-600 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
             isExpanded ? "line-clamp-none max-h-96" : "line-clamp-3 max-h-20"
           }`}
         >

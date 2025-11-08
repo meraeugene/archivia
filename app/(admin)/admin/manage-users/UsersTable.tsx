@@ -27,7 +27,7 @@ const UsersTable = ({
   setIsDeleteOpen,
 }: UsersTableProps) => {
   return (
-    <table className="w-full text-left border-collapse">
+    <table className="w-full text-left border-collapse  ">
       <thead className="bg-black text-white uppercase text-sm">
         <tr>
           <th className="px-4 py-3 font-medium">User ID</th>

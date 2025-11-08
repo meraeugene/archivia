@@ -45,7 +45,7 @@ const UploadThesisClient = ({
 
       {/* Upload Zone */}
       <div
-        className={`relative border max-w-4xl bg-white mx-auto rounded-xl  transition-all duration-300 cursor-pointer  ${
+        className={`relative border  border-gray-100 max-w-4xl bg-white shadow-sm hover:shadow-md mx-auto rounded-xl  transition-all duration-300 cursor-pointer  ${
           dragActive
             ? "border-blue-500 bg-blue-50"
             : uploadedFile

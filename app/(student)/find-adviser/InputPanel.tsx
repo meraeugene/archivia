@@ -60,7 +60,7 @@ const InputPanel = ({
             </label>
             <input
               type="text"
-              className="w-full p-4 border border-gray-200 rounded-xl bg-white focus:ring-2 focus:ring-black outline-none transition-all duration-200 text-black placeholder-gray-400"
+              className="w-full p-4 border border-gray-50  shadow-sm  rounded-xl bg-white  outline-none transition-all duration-200 text-black placeholder-gray-400 focus:shadow-md focus:border-gray-100 "
               placeholder="e.g., Exploring Machine Learning Techniques for Predictive Analytics"
               value={studentData.title}
               onChange={(e) => onChange("title", e.target.value)}
@@ -74,7 +74,7 @@ const InputPanel = ({
               Research Overview
             </label>
             <textarea
-              className="w-full p-4 border border-gray-200 rounded-xl resize-none bg-white focus:ring-2 focus:ring-black outline-none transition-all duration-200 text-black placeholder-gray-400"
+              className="w-full p-4 border border-gray-50 shadow-sm rounded-xl resize-none bg-white focus:shadow-md focus:border-gray-100 outline-none transition-all duration-200 text-black placeholder-gray-400"
               rows={hasRecommendations ? 10 : 6}
               placeholder="Describe your research topic, objectives, and any specific areas of interest or methodologies you plan to use."
               value={studentData.abstract}
@@ -99,7 +99,7 @@ const InputPanel = ({
         </button>
 
         {!hasRecommendations && (
-          <div className="mt-8 p-6 border border-gray-200 bg-gray-50 rounded-xl">
+          <div className="mt-8 p-6 border border-gray-100 shadow-sm bg-gray-50 rounded-xl">
             <div className="flex items-start gap-3">
               <Lightbulb className="text-black mt-1 flex-shrink-0" size={20} />
               <div>

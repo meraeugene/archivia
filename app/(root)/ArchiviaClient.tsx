@@ -5,13 +5,17 @@ import Hero from "@/sections/Hero";
 import ThesisCard from "@/components/ThesisCard";
 import ThesisModal from "@/components/ThesisModal";
 import AdviserRecommender from "@/sections/AdviserRecommender";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
-import ThesisCardSkeleton from "@/components/ThesisCardSkeleton";
 import { useArchivia } from "@/hooks/useArchivia";
 import SearchCategory from "@/components/SearchFilter";
 import { JwtPayload } from "jsonwebtoken";
 import { StudentAdviser } from "@/types/studentAdviser";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem,
+} from "@/components/ui/select";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
@@ -41,11 +45,16 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
     closeModal,
     currentCategory,
     setCurrentCategory,
+    loadMore,
+    hasMore,
+    loadingMore,
+    handleSortChange,
+    sort,
     thesisCount,
   } = useArchivia(initialTheses);
 
   return (
-    <main className="min-h-screen bg-white text-black">
+    <main className="min-h-screen bg-gray-50 text-black">
       <Hero />
 
       <SearchCategory
@@ -57,58 +66,125 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         onSearch={handleSearch}
       />
 
-      <section className="md:py-15 py-8">
+      <section className="md:py-15 md:pt-8 py-8">
         <div className="max-w-6xl mx-auto px-4">
-          <div className="mb-10 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <div className="md:mb-3 text-gray-700">
-              {isPending ? (
-                "Searching..."
-              ) : currentCategory === "all" ? (
-                `Showing ${displayedTheses.length} of ${thesisCount} total theses`
-              ) : (
-                <>
-                  Showing {displayedTheses.length} of {thesisCount} total theses
-                  in{" "}
-                  <span className="font-semibold text-black">
-                    {currentCategory}
-                  </span>
-                </>
-              )}
+          <div className="mb-6 md:mb-10 flex flex-col gap-4">
+            <div className="flex w-full justify-between flex-col-reverse md:flex-row gap-4">
+              <div className="mb-3 sm:mb-0 text-gray-700">
+                {isPending ? (
+                  "Searching..."
+                ) : currentCategory === "all" ? (
+                  `Showing ${displayedTheses.length} of ${thesisCount} total theses`
+                ) : (
+                  <>
+                    Showing {displayedTheses.length} of {thesisCount} total
+                    theses in{" "}
+                    <span className="font-semibold text-black">
+                      {currentCategory}
+                    </span>
+                  </>
+                )}
+              </div>
+
+              <div className="flex gap-4">
+                <Select value={sort} onValueChange={handleSortChange}>
+                  <SelectTrigger className="w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
+                    <SelectValue placeholder="Sort by" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="recent">Newest</SelectItem>
+                    <SelectItem value="title">Title (A–Z)</SelectItem>
+                    <SelectItem value="adviser">Adviser (A–Z)</SelectItem>
+                  </SelectContent>
+                </Select>
+
+                <Select
+                  value={currentCategory}
+                  onValueChange={(val) => setCurrentCategory(val)}
+                >
+                  <SelectTrigger className="w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
+                    <SelectValue placeholder="Select Category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {categoryOptions.map((option) => (
+                      <SelectItem key={option.key} value={option.key}>
+                        {option.label}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
-            <Link
-              href="/browse"
-              className="inline-flex items-center gap-2 text-black font-medium hover:text-gray-700 transition-colors group"
-            >
-              Browse All
-              <ArrowRight className="w-4 h-4 transform transition-transform duration-300 group-hover:translate-x-1" />
-            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {isPending
-              ? Array.from({ length: 6 }).map((_, i) => (
-                  <ThesisCardSkeleton key={i} />
-                ))
-              : displayedTheses.map((thesis) => (
-                  <ThesisCard
-                    key={thesis.id}
-                    thesis={thesis}
-                    onPreview={handlePreview}
-                    onDownload={handleDownload}
-                    isInitiallyBookmarked={
-                      thesis.id !== undefined &&
-                      userBookmarks.includes(thesis.id)
-                    }
-                  />
-                ))}
+            {displayedTheses.map((thesis) => (
+              <div key={thesis.id} className="fade-slide-up">
+                <ThesisCard
+                  thesis={thesis}
+                  onPreview={handlePreview}
+                  onDownload={handleDownload}
+                  isInitiallyBookmarked={
+                    thesis.id !== undefined &&
+                    userBookmarks?.includes(thesis.id)
+                  }
+                />
+              </div>
+            ))}
           </div>
 
           {!isPending && displayedTheses.length === 0 && (
-            <div className="text-center py-20 text-gray-500">
+            <div className="text-center py-20 text-gray-500 w-full col-span-2 break-inside-avoid">
               <p className="text-lg">No theses found matching your search.</p>
               <p className="text-sm mt-2">
                 Try adjusting your search or filters.
               </p>
+            </div>
+          )}
+
+          {(isPending || loadingMore) && (
+            <div className="flex justify-center items-center py-10 w-full col-span-2">
+              <div className="h-8 w-8 border-4 border-gray-300 border-t-black rounded-full animate-spin" />
+            </div>
+          )}
+
+          {/* Infinite Scroll + End Message */}
+          <div
+            ref={(el) => {
+              if (!el) return;
+              const observer = new IntersectionObserver(
+                (entries) => {
+                  if (entries[0].isIntersecting && hasMore && !loadingMore) {
+                    loadMore();
+                  }
+                },
+                {
+                  rootMargin: "200px", // Trigger earlier for smoother load
+                  threshold: 0.5, // Fire when half visible, more precise
+                }
+              );
+              observer.observe(el);
+              return () => observer.disconnect();
+            }}
+            className="h-10"
+          ></div>
+
+          {!hasMore && !loadingMore && displayedTheses.length > 0 && (
+            <div className="text-center py-5 text-gray-500">
+              {currentCategory === "all" ? (
+                <>
+                  You’ve reached the end — all {displayedTheses.length} theses
+                  loaded.
+                </>
+              ) : (
+                <>
+                  You’ve reached the end of the{" "}
+                  <span className="font-semibold text-gray-700">
+                    {currentCategory}
+                  </span>{" "}
+                  category — all {displayedTheses.length} theses loaded.
+                </>
+              )}
             </div>
           )}
         </div>

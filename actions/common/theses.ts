@@ -5,25 +5,6 @@ import { cache } from "react";
 
 const PAGE_SIZE = 6;
 
-//  1. Homepage - latest theses
-export const getAllTheses = cache(async () => {
-  const supabase = await createClient();
-
-  const { data, error } = await supabase
-    .from("theses")
-    .select("*")
-    .order("title", { ascending: true }) // sort alphabetically
-    .limit(PAGE_SIZE);
-
-  if (error) {
-    console.error(" Error fetching theses:", error.message);
-    return [];
-  }
-
-  return data;
-});
-
-//  2. Infinite scroll - with optional sorting
 export const getMoreTheses = cache(
   async (offset = 0, sort = "recent", category = "all") => {
     const supabase = await createClient();
@@ -83,7 +64,6 @@ export async function searchTheses(
   return { data, error };
 }
 
-//  4. Count (for pagination or total display)
 export const getThesesCount = cache(async (category = "all") => {
   const supabase = await createClient();
 

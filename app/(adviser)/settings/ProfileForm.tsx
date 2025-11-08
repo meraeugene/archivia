@@ -26,8 +26,8 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
   } = useAdviserProfileEditor(currentUser!);
 
   return (
-    <div className="bg-white rounded-lg  border overflow-hidden">
-      <div className="px-6 py-4 border-b border-gray-200">
+    <div className="bg-white rounded-lg  border shadow-xs border-gray-100 overflow-hidden">
+      <div className="px-6 py-4 border-b border-gray-100">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center">
           <User className="h-5 w-5 mr-2" />
           Profile Information
@@ -144,7 +144,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
           <button
             type="button"
             onClick={handleCancel}
-            className="px-6 py-3 cursor-pointer border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+            className="px-6 py-3 cursor-pointer border border-gray-100 shadow-xs text-gray-700 rounded-lg font-medium hover:shadow-sm transition-colors"
           >
             Cancel
           </button>

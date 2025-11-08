@@ -54,7 +54,7 @@ export default function ManageThesisClient({
   return (
     <main className="flex-1 bg-gray-50 min-h-screen">
       {/* Header */}
-      <div className="sticky top-0 z-40 px-8 py-4 border-b bg-white">
+      <div className="sticky top-0 z-40 px-8 py-4  bg-white shadow-xs">
         <h1 className="text-xl font-bold text-gray-900">Manage Theses</h1>
       </div>
 

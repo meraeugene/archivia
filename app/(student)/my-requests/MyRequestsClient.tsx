@@ -35,7 +35,7 @@ export default function MyRequestsClient({
   }
 
   return (
-    <main className=" mx-auto ">
+    <main className=" mx-auto bg-gray-50">
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
         <div className="relative max-w-7xl mx-auto px-6 md:py-20 py-12 text-center">
@@ -55,9 +55,7 @@ export default function MyRequestsClient({
         {requests.map((request) => (
           <div
             key={request.id}
-            className="break-inside-avoid mb-8 bg-white border overflow-hidden 
-                  p-6 hover:shadow-sm 
-                 transition-shadow  rounded-lg"
+            className="break-inside-avoid mb-8 bg-white border border-gray-200 shadow-lg hover:shadow-xl overflow-hidden p-6 transition-shadow  rounded-lg"
           >
             {/* Adviser Info + Status + Cancel */}
             <div className="flex items-start justify-between mb-3">
@@ -137,11 +135,11 @@ export default function MyRequestsClient({
 
             {/* Title + Abstract */}
             <div>
-              <h4 className="font-medium text-gray-900 mb-2">
+              <h4 className="font-extrabold text-lg text-gray-900 mb-2">
                 {request.title}
               </h4>
               <p
-                className={`text-sm text-gray-600 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
+                className={` text-gray-700 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
                   expanded === request.id
                     ? "line-clamp-none max-h-96"
                     : "line-clamp-3 max-h-20"

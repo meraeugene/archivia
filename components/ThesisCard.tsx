@@ -36,9 +36,11 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-lg p-6 hover:shadow-sm transition-all duration-300 h-fit ">
+    <div className="bg-white border border-gray-100   rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full ">
       <div className="flex items-start justify-between gap-2 mb-3">
-        <h3 className="md:text-lg font-bold leading-tight ">{thesis.title}</h3>
+        <h3 className="md:text-lg font-extrabold leading-tight text-gray-900 uppercase ">
+          {thesis.title}
+        </h3>
         <button
           onClick={handleClick}
           disabled={isPending || thesis.id === undefined}
@@ -59,7 +61,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
         </button>
       </div>
 
-      <div className="space-y-1 mb-4 text-sm text-gray-600">
+      <div className="space-y-1 mb-4  text-gray-600">
         <div>
           <strong>Adviser:</strong> {thesis.adviser_name || "N/A"}
         </div>
@@ -99,7 +101,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
               (cat, index) => (
                 <span
                   key={index}
-                  className="px-2 py-1 bg-gray-700 text-white shadow-sm text-xs md:font-medium rounded-full"
+                  className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm md:font-medium rounded-full"
                 >
                   {cat.trim()}
                 </span>
@@ -109,7 +111,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
             {thesis.category && thesis.category.length > 2 && (
               <span
                 onClick={() => onPreview(thesis)}
-                className="px-2 py-1 bg-gray-200 text-gray-700 text-xs font-medium rounded-full cursor-pointer hover:bg-gray-300 transition"
+                className="px-2 py-1 bg-gray-200 text-gray-700 text-sm font-medium rounded-full cursor-pointer hover:bg-gray-300 transition"
               >
                 +{thesis.category.length - 2} more
               </span>
@@ -118,14 +120,14 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
         </div>
       </div>
 
-      <p className="text-sm text-gray-700 mb-5 leading-relaxed line-clamp-4 mt-5">
+      <p className=" text-gray-700 mb-5 leading-relaxed line-clamp-4 mt-5">
         {thesis.abstract}
       </p>
 
       <div className="flex gap-3 mt-6">
         <button
           onClick={() => onPreview(thesis)}
-          className="flex-1 bg-gray-50 border cursor-pointer border-gray-200 text-black px-4 py-2.5 rounded font-medium  text-sm md:text-base hover:shadow-md transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-gray-50 border cursor-pointer shadow-md border-gray-200 text-black px-4 py-2.5 rounded font-medium  text-sm md:text-base hover:shadow-lg transition-colors flex items-center justify-center gap-2"
         >
           <Eye size={16} /> Preview
         </button>

@@ -48,7 +48,7 @@ export default function HandledThesisClient({
 
   return (
     <main className="flex-1">
-      <div className="sticky top-0 z-40 px-8 py-4 border-b bg-white border-gray-200">
+      <div className="sticky shadow-xs top-0 z-40 px-8 py-4  bg-white ">
         <h1 className="text-lg font-bold text-gray-900">Handled Theses</h1>
       </div>
 
@@ -63,13 +63,15 @@ export default function HandledThesisClient({
           {handledTheses.map((thesis) => (
             <div
               key={thesis.thesis_id}
-              className="bg-white break-inside-avoid border  p-6 hover:shadow-sm transition-shadow rounded-lg cursor-pointer"
+              className="bg-white break-inside-avoid border shadow-lg hover:shadow-xl  p-6  transition-shadow rounded-lg cursor-pointer"
               onClick={() => openModal(thesis)}
               title="Click to preview"
             >
-              <h1 className="font-medium text-gray-900 mb-4">{thesis.title}</h1>
+              <h1 className="md:text-lg font-extrabold leading-tight  uppercase text-gray-900 mb-4">
+                {thesis.title}
+              </h1>
 
-              <div className="space-y-2 mb-4 text-sm text-gray-600">
+              <div className="space-y-2 mb-4  text-gray-600">
                 <div>
                   <span className="font-medium">Panel Chair:</span>{" "}
                   {thesis.panel_member1 || "-"}
@@ -104,7 +106,7 @@ export default function HandledThesisClient({
                 </div>
 
                 {thesis.abstract && (
-                  <p className="mt-3 text-gray-700 text-sm line-clamp-3">
+                  <p className="mt-3 text-gray-700  line-clamp-3">
                     {thesis.abstract}
                   </p>
                 )}

@@ -74,7 +74,7 @@ export default function Login() {
   if (showPreloader) return <Preloader redirectTo={showPreloader} />;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-white px-4 relative">
+    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 relative">
       {/* Blurry Gradient Background */}
       <div
         className="absolute inset-0 z-0"
@@ -85,7 +85,7 @@ export default function Login() {
         }}
       />
 
-      <div className="w-full md:max-w-6xl h-[90vh] bg-white/10 backdrop-blur-lg  z-10  relative rounded-3xl  md:border border-gray-200    overflow-hidden flex items-center justify-center">
+      <div className="w-full md:max-w-6xl h-[90vh] bg-white   z-10  relative rounded-3xl  md:border border-gray-50 shadow-sm    overflow-hidden flex items-center justify-center">
         {/* Left Side - Login */}
         <div className="flex flex-col md:px-20 md:py-34    md:w-[55%]">
           {/* Header */}
@@ -103,7 +103,7 @@ export default function Login() {
             <p className="text-gray-600 text-center">
               Sign in to your school account
             </p>
-            <div className="border-b border-purple-100 mt-4" />
+            <div className="border-b border-gray-100 mt-4" />
           </div>
 
           {/* Form */}
@@ -127,7 +127,7 @@ export default function Login() {
                   type="text"
                   value={formData.userId}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 text-black border border-gray-300 rounded-md focus:ring-1 focus:ring-black/80 focus:border-transparent outline-none"
+                  className="w-full pl-10 pr-4 py-3 text-black border border-gray-100 shadow-sm rounded-md focus:shadow-md focus:border-gray-100 outline-none"
                   placeholder="Enter your school ID"
                 />
               </div>
@@ -152,7 +152,7 @@ export default function Login() {
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-12 py-3 text-black border border-gray-300 rounded-md focus:ring-1 focus:ring-black/80 focus:border-transparent outline-none"
+                  className="w-full pl-10 pr-12 py-3 text-black border border-gray-100 shadow-sm rounded-md focus:shadow-md focus:border-gray-100 outline-none"
                   placeholder="Enter your password"
                 />
                 <button
@@ -193,7 +193,7 @@ export default function Login() {
         </div>
 
         {/* Right Side - Image */}
-        <div className="hidden  md:flex items-center justify-center md:w-[45%] h-full  ">
+        <div className="hidden  md:flex items-center justify-center md:w-[45%] h-full   ">
           <img
             src="/images/login.jpg"
             alt="Login Illustration"

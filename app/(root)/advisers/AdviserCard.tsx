@@ -38,9 +38,9 @@ export const AdviserCard = ({
       </div>
 
       <div className="py-12 md:px-24 px-4  flex items-center justify-center">
-        <div className="max-w-8xl w-full">
+        <div className="max-w-8xl w-full ">
           {/* Three Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 border rounded-xl overflow-hidden border-gray-300">
+          <div className="grid grid-cols-1 lg:grid-cols-3 border shadow-md rounded-xl overflow-hidden border-gray-200">
             {/* COLUMN 1 - Image */}
             <div className="flex border-b-2 lg:border-b-0 lg:border-r border-gray-300 ">
               <div className="w-full">

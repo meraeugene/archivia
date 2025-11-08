@@ -8,7 +8,6 @@ const PROTECTED_PATHS = [
   "/",
   "/advisers",
   "/bookmarks",
-  "/browse",
   "/profile",
   "/settings",
 

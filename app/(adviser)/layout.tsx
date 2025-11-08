@@ -31,7 +31,7 @@ export default async function FacultyLayout({
   ]);
 
   return (
-    <main className="min-h-screen lg:flex ">
+    <main className="min-h-screen lg:flex bg-gray-50">
       <FacultySidebar
         currentUser={currentUser}
         pendingAdviserRequestCount={pendingAdviserRequestCount}

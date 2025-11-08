@@ -11,9 +11,9 @@ interface TopBookmarksCardProps {
 
 export default function TopBookmarksCard({ bookmarks }: TopBookmarksCardProps) {
   return (
-    <div className="bg-white border rounded-lg overflow-hidden">
+    <div className="bg-white border border-gray-100 shadow-xs rounded-lg overflow-hidden">
       {/* Header */}
-      <div className="border-b px-4 py-5 flex items-center gap-3">
+      <div className="border-b border-gray-100 px-4 py-5 flex items-center gap-3">
         <BookOpen className="h-5 w-5 text-gray-700" />
         <h3 className="leading-none font-semibold">Top Bookmarked Theses</h3>
       </div>
@@ -32,7 +32,7 @@ export default function TopBookmarksCard({ bookmarks }: TopBookmarksCardProps) {
             <div
               key={i}
               className={`group relative bg-white p-4  ${
-                i < bookmarks.length - 1 ? "border-b border-gray-200" : ""
+                i < bookmarks.length - 1 ? "border-b border-gray-100" : ""
               }`}
             >
               <div className="relative flex justify-between items-center gap-4">

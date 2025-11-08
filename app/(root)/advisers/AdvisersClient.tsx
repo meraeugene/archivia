@@ -28,7 +28,7 @@ const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-gray-50">
       <AdviserCard adviser={studentAdviser} />
 
       {/* 3D Cards Grid */}

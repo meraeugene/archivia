@@ -19,7 +19,7 @@ const QuickActionsCard = ({
     <Link
       prefetch
       href={link}
-      className="bg-white p-6  text-left group rounded-lg border  hover:shadow-sm transition-shadow"
+      className="bg-white p-6  text-left group rounded-lg border border-gray-100 shadow-xs  hover:shadow-md transition-shadow"
     >
       <div className="flex items-center  mb-4">
         <div className="bg-gray-100 p-3 rounded-lg group-hover:bg-gray-900 group-hover:text-white transition-colors">
