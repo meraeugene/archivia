@@ -44,7 +44,7 @@ export default function ChangePasswordPage() {
 
   return (
     <main className="flex-1">
-      <div className="bg-white rounded-lg border border-gray-100 shadow-xs  overflow-hidden">
+      <div className="bg-white rounded-lg border border-gray-100 shadow-xl  overflow-hidden">
         <div className="px-6 py-4 border-b border-gray-100">
           <h3 className="text-lg font-semibold text-gray-900 flex items-center">
             <Lock className="h-5 w-5 mr-2" />

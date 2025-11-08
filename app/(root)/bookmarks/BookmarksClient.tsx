@@ -89,7 +89,7 @@ export default function BookmarksClient({
         {bookmarks.map((thesis) => (
           <div
             key={thesis.id}
-            className="bg-white shadow-lg border border-gray-200 rounded-lg p-6 hover:shadow-xl transition-all duration-300 h-fit "
+            className="bg-white shadow-lg border border-gray-200 rounded-lg p-6 hover:shadow-xl transition-all duration-300 h-full "
           >
             <div className="flex items-start justify-between gap-4 mb-3">
               <h3 className="text-lg font-extrabold leading-tight ">

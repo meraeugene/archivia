@@ -125,10 +125,10 @@ export default function Login() {
                   name="userId"
                   autoComplete="username"
                   type="text"
+                  placeholder="School ID"
                   value={formData.userId}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 text-black border border-gray-100 shadow-sm rounded-md focus:shadow-md focus:border-gray-100 outline-none"
-                  placeholder="Enter your school ID"
                 />
               </div>
             </div>
@@ -151,9 +151,9 @@ export default function Login() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
+                  placeholder="********"
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-12 py-3 text-black border border-gray-100 shadow-sm rounded-md focus:shadow-md focus:border-gray-100 outline-none"
-                  placeholder="Enter your password"
                 />
                 <button
                   type="button"

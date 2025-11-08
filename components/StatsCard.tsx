@@ -20,7 +20,7 @@ const StatsCard = ({
   textColorClass,
 }: StatsCardProps) => {
   return (
-    <div className=" p-6 border border-gray-100 rounded-lg bg-white shadow-xs hover:shadow-sm transition-shadow duration-200">
+    <div className=" p-6 border border-gray-100 rounded-lg bg-white shadow-lg hover:shadow-xl transition-shadow duration-200">
       <div className="flex items-center justify-between">
         <div>
           <p className="text-sm font-medium">{title}</p>
