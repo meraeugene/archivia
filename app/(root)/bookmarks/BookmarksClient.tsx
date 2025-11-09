@@ -6,6 +6,7 @@ import { useArchivia } from "@/hooks/useArchivia";
 import { Thesis } from "@/types/thesis";
 import ThesisModal from "@/components/ThesisModal";
 import { toggleBookmark } from "@/actions/common/toggleBookmark";
+import Link from "next/link";
 
 interface BookmarksClientProps {
   bookmarks: Thesis[];
@@ -60,9 +61,9 @@ export default function BookmarksClient({
           <div className="w-48 h-1 bg-white mx-auto md:mb-8 mb-5"></div>
           <p className="text-lg text-gray-300 max-w-xl mx-auto">
             Browse the{" "}
-            <a href="/browse" className="text-blue-300 hover:underline">
+            <Link prefetch href="/" className="text-blue-300 hover:underline">
               Thesis Archive
-            </a>{" "}
+            </Link>{" "}
             and bookmark your favorite works.
           </p>
         </div>

@@ -36,7 +36,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
   };
 
   return (
-    <div className="bg-white border border-gray-100   rounded-lg p-6  shadow-lg hover:shadow-xl transition-all duration-300 h-full ">
+    <div className="bg-white border border-gray-100   rounded-lg p-6  shadow-lg hover:shadow-xl transition-all duration-300 h-fit ">
       <div className="flex items-start justify-between gap-2 mb-3">
         <h3 className="md:text-lg font-extrabold leading-tight text-gray-900 uppercase ">
           {thesis.title}

@@ -47,13 +47,12 @@ export function useArchivia(initialTheses?: Thesis[]) {
   //  Fetch by category
   const handleCategoryChange = useCallback(
     async (newCategory: string) => {
-      setCurrentCategory(newCategory);
-      setDisplayedTheses([]);
       setOffset(0);
       setHasMore(true);
       fetchTotalCount(newCategory);
 
       startTransition(async () => {
+        setDisplayedTheses([]);
         const data = await getMoreTheses(0, sort, newCategory);
         setDisplayedTheses(data);
         setOffset(data.length);

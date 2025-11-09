@@ -9,6 +9,7 @@ import { useArchivia } from "@/hooks/useArchivia";
 import SearchCategory from "@/components/SearchFilter";
 import { JwtPayload } from "jsonwebtoken";
 import { StudentAdviser } from "@/types/studentAdviser";
+import Masonry from "react-masonry-css";
 import {
   Select,
   SelectTrigger,
@@ -24,6 +25,11 @@ interface ArchiviaClientProps {
   userBookmarks?: number[];
   studentAdviser?: StudentAdviser | null;
 }
+
+const breakpointColumnsObj = {
+  default: 2,
+  768: 1,
+};
 
 const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
   initialTheses,
@@ -102,7 +108,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                   value={currentCategory}
                   onValueChange={(val) => setCurrentCategory(val)}
                 >
-                  <SelectTrigger className="w-auto border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
+                  <SelectTrigger className="w-auto min-w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -117,7 +123,11 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <Masonry
+            breakpointCols={breakpointColumnsObj}
+            className="flex gap-8"
+            columnClassName="space-y-8"
+          >
             {displayedTheses.map((thesis) => (
               <div key={thesis.id} className="fade-slide-up">
                 <ThesisCard
@@ -131,7 +141,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                 />
               </div>
             ))}
-          </div>
+          </Masonry>
 
           {!isPending && displayedTheses.length === 0 && (
             <div className="text-center py-20 text-gray-500 w-full col-span-2 break-inside-avoid">

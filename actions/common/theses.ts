@@ -35,6 +35,7 @@ export const getMoreTheses = cache(
     query = query.range(offset, offset + PAGE_SIZE - 1);
 
     const { data, error } = await query;
+
     if (error) {
       console.error("Error fetching theses:", error.message);
       return [];
