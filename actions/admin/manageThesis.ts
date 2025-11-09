@@ -38,9 +38,9 @@ export const getAllTheses = cache(
 
     // Sorting
     if (sortBy === "newest")
-      query = query.order("created_at", { ascending: false });
+      query = query.order("defense_year", { ascending: false });
     else if (sortBy === "oldest")
-      query = query.order("created_at", { ascending: true });
+      query = query.order("defense_year", { ascending: true });
     else if (sortBy === "title")
       query = query.order("title", { ascending: true });
     else if (sortBy === "adviser")

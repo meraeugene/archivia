@@ -102,7 +102,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                   value={currentCategory}
                   onValueChange={(val) => setCurrentCategory(val)}
                 >
-                  <SelectTrigger className="w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
+                  <SelectTrigger className="w-auto border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
