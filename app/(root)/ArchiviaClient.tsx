@@ -75,7 +75,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
       <section className="md:py-15 md:pt-8 py-8">
         <div className="max-w-6xl mx-auto ">
           <div className="mb-6 md:mb-10 flex flex-col gap-4">
-            <div className="flex w-full justify-between flex-col-reverse md:flex-row gap-4">
+            <div className="flex w-full justify-between flex-col-reverse items-center md:flex-row gap-4">
               <div className="mb-3 sm:mb-0 text-gray-700">
                 {isPending ? (
                   "Searching..."
