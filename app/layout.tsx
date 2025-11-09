@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     siteName: "Archivia",
     images: [
       {
-        url: "/thumbnail-v3.png", // replace with your actual OG image URL
+        url: "/thumbnail-v4.png", // replace with your actual OG image URL
         // width: 1200,
         // height: 630,
         width: 2400,
@@ -43,7 +43,7 @@ export const metadata: Metadata = {
     title: "Archivia | Digital Thesis Archive",
     description:
       "Browse past thesis papers and find your ideal adviser with Archivia — a secure platform by the USTP IT Department that centralizes research access and uses smart recommendations to match students with the best advisers for their study.",
-    images: ["/thumbnail-v3.png"], // replace with your actual image
+    images: ["/thumbnail-v4.png"], // replace with your actual image
   },
 };
 
