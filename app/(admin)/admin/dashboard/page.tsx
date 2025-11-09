@@ -5,6 +5,7 @@ import {
   BookOpen,
   Database,
   BrainCircuit,
+  UserCog,
 } from "lucide-react";
 import StatsCard from "@/components/StatsCard";
 import { getAdminDashboardStats } from "@/actions/admin/dashboardStats";
@@ -12,6 +13,7 @@ import { ChartBarMultiple } from "@/components/admin/ChartBarMultiple";
 import { getAdviserRequestsPerMonth } from "@/actions/admin/getAdviserRequestsPerMonth";
 import QuickActionsCard from "@/components/QuickActionsCard";
 import TopBookmarksCard from "./TopBookmarksCard";
+import { getAdviserAdvisees } from "@/actions/admin/getAdivserAdvisees";
 
 export default async function AdminDashboard() {
   const [
@@ -27,6 +29,7 @@ export default async function AdminDashboard() {
   ] = await Promise.all([
     getAdminDashboardStats(),
     getAdviserRequestsPerMonth(),
+    getAdviserAdvisees(),
   ]);
 
   return (
@@ -74,48 +77,52 @@ export default async function AdminDashboard() {
             iconClass="bg-gray-100"
           />
         </div>
+      </section>
 
-        <section className="pt-8">
-          <TopBookmarksCard bookmarks={topBookmarked} />
-        </section>
-
-        <div className="space-y-8 py-8">
-          <ChartBarMultiple adviserRequest={adviserRequestsPerMonth} />
+      <section className="p-8">
+        <h2 className="text-xl font-semibold text-gray-900 mb-4">
+          Quick Actions
+        </h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-6">
+          <QuickActionsCard
+            title="Manage advisees"
+            desc="View and manage adviser advisees."
+            icon={<UserCog className="h-6 w-6" />}
+            link="/admin/manage-advisees"
+          />
+          <QuickActionsCard
+            title="Manage users"
+            desc="View and manage users."
+            icon={<Users className="h-6 w-6" />}
+            link="/admin/manage-users"
+          />
+          <QuickActionsCard
+            title="Manage Theses"
+            link="/admin/manage-theses"
+            desc="View and manage theses submissions"
+            icon={<BookOpen className="h-6 w-6" />}
+          />
+          <QuickActionsCard
+            title="Backup & Recovery"
+            link="/admin/backup"
+            desc="Backup and restore system data"
+            icon={<Database className="h-6 w-6" />}
+          />
+          <QuickActionsCard
+            title="Retrain Model"
+            link="/admin/retrain-model"
+            desc="Retrain the AI model with new data"
+            icon={<BrainCircuit className="h-6 w-6" />}
+          />
         </div>
+      </section>
 
-        <section className="mb-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-4">
-            Quick Actions
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
-            <QuickActionsCard
-              title="Manage users"
-              desc="View and manage all users in the system."
-              icon={<Users className="h-6 w-6" />}
-              link="/admin/manage-users"
-            />
-            <QuickActionsCard
-              title="Manage Theses"
-              link="/admin/manage-theses"
-              desc="View and manage all theses submissions"
-              icon={<BookOpen className="h-6 w-6" />}
-            />
+      <section className="p-8 pt-0">
+        <ChartBarMultiple adviserRequest={adviserRequestsPerMonth} />
+      </section>
 
-            <QuickActionsCard
-              title="Backup & Recovery"
-              link="/admin/backup"
-              desc="Backup and restore system data"
-              icon={<Database className="h-6 w-6" />}
-            />
-
-            <QuickActionsCard
-              title="Retrain Model"
-              link="/admin/retrain-model"
-              desc="Retrain the AI model with new data"
-              icon={<BrainCircuit className="h-6 w-6" />}
-            />
-          </div>
-        </section>
+      <section className="p-8 pt-0">
+        <TopBookmarksCard bookmarks={topBookmarked} />
       </section>
     </main>
   );

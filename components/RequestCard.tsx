@@ -149,7 +149,7 @@ const RequestCard = ({
 
       {request.status === "accepted" && (
         <button
-          disabled={isPending}
+          disabled={isPending || request.is_authorized}
           onClick={() => handleOpenModal?.(request, "authorize")}
           className={`flex  w-full justify-center items-center gap-2 py-3 rounded-md text-sm font-medium transition-colors border
       ${
@@ -188,7 +188,7 @@ const RequestCard = ({
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "refer")}
-            className="flex-1 cursor-pointer bg-white text-gray-700 border border-gray-300 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
+            className="flex-1 shadow-md hover:shadow-lg  cursor-pointer bg-white text-gray-700 border border-gray-100 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
           >
             <CornerUpRight className="h-4 w-4 mr-2" />
             Refer Adviser

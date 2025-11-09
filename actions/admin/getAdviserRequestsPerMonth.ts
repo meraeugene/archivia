@@ -1,8 +1,9 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { cache } from "react";
 
-export async function getAdviserRequestsPerMonth() {
+export const getAdviserRequestsPerMonth = cache(async () => {
   const supabase = await createClient();
 
   const { data, error } = await supabase
@@ -15,4 +16,4 @@ export async function getAdviserRequestsPerMonth() {
   }
 
   return data;
-}
+});

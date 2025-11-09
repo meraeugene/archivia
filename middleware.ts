@@ -27,6 +27,7 @@ const PROTECTED_PATHS = [
   "/backup",
   "/admin/dashboard",
   "/manage-theses",
+  "/manage-advisees",
   "/manage-users",
   "/retrain-model",
   "/admin/settings",

@@ -1,8 +1,9 @@
 "use server";
 
 import { createClient } from "@/utils/supabase/server";
+import { cache } from "react";
 
-export async function getAdminDashboardStats() {
+export const getAdminDashboardStats = cache(async () => {
   const supabase = await createClient();
 
   const [
@@ -40,4 +41,4 @@ export async function getAdminDashboardStats() {
     totalStudents: totalStudents ?? 0,
     topBookmarked: topBookmarked ?? [],
   };
-}
+});

@@ -19,20 +19,8 @@ const InputPanel = ({
   hasRecommendations,
 }: InputPanelProps) => {
   return (
-    <div
-      className={`transition-all duration-700 ease-in-out ${
-        hasRecommendations
-          ? "w-2/5 border-r border-gray-200"
-          : "w-full flex items-center justify-center pt-10 pb-16"
-      }`}
-    >
-      <div
-        className={`${
-          hasRecommendations
-            ? "top-[65px] self-start sticky h-fit py-8 pr-8 px-5"
-            : "w-full max-w-2xl"
-        }`}
-      >
+    <div>
+      <div className="max-w-2xl mx-auto py-8">
         {!hasRecommendations && (
           <div className="text-center mb-8">
             <h1 className="text-4xl font-bold text-black mb-3">
@@ -75,7 +63,7 @@ const InputPanel = ({
             </label>
             <textarea
               className="w-full p-4 border border-gray-50 shadow-sm rounded-xl resize-none bg-white focus:shadow-md focus:border-gray-100 outline-none transition-all duration-200 text-black placeholder-gray-400"
-              rows={hasRecommendations ? 10 : 6}
+              rows={8}
               placeholder="Describe your research topic, objectives, and any specific areas of interest or methodologies you plan to use."
               value={studentData.abstract}
               onChange={(e) => onChange("abstract", e.target.value)}
@@ -90,7 +78,7 @@ const InputPanel = ({
         >
           {isLoading ? (
             <>
-              <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+              <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
               Finding Advisers...
             </>
           ) : (

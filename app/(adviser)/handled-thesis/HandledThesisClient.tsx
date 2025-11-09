@@ -91,19 +91,18 @@ export default function HandledThesisClient({
                   {thesis.defense_year || "N/A"}
                 </div>
 
-                <div className="flex flex-wrap gap-2 mt-3">
-                  {(thesis.category?.length
-                    ? thesis.category
-                    : ["Uncategorized"]
-                  ).map((cat, index) => (
-                    <span
-                      key={index}
-                      className="px-2 py-1 bg-gray-700 text-white shadow-sm text-xs font-medium rounded-full"
-                    >
-                      {cat.trim()}
-                    </span>
-                  ))}
-                </div>
+                {thesis.category?.length ? (
+                  <div className="flex flex-wrap gap-2 mt-3">
+                    {thesis.category.map((cat, index) => (
+                      <span
+                        key={index}
+                        className="px-2 py-1 bg-gray-700 text-white shadow-sm text-xs font-medium rounded-full"
+                      >
+                        {cat.trim()}
+                      </span>
+                    ))}
+                  </div>
+                ) : null}
 
                 {thesis.abstract && (
                   <p className="mt-3 text-gray-700  line-clamp-3">

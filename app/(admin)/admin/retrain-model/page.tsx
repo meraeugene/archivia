@@ -10,6 +10,7 @@ export default function RetrainModelPage() {
 
   const handleRetrainExport = async () => {
     setLoading(true);
+    const toastId = toast.loading("Retraining & exporting model...");
     try {
       const res = await fetch("/api/retrain-model");
       if (!res.ok) throw new Error("Failed to generate model");
@@ -27,6 +28,7 @@ export default function RetrainModelPage() {
       console.error(err);
       toast.error("Failed to retrain/export model.");
     } finally {
+      toast.dismiss(toastId);
       setLoading(false);
     }
   };

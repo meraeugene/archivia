@@ -26,7 +26,7 @@ const HandledThesisModal: React.FC<HandledThesisModalProps> = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white/90 backdrop-blur-md rounded-lg max-w-5xl w-full max-h-[80vh] overflow-y-auto relative shadow-lg border border-white/30"
+        className="bg-white/90 animate-fadeInScale backdrop-blur-md rounded-lg max-w-5xl w-full max-h-[80vh] overflow-y-auto relative shadow-lg border border-white/30"
       >
         {/* Close Button */}
         <button

@@ -85,7 +85,7 @@ export default function Login() {
         }}
       />
 
-      <div className="w-full md:max-w-6xl h-[90vh] bg-white   z-10  relative rounded-3xl  md:border border-gray-50 shadow-sm    overflow-hidden flex items-center justify-center">
+      <div className="w-full md:max-w-6xl h-[90vh] bg-white   z-10  relative rounded-3xl  md:border border-gray-200     overflow-hidden flex items-center justify-center">
         {/* Left Side - Login */}
         <div className="flex flex-col md:px-20 md:py-34    md:w-[55%]">
           {/* Header */}
@@ -125,7 +125,6 @@ export default function Login() {
                   name="userId"
                   autoComplete="username"
                   type="text"
-                  placeholder="School ID"
                   value={formData.userId}
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-4 py-3 text-black border border-gray-100 shadow-sm rounded-md focus:shadow-md focus:border-gray-100 outline-none"
@@ -151,7 +150,6 @@ export default function Login() {
                   name="password"
                   type={showPassword ? "text" : "password"}
                   value={formData.password}
-                  placeholder="********"
                   onChange={handleInputChange}
                   className="w-full pl-10 pr-12 py-3 text-black border border-gray-100 shadow-sm rounded-md focus:shadow-md focus:border-gray-100 outline-none"
                 />

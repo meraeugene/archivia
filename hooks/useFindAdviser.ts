@@ -118,6 +118,15 @@ export function useFindAdviser() {
     });
   };
 
+  const handleReset = () => {
+    setRecommendations([]);
+    setWildcardAdvisers([]);
+    setSelectedAdviser(null);
+    setShowModal(false);
+    setRecommendedIds([]);
+    document.body.classList.remove("modal-open");
+  };
+
   return {
     studentData,
     recommendations,
@@ -132,5 +141,6 @@ export function useFindAdviser() {
     handleConfirmRequest,
     handleConnect,
     handleCancel,
+    handleReset,
   };
 }

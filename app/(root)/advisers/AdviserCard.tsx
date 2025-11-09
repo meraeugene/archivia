@@ -40,9 +40,9 @@ export const AdviserCard = ({
       <div className="py-12 md:px-24 px-4  flex items-center justify-center">
         <div className="max-w-8xl w-full ">
           {/* Three Column Layout */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 border shadow-md rounded-xl overflow-hidden border-gray-200">
+          <div className="grid grid-cols-1 lg:grid-cols-3 border shadow-xs rounded-xl overflow-hidden border-gray-200">
             {/* COLUMN 1 - Image */}
-            <div className="flex border-b-2 lg:border-b-0 lg:border-r border-gray-300 ">
+            <div className="flex border-b-2 lg:border-b-0 lg:border-r border-gray-200 ">
               <div className="w-full">
                 {adviser.profile_picture ? (
                   <img
@@ -61,9 +61,9 @@ export const AdviserCard = ({
             </div>
 
             {/* COLUMN 2 - Information */}
-            <div className="bg-white p-8 md:p-10 md:border-b-2 lg:border-b-0 lg:border-r border-gray-300">
+            <div className="bg-white p-8 md:p-10 md:border-b-2 lg:border-b-0 lg:border-r border-gray-200">
               {/* Name & Title */}
-              <div className="mb-8 pb-6 border-b border-gray-300">
+              <div className="mb-8 pb-6 border-b border-gray-200">
                 <h1 className="text-3xl md:text-4xl font-bold text-black mb-2">
                   {adviser.full_name}
                 </h1>
@@ -169,7 +169,7 @@ export const AdviserCard = ({
 
             {/* COLUMN 3 - Biography */}
             <div className="bg-white p-8 md:p-10">
-              <h3 className="text-xs font-bold text-black uppercase tracking-widest mb-6 pb-3 border-b border-gray-300">
+              <h3 className="text-xs font-bold text-black uppercase tracking-widest mb-6 pb-3 border-b border-gray-200">
                 Biography
               </h3>
               <p className="text-gray-700 leading-relaxed text-sm">

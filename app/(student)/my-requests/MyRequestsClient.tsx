@@ -51,7 +51,7 @@ export default function MyRequestsClient({
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto py-14 columns-1 sm:columns-2 lg:columns-2 gap-6 px-4">
+      <div className="max-w-6xl mx-auto py-14 columns-1 sm:columns-2 lg:columns-2 gap-6">
         {requests.map((request) => (
           <div
             key={request.id}
@@ -135,7 +135,7 @@ export default function MyRequestsClient({
 
             {/* Title + Abstract */}
             <div>
-              <h4 className="font-extrabold text-lg text-gray-900 mb-2">
+              <h4 className="font-extrabold uppercase text-lg text-gray-900 mb-2">
                 {request.title}
               </h4>
               <p

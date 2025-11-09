@@ -2,8 +2,9 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getSession } from "../auth/getSession";
+import { cache } from "react";
 
-export const getUserBookmarks = async () => {
+export const getUserBookmarks = cache(async () => {
   const supabase = await createClient();
 
   const session = await getSession();
@@ -24,4 +25,4 @@ export const getUserBookmarks = async () => {
   }
 
   return { data, error: null };
-};
+});

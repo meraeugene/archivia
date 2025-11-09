@@ -5,63 +5,67 @@ import { revalidatePath } from "next/cache";
 import { isValidEmail } from "@/utils/isValidEmail";
 import bcrypt from "bcryptjs";
 import { getSession } from "../auth/getSession";
+import { cache } from "react";
 
-export async function getAllUsers({
-  page = 1,
-  limit = 10,
-  search = "",
-  sortBy = "newest",
-}: {
-  page?: number;
-  limit?: number;
-  search?: string;
-  sortBy?: string;
-}) {
-  const supabase = await createClient();
-  const session = await getSession();
+export const getAllUsers = cache(
+  async ({
+    page = 1,
+    limit = 10,
+    search = "",
+    sortBy = "newest",
+  }: {
+    page?: number;
+    limit?: number;
+    search?: string;
+    sortBy?: string;
+  }) => {
+    const supabase = await createClient();
+    const session = await getSession();
 
-  if (!session?.sub || session.role !== "admin") {
-    throw new Error("Unauthorized");
+    if (!session?.sub || session.role !== "admin") {
+      throw new Error("Unauthorized");
+    }
+
+    const start = (page - 1) * limit;
+    const end = start + limit - 1;
+
+    let query = supabase
+      .from("manage_users_view")
+      .select("id, user_id, role, created_at, full_name, email", {
+        count: "exact",
+      });
+
+    // Search filter
+    if (search) {
+      query = query.or(
+        `user_id.ilike.%${search}%,full_name.ilike.%${search}%,email.ilike.%${search}%`
+      );
+    }
+
+    // Sorting
+    if (sortBy === "newest")
+      query = query.order("created_at", { ascending: false });
+    else if (sortBy === "oldest")
+      query = query.order("created_at", { ascending: true });
+    else if (sortBy === "role")
+      query = query.order("role", { ascending: true });
+    else if (sortBy === "name")
+      query = query.order("full_name", { ascending: true });
+
+    // Pagination
+    const { data, error, count } = await query.range(start, end);
+
+    if (error) throw new Error(error.message);
+
+    return {
+      users: data || [],
+      total: count || 0,
+      page,
+      limit,
+      totalPages: Math.ceil((count || 0) / limit),
+    };
   }
-
-  const start = (page - 1) * limit;
-  const end = start + limit - 1;
-
-  let query = supabase
-    .from("manage_users_view")
-    .select("id, user_id, role, created_at, full_name, email", {
-      count: "exact",
-    });
-
-  // Search filter
-  if (search) {
-    query = query.or(
-      `user_id.ilike.%${search}%,full_name.ilike.%${search}%,email.ilike.%${search}%`
-    );
-  }
-
-  // Sorting
-  if (sortBy === "newest")
-    query = query.order("created_at", { ascending: false });
-  else if (sortBy === "oldest")
-    query = query.order("created_at", { ascending: true });
-  else if (sortBy === "role") query = query.order("role", { ascending: true });
-  else if (sortBy === "name")
-    query = query.order("full_name", { ascending: true });
-
-  // Pagination
-  const { data, error, count } = await query.range(start, end);
-
-  if (error) throw new Error(error.message);
-
-  return {
-    users: data || [],
-    total: count || 0,
-    page,
-    limit,
-    totalPages: Math.ceil((count || 0) / limit),
-  };
-}
+);
 
 export async function addUser({
   user_id,

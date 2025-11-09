@@ -12,6 +12,7 @@ import {
   BookOpen,
   Database,
   BrainCircuit,
+  UserCog,
 } from "lucide-react";
 import { useTransition } from "react";
 import { CurrentUser } from "@/types/currentUser";
@@ -20,6 +21,7 @@ import { logout } from "@/actions/auth/logout";
 const adminNavLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "Dashboard", href: "/admin/dashboard", icon: LayoutDashboard },
+  { label: "Manage Advisees", href: "/admin/manage-advisees", icon: UserCog },
   { label: "Manage Users", href: "/admin/manage-users", icon: Users },
   { label: "Manage Theses", href: "/admin/manage-theses", icon: BookOpen },
   { label: "Backup & Recovery", href: "/admin/backup", icon: Database },

@@ -85,7 +85,7 @@ export default function BookmarksClient({
         </div>
       </div>
 
-      <div className="max-w-6xl mx-auto py-14 grid grid-cols-1 md:grid-cols-2 gap-8 px-4">
+      <div className="max-w-6xl mx-auto py-14 grid grid-cols-1 md:grid-cols-2 gap-8 ">
         {bookmarks.map((thesis) => (
           <div
             key={thesis.id}
@@ -141,16 +141,16 @@ export default function BookmarksClient({
 
               <div className="flex gap-2 mt-3">
                 <div className="flex flex-wrap gap-2">
-                  {(thesis.category?.slice(0, 2) ?? ["Uncategorized"]).map(
-                    (cat, index) => (
-                      <span
-                        key={index}
-                        className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm font-medium rounded-full"
-                      >
-                        {cat.trim()}
-                      </span>
-                    )
-                  )}
+                  {thesis.category?.length
+                    ? thesis.category.slice(0, 2).map((cat, index) => (
+                        <span
+                          key={index}
+                          className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm md:font-medium rounded-full"
+                        >
+                          {cat.trim()}
+                        </span>
+                      ))
+                    : null}
 
                   {thesis.category && thesis.category.length > 2 && (
                     <span

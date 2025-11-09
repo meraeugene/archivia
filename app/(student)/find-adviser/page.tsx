@@ -2,8 +2,8 @@
 
 import InputPanel from "./InputPanel";
 import ConfirmModal from "./ConfirmModal";
-import RecommendationsList from "./RecommendationsList";
 import { useFindAdviser } from "@/hooks/useFindAdviser";
+import { RecommendationsList } from "./RecommendationsList";
 
 const FindAdviser = () => {
   const {
@@ -20,28 +20,28 @@ const FindAdviser = () => {
     handleConnect,
     handleCancel,
     wildcardAdvisers,
+    handleReset,
   } = useFindAdviser();
 
   return (
     <div className="bg-gray-50 px-4">
-      <div
-        className={`transition-all duration-700 ease-in-out ${
-          hasRecommendations ? "max-w-6xl mx-auto flex" : ""
-        }`}
-      >
-        <InputPanel
-          studentData={studentData}
-          onChange={handleInputChange}
-          onSubmit={handleGetRecommendations}
-          isLoading={isLoading}
-          hasRecommendations={hasRecommendations}
-        />
+      <div>
+        {!hasRecommendations && (
+          <InputPanel
+            studentData={studentData}
+            onChange={handleInputChange}
+            onSubmit={handleGetRecommendations}
+            isLoading={isLoading}
+            hasRecommendations={hasRecommendations}
+          />
+        )}
 
         {hasRecommendations && wildcardAdvisers && (
           <RecommendationsList
             recommendations={recommendations}
             onConnect={handleConnect}
             wildcardAdvisers={wildcardAdvisers}
+            handleReset={handleReset}
           />
         )}
       </div>

@@ -36,7 +36,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
   };
 
   return (
-    <div className="bg-white border border-gray-100   rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-full ">
+    <div className="bg-white border border-gray-100   rounded-lg p-6  shadow-lg hover:shadow-xl transition-all duration-300 h-full ">
       <div className="flex items-start justify-between gap-2 mb-3">
         <h3 className="md:text-lg font-extrabold leading-tight text-gray-900 uppercase ">
           {thesis.title}
@@ -97,16 +97,16 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
 
         <div className="flex gap-2 mt-3">
           <div className="flex flex-wrap gap-2">
-            {(thesis.category?.slice(0, 2) ?? ["Uncategorized"]).map(
-              (cat, index) => (
-                <span
-                  key={index}
-                  className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm md:font-medium rounded-full"
-                >
-                  {cat.trim()}
-                </span>
-              )
-            )}
+            {thesis.category?.length
+              ? thesis.category.slice(0, 2).map((cat, index) => (
+                  <span
+                    key={index}
+                    className="px-2 py-1 bg-gray-700 text-white shadow-sm text-sm md:font-medium rounded-full"
+                  >
+                    {cat.trim()}
+                  </span>
+                ))
+              : null}
 
             {thesis.category && thesis.category.length > 2 && (
               <span

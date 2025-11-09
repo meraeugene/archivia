@@ -38,8 +38,8 @@ const Header = ({
     isAuthorizedToUploadThesis;
 
   return (
-    <header className="sticky top-0 z-50 border-b border-gray-100 bg-white/90 backdrop-blur-md">
-      <div className="max-w-6xl mx-auto px-4">
+    <header className="sticky top-0 z-50  bg-white/90 backdrop-blur-md">
+      <div className="max-w-6xl mx-auto ">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
           <div className="flex items-center ">
@@ -139,7 +139,7 @@ const Header = ({
                 </div>
 
                 {open && (
-                  <div className="absolute right-0 mt-2 w-56 bg-white border rounded-md ">
+                  <div className="absolute animate-fadeInScale right-0 mt-2 w-56 bg-white border rounded-md ">
                     {/* User info */}
                     <div className="px-4 py-3 border-b border-gray-100 text-sm">
                       <div className="font-medium text-gray-900 ">
