@@ -186,3 +186,17 @@
 ::-webkit-scrollbar-thumb:hover {
   background-color: #9ca3af; /* lighter gray on hover (gray-400) */
 }
+
+@keyframes fade {
+  0%,
+  100% {
+    opacity: 0.2;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.animate-fade {
+  animation: fade 1.5s ease-in-out infinite;
+}

@@ -38,7 +38,24 @@ export default function ProfilePageClient({
   };
 
   return (
-    <div className="bg-white">
+    <div className="bg-black relative  text-white">
+      {/* Animated mesh gradient background */}
+      <div className="absolute inset-0 opacity-40 pointer-events-none">
+        <div
+          className="absolute bottom-1/4 right-1/3 w-[600px] h-[600px] bg-gray-700 rounded-full blur-[120px] animate-pulse"
+          style={{
+            transition: "transform 0.5s ease-out",
+            animationDelay: "1.5s",
+          }}
+        ></div>
+      </div>
+
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]  pointer-events-none"></div>
+
+      {/* Radial gradient vignette */}
+      <div className="absolute inset-0 bg-radial-gradient from-transparent via-transparent to-black  pointer-events-none"></div>
+
       <main className="max-w-6xl mx-auto  md:py-16 py-12">
         {/* Profile Header */}
         <div className="grid lg:grid-cols-3 gap-12 mb-16">
@@ -66,7 +83,7 @@ export default function ProfilePageClient({
               </div>
             ) : (
               profile.email && (
-                <div className="mt-8 md:p-6 p-4 border ">
+                <div className="mt-8 md:p-6 p-4 border border-gray-800 ">
                   <div className="flex items-start gap-3">
                     <Mail className="w-5 h-5 mt-1 flex-shrink-0" />
                     <a

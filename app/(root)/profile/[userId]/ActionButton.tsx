@@ -19,7 +19,7 @@ export function ActionButton({
     <button
       onClick={onClick}
       disabled={disabled}
-      className={`group  relative px-12 py-5 bg-white text-black font-bold uppercase tracking-widest text-sm overflow-hidden transition-all duration-300 w-full sm:w-auto border ${
+      className={`group  relative px-12 py-5 bg-white text-black font-bold uppercase tracking-widest text-sm overflow-hidden transition-all duration-300 w-full sm:w-auto border  ${
         disabled ? "cursor-not-allowed  disabled:opacity-50" : "cursor-pointer"
       }`}
     >

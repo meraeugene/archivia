@@ -72,7 +72,7 @@ export default function BookmarksClient({
   }
 
   return (
-    <main className="mx-auto bg-gray-50">
+    <main className="mx-auto bg-gray-50 relative ">
       <div className="relative ">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
         <div className="relative max-w-7xl mx-auto px-6 md:py-20 py-12 text-center">
@@ -84,13 +84,19 @@ export default function BookmarksClient({
             View all your bookmarked theses here.
           </p>
         </div>
+
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto py-14 grid grid-cols-1 md:grid-cols-2 gap-8 ">
+      {/* Grid pattern overlay */}
+      <div className="absolute inset-0  bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
+
+      <div className="max-w-6xl mx-auto  py-14 grid grid-cols-1 md:grid-cols-2 gap-8 ">
         {bookmarks.map((thesis) => (
           <div
             key={thesis.id}
-            className="bg-white shadow-lg border border-gray-200 rounded-lg p-6 hover:shadow-xl transition-all duration-300 h-full "
+            className="bg-white shadow-lg border border-gray-200 rounded-lg p-6 hover:shadow-xl transition-all duration-300 h-full z-20 "
           >
             <div className="flex items-start justify-between gap-4 mb-3">
               <h3 className="text-lg font-extrabold leading-tight ">

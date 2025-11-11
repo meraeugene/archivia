@@ -24,7 +24,7 @@ const FindAdviser = () => {
   } = useFindAdviser();
 
   return (
-    <div className="bg-gray-50 px-4">
+    <div className="bg-gray-50  relative">
       <div>
         {!hasRecommendations && (
           <InputPanel

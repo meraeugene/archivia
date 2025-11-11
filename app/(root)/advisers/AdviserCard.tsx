@@ -20,7 +20,7 @@ export const AdviserCard = ({
   if (!adviser) return null;
 
   return (
-    <div className="bg-white ">
+    <div className="bg-white relative ">
       {/* Header */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
@@ -35,9 +35,12 @@ export const AdviserCard = ({
             adviser.
           </p>
         </div>
+
+        {/* Grid pattern overlay */}
+        <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]"></div>
       </div>
 
-      <div className="py-12 md:px-24 px-4  flex items-center justify-center">
+      <div className="py-12 md:px-24 px-4  bg-white flex items-center justify-center">
         <div className="max-w-8xl w-full ">
           {/* Three Column Layout */}
           <div className="grid grid-cols-1 lg:grid-cols-3 border shadow-xs rounded-xl overflow-hidden border-gray-200">

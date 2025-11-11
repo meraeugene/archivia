@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 "use client";
 
 import { Thesis } from "@/types/thesis";
@@ -60,7 +61,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
   } = useArchivia(initialTheses);
 
   return (
-    <main className="min-h-screen bg-gray-50 text-black">
+    <main className="min-h-screen bg-gray-50 text-black ">
       <Hero />
 
       <SearchCategory
@@ -72,7 +73,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         onSearch={handleSearch}
       />
 
-      <section className="md:py-15 md:pt-8 py-8">
+      <section className="md:py-15 md:pt-8 py-8  ">
         <div className="max-w-6xl mx-auto ">
           <div className="mb-6 md:mb-10 flex flex-col gap-4">
             <div className="flex w-full justify-between flex-col-reverse items-center md:flex-row gap-4">
@@ -92,9 +93,9 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                 )}
               </div>
 
-              <div className="flex gap-4">
+              <div className="flex gap-4 ">
                 <Select value={sort} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
+                  <SelectTrigger className="w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer ">
                     <SelectValue placeholder="Sort by" />
                   </SelectTrigger>
                   <SelectContent>
@@ -108,7 +109,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                   value={currentCategory}
                   onValueChange={(val) => setCurrentCategory(val)}
                 >
-                  <SelectTrigger className="w-auto min-w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
+                  <SelectTrigger className="w-auto min-w-[150px]  border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
                     <SelectValue placeholder="Select Category" />
                   </SelectTrigger>
                   <SelectContent>
@@ -154,7 +155,11 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
 
           {(isPending || loadingMore) && (
             <div className="flex justify-center items-center py-10 w-full col-span-2">
-              <div className="h-8 w-8 border-4 border-gray-300 border-t-black rounded-full animate-spin" />
+              <img
+                src="/images/logo.png"
+                alt="Archivia Logo"
+                className="h-12 w-12 animate-fade"
+              />
             </div>
           )}
 

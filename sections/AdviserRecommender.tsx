@@ -6,7 +6,7 @@ const AdviserRecommender = () => {
   return (
     <section
       id="features"
-      className="py-20 text-center border-t border-gray-200 "
+      className="py-20 bg-white  text-center border-t border-gray-200 "
     >
       <div className="max-w-6xl mx-auto px-5">
         <h1 className="text-5xl text-black font-extrabold mb-5 tracking-tight">

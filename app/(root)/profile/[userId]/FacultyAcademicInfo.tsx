@@ -12,7 +12,7 @@ const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
 
       <div className="grid md:grid-cols-2 gap-8">
         {profile.highest_educational_attainment && (
-          <div className="group cursor-pointer">
+          <div className="group cursor-pointer border-gray-800 border">
             <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
               <div className="flex items-center gap-3 mb-4">
                 <GraduationCap className="w-6 h-6" />
@@ -28,7 +28,7 @@ const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
         )}
 
         {profile.research_interest && (
-          <div className="group cursor-pointer">
+          <div className="group cursor-pointer border-gray-800 border">
             <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
               <div className="flex items-center gap-3 mb-4">
                 <FileText className="w-6 h-6" />
@@ -44,7 +44,7 @@ const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
         )}
 
         {profile.handled_subjects && (
-          <div className="group cursor-pointer">
+          <div className="group cursor-pointer border-gray-800 border">
             <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
               <div className="flex items-center gap-3 mb-4">
                 <BookOpen className="w-6 h-6" />
@@ -60,7 +60,7 @@ const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
         )}
 
         {profile.orcid && (
-          <div className="group cursor-pointer">
+          <div className="group cursor-pointer border-gray-800 border">
             <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
               <div className="flex items-center gap-3 mb-4">
                 <Award className="w-6 h-6" />

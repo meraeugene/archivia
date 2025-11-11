@@ -31,12 +31,10 @@ export function useFindAdviser() {
   const handleConnect = (adviser: Adviser) => {
     setSelectedAdviser(adviser);
     setShowModal(true);
-    document.body.classList.add("modal-open");
   };
 
   const handleCancel = () => {
     setShowModal(false);
-    document.body.classList.remove("modal-open");
   };
 
   const handleGetRecommendations = async () => {

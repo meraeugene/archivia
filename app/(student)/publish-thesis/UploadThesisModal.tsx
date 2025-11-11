@@ -47,8 +47,8 @@ const UploadThesisModal = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm  ">
-      <div className="bg-white h-[90vh] md:h-full overflow-auto rounded-2xl md:p-8 p-4 max-w-4xl w-full shadow-2xl border border-gray-200">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm   ">
+      <div className="bg-white md:h-full  rounded-2xl md:p-8 p-4 max-w-4xl w-full shadow-2xl border border-gray-200 ">
         <div className="mb-8 flex flex-col items-center text-center">
           <div className="gap-3 mb-2 flex flex-col items-center">
             <div className="w-12 h-12 bg-black rounded-2xl flex items-center justify-center">
@@ -63,7 +63,7 @@ const UploadThesisModal = ({
           </p>
         </div>
 
-        <div className="space-y-4 md:max-h-[60vh] md:px-4 md:overflow-y-auto">
+        <div className="space-y-4  md:px-4">
           {/* Title */}
           <FormField
             label="Thesis Title"

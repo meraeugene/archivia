@@ -4,6 +4,7 @@ import { comparePassword } from "@/lib/hash";
 import { signToken } from "@/lib/jwt";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function login(userId: string, password: string) {
   const sanitizedUserId = userId.trim();
@@ -46,12 +47,13 @@ export async function login(userId: string, password: string) {
     sameSite: "strict", // CSRF protection
   });
 
-  return {
-    redirectTo:
-      user.role === "faculty"
-        ? "/dashboard"
-        : user.role === "admin"
-        ? "/admin/dashboard"
-        : "/",
-  };
+  if (user.role === "faculty") {
+    redirect("/dashboard");
+  }
+
+  if (user.role === "admin") {
+    redirect("/admin/dashboard");
+  }
+
+  redirect("/");
 }

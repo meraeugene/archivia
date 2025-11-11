@@ -54,7 +54,7 @@ export default function ChangePasswordForm() {
             value={oldPassword}
             onChange={(e) => setOldPassword(e.target.value)}
             placeholder="Enter your current password"
-            className="w-full border border-gray-300  p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
+            className="w-full border-3 border-gray-800  p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
           />
           <button
             type="button"
@@ -81,7 +81,7 @@ export default function ChangePasswordForm() {
             value={newPassword}
             onChange={(e) => setNewPassword(e.target.value)}
             placeholder="Enter your new password"
-            className="w-full border border-gray-300 p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
+            className="w-full border-3 border-gray-800 p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
           />
           <button
             type="button"
