@@ -54,11 +54,11 @@ export default function MyRequestsClient({
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto py-14 columns-1 sm:columns-2 lg:columns-2 gap-6">
+      <div className="max-w-6xl mx-auto py-14  columns-1 sm:columns-2 lg:columns-2 gap-6">
         {requests.map((request) => (
           <div
             key={request.id}
-            className="break-inside-avoid  bg-white border  border-gray-200 shadow-lg hover:shadow-xl overflow-hidden p-6 transition-shadow  rounded-lg"
+            className="break-inside-avoid   bg-white border  border-gray-200 shadow-lg hover:shadow-xl overflow-hidden p-6 transition-shadow  rounded-lg"
           >
             {/* Adviser Info + Status + Cancel */}
             <div className="flex items-start justify-between mb-3">

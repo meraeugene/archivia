@@ -38,7 +38,7 @@ const Header = ({
     isAuthorizedToUploadThesis;
 
   return (
-    <header className="sticky top-0 z-50  bg-white/90 backdrop-blur-md">
+    <header className="sticky top-0 z-50  bg-white/90 backdrop-blur-xs">
       <div className="max-w-6xl mx-auto ">
         <div className="flex justify-between items-center py-3">
           {/* Logo */}
