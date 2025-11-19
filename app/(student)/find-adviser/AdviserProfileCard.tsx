@@ -10,6 +10,7 @@ import {
   BookOpen,
 } from "lucide-react";
 import { Adviser } from "@/types/advisers";
+import { motion } from "framer-motion";
 import { getInitials } from "@/utils/getInitials";
 import { useEffect, useState } from "react";
 
@@ -23,10 +24,17 @@ const AdviserProfileCard = ({
   onConnect: () => void;
 }) => {
   const [mounted, setMounted] = useState(false);
+  const [expandedProjects, setExpandedProjects] = useState<number[]>([]);
 
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  const toggleProject = (idx: number) => {
+    setExpandedProjects((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    );
+  };
 
   return (
     <div
@@ -215,7 +223,7 @@ const AdviserProfileCard = ({
                 {adviser.projects.map((project, idx) => (
                   <div
                     key={idx}
-                    className="group/project relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl overflow-hidden hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10"
+                    className="group/project relative backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl  overflow-hidden hover:bg-white/10 hover:border-white/20 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10"
                   >
                     {/* Glow effect */}
                     <div className="absolute inset-0 bg-white rounded-3xl blur-2xl opacity-0 group-hover/project:opacity-5 transition-opacity duration-500"></div>
@@ -235,9 +243,26 @@ const AdviserProfileCard = ({
                       <h5 className="font-bold text-lg text-white leading-tight">
                         {project.title}
                       </h5>
-                      <p className="text-gray-400 text-sm leading-relaxed line-clamp-4">
-                        {project.abstract}
-                      </p>
+                      <motion.div
+                        initial={{ height: 100 }}
+                        animate={{
+                          height: expandedProjects.includes(idx) ? "auto" : 100,
+                        }}
+                        transition={{ duration: 0.3 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-gray-400 leading-relaxed">
+                          {project.abstract}
+                        </p>
+                      </motion.div>
+                      <button
+                        onClick={() => toggleProject(idx)}
+                        className="cursor-pointer text-sm text-blue-400 font-semibold mt-2 hover:underline"
+                      >
+                        {expandedProjects.includes(idx)
+                          ? "Show Less"
+                          : "Show More"}
+                      </button>
                     </div>
                   </div>
                 ))}
