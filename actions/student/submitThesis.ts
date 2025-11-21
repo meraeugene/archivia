@@ -63,7 +63,7 @@ export async function submitThesisForApproval(
         defense_year: thesisData.defense_year,
         category: thesisData.category,
         file_url: thesisData.file_url,
-        status: "pending",
+        status: "accepted",
       },
     ]);
 

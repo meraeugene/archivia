@@ -125,28 +125,41 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
             </div>
           </div>
 
-          <Masonry
-            breakpointCols={breakpointColumnsObj}
-            className="flex gap-8"
-            columnClassName="space-y-8"
-          >
-            {displayedTheses.map((thesis) => (
-              <div key={thesis.id} className="fade-slide-up">
-                <ThesisCard
-                  thesis={thesis}
-                  onPreview={handlePreview}
-                  onDownload={handleDownload}
-                  isInitiallyBookmarked={
-                    thesis.id !== undefined &&
-                    userBookmarks?.includes(thesis.id)
-                  }
-                />
-              </div>
-            ))}
-          </Masonry>
+          {/* Loading Logo */}
+          {isPending && (
+            <div className="flex justify-center items-center py-10 w-full">
+              <img
+                src="/images/logo.png"
+                alt="Loading..."
+                className="h-12 w-12 animate-fade"
+              />
+            </div>
+          )}
+
+          {!isPending && displayedTheses.length > 0 && (
+            <Masonry
+              breakpointCols={breakpointColumnsObj}
+              className="flex gap-8"
+              columnClassName="space-y-8"
+            >
+              {displayedTheses.map((thesis) => (
+                <div key={thesis.id} className="fade-slide-up">
+                  <ThesisCard
+                    thesis={thesis}
+                    onPreview={handlePreview}
+                    onDownload={handleDownload}
+                    isInitiallyBookmarked={
+                      thesis.id !== undefined &&
+                      userBookmarks?.includes(thesis.id)
+                    }
+                  />
+                </div>
+              ))}
+            </Masonry>
+          )}
 
           {!isPending && displayedTheses.length === 0 && (
-            <div className="text-center py-20 text-gray-500 w-full col-span-2 break-inside-avoid">
+            <div className="text-center py-20 text-gray-500 w-full col-span-2 ">
               <p className="text-lg">No theses found matching your search.</p>
               <p className="text-sm mt-2">
                 Try adjusting your search or filters.
@@ -154,7 +167,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
             </div>
           )}
 
-          {(isPending || loadingMore) && (
+          {loadingMore && (
             <div className="flex justify-center items-center py-10 w-full col-span-2">
               <img
                 src="/images/logo.png"
@@ -185,24 +198,27 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
             className="h-10"
           ></div>
 
-          {!hasMore && !loadingMore && displayedTheses.length > 0 && (
-            <div className="text-center py-5 text-gray-500">
-              {currentCategory === "all" ? (
-                <>
-                  You’ve reached the end — all {displayedTheses.length} theses
-                  loaded.
-                </>
-              ) : (
-                <>
-                  You’ve reached the end of the{" "}
-                  <span className="font-semibold text-gray-700">
-                    {currentCategory}
-                  </span>{" "}
-                  category — all {displayedTheses.length} theses loaded.
-                </>
-              )}
-            </div>
-          )}
+          {!isPending &&
+            !hasMore &&
+            !loadingMore &&
+            displayedTheses.length > 0 && (
+              <div className="text-center py-5 text-gray-500">
+                {currentCategory === "all" ? (
+                  <>
+                    You’ve reached the end — all {displayedTheses.length} theses
+                    loaded.
+                  </>
+                ) : (
+                  <>
+                    You’ve reached the end of the{" "}
+                    <span className="font-semibold text-gray-700">
+                      {currentCategory}
+                    </span>{" "}
+                    category — all {displayedTheses.length} theses loaded.
+                  </>
+                )}
+              </div>
+            )}
         </div>
       </section>
 

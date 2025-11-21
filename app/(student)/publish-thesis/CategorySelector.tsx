@@ -19,7 +19,7 @@ export const CategorySelector = ({
     </label>
 
     <div className="flex flex-col gap-2">
-      <div className="flex flex-wrap gap-2 border border-gray-300 p-2 rounded min-h-[44px] bg-white">
+      <div className="flex flex-wrap gap-2 border border-gray-300 p-2 rounded min-h-[44px] ">
         {form.category?.length ? (
           form.category.map((cat: string) => (
             <span
@@ -47,7 +47,7 @@ export const CategorySelector = ({
       </div>
 
       <select
-        className={`w-full border border-gray-300 p-2 rounded bg-white ${
+        className={`w-full border border-gray-300 p-2 rounded bg-white text-black ${
           error ? "border-red-500" : ""
         }`}
         onChange={(e) => {

@@ -30,7 +30,7 @@ export const FormField = ({
         onChange={onChange as React.ChangeEventHandler<HTMLTextAreaElement>}
         readOnly={readOnly}
         placeholder={placeholder}
-        className={`w-full border border-gray-300 p-2 rounded resize-none ${
+        className={`w-full text-black border border-gray-300 p-2 rounded resize-none ${
           error ? "border-red-500" : ""
         }`}
       />
@@ -41,7 +41,7 @@ export const FormField = ({
         onChange={onChange}
         readOnly={readOnly}
         placeholder={placeholder}
-        className={`w-full border border-gray-300 p-2 rounded ${
+        className={`w-full text-black border border-gray-300 p-2 rounded ${
           readOnly ? "bg-gray-50 text-gray-700" : ""
         } ${error ? "border-red-500" : ""}`}
       />

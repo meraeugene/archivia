@@ -122,7 +122,7 @@ export default function ResponsiveHeader({
   return (
     <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xs md:border-b border-gray-100">
       <div className="max-w-6xl mx-auto ">
-        <div className="flex justify-between items-center py-2 md:py-3 px-2">
+        <div className="flex justify-between items-center py-2 md:py-3 px-2 md:px-3 lg:px-0">
           {/* Logo */}
           <div className="flex items-center">
             <img src="/images/logo.png" alt="Archivia Logo" className="h-8" />
@@ -214,8 +214,8 @@ export default function ResponsiveHeader({
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="md:hidden pt-4  border-t animate-in fade-in slide-in-from-top-2">
-            <div className="px-4">{renderLinks(true)}</div>
+          <div className="md:hidden absolute top-full left-0 w-full bg-white z-50 border-t animate-in fade-in slide-in-from-top-2 duration-400 ease-out">
+            <div className="px-4 pt-4">{renderLinks(true)}</div>
 
             {/* Mobile User Section */}
             {currentUser && (

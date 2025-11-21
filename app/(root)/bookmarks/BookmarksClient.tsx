@@ -92,7 +92,7 @@ export default function BookmarksClient({
       {/* Grid pattern overlay */}
       <div className="absolute inset-0  bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
 
-      <div className="max-w-6xl mx-auto px-4  py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 ">
+      <div className="max-w-6xl mx-auto px-4  md:px-0 py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 ">
         {bookmarks.map((thesis) => (
           <div
             key={thesis.id}

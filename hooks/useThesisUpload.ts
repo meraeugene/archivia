@@ -137,7 +137,7 @@ export function useThesisUpload() {
       toast.error(result.error);
     } else {
       toast.success(
-        "Thesis submitted successfully! Please check your email for approval status."
+        "Thesis published successfully! You may now browse the archive."
       );
       router.push("/");
       setModalOpen(false);

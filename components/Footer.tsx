@@ -5,7 +5,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="bg-black-50    border-t border-gray-100 ">
-      <div className="max-w-6xl mx-auto px-4 py-10">
+      <div className="max-w-6xl mx-auto px-4 py-10 md:px-0">
         <div className="flex items-start flex-col md:flex-row  space-y-10 md:space-y-0 justify-between">
           {Object.entries(footerLinks).map(([section, links]) => (
             <div key={section}>
