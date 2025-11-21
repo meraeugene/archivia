@@ -33,11 +33,11 @@ const Hero = () => {
       <div className="relative max-w-7xl mx-auto px-6   text-center z-10">
         {/* Floating badge */}
         <div
-          className={`inline-flex items-center gap-2 px-5 py-2.5 mb-10 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full text-sm font-medium transition-all duration-1000 ${
+          className={`inline-flex  items-center gap-2 px-5 py-2.5 mb-10 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full text-sm font-medium transition-all duration-1000 ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          <Archive className="w-4 h-4" />
+          <Archive className="w-4 h-4 hidden md:block" />
           <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent font-semibold">
             University of Science and Technology of Southern Philippines
           </span>
@@ -71,7 +71,7 @@ const Hero = () => {
 
         {/* Description */}
         <p
-          className={`text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-14 font-light leading-relaxed transition-all duration-1000 delay-300 ${
+          className={`text-xl md:text-2xl text-gray-300 md:max-w-xl max-w-3xl mx-auto mb-14 font-light leading-relaxed transition-all duration-1000 delay-300 ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >

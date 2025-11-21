@@ -65,7 +65,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
       <Hero />
 
       {/* Grid pattern overlay */}
-      <div className="absolute inset-0  bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
+      <div className="absolute inset-0 hidden md:block  bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
 
       <SearchCategory
         searchQuery={searchQuery}
@@ -76,29 +76,27 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         onSearch={handleSearch}
       />
 
-      <section className="md:py-15 md:pt-8 py-8  ">
+      <section className="md:py-15 md:pt-8 py-8 px-4 ">
         <div className="max-w-6xl mx-auto ">
-          <div className="mb-6 md:mb-10 flex flex-col gap-4">
+          <div className="mb-6 md:mb-10 flex flex-col  gap-4">
             <div className="flex w-full justify-between flex-col-reverse items-center md:flex-row gap-4">
               <div className="mb-3 sm:mb-0 text-gray-700">
-                {isPending ? (
-                  "Searching..."
-                ) : currentCategory === "all" ? (
+                {currentCategory === "all" ? (
                   `Showing ${displayedTheses.length} of ${thesisCount} total theses`
                 ) : (
-                  <>
+                  <div className="text-center">
                     Showing {displayedTheses.length} of {thesisCount} total
                     theses in{" "}
                     <span className="font-semibold text-black">
                       {currentCategory}
                     </span>
-                  </>
+                  </div>
                 )}
               </div>
 
-              <div className="flex gap-4 ">
+              <div className="flex gap-4 flex-col md:flex-row  w-full md:w-fit  ">
                 <Select value={sort} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer ">
+                  <SelectTrigger className="w-full md:w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer ">
                     <SelectValue placeholder="Sort by" />
                   </SelectTrigger>
                   <SelectContent>

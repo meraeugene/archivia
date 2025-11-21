@@ -79,7 +79,7 @@ export default function Login() {
 
       <div className="w-full md:max-w-6xl h-[90vh] bg-white   z-10  relative rounded-3xl  md:border border-gray-200     overflow-hidden flex items-center justify-center">
         {/* Left Side - Login */}
-        <div className="flex flex-col md:px-20 md:py-34    md:w-[55%]">
+        <div className="flex flex-col md:px-10 lg:px-20 md:py-34    md:w-1/2">
           {/* Header */}
           <div className="mb-4 ">
             <div className="flex items-center justify-center md:mb-18 mb-4">
@@ -183,7 +183,7 @@ export default function Login() {
         </div>
 
         {/* Right Side - Image */}
-        <div className="hidden  md:flex items-center justify-center md:w-[45%] h-full   ">
+        <div className="hidden  md:flex items-center justify-center md:w-1/2 h-full   ">
           <img
             src="/images/login.jpg"
             alt="Login Illustration"

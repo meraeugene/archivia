@@ -55,6 +55,6 @@ export async function toggleBookmark(thesisId: number) {
     }
   }
 
-  revalidatePath("/browse");
+  // revalidatePath("/browse");
   revalidatePath("/bookmarks");
 }

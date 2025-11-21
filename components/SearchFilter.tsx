@@ -26,7 +26,7 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
   return (
     <section className="pt-10 ">
       <div className="max-w-5xl mx-auto px-4">
-        <div className="relative mb-5 max-w-4xl mx-auto">
+        <div className="relative  max-w-4xl mx-auto">
           <input
             type="text"
             value={searchQuery}
@@ -35,14 +35,14 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
               if (e.key === "Enter" && onSearch) onSearch();
             }}
             placeholder="Search by title, adviser, proponents, and keywords..."
-            className="w-full pl-3 md:pl-5 py-4 pr-30 md:pr-34 md:text-base shadow-sm border border-gray-200 rounded-lg text-sm bg-white focus:shadow-md focus:outline-none transition-colors"
+            className="w-full pl-3 md:pl-5 py-3 pr-30 md:pr-34 md:text-base shadow-sm border border-gray-200 rounded-lg text-sm bg-white focus:shadow-md focus:outline-none transition-colors"
           />
           <button
             onClick={onSearch}
             className="absolute right-2 md:right-3 top-1/2 transform -translate-y-1/2 px-4 py-2 rounded font-medium bg-black text-white shadow-sm hover:bg-gray-800 cursor-pointer transition-colors flex items-center gap-2"
           >
             <Search size={16} />
-            Search
+            <span className="hidden md:block">Search</span>
           </button>
         </div>
 
