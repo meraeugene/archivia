@@ -44,20 +44,22 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
     isModalOpen,
     selectedThesis,
     searchQuery,
-    isPending,
+    isSearching,
+    isSorting,
+    isCategorizing,
     setSearchQuery,
     handleSearch,
     handlePreview,
     handleDownload,
     closeModal,
     currentCategory,
-    setCurrentCategory,
     loadMore,
     hasMore,
     loadingMore,
     handleSortChange,
     sort,
     thesisCount,
+    handleCategoryChange,
   } = useArchivia(initialTheses);
 
   return (
@@ -71,7 +73,6 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         currentCategory={currentCategory}
-        setCurrentCategory={setCurrentCategory}
         categoryOptions={categoryOptions}
         onSearch={handleSearch}
       />
@@ -108,7 +109,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
 
                 <Select
                   value={currentCategory}
-                  onValueChange={(val) => setCurrentCategory(val)}
+                  onValueChange={(val) => handleCategoryChange(val)}
                 >
                   <SelectTrigger className="w-auto min-w-[150px]  border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
                     <SelectValue placeholder="Select Category" />
@@ -126,7 +127,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
           </div>
 
           {/* Loading Logo */}
-          {isPending && (
+          {isSearching && (
             <div className="flex justify-center items-center py-10 w-full">
               <img
                 src="/images/logo.png"
@@ -136,36 +137,43 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
             </div>
           )}
 
-          {!isPending && displayedTheses.length > 0 && (
-            <Masonry
-              breakpointCols={breakpointColumnsObj}
-              className="flex gap-8"
-              columnClassName="space-y-8"
-            >
-              {displayedTheses.map((thesis) => (
-                <div key={thesis.id} className="fade-slide-up">
-                  <ThesisCard
-                    thesis={thesis}
-                    onPreview={handlePreview}
-                    onDownload={handleDownload}
-                    isInitiallyBookmarked={
-                      thesis.id !== undefined &&
-                      userBookmarks?.includes(thesis.id)
-                    }
-                  />
-                </div>
-              ))}
-            </Masonry>
-          )}
+          {!isSearching &&
+            !isSorting &&
+            !isCategorizing &&
+            displayedTheses.length > 0 && (
+              <Masonry
+                breakpointCols={breakpointColumnsObj}
+                className="flex gap-8"
+                columnClassName="space-y-8"
+              >
+                {displayedTheses.map((thesis) => (
+                  <div key={thesis.id} className="fade-slide-up">
+                    <ThesisCard
+                      thesis={thesis}
+                      onPreview={handlePreview}
+                      onDownload={handleDownload}
+                      isInitiallyBookmarked={
+                        thesis.id !== undefined &&
+                        userBookmarks?.includes(thesis.id)
+                      }
+                      searchQuery={searchQuery}
+                    />
+                  </div>
+                ))}
+              </Masonry>
+            )}
 
-          {!isPending && displayedTheses.length === 0 && (
-            <div className="text-center py-20 text-gray-500 w-full col-span-2 ">
-              <p className="text-lg">No theses found matching your search.</p>
-              <p className="text-sm mt-2">
-                Try adjusting your search or filters.
-              </p>
-            </div>
-          )}
+          {!isSearching &&
+            !isSorting &&
+            !isCategorizing &&
+            displayedTheses.length === 0 && (
+              <div className="text-center py-20 text-gray-500 w-full col-span-2 ">
+                <p className="text-lg">No theses found matching your search.</p>
+                <p className="text-sm mt-2">
+                  Try adjusting your search or filters.
+                </p>
+              </div>
+            )}
 
           {loadingMore && (
             <div className="flex justify-center items-center py-10 w-full col-span-2">
@@ -198,7 +206,9 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
             className="h-10"
           ></div>
 
-          {!isPending &&
+          {!isSearching &&
+            !isSorting &&
+            !isCategorizing &&
             !hasMore &&
             !loadingMore &&
             displayedTheses.length > 0 && (

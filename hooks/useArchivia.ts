@@ -19,7 +19,10 @@ export function useArchivia(initialTheses?: Thesis[]) {
   const [searchQuery, setSearchQuery] = useState("");
   const [currentCategory, setCurrentCategory] = useState<string>("all");
   const [sort, setSort] = useState("recent");
-  const [isPending, startTransition] = useTransition();
+
+  const [isSearching, startSearchTransition] = useTransition();
+  const [isSorting, startSortTransition] = useTransition();
+  const [isCategorizing, startCategoryTransition] = useTransition();
 
   const [offset, setOffset] = useState(initialTheses?.length || 0);
   const [hasMore, setHasMore] = useState(true);
@@ -47,53 +50,37 @@ export function useArchivia(initialTheses?: Thesis[]) {
   //  Fetch by category
   const handleCategoryChange = useCallback(
     async (newCategory: string) => {
+      setCurrentCategory(newCategory);
       setOffset(0);
       setHasMore(true);
-      fetchTotalCount(newCategory);
 
-      startTransition(async () => {
+      startCategoryTransition(async () => {
         setDisplayedTheses([]);
         const data = await getMoreTheses(0, sort, newCategory);
         setDisplayedTheses(data);
         setOffset(data.length);
         setHasMore(data.length > 0);
       });
+
+      fetchTotalCount(newCategory);
     },
     [sort, fetchTotalCount]
   );
 
-  useEffect(() => {
-    if (currentCategory === "all") {
-      // reset to default (initial theses)
-      setDisplayedTheses(initialTheses || []);
-      setOffset(initialTheses?.length || 0);
-      setHasMore(true);
-      fetchTotalCount("all");
-    } else {
-      handleCategoryChange(currentCategory);
-    }
-  }, [currentCategory, handleCategoryChange, initialTheses, fetchTotalCount]);
-
   // Search (always searches across all theses, ignoring category)
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
+  const handleSearch = async (query?: string) => {
+    const finalQuery = query ?? searchQuery;
+    if (!finalQuery.trim()) return;
 
-    startTransition(async () => {
-      const { data, error } = await searchTheses(
-        searchQuery,
-        sort,
-        currentCategory
-      );
+    startSearchTransition(async () => {
+      const { data, error } = await searchTheses(finalQuery);
       if (error) {
         toast.error("Error searching theses");
       } else {
         const results = data || [];
-
         setDisplayedTheses(results);
         setOffset(results.length);
         setHasMore(false);
-
-        // Update count based on search results
         setThesisCount(results.length);
       }
     });
@@ -106,7 +93,7 @@ export function useArchivia(initialTheses?: Thesis[]) {
       setDisplayedTheses([]);
       setOffset(0);
 
-      startTransition(async () => {
+      startSortTransition(async () => {
         const sorted = await getMoreTheses(0, newSort, currentCategory);
         setDisplayedTheses(sorted);
         setOffset(sorted.length);
@@ -175,11 +162,12 @@ export function useArchivia(initialTheses?: Thesis[]) {
     searchQuery,
     currentCategory,
     sort,
-    isPending,
+    isSearching,
+    isSorting,
+    isCategorizing,
     hasMore,
     loadingMore,
     setSearchQuery,
-    setCurrentCategory,
     setSort,
     handleSearch,
     handlePreview,

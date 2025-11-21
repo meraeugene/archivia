@@ -9,10 +9,12 @@ export const getMoreTheses = cache(
   async (offset = 0, sort = "recent", category = "all") => {
     const supabase = await createClient();
 
+    console.log("category nigga", category);
+
     let query = supabase.from("theses").select("*");
 
     if (category !== "all") {
-      query = query.contains("category", [category]);
+      query = query.overlaps("category", [category]);
     }
 
     switch (sort) {
@@ -45,17 +47,11 @@ export const getMoreTheses = cache(
   }
 );
 
-export async function searchTheses(
-  query: string,
-  sort: string,
-  category: string
-) {
+export async function searchTheses(query: string) {
   const supabase = await createClient();
 
   const { data, error } = await supabase.rpc("search_theses", {
     query,
-    sort,
-    category,
   });
 
   if (error) {
@@ -73,7 +69,7 @@ export const getThesesCount = cache(async (category = "all") => {
     .select("*", { count: "exact", head: true });
 
   if (category !== "all") {
-    query = query.contains("category", [category]);
+    query = query.overlaps("category", [category]);
   }
 
   const { count, error } = await query;

@@ -4,12 +4,14 @@ import { Download, Eye, Bookmark } from "lucide-react";
 import { Thesis } from "@/types/thesis";
 import { useBookmark } from "@/hooks/useBookmark";
 import { useState } from "react";
+import { highlightText } from "@/utils/highlightText";
 
 interface ThesisCardProps {
   thesis: Thesis;
   onPreview: (t: Thesis) => void;
   onDownload: (t: Thesis) => void;
   isInitiallyBookmarked?: boolean;
+  searchQuery?: string; // new prop
 }
 
 const ThesisCard: React.FC<ThesisCardProps> = ({
@@ -17,6 +19,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
   onPreview,
   onDownload,
   isInitiallyBookmarked = false,
+  searchQuery = "",
 }) => {
   const { isBookmarked, handleToggle, isPending } = useBookmark(
     thesis.id!,
@@ -27,46 +30,50 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
 
   const handleClick = () => {
     setIsAnimating(true);
-
     handleToggle();
-
-    setTimeout(() => {
-      setIsAnimating(false);
-    }, 300);
+    setTimeout(() => setIsAnimating(false), 300);
   };
 
   return (
-    <div className="bg-white border border-gray-100   rounded-lg p-6  shadow-lg hover:shadow-xl transition-all duration-300 h-fit ">
+    <div className="bg-white border border-gray-100 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-fit">
       <div className="flex items-start justify-between gap-2 mb-3">
-        <h3 className="text-lg font-extrabold leading-tight text-gray-900 uppercase ">
-          {thesis.title}
-        </h3>
+        <h3
+          className="text-lg font-extrabold leading-tight text-gray-900 uppercase"
+          dangerouslySetInnerHTML={{
+            __html: highlightText(thesis.title, searchQuery),
+          }}
+        />
         <button
           onClick={handleClick}
           disabled={isPending || thesis.id === undefined}
-          className=" text-gray-500 cursor-pointer hover:text-black transition-colors"
+          className="text-gray-500 cursor-pointer hover:text-black transition-colors"
         >
           <Bookmark
             size={20}
             className={`
-    ${
-      isBookmarked
-        ? "fill-black text-black "
-        : "text-gray-500 hover:fill-black hover:text-black"
-    }
-    transition-transform duration-300  
-    ${isAnimating ? "scale-125 rotate-12" : "scale-100 rotate-0"}
-  `}
+              ${
+                isBookmarked
+                  ? "fill-black text-black "
+                  : "text-gray-500 hover:fill-black hover:text-black"
+              }
+              transition-transform duration-300  
+              ${isAnimating ? "scale-125 rotate-12" : "scale-100 rotate-0"}
+            `}
           />
         </button>
       </div>
 
-      <div className="space-y-1 mb-4  text-gray-600">
+      <div className="space-y-1 mb-4 text-gray-600">
         <div>
-          <strong>Adviser:</strong> {thesis.adviser_name || "N/A"}
+          <strong>Adviser:</strong>{" "}
+          <span
+            dangerouslySetInnerHTML={{
+              __html: highlightText(thesis.adviser_name, searchQuery),
+            }}
+          />
         </div>
 
-        <div className="flex  gap-2">
+        <div className="flex gap-2">
           <strong>Panel:</strong>
           <div className="flex flex-wrap gap-2">
             {[
@@ -81,19 +88,19 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
 
         <div>
           <strong>Proponents:</strong>{" "}
-          {Array.isArray(thesis.proponents) && thesis.proponents.length > 0
-            ? thesis.proponents.join(", ")
-            : "N/A"}
+          <span
+            dangerouslySetInnerHTML={{
+              __html:
+                Array.isArray(thesis.proponents) && thesis.proponents.length > 0
+                  ? highlightText(thesis.proponents.join(", "), searchQuery)
+                  : "N/A",
+            }}
+          />
         </div>
 
         <div>
           <strong>Year:</strong> {thesis.defense_year || "N/A"}
         </div>
-
-        {/* <div>
-        <strong>Keywords:</strong>{" "}
-        {Array.isArray(thesis.keywords) ? thesis.keywords.join(", ") : "N/A"}
-      </div> */}
 
         <div className="flex gap-2 mt-3">
           <div className="flex flex-wrap gap-2">
@@ -120,14 +127,14 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
         </div>
       </div>
 
-      <p className=" text-gray-700 mb-5 leading-relaxed line-clamp-4 mt-5">
+      <p className="text-gray-700 mb-5 leading-relaxed line-clamp-4 mt-5">
         {thesis.abstract}
       </p>
 
       <div className="flex gap-3 mt-6">
         <button
           onClick={() => onPreview(thesis)}
-          className="flex-1 bg-gray-50 border cursor-pointer shadow-md border-gray-200 text-black px-4 py-2.5 rounded font-medium  text-sm md:text-base hover:shadow-lg transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-gray-50 border cursor-pointer shadow-md border-gray-200 text-black px-4 py-2.5 rounded font-medium text-sm md:text-base hover:shadow-lg transition-colors flex items-center justify-center gap-2"
         >
           <Eye size={16} /> Preview
         </button>
