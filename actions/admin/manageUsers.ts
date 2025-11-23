@@ -84,6 +84,10 @@ export async function addUser({
     throw new Error("Invalid email address");
   }
 
+  if (!/^\d+$/.test(user_id)) {
+    throw new Error("User ID must contain numbers only.");
+  }
+
   const supabase = await createClient();
   const session = await getSession();
 
@@ -112,6 +116,7 @@ export async function addUser({
 
   revalidatePath("/manage-users");
 }
+
 export async function editUser({
   id,
   password,

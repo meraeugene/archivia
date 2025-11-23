@@ -6,7 +6,7 @@ import { useArchivia } from "@/hooks/useArchivia";
 import { Thesis } from "@/types/thesis";
 import ThesisModal from "@/components/ThesisModal";
 import { toggleBookmark } from "@/actions/common/toggleBookmark";
-import Link from "next/link";
+import NoBookmarks from "./NoBookmarks";
 
 interface BookmarksClientProps {
   bookmarks: Thesis[];
@@ -51,24 +51,7 @@ export default function BookmarksClient({
   };
 
   if (bookmarks.length === 0) {
-    return (
-      <div className="relative overflow-hidden min-h-[60vh] flex items-center justify-center">
-        <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
-        <div className="relative max-w-7xl mx-auto px-6 md:py-20 py-12 text-center">
-          <h1 className="text-4xl md:text-5xl text-white font-extrabold mb-5 tracking-tight">
-            No Bookmarks Yet
-          </h1>
-          <div className="w-48 h-1 bg-white mx-auto md:mb-8 mb-5"></div>
-          <p className="text-lg text-gray-300 max-w-xl mx-auto">
-            Browse the{" "}
-            <Link prefetch href="/" className="text-blue-300 hover:underline">
-              Thesis Archive
-            </Link>{" "}
-            and bookmark your favorite works.
-          </p>
-        </div>
-      </div>
-    );
+    return <NoBookmarks />;
   }
 
   return (
@@ -92,7 +75,7 @@ export default function BookmarksClient({
       {/* Grid pattern overlay */}
       <div className="absolute inset-0  bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
 
-      <div className="max-w-6xl mx-auto px-4  md:px-0 py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 ">
+      <div className="max-w-6xl mx-auto px-4 md:px-6 xl:px-0 py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 ">
         {bookmarks.map((thesis) => (
           <div
             key={thesis.id}
@@ -116,7 +99,7 @@ export default function BookmarksClient({
                 <strong>Adviser:</strong> {thesis.adviser_name || "N/A"}
               </div>
 
-              <div className="flex  gap-2">
+              <div className="gap-2 hidden md:flex">
                 <strong>Panel:</strong>
                 <div className="flex flex-wrap gap-2">
                   {[
@@ -129,7 +112,7 @@ export default function BookmarksClient({
                 </div>
               </div>
 
-              <div>
+              <div className="hidden md:block">
                 <strong>Proponents:</strong>{" "}
                 {Array.isArray(thesis.proponents) &&
                 thesis.proponents.length > 0
@@ -146,7 +129,7 @@ export default function BookmarksClient({
         {Array.isArray(thesis.keywords) ? thesis.keywords.join(", ") : "N/A"}
       </div> */}
 
-              <div className="flex gap-2 mt-3">
+              <div className="md:flex hidden gap-2 mt-3">
                 <div className="flex flex-wrap gap-2">
                   {thesis.category?.length
                     ? thesis.category.slice(0, 2).map((cat, index) => (

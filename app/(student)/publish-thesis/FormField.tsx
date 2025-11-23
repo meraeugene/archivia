@@ -25,12 +25,12 @@ export const FormField = ({
     </label>
     {type === "textarea" ? (
       <textarea
-        rows={rows || 4}
+        rows={rows || 10}
         value={value}
         onChange={onChange as React.ChangeEventHandler<HTMLTextAreaElement>}
         readOnly={readOnly}
         placeholder={placeholder}
-        className={`w-full text-black border border-gray-300 p-2 rounded resize-none ${
+        className={`w-full text-black scrollbar-none  border border-gray-300 p-2 rounded resize-none ${
           error ? "border-red-500" : ""
         }`}
       />

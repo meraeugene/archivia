@@ -5,8 +5,8 @@ import { GraduationCap, FileText, BookOpen, Award } from "lucide-react";
 
 const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
   return (
-    <div className="pt-16">
-      <h2 className="text-4xl font-black mb-12 tracking-tight">
+    <div className="md:pt-16 pt-12">
+      <h2 className="text-3xl md:text-4xl font-black mb-12 tracking-tight">
         ACADEMIC PROFILE
       </h2>
 

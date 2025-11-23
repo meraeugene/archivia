@@ -33,7 +33,7 @@ const InputPanel = ({
   }, []);
 
   return (
-    <div className="relative min-h-screen bg-black overflow-hidden px-4">
+    <div className="relative min-h-screen bg-black overflow-hidden px-6">
       {/* Grid pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
 
@@ -60,7 +60,7 @@ const InputPanel = ({
               <br />
               Perfect Adviser
             </h1>
-            <p className="text-gray-400 text-xl max-w-lg mx-auto font-light">
+            <p className="text-gray-400 text-lg md:text-xl max-w-lg mx-auto font-light">
               Match with research advisers based on your research interests and
               expertise
             </p>
@@ -105,7 +105,7 @@ const InputPanel = ({
 
               <input
                 type="text"
-                className="relative w-full p-5 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-xl outline-none transition-all duration-300 text-white placeholder-gray-500 focus:border-white/30 focus:bg-white/10 focus:shadow-2xl focus:shadow-white/10"
+                className="relative w-full p-3 md:p-5 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-xl outline-none transition-all duration-300 text-white placeholder-gray-500 focus:border-white/30 focus:bg-white/10 focus:shadow-2xl focus:shadow-white/10"
                 placeholder="e.g., Exploring Machine Learning Techniques for Predictive Analytics"
                 value={studentData.title}
                 onChange={(e) => onChange("title", e.target.value)}
@@ -143,7 +143,7 @@ const InputPanel = ({
               ></div>
 
               <textarea
-                className="relative w-full p-5 border border-white/10 rounded-2xl resize-none bg-white/5 backdrop-blur-xl focus:border-white/30 focus:bg-white/10 focus:shadow-2xl focus:shadow-white/10 outline-none transition-all duration-300 text-white placeholder-gray-500"
+                className="relative w-full  p-3 md:p-5 border border-white/10 rounded-2xl resize-none bg-white/5 backdrop-blur-xl focus:border-white/30 focus:bg-white/10 focus:shadow-2xl focus:shadow-white/10 outline-none transition-all duration-300 text-white placeholder-gray-500"
                 rows={8}
                 placeholder="Describe your research topic, objectives, and any specific areas of interest or methodologies you plan to use..."
                 value={studentData.abstract}
@@ -166,7 +166,7 @@ const InputPanel = ({
         <button
           onClick={onSubmit}
           disabled={isLoading || !studentData.title || !studentData.abstract}
-          className={`mt-10 w-full px-8 py-6 rounded-2xl bg-white text-black font-bold text-lg transition-all duration-500 shadow-2xl shadow-white/20 flex items-center justify-center gap-3 group/btn relative overflow-hidden ${
+          className={`mt-10 w-full px-8 py-3 md:py-6 rounded-2xl bg-white text-black font-bold text-lg transition-all duration-500 shadow-2xl shadow-white/20 flex items-center justify-center gap-3 group/btn relative overflow-hidden ${
             isLoading || !studentData.title || !studentData.abstract
               ? "opacity-50 cursor-not-allowed"
               : "hover:scale-[1.02] hover:shadow-white/30 active:scale-95 cursor-pointer"
@@ -193,19 +193,24 @@ const InputPanel = ({
         {/* Info Card */}
         {!hasRecommendations && (
           <div
-            className={`mt-10 backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl p-8 transition-all duration-1000 delay-400 hover:bg-white/10 hover:border-white/20 hover:scale-[1.02] ${
+            className={`mt-10 backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl md:p-8 p-4  transition-all duration-1000 delay-400 hover:bg-white/10 hover:border-white/20 hover:scale-[1.02] ${
               mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="flex items-start gap-4">
-              <div className="flex-shrink-0 w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
-                <Lightbulb className="text-white" size={20} />
+            <div>
+              <div className="flex items-center gap-4 w-full">
+                <div className="flex-shrink-0 w-12 h-12 bg-white/10 rounded-2xl flex items-center justify-center">
+                  <Lightbulb className="text-white" size={20} />
+                </div>
+                <div>
+                  <h4 className="font-bold text-white text-lg ">
+                    How it works
+                  </h4>
+                </div>
               </div>
-              <div>
-                <h4 className="font-bold text-white text-lg mb-3">
-                  How it works
-                </h4>
-                <p className="text-gray-400 leading-relaxed">
+
+              <div className="content__container mt-6">
+                <p className="text-gray-400 leading-relaxed text-justify">
                   Our AI analyzes your research title and overview to match you
                   with advisers who have experience in similar projects. The
                   more detailed your input, the better the recommendations.

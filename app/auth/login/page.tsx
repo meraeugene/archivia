@@ -66,7 +66,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 px-4 relative">
+    <div className="min-h-screen flex items-center justify-center md:px-6 bg-gray-50  relative">
       {/* Blurry Gradient Background */}
       <div
         className="absolute inset-0 z-0"
@@ -77,9 +77,9 @@ export default function Login() {
         }}
       />
 
-      <div className="w-full md:max-w-6xl h-[90vh] bg-white   z-10  relative rounded-3xl  md:border border-gray-200     overflow-hidden flex items-center justify-center">
+      <div className="w-full md:max-w-6xl  h-[90vh] bg-white   z-10  relative rounded-3xl  md:border border-gray-200     overflow-hidden flex items-center justify-center">
         {/* Left Side - Login */}
-        <div className="flex flex-col md:px-10 lg:px-20 md:py-34    md:w-1/2">
+        <div className="flex flex-col  md:px-10 lg:px-20 md:py-34    md:w-1/2">
           {/* Header */}
           <div className="mb-4 ">
             <div className="flex items-center justify-center md:mb-18 mb-4">

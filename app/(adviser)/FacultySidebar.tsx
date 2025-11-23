@@ -18,7 +18,7 @@ import { useTransition } from "react";
 import { CurrentUser } from "@/types/currentUser";
 import { logout } from "@/actions/auth/logout";
 
-const adviserNavLinks = [
+export const adviserNavLinks = [
   { label: "Home", href: "/", icon: Home },
   { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
   { label: "Advisory Requests", href: "/advisory-requests", icon: FileText },

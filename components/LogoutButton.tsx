@@ -19,7 +19,7 @@ export function LogoutButton() {
         </div>
       ) : (
         <div className="flex items-center space-x-2">
-          <LogOut size={16} className="text-gray-600" />
+          <LogOut size={16} />
           <span>Logout</span>
         </div>
       )}

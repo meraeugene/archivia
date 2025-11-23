@@ -8,6 +8,7 @@ import {
   Sparkles,
   Award,
   BookOpen,
+  XCircle,
 } from "lucide-react";
 import { Adviser } from "@/types/advisers";
 import { motion } from "framer-motion";
@@ -38,17 +39,17 @@ const AdviserProfileCard = ({
 
   return (
     <div
-      className="fixed inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-50 p-4 animate-in fade-in duration-300"
+      className="fixed  inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-50 md:p-4 animate-in fade-in duration-300 "
       onClick={onClose}
     >
       <div
-        className={`bg-black border border-white/10  max-w-7xl w-full max-h-[95vh] overflow-y-auto shadow-2xl shadow-white/5 transition-all duration-500 ${
+        className={`bg-black border border-white/10  max-w-7xl w-full h-full md:max-h-[95vh] overflow-y-auto shadow-2xl shadow-white/5 transition-all duration-500 scrollbar-none ${
           mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="sticky top-0 z-20 backdrop-blur-2xl bg-black/80 border-b border-white/10 py-6 px-8 md:px-12">
+        <div className="sticky top-0 z-20 backdrop-blur-2xl bg-black/80 border-b border-white/10 md:py-6 py-4 px-6 md:px-12">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl flex items-center justify-center">
@@ -89,11 +90,32 @@ const AdviserProfileCard = ({
                   </div>
                 )}
 
+                <div className="absolute top-4 left-4">
+                  {/* Advisees Count */}
+                  <span className="px-4 py-2 rounded-full md:hidden mb-2   backdrop-blur-xl bg-white/20 border border-white/30 text-white text-xs font-bold">
+                    {adviser.current_leaders}
+                    {adviser.limit > 0 && ` / ${adviser.limit}`} Advisee
+                    {adviser.current_leaders !== 1 && "s"}
+                  </span>
+                </div>
+
+                <div className="absolute right-4 top-4">
+                  <span
+                    className={`px-4 py-2 rounded-full text-xs font-bold text-white transition-all duration-300 ${
+                      adviser.availability === "Available"
+                        ? "bg-green-500 shadow-[0_0_10px_2px_rgba(34,197,94,0.7)] hover:shadow-[0_0_20px_4px_rgba(34,197,94,0.9)]"
+                        : "bg-red-500 shadow-[0_0_10px_2px_rgba(239,68,68,0.7)] hover:shadow-[0_0_20px_4px_rgba(239,68,68,0.9)]"
+                    }`}
+                  >
+                    {adviser.availability}
+                  </span>
+                </div>
+
                 {/* Info Overlay */}
-                <div className="absolute bottom-0 w-full b p-6 space-y-4">
+                <div className="absolute bottom-0 w-full b p-6 pb-3 md:space-y-4">
                   {/* Name & Title */}
                   <div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-white leading-tight mb-2">
+                    <h3 className="text-xl md:text-3xl font-bold text-white leading-tight mb-2">
                       {adviser.full_name}
                     </h3>
                     {(adviser.prefix || adviser.suffix) && (
@@ -107,21 +129,12 @@ const AdviserProfileCard = ({
                   </div>
 
                   {/* Badges */}
-                  <div className="flex flex-wrap items-center gap-2">
-                    {/* Availability */}
-                    <span
-                      className={`px-4 py-2 rounded-full text-xs font-bold shadow-lg ${
-                        adviser.availability === "Available"
-                          ? "bg-green-400 text-black"
-                          : "bg-red-400 text-white"
-                      }`}
-                    >
-                      {adviser.availability}
-                    </span>
-
+                  <div className="flex flex-wrap items-center justify-start  gap-2">
                     {/* Advisees Count */}
-                    <span className="px-4 py-2 rounded-full backdrop-blur-xl bg-white/20 border border-white/30 text-white text-xs font-bold">
-                      {adviser.current_leaders} Advisee
+
+                    <span className="px-4 py-2 rounded-full hidden md:block backdrop-blur-xl bg-white/20 border border-white/30 text-white text-xs font-bold">
+                      {adviser.current_leaders}
+                      {adviser.limit > 0 && ` / ${adviser.limit}`} Advisee
                       {adviser.current_leaders !== 1 && "s"}
                     </span>
 
@@ -129,7 +142,7 @@ const AdviserProfileCard = ({
                     {adviser.email && (
                       <a
                         href={`mailto:${adviser.email}`}
-                        className="px-4 py-2 rounded-full bg-white text-black text-xs font-bold flex items-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl active:scale-95 shadow-lg"
+                        className="px-4 py-2 rounded-full hidden   bg-white text-black text-xs font-bold md:flex items-center gap-2 transition-all duration-300 hover:scale-110 hover:shadow-xl active:scale-95 shadow-lg"
                         title="Contact Adviser"
                       >
                         <Mail size={14} />
@@ -183,17 +196,20 @@ const AdviserProfileCard = ({
               )}
 
               {/* Action Button */}
+              {/* Action Button */}
               <button
                 onClick={onConnect}
-                disabled={adviser.already_requested}
+                disabled={adviser.already_requested || adviser.is_full} // disable if already requested or full
                 className={`group/btn w-full py-5 font-bold text-lg rounded-2xl transition-all duration-500 shadow-2xl relative overflow-hidden ${
                   adviser.already_requested
                     ? "backdrop-blur-xl bg-green-500/20 border border-green-500/30 text-green-400 cursor-not-allowed"
+                    : adviser.is_full
+                    ? "backdrop-blur-xl bg-red-500/20 border border-red-500/30 text-red-400 cursor-not-allowed"
                     : "bg-white text-black hover:scale-[1.02] active:scale-95 cursor-pointer hover:shadow-white/30"
                 }`}
               >
                 {/* Shimmer effect for active button */}
-                {!adviser.already_requested && (
+                {!adviser.already_requested && !adviser.is_full && (
                   <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000"></div>
                 )}
 
@@ -201,6 +217,11 @@ const AdviserProfileCard = ({
                   <div className="flex items-center justify-center gap-3">
                     <CheckCircle2 size={22} className="text-green-400" />
                     Request Sent
+                  </div>
+                ) : adviser.is_full ? (
+                  <div className="flex items-center justify-center gap-2 text-red-500 font-bold">
+                    <XCircle size={20} />
+                    No Slots Available
                   </div>
                 ) : (
                   "Request as Adviser"

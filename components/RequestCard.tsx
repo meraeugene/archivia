@@ -99,11 +99,11 @@ const RequestCard = ({
 
       {/* Title + Abstract */}
       <div className="mb-2">
-        <h4 className="font-extrabold text-lg leading-tight  uppercase text-gray-900 mb-2">
+        <h4 className="font-extrabold md:text-lg leading-tight  uppercase text-gray-900 mb-2">
           {request.title}
         </h4>
         <p
-          className={` text-gray-600 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
+          className={` text-gray-600 text-sm md:text-base text-justify transition-all duration-300 ease-in-out overflow-hidden ${
             isExpanded ? "line-clamp-none max-h-96" : "line-clamp-3 max-h-20"
           }`}
         >
@@ -139,7 +139,7 @@ const RequestCard = ({
             Feedback
           </h3>
           <p className="text-base flex items-center gap-2 text-blue-700 leading-relaxed">
-            <span className="inline-block w-1 h-1 bg-blue-600 rounded-full"></span>
+            <span className="md:inline-block w-1 h-1 bg-blue-600 rounded-full hidden "></span>
             {request.feedback || "No feedback provided."}
           </p>
         </div>
@@ -174,12 +174,12 @@ const RequestCard = ({
       {request.status === "pending" ||
       request.status === "reserved" ||
       request.status === "referred" ? (
-        <div className="flex space-x-3">
+        <div className="flex space-x-3 flex-col md:flex-row gap-4">
           {/* Accept */}
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "reserve")}
-            className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
+            className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-3 md:py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
           >
             <CalendarClock className="h-4 w-4 mr-2" />
             Reserve
@@ -188,7 +188,7 @@ const RequestCard = ({
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "refer")}
-            className="flex-1 shadow-md hover:shadow-lg  cursor-pointer bg-white text-gray-700 border border-gray-100 px-4 py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
+            className="flex-1 shadow-md hover:shadow-lg  cursor-pointer bg-white text-gray-700 border border-gray-100 px-4 py-3 md:py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
           >
             <CornerUpRight className="h-4 w-4 mr-2" />
             Refer Adviser

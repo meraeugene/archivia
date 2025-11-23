@@ -77,7 +77,7 @@ export async function approveThesis(
     return { success: false, error: deleteError.message };
   }
 
-  // 3 Fetch adviser current leaders count
+  // 4 Fetch adviser current leaders count
   const { data: advData, error: advError } = await supabase
     .from("adviser_current_leaders")
     .select("current_leaders")
@@ -86,7 +86,7 @@ export async function approveThesis(
 
   if (advError) return { success: false, error: advError.message };
 
-  // 4. Decrement adviser current_leaders
+  // 5. Decrement adviser current_leaders
   const { error: updateAdvError } = await supabase
     .from("adviser_current_leaders")
     .update({ current_leaders: advData.current_leaders - 1 })

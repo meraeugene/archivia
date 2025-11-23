@@ -37,12 +37,12 @@ const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
         <div className="relative overflow-hidden">
           <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
           <div className="relative max-w-7xl mx-auto px-6 md:py-20 py-12 text-center">
-            <h1 className="text-5xl text-white font-extrabold mb-5 tracking-tight">
+            <h1 className="text-4xl md:text-5xl text-white font-extrabold mb-5 tracking-tight">
               USTP Advisers
             </h1>
 
-            <div className="w-32 h-1 bg-white mx-auto mb-8"></div>
-            <p className="text-lg text-gray-300 max-w-xl mx-auto ">
+            <div className="w-32 h-1 bg-white mx-auto md:mb-8 mb-6"></div>
+            <p className=" md:text-lg text-gray-300 max-w-xl mx-auto ">
               Meet our distinguished faculty members who are shaping the future
               of research and innovation at USTP.
             </p>
@@ -55,7 +55,7 @@ const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
         {/* Grid pattern overlay */}
         <div className="absolute inset-0   bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
 
-        <div className="grid max-w-7xl mx-auto  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8  py-12 px-4 md:px-0 ">
+        <div className="grid max-w-7xl mx-auto  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8  py-12 px-4 md:px-6 xl:px-0 ">
           {advisers.map((adviser) => (
             <div
               key={adviser.id}

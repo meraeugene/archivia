@@ -18,6 +18,7 @@ import {
   SelectContent,
   SelectItem,
 } from "@/components/ui/select";
+import SearchLoading from "@/components/SearchLoading";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
@@ -72,70 +73,63 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
       <SearchCategory
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
-        currentCategory={currentCategory}
-        categoryOptions={categoryOptions}
         onSearch={handleSearch}
       />
 
-      <section className="md:py-15 md:pt-8 py-8 px-4 ">
+      <section className="md:py-15 md:pt-8 py-8 px-4 md:px-6 ">
         <div className="max-w-6xl mx-auto ">
-          <div className="mb-6 md:mb-10 flex flex-col  gap-4">
-            <div className="flex w-full justify-between flex-col-reverse items-center md:flex-row gap-4">
-              <div className="mb-3 sm:mb-0 text-gray-700">
-                {currentCategory === "all" ? (
-                  `Showing ${displayedTheses.length} of ${thesisCount} total theses`
-                ) : (
-                  <div className="text-center">
-                    Showing {displayedTheses.length} of {thesisCount} total
-                    theses in{" "}
-                    <span className="font-semibold text-black">
-                      {currentCategory}
-                    </span>
-                  </div>
-                )}
+          {!isSearching && !isSorting && !isCategorizing && (
+            <div className="mb-6 md:mb-10 flex flex-col  gap-4">
+              <div className="flex w-full justify-between flex-col-reverse items-center md:flex-row gap-4">
+                <div className="mb-3 sm:mb-0 text-gray-700">
+                  {thesisCount === null ? (
+                    <div className="h-4 w-50 bg-gray-200 rounded animate-pulse"></div>
+                  ) : currentCategory === "all" ? (
+                    `Showing ${displayedTheses.length} of ${thesisCount} total theses`
+                  ) : (
+                    <div className="text-center">
+                      Showing {displayedTheses.length} of {thesisCount} total
+                      theses in{" "}
+                      <span className="font-semibold text-black">
+                        {currentCategory}
+                      </span>
+                    </div>
+                  )}
+                </div>
+
+                <div className="flex gap-4 flex-col md:flex-row  w-full md:w-fit  ">
+                  <Select value={sort} onValueChange={handleSortChange}>
+                    <SelectTrigger className="w-full md:w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer ">
+                      <SelectValue placeholder="Sort by" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="recent">Newest</SelectItem>
+                      <SelectItem value="title">Title (A–Z)</SelectItem>
+                      <SelectItem value="adviser">Adviser (A–Z)</SelectItem>
+                    </SelectContent>
+                  </Select>
+
+                  <Select
+                    value={currentCategory}
+                    onValueChange={(val) => handleCategoryChange(val)}
+                  >
+                    <SelectTrigger className="w-full min-w-[150px]  border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
+                      <SelectValue placeholder="Select Category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      {categoryOptions.map((option) => (
+                        <SelectItem key={option.key} value={option.key}>
+                          {option.label}
+                        </SelectItem>
+                      ))}
+                    </SelectContent>
+                  </Select>
+                </div>
               </div>
-
-              <div className="flex gap-4 flex-col md:flex-row  w-full md:w-fit  ">
-                <Select value={sort} onValueChange={handleSortChange}>
-                  <SelectTrigger className="w-full md:w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer ">
-                    <SelectValue placeholder="Sort by" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="recent">Newest</SelectItem>
-                    <SelectItem value="title">Title (A–Z)</SelectItem>
-                    <SelectItem value="adviser">Adviser (A–Z)</SelectItem>
-                  </SelectContent>
-                </Select>
-
-                <Select
-                  value={currentCategory}
-                  onValueChange={(val) => handleCategoryChange(val)}
-                >
-                  <SelectTrigger className="w-auto min-w-[150px]  border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
-                    <SelectValue placeholder="Select Category" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    {categoryOptions.map((option) => (
-                      <SelectItem key={option.key} value={option.key}>
-                        {option.label}
-                      </SelectItem>
-                    ))}
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-          </div>
-
-          {/* Loading Logo */}
-          {isSearching && (
-            <div className="flex justify-center items-center py-10 w-full">
-              <img
-                src="/images/logo.png"
-                alt="Loading..."
-                className="h-12 w-12 animate-fade"
-              />
             </div>
           )}
+
+          {isSearching && <SearchLoading />}
 
           {!isSearching &&
             !isSorting &&
@@ -146,8 +140,11 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                 className="flex gap-8"
                 columnClassName="space-y-8"
               >
-                {displayedTheses.map((thesis) => (
-                  <div key={thesis.id} className="fade-slide-up">
+                {displayedTheses.map((thesis, index) => (
+                  <div
+                    key={`${currentCategory}-${sort}-${searchQuery}-${thesis.id}-${index}`}
+                    className="fade-slide-up"
+                  >
                     <ThesisCard
                       thesis={thesis}
                       onPreview={handlePreview}

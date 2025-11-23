@@ -38,7 +38,7 @@ export default function ProfilePageClient({
   };
 
   return (
-    <div className="bg-black relative  text-white">
+    <div className="bg-black relative  text-white px-5 md:px-6 ">
       {/* Animated mesh gradient background */}
       <div className="absolute inset-0 opacity-40 pointer-events-none">
         <div
@@ -58,7 +58,7 @@ export default function ProfilePageClient({
 
       <main className="max-w-6xl mx-auto  md:py-16 py-12">
         {/* Profile Header */}
-        <div className="grid lg:grid-cols-3 gap-12 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-10 md:gap-12 md:mb-16">
           {/* Left Column - Profile Picture */}
           <div className="lg:col-span-1">
             <ProfileImage
@@ -71,19 +71,19 @@ export default function ProfilePageClient({
 
             {/* Quick Contact */}
             {isEditing ? (
-              <div className="mt-8 p-6 border ">
+              <div className="mt-8 hidden md:block ">
                 <label className="block text-sm font-bold mb-1">EMAIL</label>
                 <input
                   type="email"
                   name="email"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full border px-3 py-2"
+                  className="w-full border font-medium border-gray-800 p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
                 />
               </div>
             ) : (
               profile.email && (
-                <div className="mt-8 md:p-6 p-4 border border-gray-800 ">
+                <div className="mt-8 md:block md:p-6 p-4 border border-gray-800 hidden ">
                   <div className="flex items-start gap-3">
                     <Mail className="w-5 h-5 mt-1 flex-shrink-0" />
                     <a
@@ -102,13 +102,47 @@ export default function ProfilePageClient({
           <div className="lg:col-span-2">
             {/* Name */}
             <div className="mb-8">
-              <h1 className="text-4xl lg:text-7xl font-black tracking-tight leading-none">
+              <h1 className="text-3xl text-center md:text-left lg:text-7xl font-black tracking-tight leading-none">
                 {profile.prefix} {profile.full_name} {profile.suffix}
               </h1>
 
               {/* Faculty position */}
               {isFaculty && profile.position && (
-                <p className="text-2xl tracking-wide uppercase font-light border-l-4 border-black pl-6 ml-6">
+                <p className="text-2xl text-center tracking-wide md:hidden uppercase font-light border-l-4 border-black md:pl-6 md:ml-6 mt-2 md:text-left ">
+                  {profile.position}
+                </p>
+              )}
+
+              {isEditing ? (
+                <div className="mt-8  md:hidden  ">
+                  <label className="block text-sm font-bold mb-1">EMAIL</label>
+                  <input
+                    type="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full border font-medium border-gray-800 p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
+                  />
+                </div>
+              ) : (
+                profile.email && (
+                  <div className="mt-8 md:p-6 p-4 border border-gray-800 md:hidden ">
+                    <div className="flex items-start gap-3">
+                      <Mail className="w-5 h-5 mt-1 flex-shrink-0" />
+                      <a
+                        href={`mailto:${profile.email}`}
+                        className="hover:underline break-all"
+                      >
+                        {profile.email}
+                      </a>
+                    </div>
+                  </div>
+                )
+              )}
+
+              {/* Faculty position */}
+              {isFaculty && profile.position && (
+                <p className="text-2xl text-center tracking-wide hidden md:block uppercase font-light border-l-4 border-black md:pl-6 md:ml-6 mt-2 md:text-left ">
                   {profile.position}
                 </p>
               )}
@@ -117,7 +151,7 @@ export default function ProfilePageClient({
               {!isFaculty && (
                 <div className="space-y-4 mt-6">
                   {/* Course */}
-                  <div className="text-xl font-light">
+                  <div className="md:text-xl font-light">
                     <span className="font-bold uppercase text-sm tracking-wider">
                       Course
                     </span>
@@ -127,17 +161,17 @@ export default function ProfilePageClient({
                         name="course"
                         value={formData.course}
                         onChange={handleChange}
-                        className="w-full border px-3 py-2 mt-1"
+                        className="w-full border font-medium border-gray-800 p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
                       />
                     ) : (
-                      <div className="text-2xl mt-1">
+                      <div className="md:text-2xl mt-1">
                         {profile.course ?? "To be provided"}
                       </div>
                     )}
                   </div>
 
                   {/* Year & Section */}
-                  <div className="text-xl font-light">
+                  <div className="md:text-xl font-light">
                     <span className="font-bold uppercase text-sm tracking-wider">
                       Year & Section
                     </span>
@@ -149,7 +183,7 @@ export default function ProfilePageClient({
                           value={formData.year_level}
                           onChange={handleChange}
                           placeholder="Year"
-                          className="w-1/2 border px-3 py-2"
+                          className="w-1/2 border font-medium border-gray-800 p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
                         />
                         <input
                           type="text"
@@ -157,11 +191,11 @@ export default function ProfilePageClient({
                           value={formData.section}
                           onChange={handleChange}
                           placeholder="Section"
-                          className="w-1/2 border px-3 py-2"
+                          className="w-1/2 border font-medium border-gray-800 p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
                         />
                       </div>
                     ) : (
-                      <div className="text-2xl mt-1">
+                      <div className="md:text-2xl mt-1">
                         {profile.year_level && profile.section
                           ? `${profile.year_level}${profile.section}`
                           : "To be provided"}
@@ -170,7 +204,7 @@ export default function ProfilePageClient({
                   </div>
 
                   {/* Bio */}
-                  <div className="text-xl font-light">
+                  <div className="md:text-xl font-light">
                     <span className="font-bold uppercase text-sm tracking-wider">
                       Bio
                     </span>
@@ -180,10 +214,10 @@ export default function ProfilePageClient({
                         name="bio"
                         value={formData.bio}
                         onChange={handleChange}
-                        className="w-full border px-3 py-2 mt-1"
+                        className="w-full border font-medium border-gray-800 p-3 focus:ring-2 focus:ring-gray-900 focus:outline-none"
                       />
                     ) : (
-                      <div className="text-2xl mt-1">
+                      <div className="md:text-2xl mt-1">
                         {profile.bio ?? "To be provided"}
                       </div>
                     )}
@@ -230,10 +264,10 @@ export default function ProfilePageClient({
         </div>
 
         {/* Decorative Footer */}
-        <div className="mt-16 flex items-center gap-4">
-          <div className="flex-1 h-px bg-black"></div>
-          <div className="w-2 h-2 bg-black rotate-45"></div>
-          <div className="flex-1 h-px bg-black"></div>
+        <div className="mt-12 md:mt-16  flex items-center gap-4">
+          <div className="flex-1 h-px bg-gray-600"></div>
+          <div className="w-2 h-2 bg-gray-600 rotate-45"></div>
+          <div className="flex-1 h-px bg-gray-600"></div>
         </div>
 
         {/* Faculty Academic Info */}

@@ -23,7 +23,7 @@ export const RecommendationsList = ({
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
   const [mounted, setMounted] = useState(false);
   const [cursorPos, setCursorPos] = useState({ x: 0, y: 0 });
-  const [layoutMode, setLayoutMode] = useState<"pyramid" | "grid">("pyramid");
+  const [layoutMode, setLayoutMode] = useState<"pyramid" | "grid">("grid");
 
   useEffect(() => {
     setMounted(true);
@@ -100,62 +100,71 @@ export const RecommendationsList = ({
       {/* Grid pattern */}
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:64px_64px]"></div>
 
-      <div className="relative max-w-6xl mx-auto pb-20 pt-12 ">
+      <div className="relative max-w-6xl mx-auto pb-20 pt-12 px-6 xl:px-0 ">
         {/* Header with Reset Button */}
         <div
-          className={`flex items-end justify-between mb-16 transition-all duration-1000 ${
+          className={`flex items-end justify-center md:justify-between    flex-wrap gap-6 md:mb-16 mb-12 transition-all duration-1000 ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-4"
           }`}
         >
-          <div>
+          <div className="flex items-center justify-center flex-col w-full md:w-auto md:block">
             <div className="inline-flex items-center gap-2 px-4 py-2 mb-4 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full text-sm font-medium">
               <Sparkles className="w-4 h-4 animate-pulse" />
               <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent font-semibold">
                 AI-Matched Results
               </span>
             </div>
-            <h1 className="text-5xl md:text-6xl font-bold bg-gradient-to-b from-white via-white to-gray-500 bg-clip-text text-transparent">
+            <h1 className="text-5xl text-center md:text-6xl font-bold bg-gradient-to-b from-white via-white to-gray-500 bg-clip-text text-transparent">
               Your Matches
             </h1>
           </div>
 
-          <div className="flex items-center gap-4">
-            {/* Layout Toggle Buttons */}
-            <div className="flex backdrop-blur-xl bg-white/10 border border-white/20 rounded-2xl p-1.5 gap-1.5">
-              <button
-                onClick={() => setLayoutMode("pyramid")}
-                className={`flex cursor-pointer items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                  layoutMode === "pyramid"
-                    ? "bg-white text-black shadow-lg"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                <Triangle size={16} />
-                <span>Pyramid</span>
-              </button>
-              <button
-                onClick={() => setLayoutMode("grid")}
-                className={`flex cursor-pointer items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 ${
-                  layoutMode === "grid"
-                    ? "bg-white text-black shadow-lg"
-                    : "text-white hover:bg-white/10"
-                }`}
-              >
-                <Grid3x3 size={16} />
-                <span>Grid</span>
-              </button>
+          <div className="flex flex-col gap-4">
+            <div className="items-center gap-3  md:hidden">
+              <div className="backdrop-blur-xl text-center bg-white text-black rounded-2xl px-5 py-2.5 font-bold text-sm shadow-2xl shadow-white/20">
+                {recommendations.length}{" "}
+                {recommendations.length === 1 ? "MATCH" : "MATCHES"}
+              </div>
             </div>
 
-            <button
-              onClick={handleReset}
-              className="group/btn backdrop-blur-xl bg-white/10 border border-white/20 text-white rounded-2xl px-6 py-3.5 font-semibold text-sm hover:bg-white/20 hover:border-white/30 transition-all duration-300 flex items-center gap-2.5 hover:scale-105 active:scale-95 cursor-pointer shadow-lg hover:shadow-white/10"
-            >
-              <RefreshCw
-                size={18}
-                className="group-hover/btn:rotate-180 transition-transform duration-500"
-              />
-              <span>New Search</span>
-            </button>
+            <div className="flex items-center gap-4    ">
+              {/* Layout Toggle Buttons */}
+              <div className="md:flex backdrop-blur-xl hidden  bg-white/10 border border-white/20 rounded-2xl p-1.5 gap-1.5">
+                <button
+                  onClick={() => setLayoutMode("pyramid")}
+                  className={`flex cursor-pointer items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                    layoutMode === "pyramid"
+                      ? "bg-white text-black shadow-lg"
+                      : "text-white hover:bg-white/10"
+                  }`}
+                >
+                  <Triangle size={16} />
+                  <span>Pyramid</span>
+                </button>
+                <button
+                  onClick={() => setLayoutMode("grid")}
+                  className={`flex cursor-pointer items-center gap-2 px-4 py-2 rounded-xl font-semibold text-sm transition-all duration-300 ${
+                    layoutMode === "grid"
+                      ? "bg-white text-black shadow-lg"
+                      : "text-white hover:bg-white/10"
+                  }`}
+                >
+                  <Grid3x3 size={16} />
+                  <span>Grid</span>
+                </button>
+              </div>
+
+              <button
+                onClick={handleReset}
+                className="group/btn mx-auto backdrop-blur-xl bg-white/10 border border-white/20 text-white rounded-2xl px-6 py-3.5 font-semibold text-sm hover:bg-white/20 hover:border-white/30 transition-all duration-300 flex items-center gap-2.5 hover:scale-105 active:scale-95 cursor-pointer shadow-lg hover:shadow-white/10"
+              >
+                <RefreshCw
+                  size={18}
+                  className="group-hover/btn:rotate-180 transition-transform duration-500"
+                />
+                <span className="text-xs">New Search</span>
+              </button>
+            </div>
           </div>
         </div>
 
@@ -212,7 +221,7 @@ export const RecommendationsList = ({
               </div>
             </div>
 
-            <div className="flex items-center gap-3">
+            <div className="items-center gap-3 hidden md:flex">
               <div className="backdrop-blur-xl bg-white text-black rounded-2xl px-5 py-2.5 font-bold text-sm shadow-2xl shadow-white/20">
                 {recommendations.length}{" "}
                 {recommendations.length === 1 ? "MATCH" : "MATCHES"}
@@ -331,9 +340,9 @@ export const RecommendationsList = ({
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
-          <div className="flex items-center justify-between mb-10">
-            <div className="flex items-center gap-4">
-              <div className="w-12 h-12 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center justify-center">
+          <div className="flex items-center justify-between  mb-10">
+            <div className="flex items-center  w-full  gap-4">
+              <div className="w-12 h-12  bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl  flex items-center justify-center">
                 <Sparkles className="text-white animate-pulse" size={24} />
               </div>
               <div>
@@ -341,12 +350,12 @@ export const RecommendationsList = ({
                   Wildcard
                 </h2>
                 <p className="text-gray-400 text-sm mt-1">
-                  Explore these advisers align with their research interests.
+                  Advisers fit research interests{" "}
                 </p>
               </div>
             </div>
 
-            <div className="backdrop-blur-xl bg-white text-black rounded-2xl px-5 py-2.5 font-bold text-sm shadow-2xl shadow-white/20">
+            <div className="backdrop-blur-xl hidden md:block w-52 bg-white text-black rounded-2xl px-5 py-2.5 font-bold text-sm shadow-2xl shadow-white/20">
               {wildcardAdvisers.length}{" "}
               {/* {wildcardAdvisers.length === 1 ? "OPTION" : "OPTIONS"} */}
               Interest Matches

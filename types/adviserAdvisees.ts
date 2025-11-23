@@ -18,4 +18,6 @@ export type AdviserWithAdvisees = {
   adviser_email: string | null;
   total_advisees: number;
   advisees: Advisee[] | null; // null if none (because of json_agg)
+  max_limit: number;
+  profile_picture: string | null;
 };

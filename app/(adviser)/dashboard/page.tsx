@@ -19,6 +19,7 @@ import {
 } from "@/actions/faculty/count";
 import { getAdviserRequests } from "@/actions/faculty/getAdviserRequests";
 import { getReferAdvisers } from "@/actions/faculty/getReferAdvisers";
+import DashboardMobileHeader from "@/components/DashboardMobileHeader";
 
 export default async function FacultyDashboard() {
   const [
@@ -41,14 +42,16 @@ export default async function FacultyDashboard() {
 
   return (
     <main className="flex-1 ">
-      <div className="sticky top-0 z-40 px-8 py-4 shadow-xs bg-white ">
+      <DashboardMobileHeader headerTitle="Dashboard" />
+
+      <div className="sticky hidden md:block top-0 z-40 md:px-8 p-4 shadow-xs bg-white ">
         <h1 className="text-lg font-bold text-gray-900">Dashboard</h1>
       </div>
 
-      <div className="p-8">
+      <div className="px-4 py-6 md:p-8 ">
         {/* Statistics Overview */}
         <section className="mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-5 gap-6 mb-8">
             <StatsCard
               title="Total Advisory Requests"
               count={totalAdviserRequestCount}
@@ -96,7 +99,7 @@ export default async function FacultyDashboard() {
           <h2 className="text-xl font-semibold text-gray-900 mb-4">
             Quick Actions
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             <QuickActionsCard
               title="Review Advisory Requests"
               desc="Review and manage pending student requests"
@@ -130,7 +133,7 @@ export default async function FacultyDashboard() {
         <section>
           <div className=" mb-6">
             <div className="flex items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-900">
+              <h2 className="text-lg md:text-xl font-semibold text-gray-900">
                 Advisory Requests Log
               </h2>
 

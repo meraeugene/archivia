@@ -73,7 +73,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
           />
         </div>
 
-        <div className="flex gap-2">
+        <div className=" gap-2 hidden md:flex">
           <strong>Panel:</strong>
           <div className="flex flex-wrap gap-2">
             {[
@@ -86,7 +86,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
           </div>
         </div>
 
-        <div>
+        <div className=" gap-2 hidden md:flex">
           <strong>Proponents:</strong>{" "}
           <span
             dangerouslySetInnerHTML={{
@@ -102,7 +102,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
           <strong>Year:</strong> {thesis.defense_year || "N/A"}
         </div>
 
-        <div className="flex gap-2 mt-3">
+        <div className="gap-2 mt-3 md:flex hidden">
           <div className="flex flex-wrap gap-2">
             {thesis.category?.length
               ? thesis.category.slice(0, 2).map((cat, index) => (

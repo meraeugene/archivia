@@ -10,7 +10,7 @@ import { CurrentUser } from "@/types/currentUser";
 import { StudentAdviser } from "@/types/studentAdviser";
 import { logout } from "@/actions/auth/logout";
 import { LogoutButton } from "./LogoutButton";
-import { useFormStatus } from "react-dom";
+import MobileHeader from "./MobileHeader";
 
 interface HeaderProps {
   currentUser: CurrentUser | null;
@@ -38,8 +38,6 @@ export default function ResponsiveHeader({
     currentUser?.role === "student" &&
     studentAdviser &&
     isAuthorizedToUploadThesis;
-
-  const { pending } = useFormStatus();
 
   const renderLinks = (isMobile = false) => (
     <div
@@ -120,9 +118,10 @@ export default function ResponsiveHeader({
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-white/90 backdrop-blur-xs md:border-b border-gray-100">
+    <header className="sticky top-0 z-50 bg-white  md:border-b border-gray-100">
       <div className="max-w-6xl mx-auto ">
-        <div className="flex justify-between items-center py-2 md:py-3 px-2 md:px-3 lg:px-0">
+        {/* Desktop Navigation */}
+        <div className="md:flex justify-between hidden  items-center py-2 md:py-3 px-2 md:px-6 xl:px-0 ">
           {/* Logo */}
           <div className="flex items-center">
             <img src="/images/logo.png" alt="Archivia Logo" className="h-8" />
@@ -144,7 +143,6 @@ export default function ResponsiveHeader({
             )}
           </button>
 
-          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-6">
             {renderLinks(false)}
 
@@ -212,77 +210,12 @@ export default function ResponsiveHeader({
           </nav>
         </div>
 
-        {/* Mobile Menu */}
-        {mobileMenuOpen && (
-          <div className="md:hidden absolute top-full left-0 w-full bg-white z-50 border-t animate-in fade-in slide-in-from-top-2 duration-400 ease-out">
-            <div className="px-4 pt-4">{renderLinks(true)}</div>
-
-            {/* Mobile User Section */}
-            {currentUser && (
-              <div className="mt-6 pt-4 border-t space-y-3 ">
-                <div className="flex items-center space-x-3 px-4">
-                  {currentUser.profile_picture ? (
-                    <img
-                      src={currentUser.profile_picture}
-                      alt={currentUser.full_name}
-                      className="object-cover rounded-full w-10 h-10"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-black text-white font-bold">
-                      {getInitials(currentUser.full_name)}
-                    </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-gray-900 text-sm truncate">
-                      {currentUser.prefix} {currentUser.full_name}{" "}
-                      {currentUser.suffix}
-                    </div>
-                    <div className="text-gray-600 text-xs truncate">
-                      {currentUser.email}
-                    </div>
-                  </div>
-                </div>
-
-                <Link
-                  prefetch
-                  href={`/profile/${currentUser.user_id}`}
-                  className="block px-4   text-gray-800 hover:text-black"
-                  onClick={() => setMobileMenuOpen(false)}
-                >
-                  <span>Profile</span>
-                </Link>
-
-                {currentUser.role === "student" && (
-                  <Link
-                    prefetch
-                    href="/my-requests"
-                    className=" px-4 block pb-2   text-gray-800 hover:text-black"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <span>My Requests</span>
-                  </Link>
-                )}
-
-                <form action={logout} className="py-4  px-4 border-t">
-                  <button
-                    type="submit"
-                    disabled={pending}
-                    className="flex  cursor-pointer items-center space-x-2 w-full text-left   hover:bg-gray-100 disabled:opacity-50  "
-                  >
-                    {pending ? (
-                      <div className="flex items-center space-x-2">
-                        <div className="h-5 w-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                        <span>Logging out...</span>
-                      </div>
-                    ) : (
-                      <div>Logout</div>
-                    )}
-                  </button>
-                </form>
-              </div>
-            )}
-          </div>
-        )}
+        <MobileHeader
+          mobileMenuOpen={mobileMenuOpen}
+          setMobileMenuOpen={setMobileMenuOpen}
+          currentUser={currentUser}
+          renderLinks={renderLinks}
+        />
       </div>
     </header>
   );

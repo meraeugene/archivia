@@ -55,7 +55,7 @@ const UploadThesisClient = ({
   }, []);
 
   return (
-    <main className="relative flex-1 mx-auto min-h-screen bg-black text-white py-20 px-4 md:px-8 overflow-hidden">
+    <main className="relative flex-1 mx-auto min-h-screen bg-black text-white py-20 px-6 md:px-8 overflow-hidden">
       {/* Apple-style animated mesh gradient background */}
       <div className="absolute inset-0 opacity-30">
         <div
@@ -252,14 +252,14 @@ const UploadThesisClient = ({
         {/* File Display Card - Glass morphism */}
         {uploadedFile && (
           <div className="max-w-4xl mx-auto mb-10 animate-in slide-in-from-bottom duration-700 fade-in">
-            <div className="relative group/card backdrop-blur-2xl bg-white/10 border border-white/20 rounded-3xl p-7 hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10">
+            <div className="relative group/card backdrop-blur-2xl bg-white/10 border border-white/20 rounded-3xl p-4 md:p-7 hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] hover:shadow-2xl hover:shadow-white/10">
               {/* Hover glow */}
               <div className="absolute inset-0 bg-white rounded-3xl blur-xl opacity-0 group-hover/card:opacity-5 transition-opacity duration-500"></div>
 
-              <div className="relative flex items-center justify-between gap-6">
-                <div className="flex items-center gap-5 flex-1 min-w-0">
+              <div className="relative flex items-center  justify-between gap-6">
+                <div className="flex items-center  gap-5 flex-1 min-w-0">
                   <div className="relative flex-shrink-0">
-                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg transform transition-transform duration-500 group-hover/card:scale-110 group-hover/card:rotate-6">
+                    <div className="w-10 h-10  md:w-16md:h-16 bg-white rounded-2xl flex items-center justify-center shadow-lg transform transition-transform duration-500 group-hover/card:scale-110 group-hover/card:rotate-6">
                       <FileText
                         className="text-black"
                         size={28}
@@ -271,11 +271,11 @@ const UploadThesisClient = ({
                     </div>
                   </div>
 
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1  min-w-0">
                     <h3 className="text-xl font-bold text-white truncate mb-1">
                       {uploadedFile.file.name}
                     </h3>
-                    <div className="flex items-center gap-3 text-sm text-gray-400">
+                    <div className="flex items-center gap-3  text-sm text-gray-400">
                       <span className="font-medium">
                         {(uploadedFile.file.size / 1024 / 1024).toFixed(2)} MB
                       </span>
@@ -290,7 +290,7 @@ const UploadThesisClient = ({
                     e.stopPropagation();
                     removeFile();
                   }}
-                  className="flex-shrink-0 p-3.5 cursor-pointer text-black bg-white rounded-2xl transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-xl focus:outline-none active:scale-95"
+                  className="flex-shrink-0 p-1.5 md:p-3.5 cursor-pointer text-black bg-white rounded-2xl transition-all duration-300 hover:scale-110 hover:rotate-6 hover:shadow-xl focus:outline-none active:scale-95"
                 >
                   <X size={22} strokeWidth={2.5} />
                 </button>
@@ -301,11 +301,11 @@ const UploadThesisClient = ({
 
         {/* Submit Button - Apple style CTA */}
         {uploadedFile && uploadStatus === "success" && (
-          <div className="flex justify-center animate-in slide-in-from-bottom duration-1000 fade-in delay-200">
+          <div className="flex justify-center  animate-in slide-in-from-bottom duration-1000 fade-in delay-200">
             <button
               onClick={handleSubmitThesis}
               disabled={isPending}
-              className={`group/btn relative cursor-pointer px-16 py-6 bg-white text-black font-bold text-xl rounded-full transition-all duration-500 overflow-hidden ${
+              className={`group/btn relative cursor-pointer px-16 py-3 md:py-6 bg-white text-black font-bold text-xl w-full rounded-full transition-all duration-500 overflow-hidden ${
                 isPending
                   ? "opacity-70 cursor-not-allowed"
                   : "hover:scale-105 hover:shadow-2xl hover:shadow-white/30 active:scale-95 shadow-xl shadow-white/20"

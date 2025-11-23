@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback, useTransition } from "react";
+import { useState, useCallback, useTransition, useEffect } from "react";
 import { Thesis } from "@/types/thesis";
 import { toast } from "sonner";
 import {
@@ -28,16 +28,13 @@ export function useArchivia(initialTheses?: Thesis[]) {
   const [hasMore, setHasMore] = useState(true);
   const [loadingMore, setLoadingMore] = useState(false);
 
-  const [thesisCount, setThesisCount] = useState<number>(
-    initialTheses?.length || 0
-  );
+  const [thesisCount, setThesisCount] = useState<number | null>(null);
 
   const fetchTotalCount = useCallback(async (category: string) => {
     const count = await getThesesCount(category);
     setThesisCount(count);
   }, []);
 
-  // Reset list when clearing search
   useEffect(() => {
     if (searchQuery.trim() === "") {
       setDisplayedTheses(initialTheses || []);
@@ -68,23 +65,32 @@ export function useArchivia(initialTheses?: Thesis[]) {
   );
 
   // Search (always searches across all theses, ignoring category)
-  const handleSearch = async (query?: string) => {
-    const finalQuery = query ?? searchQuery;
-    if (!finalQuery.trim()) return;
+  const handleSearch = useCallback(
+    async (query?: string) => {
+      const trimmedQuery = query?.trim() ?? "";
 
-    startSearchTransition(async () => {
-      const { data, error } = await searchTheses(finalQuery);
-      if (error) {
-        toast.error("Error searching theses");
-      } else {
-        const results = data || [];
-        setDisplayedTheses(results);
-        setOffset(results.length);
-        setHasMore(false);
-        setThesisCount(results.length);
+      if (trimmedQuery === "") {
+        setDisplayedTheses(initialTheses || []);
+        setOffset(initialTheses?.length || 0);
+        setHasMore(true);
+        fetchTotalCount(currentCategory);
+        return;
       }
-    });
-  };
+
+      startSearchTransition(async () => {
+        const { data, error } = await searchTheses(trimmedQuery);
+        if (error) toast.error("Error searching theses");
+        else {
+          const results = data || [];
+          setDisplayedTheses(results);
+          setOffset(results.length);
+          setHasMore(false);
+          setThesisCount(results.length);
+        }
+      });
+    },
+    [initialTheses, fetchTotalCount, currentCategory]
+  );
 
   // Sorting handler
   const handleSortChange = useCallback(

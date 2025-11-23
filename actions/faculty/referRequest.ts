@@ -2,7 +2,7 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
-import { sendReferralEmail } from "@/utils/nodemailer/sendReferralEmail";
+// import { sendReferralEmail } from "@/utils/nodemailer/sendReferralEmail";
 import { getCurrentUser } from "../auth/getCurrentUser";
 
 export async function referRequest(
@@ -48,15 +48,15 @@ export async function referRequest(
     return { success: false, error: "Error referring request." };
   }
 
-  await sendReferralEmail({
-    toAdviser: newAdviserEmail, // new adviser email
-    toStudent: studentEmail,
-    studentName,
-    thesisTitle,
-    thesisAbstract,
-    referredBy: currentUser.full_name,
-    refferedTo: newAdviserFullName,
-  });
+  // await sendReferralEmail({
+  //   toAdviser: newAdviserEmail, // new adviser email
+  //   toStudent: studentEmail,
+  //   studentName,
+  //   thesisTitle,
+  //   thesisAbstract,
+  //   referredBy: currentUser.full_name,
+  //   refferedTo: newAdviserFullName,
+  // });
 
   revalidatePath("/requests");
   revalidatePath("/my-requests");

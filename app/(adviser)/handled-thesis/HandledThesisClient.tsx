@@ -59,7 +59,7 @@ export default function HandledThesisClient({
           </p>
         </div>
       ) : (
-        <div className="columns-1 md:columns-2 gap-6 p-8  space-y-6">
+        <div className="columns-1 xl:columns-2 gap-6 p-8  space-y-6">
           {handledTheses.map((thesis) => (
             <div
               key={thesis.thesis_id}

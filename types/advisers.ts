@@ -27,6 +27,8 @@ export type WildcardAdviser = {
 export type Adviser = {
   id: string;
   availability: string;
+  limit: number;
+  is_full: boolean;
   full_name: string;
   prefix: string | null;
   suffix: string | null;

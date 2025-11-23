@@ -9,12 +9,10 @@ export const getMoreTheses = cache(
   async (offset = 0, sort = "recent", category = "all") => {
     const supabase = await createClient();
 
-    console.log("category nigga", category);
-
     let query = supabase.from("theses").select("*");
 
     if (category !== "all") {
-      query = query.overlaps("category", [category]);
+      query = query.contains("category", [category]);
     }
 
     switch (sort) {
@@ -78,6 +76,8 @@ export const getThesesCount = cache(async (category = "all") => {
     console.error("Error counting theses:", error.message);
     return 0;
   }
+
+  console.log("count", count);
 
   return count ?? 0;
 });

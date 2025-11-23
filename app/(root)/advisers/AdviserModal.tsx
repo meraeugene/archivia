@@ -23,21 +23,29 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
       className="fixed  inset-0 z-50 flex items-center justify-center  bg-black/20 backdrop-blur-sm px-4 "
       onClick={closeModal}
     >
+      <button
+        onClick={closeModal}
+        className="absolute top-14 right-8 z-50 cursor-pointer 
+      text-gray-600 hover:text-black xl:hidden transition-colors"
+      >
+        <X size={24} />
+      </button>
+
       <div
-        className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[90vh] relative animate-fadeInScale"
+        className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[90vh] relative animate-fadeInScale scrollbar-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={closeModal}
-          className="absolute top-4 right-4 z-10    text-gray-700 rounded-full flex items-center justify-center hover:text-gray-900 cursor-pointer"
+          className="absolute hidden top-4 right-4 z-10    text-gray-700 rounded-full xl:flex items-center justify-center hover:text-gray-900 cursor-pointer"
         >
           <X className="w-8 h-8" />
         </button>
 
-        <div className="flex flex-col md:flex-row h-full">
+        <div className="flex flex-col md:flex-row  h-full">
           {/* Left Side - Large Profile Picture */}
-          <div className="md:w-[40%] h-64 md:h-auto relative overflow-hidden">
+          <div className="md:w-[40%] md:h-auto relative overflow-hidden">
             {selectedAdviser.profile_picture ? (
               <img
                 src={selectedAdviser.profile_picture}

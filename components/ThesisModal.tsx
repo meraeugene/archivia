@@ -22,31 +22,32 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-3 md:p-5 bg-black/20 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm"
     >
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className="bg-white/90 backdrop-blur-md  max-w-5xl w-full max-h-[80vh]
-  overflow-y-auto relative shadow-lg border border-white/30
-  animate-fadeInScale"
+      {/* Fixed Close Button */}
+      <button
+        onClick={onClose}
+        className="fixed top-5 right-5 z-50 cursor-pointer text-gray-600 hover:text-black transition-colors"
       >
-        {/* Close Button */}
-        <button
-          onClick={onClose}
-          className="absolute top-5 cursor-pointer right-5 text-gray-600 hover:text-black transition-colors "
-        >
-          <X size={24} />
-        </button>
+        <X size={24} />
+      </button>
 
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white/90 backdrop-blur-md 
+             w-full h-full md:w-full md:max-w-5xl md:max-h-[80vh]
+             overflow-y-auto scrollbar-none
+             relative shadow-lg border border-white/30
+             animate-fadeInScale
+             flex flex-col rounded-none md:rounded-lg"
+      >
         <div className="md:p-10 py-10 px-6 mt-4">
           <h2 className="text-lg md:text-2xl font-bold mb-5">{thesis.title}</h2>
           <div className="mb-4 space-y-2 text-gray-700">
             <div>
               <strong>Adviser:</strong> <span>{thesis.adviser_name}</span>{" "}
             </div>
-            <div className="flex  gap-2">
+            <div className="flex gap-2">
               <strong>Panel:</strong>
               <div className="flex flex-wrap gap-2">
                 {[
@@ -76,7 +77,6 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
             </div>
 
             <div className="flex gap-2 mt-3">
-              {/* <strong>Category:</strong> */}
               <div className="flex flex-wrap gap-2">
                 {(thesis.category?.length
                   ? thesis.category
@@ -103,7 +103,7 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
               onDownload(thesis);
               onClose();
             }}
-            className="  cursor-pointer text-white bg-black px-6 py-3 rounded font-medium hover:bg-black/90  transition-colors flex items-center gap-2"
+            className="w-full md:w-auto cursor-pointer text-white bg-black px-6 py-3 rounded font-medium hover:bg-black/90 transition-colors flex items-center justify-center md:justify-start gap-2"
           >
             <Download size={16} /> Download Full PDF
           </button>

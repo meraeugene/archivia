@@ -11,7 +11,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { isValidEmail } from "@/utils/isValidEmail";
-import { Dispatch, SetStateAction } from "react";
+import { Eye, EyeOff } from "lucide-react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
 
 interface AddUserModalProps {
@@ -45,6 +46,8 @@ const AddUserModal = ({
   isLoading,
   setIsLoading,
 }: AddUserModalProps) => {
+  const [showPassword, setShowPassword] = useState(false);
+
   const handleConfirm = async () => {
     try {
       if (
@@ -55,6 +58,12 @@ const AddUserModal = ({
         !addData.email
       ) {
         toast.error("Please fill in all fields");
+        return;
+      }
+
+      // User ID must be numeric only
+      if (!/^\d+$/.test(addData.user_id)) {
+        toast.error("User ID must contain numbers only (e.g., 20250123)");
         return;
       }
 
@@ -150,13 +159,14 @@ const AddUserModal = ({
           />
         </div>
 
-        <div className="flex flex-col gap-2">
-          <label className="font-medium text-xs tracking-wide uppercase text-gray-700 ">
-            Password{" "}
+        <div className="flex flex-col gap-2 relative">
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
+            Password
           </label>
+
           <Input
             name="password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             value={addData.password}
             onChange={(e) =>
               setAddData((prev) => ({
@@ -164,8 +174,17 @@ const AddUserModal = ({
                 password: e.target.value,
               }))
             }
-            className="border-gray-300 rounded"
+            className="border-gray-300 rounded pr-10" // add padding-right for icon
           />
+
+          {/* Show/Hide Password Icon */}
+          <button
+            type="button"
+            onClick={() => setShowPassword((prev) => !prev)}
+            className="absolute cursor-pointer right-3 top-9 text-gray-500 hover:text-black transition"
+          >
+            {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+          </button>
         </div>
 
         <div className="flex flex-col gap-2">

@@ -23,10 +23,10 @@ export default function ProfileImage({
         <img
           src={imagePreview}
           alt={name}
-          className="w-full h-[340px] object-cover border-8 "
+          className="w-full h-[340px]  object-cover border-8 "
         />
       ) : (
-        <div className="w-full h-[340px] flex items-center justify-center text-white bg-black font-bold text-8xl tracking-tighter   border-8">
+        <div className="md:w-full w-[250px] h-[250px] mx-auto  md:h-[340px]  lg:h-[300px] flex items-center justify-center text-white bg-black font-bold text-8xl tracking-tighter   border-8">
           {getInitials(name)}
         </div>
       )}

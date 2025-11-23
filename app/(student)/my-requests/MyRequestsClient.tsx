@@ -45,12 +45,12 @@ export default function MyRequestsClient({
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
         <div className="relative max-w-7xl mx-auto px-6 md:py-20 py-12 text-center">
-          <h1 className="text-3xl md:text-5xl text-white font-extrabold mb-5 tracking-tight">
+          <h1 className="text-4xl md:text-5xl text-white font-extrabold mb-5 tracking-tight">
             My Requests
           </h1>
 
-          <div className="w-32 h-1 bg-white mx-auto mb-8"></div>
-          <p className="text-lg text-gray-300 max-w-xl mx-auto ">
+          <div className="w-32 h-1 bg-white mx-auto md:mb-8 mb-6"></div>
+          <p className="md:text-lg text-gray-300 max-w-xl mx-auto ">
             Track the status of your advisory requests below. You can cancel any
             pending requests at any time.
           </p>
@@ -60,7 +60,7 @@ export default function MyRequestsClient({
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto py-14 ">
+      <div className="max-w-6xl mx-auto py-14 px-4 md:px-6 xl:px-0 ">
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex gap-8"
@@ -72,7 +72,7 @@ export default function MyRequestsClient({
               className="  bg-white border  border-gray-200 shadow-lg hover:shadow-xl overflow-hidden p-6 transition-shadow  rounded-lg"
             >
               {/* Adviser Info + Status + Cancel */}
-              <div className="flex items-start justify-between mb-3">
+              <div className="flex items-start justify-between flex-wrap gap-4 mb-3">
                 <div className="flex items-center space-x-3">
                   <div className="w-9 h-9 rounded-full overflow-hidden flex items-center justify-center bg-gray-200 text-gray-600 font-bold">
                     {request.adviser_profile_picture ? (
@@ -149,11 +149,11 @@ export default function MyRequestsClient({
 
               {/* Title + Abstract */}
               <div>
-                <h4 className="font-extrabold uppercase text-lg text-gray-900 mb-2">
+                <h4 className="font-extrabold uppercase md:text-lg text-gray-900 mb-2">
                   {request.title}
                 </h4>
                 <p
-                  className={` text-gray-700 text-justify transition-all duration-300 ease-in-out overflow-hidden ${
+                  className={` text-gray-700 text-sm md:text-base text-justify transition-all duration-300 ease-in-out overflow-hidden ${
                     expanded === request.id
                       ? "line-clamp-none max-h-96"
                       : "line-clamp-3 max-h-20"
