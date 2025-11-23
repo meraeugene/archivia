@@ -143,7 +143,7 @@ const InputPanel = ({
               ></div>
 
               <textarea
-                className="relative w-full  p-3 md:p-5 border border-white/10 rounded-2xl resize-none bg-white/5 backdrop-blur-xl focus:border-white/30 focus:bg-white/10 focus:shadow-2xl focus:shadow-white/10 outline-none transition-all duration-300 text-white placeholder-gray-500"
+                className="relative w-full  p-3 md:p-5 border border-white/10 rounded-2xl resize-none bg-white/5 backdrop-blur-xl focus:border-white/30 focus:bg-white/10 focus:shadow-2xl focus:shadow-white/10 outline-none transition-all duration-300 text-white placeholder-gray-500 scrollbar-none "
                 rows={8}
                 placeholder="Describe your research topic, objectives, and any specific areas of interest or methodologies you plan to use..."
                 value={studentData.abstract}
@@ -180,7 +180,7 @@ const InputPanel = ({
           {isLoading ? (
             <>
               <div className="w-6 h-6 border-3 border-black/30 border-t-black rounded-full animate-spin"></div>
-              <span>Finding Perfect Matches...</span>
+              <span>Finding Advisers...</span>
             </>
           ) : (
             <>

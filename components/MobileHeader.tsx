@@ -29,7 +29,7 @@ const MobileHeader = ({
   return (
     <header className="sticky md:hidden top-0 z-50 bg-white border-b border-gray-100 ">
       {/* Header always visible */}
-      <div className="flex justify-between items-center py-2 px-2 relative z-50 bg-white">
+      <div className="flex justify-between items-center p-3 relative z-50 bg-white">
         {/* Logo */}
         <div className="flex items-center">
           <img src="/images/logo.png" alt="Archivia Logo" className="h-8" />
@@ -41,7 +41,7 @@ const MobileHeader = ({
         {/* Mobile Menu Button */}
         <button
           onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className="p-2 hover:bg-gray-100 rounded-md transition-colors"
+          className=" hover:bg-gray-100 rounded-md transition-colors"
           aria-label="Toggle menu"
         >
           {mobileMenuOpen ? (
@@ -63,7 +63,7 @@ const MobileHeader = ({
 
           {/* Menu panel */}
           <div
-            className="absolute top-[55px]  left-0 right-0 bg-white border-t z-50 animate-in fade-in slide-in-from-top-2 duration-300"
+            className="absolute top-[56px]  left-0 right-0 bg-white  z-50 animate-in fade-in slide-in-from-top-2 duration-300"
             onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
           >
             {/* User info */}
@@ -138,7 +138,7 @@ const MobileHeader = ({
                 <button
                   type="submit"
                   disabled={isLoggingOut}
-                  className="flex items-center space-x-2 w-full text-left hover:bg-gray-100 disabled:opacity-50"
+                  className="flex items-center space-x-2 w-full text-left hover:bg-gray-100 disabled:opacity-50 text-gray-800"
                 >
                   {isLoggingOut ? (
                     <div className="flex items-center space-x-2">
