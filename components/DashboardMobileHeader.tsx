@@ -60,18 +60,21 @@ MobileHeaderProps) => {
               {/* Navigation links */}
               {adviserNavLinks.map((link, index) => {
                 const isActive = pathname === link.href;
+                const Icon = link.icon;
+
                 return (
                   <Link
                     key={index}
                     prefetch
                     href={link.href}
-                    className={`block py-2 ${
+                    className={`py-2  flex  items-center ${
                       isActive
                         ? "font-semibold text-black"
                         : "text-gray-800 hover:text-black"
                     }`}
                     onClick={() => setMobileMenuOpen(false)}
                   >
+                    <Icon className="h-5 w-5 mr-3" />
                     {link.label}
                   </Link>
                 );

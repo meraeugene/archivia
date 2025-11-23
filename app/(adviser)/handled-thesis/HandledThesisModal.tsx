@@ -22,16 +22,24 @@ const HandledThesisModal: React.FC<HandledThesisModalProps> = ({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center p-5 bg-black/20 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center  bg-black/20 backdrop-blur-sm md:p-5"
     >
+      {/* Fixed Close Button */}
+      <button
+        onClick={onClose}
+        className="fixed top-5 right-5 z-50 cursor-pointer text-gray-600 hover:text-black transition-colors lg:hidden "
+      >
+        <X size={24} />
+      </button>
+
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white/90 animate-fadeInScale backdrop-blur-md rounded-lg max-w-5xl w-full max-h-[80vh] overflow-y-auto relative shadow-lg border border-white/30"
+        className="bg-white/90 animate-fadeInScale backdrop-blur-md rounded-lg max-w-5xl w-full md:h-[80vh] h-full scrollbar-none overflow-y-auto relative shadow-lg border border-white/30"
       >
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute cursor-pointer top-5 right-5 text-gray-600 hover:text-black transition-colors"
+          className="absolute cursor-pointer top-5 right-5 text-gray-600 hover:text-black transition-colors md:hidden lg:block"
         >
           <X size={24} />
         </button>

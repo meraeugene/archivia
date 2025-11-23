@@ -3,6 +3,7 @@
 import { HandledThesis } from "@/types/handledThesis";
 import { useState } from "react";
 import HandledThesisModal from "./HandledThesisModal";
+import DashboardMobileHeader from "@/components/DashboardMobileHeader";
 
 export default function HandledThesisClient({
   handledTheses,
@@ -48,18 +49,20 @@ export default function HandledThesisClient({
 
   return (
     <main className="flex-1">
-      <div className="sticky shadow-xs top-0 z-40 px-8 py-4  bg-white ">
+      <DashboardMobileHeader headerTitle="Handled Theses" />
+
+      <div className="sticky shadow-xs top-0 z-40 px-8 py-4  bg-white hidden md:block ">
         <h1 className="text-lg font-bold text-gray-900">Handled Theses</h1>
       </div>
 
       {handledTheses.length === 0 ? (
-        <div className="flex items-center justify-center p-8">
+        <div className="flex items-center justify-center md:p-8 px-4 py-6">
           <p className="text-gray-500 text-center">
             You currently have no handled theses.
           </p>
         </div>
       ) : (
-        <div className="columns-1 xl:columns-2 gap-6 p-8  space-y-6">
+        <div className="columns-1 xl:columns-2 gap-6 md:p-8 px-4 py-6  space-y-6">
           {handledTheses.map((thesis) => (
             <div
               key={thesis.thesis_id}

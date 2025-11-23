@@ -199,7 +199,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
 
               {/* Dropdown list */}
               {showDropdown && (
-                <div className="absolute z-50 mt-2 w-full max-h-64 overflow-y-auto bg-white border border-gray-200 rounded-xl shadow-lg animate-in fade-in slide-in-from-top-1">
+                <div className="absolute z-50 mt-2 w-full max-h-64 overflow-y-auto bg-white border border-gray-200 scrollbar-none rounded-xl shadow-lg animate-in fade-in slide-in-from-top-1">
                   {referredAdvisers?.length === 0 ? (
                     <div className="p-3 text-gray-500 text-sm text-center">
                       No advisers available
@@ -265,7 +265,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                   value={feedback}
                   onChange={(e) => setFeedback(e.target.value)}
                   placeholder={content.placeholder}
-                  className="w-full p-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm"
+                  className="w-full p-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm scrollbar-none"
                   rows={3}
                   maxLength={300}
                 />

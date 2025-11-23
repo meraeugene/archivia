@@ -117,7 +117,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
             name="bio"
             value={formData.bio}
             onChange={handleChange}
-            rows={5}
+            rows={10}
           />
 
           <TextAreaField
@@ -125,7 +125,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
             name="research_interest"
             value={formData.research_interest}
             onChange={handleChange}
-            rows={2}
+            rows={5}
           />
         </div>
 
