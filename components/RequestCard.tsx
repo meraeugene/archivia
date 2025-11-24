@@ -179,7 +179,7 @@ const RequestCard = ({
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "reserve")}
-            className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-3 md:py-2 rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
+            className="flex-1 cursor-pointer bg-gray-900 text-white px-4 py-3 lg:py-2  rounded-md text-sm font-medium hover:bg-gray-800 transition-colors flex items-center justify-center"
           >
             <CalendarClock className="h-4 w-4 mr-2" />
             Reserve
@@ -188,7 +188,7 @@ const RequestCard = ({
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "refer")}
-            className="flex-1 shadow-md hover:shadow-lg  cursor-pointer bg-white text-gray-700 border border-gray-100 px-4 py-3 md:py-2 rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
+            className="flex-1 shadow-md hover:shadow-lg  cursor-pointer bg-white text-gray-700 border border-gray-100 px-4 py-3 lg:py-2  rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
           >
             <CornerUpRight className="h-4 w-4 mr-2" />
             Refer Adviser

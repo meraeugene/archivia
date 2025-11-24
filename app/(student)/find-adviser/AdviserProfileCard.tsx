@@ -43,7 +43,7 @@ const AdviserProfileCard = ({
       onClick={onClose}
     >
       <div
-        className={`bg-black border border-white/10  max-w-7xl w-full h-full md:max-h-[95vh] overflow-y-auto shadow-2xl shadow-white/5 transition-all duration-500 scrollbar-none ${
+        className={`bg-black border border-white/10  max-w-7xl w-full h-full md:max-h-[95vh] overflow-y-auto shadow-2xl shadow-white/5 transition-all duration-500 scrollbar-none  ${
           mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"
         }`}
         onClick={(e) => e.stopPropagation()}

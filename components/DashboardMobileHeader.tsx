@@ -1,26 +1,27 @@
 "use client";
 
 import { Menu, X } from "lucide-react";
-// import { logout } from "@/actions/auth/logout";
-import { useState } from "react";
+import { logout } from "@/actions/auth/logout";
+import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
-// import { CurrentUser } from "@/types/currentUser";
 import { adviserNavLinks } from "@/app/(adviser)/FacultySidebar";
 import Link from "next/link";
 
 interface MobileHeaderProps {
   headerTitle: string;
-  // currentUser: CurrentUser | null;
 }
 
-const DashboardMobileHeader = ({
-  headerTitle,
-}: // currentUser,
-MobileHeaderProps) => {
-  // const [isLoggingOut, setIsLoggingOut] = useState(false);
+const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-
   const pathname = usePathname();
+
+  const [isPending, startTransition] = useTransition();
+
+  const handleLogout = async () => {
+    startTransition(async () => {
+      await logout();
+    });
+  };
 
   return (
     <header className="px-4 py-2 md:px-8 sticky lg:hidden top-0 z-50 bg-white border-b border-gray-100 ">
@@ -62,6 +63,28 @@ MobileHeaderProps) => {
                 const isActive = pathname === link.href;
                 const Icon = link.icon;
 
+                if (link.label === "Logout") {
+                  return (
+                    <button
+                      key="logout"
+                      onClick={handleLogout}
+                      disabled={isPending}
+                      className={`w-full flex cursor-pointer items-center py-2 transition-colors
+                    text-gray-800 hover:text-black `}
+                    >
+                      <Icon className="h-5 w-5 mr-3" />
+                      {isPending ? (
+                        <div className="flex items-center space-x-2">
+                          <div className="h-5 w-5 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
+                          <span>Logging out...</span>
+                        </div>
+                      ) : (
+                        link.label
+                      )}
+                    </button>
+                  );
+                }
+
                 return (
                   <Link
                     key={index}
@@ -80,33 +103,6 @@ MobileHeaderProps) => {
                 );
               })}
             </div>
-
-            {/* Logout button */}
-            {/* {currentUser && (
-              <form
-                onSubmit={async (e) => {
-                  e.preventDefault();
-                  setIsLoggingOut(true);
-                  await logout(); // call server action
-                }}
-                className="py-4 px-4 border-t shadow-2xl"
-              >
-                <button
-                  type="submit"
-                  disabled={isLoggingOut}
-                  className="flex items-center space-x-2 w-full text-left hover:bg-gray-100 disabled:opacity-50"
-                >
-                  {isLoggingOut ? (
-                    <div className="flex items-center space-x-2">
-                      <div className="h-5 w-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                      <span>Logging out...</span>
-                    </div>
-                  ) : (
-                    <div>Logout</div>
-                  )}
-                </button>
-              </form>
-            )} */}
           </div>
         </div>
       )}

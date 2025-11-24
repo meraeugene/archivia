@@ -113,12 +113,12 @@ export default async function FacultyDashboard() {
               icon={<Users className="h-6 w-6" />}
             />
 
-            <QuickActionsCard
+            {/* <QuickActionsCard
               title="Thesis Approval"
               link="/thesis-approval"
               desc="Approve or return student thesis submissions"
               icon={<FileCheck className="h-6 w-6" />}
-            />
+            /> */}
 
             <QuickActionsCard
               title="Handled Thesis"

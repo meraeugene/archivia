@@ -32,10 +32,15 @@ export function useAdvisoryRequests() {
   const openModal = (
     request: Request,
     type: "accept" | "reserve" | "refer" | "returned" | "authorize"
-  ) => setModalState({ open: true, type, request });
+  ) => {
+    document.body.classList.add("modal-open");
+    setModalState({ open: true, type, request });
+  };
 
-  const closeModal = () =>
+  const closeModal = () => {
+    document.body.classList.remove("modal-open");
     setModalState({ open: false, type: "accept", request: null });
+  };
 
   const handleAction = async (
     title: string,
