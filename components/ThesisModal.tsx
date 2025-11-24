@@ -22,12 +22,11 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
   return (
     <div
       onClick={onClose}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm md:px-6 "
     >
-      {/* Fixed Close Button */}
       <button
         onClick={onClose}
-        className="fixed top-5 right-5 z-50 cursor-pointer text-gray-600 hover:text-black transition-colors"
+        className="fixed  top-5 right-5 z-5 md:hidden cursor-pointer text-gray-600 hover:text-black transition-colors"
       >
         <X size={24} />
       </button>
@@ -41,6 +40,13 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
              animate-fadeInScale
              flex flex-col rounded-none md:rounded-lg"
       >
+        <button
+          onClick={onClose}
+          className="fixed hidden md:block  top-5 right-5 z-50 cursor-pointer text-gray-600 hover:text-black transition-colors"
+        >
+          <X size={24} />
+        </button>
+
         <div className="md:p-10 py-10 px-6 mt-4">
           <h2 className="text-lg md:text-2xl font-bold mb-5">{thesis.title}</h2>
           <div className="mb-4 space-y-2 text-gray-700">
