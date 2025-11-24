@@ -7,7 +7,7 @@ import Link from "next/link";
 const Footer = () => {
   return (
     <footer className="w-full  border-t border-white/[0.08] pt-8 pb-8 relative z-20">
-      <div className="max-w-6xl mx-auto px-6 xl:px-0">
+      <div className="max-w-6xl mx-auto px-3 md:px-6 xl:px-0">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-12 md:gap-8 mb-8">
           {/* Brand Column */}
           <div className="col-span-1 md:col-span-4 lg:col-span-5 pr-0 md:pr-12">
