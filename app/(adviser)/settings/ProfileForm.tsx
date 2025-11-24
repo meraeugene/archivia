@@ -7,6 +7,8 @@ import { InputField } from "./InputField";
 import { TextAreaField } from "./TextAreaField";
 import { getInitials } from "@/utils/getInitials";
 import { ProfileFormFields } from "@/data/profileFormFields";
+import { ResearchInterestSelector } from "@/app/(adviser)/settings/ResearchInterestSelector";
+import { HandledSubjectsSelector } from "./HandledSubjectsSelector";
 
 interface ProfileFormProps {
   currentUser: CurrentUser | null;
@@ -120,16 +122,38 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
             rows={10}
           />
 
-          <TextAreaField
+          {/* <TextAreaField
             label="Research Interest (comma separated)"
             name="research_interest"
             value={formData.research_interest}
             onChange={handleChange}
             rows={5}
+          /> */}
+        </div>
+
+        <div className="mt-6 xl:w-1/2">
+          <ResearchInterestSelector
+            value={formData.research_interest}
+            handleChange={(name, value) =>
+              handleChange({
+                target: { name, value },
+              } as React.ChangeEvent<HTMLInputElement>)
+            }
           />
         </div>
 
-        <div className="mt-6">
+        <div className="mt-6 xl:w-1/2">
+          <HandledSubjectsSelector
+            value={formData.handled_subjects}
+            handleChange={(name, value) =>
+              handleChange({
+                target: { name, value },
+              } as React.ChangeEvent<HTMLInputElement>)
+            }
+          />
+        </div>
+
+        {/* <div className="mt-6">
           <InputField
             label="Handled Subjects (comma separated)"
             name="handled_subjects"
@@ -137,7 +161,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
             onChange={handleChange}
             placeholder="e.g. Mathematics, Physics, Computer Science"
           />
-        </div>
+        </div> */}
 
         {/* Buttons */}
         <div className="flex justify-end space-x-3 mt-8">

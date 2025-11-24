@@ -19,6 +19,13 @@ type AdviserFormState = {
   profile_picture: string | File;
 };
 
+interface SyntheticInputEvent {
+  target: {
+    name: string;
+    value: string;
+  };
+}
+
 export function useAdviserProfileEditor(profile: CurrentUser) {
   const [isUploading, setIsUploading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -43,7 +50,7 @@ export function useAdviserProfileEditor(profile: CurrentUser) {
 
   // Handle input & textarea changes
   const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement> | SyntheticInputEvent
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
