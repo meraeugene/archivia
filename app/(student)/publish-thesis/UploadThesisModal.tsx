@@ -54,7 +54,7 @@ const UploadThesisModal = ({
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-start md:items-center justify-center  bg-black/20 backdrop-blur-sm scrollbar-none  overflow-auto">
-        <div className="bg-white   md:h-[95vh] overflow-auto  md:p-8 p-4 max-w-4xl w-full md:w-fit lg:w-full shadow-2xl border border-gray-200 ">
+        <div className="bg-white    md:h-[95vh] overflow-auto  md:p-8 p-4 max-w-4xl w-full md:w-fit lg:w-full shadow-2xl border border-gray-200 ">
           <div className="mb-8 flex flex-col items-center text-center">
             <div className="gap-3 mb-2 flex flex-col items-center">
               <div className="w-12 h-12 bg-black rounded-2xl flex items-center justify-center">

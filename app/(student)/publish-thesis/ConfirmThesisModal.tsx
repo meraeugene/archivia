@@ -24,7 +24,7 @@ const ConfirmThesisModal: React.FC<ConfirmThesisModalProps> = ({
 
   return (
     <div className="fixed  inset-0 z-50 flex items-start md:items-center justify-center overflow-auto bg-black/30 backdrop-blur-sm  scrollbar-none md:p-8">
-      <div className="bg-white md:h-[95vh] overflow-auto  w-full   max-w-4xl h-full shadow-2xl border border-gray-200 rounded-lg flex flex-col">
+      <div className="bg-white md:h-[90vh] rounded-lg  overflow-auto  w-full   max-w-4xl h-full shadow-2xl border border-gray-200  flex flex-col">
         {/* Sticky Header */}
         <div className="sticky top-0 z-10 bg-white p-4 md:p-6 border-b border-gray-200 text-center">
           <h3 className="text-2xl md:text-3xl font-bold text-black">

@@ -53,12 +53,10 @@ const InputPanel = ({
             </div>
 
             <h1
-              className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-b from-white via-white to-gray-500 bg-clip-text text-transparent tracking-tight"
+              className="text-6xl lg:text-7xl    font-bold mb-6 bg-gradient-to-b from-white via-white to-gray-500 bg-clip-text text-transparent tracking-tight"
               style={{ lineHeight: "1.1" }}
             >
-              Find Your
-              <br />
-              Adviser
+              Find Your Adviser
             </h1>
             <p className="text-gray-400 text-lg md:text-xl max-w-lg mx-auto font-light">
               Match with research advisers based on your research interests and

@@ -321,7 +321,7 @@ const UploadThesisClient = ({
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/60 to-transparent translate-x-[-200%] group-hover/btn:translate-x-[200%] transition-transform duration-1000"></div>
               )}
 
-              <span className="relative flex items-center gap-4">
+              <span className="relative flex items-center justify-center gap-4">
                 {isPending ? (
                   <>
                     <div className="h-7 w-7 border-[3px] border-black border-t-transparent rounded-full animate-spin"></div>
