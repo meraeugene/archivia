@@ -33,7 +33,7 @@ const ConfirmModal = ({ adviser, onCancel, onConfirm, isPending }: Props) => {
   };
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 ">
-      <div className="bg-white rounded-2xl p-8 max-w-lg w-full shadow-2xl border border-gray-200 animate-fadeInScale backdrop-blur-sm">
+      <div className="bg-white rounded-2xl p-4 md:p-8 max-w-lg w-full shadow-2xl border border-gray-200 animate-fadeInScale backdrop-blur-sm">
         <div className="text-center mb-6">
           <div className="w-16 h-16 bg-black rounded-2xl flex items-center justify-center mx-auto mb-4">
             <ShieldCheck className="text-white" size={28} />

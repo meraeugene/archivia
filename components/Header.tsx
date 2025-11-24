@@ -157,7 +157,7 @@ export default function ResponsiveHeader({
                     <img
                       src={currentUser.profile_picture}
                       alt={currentUser.full_name}
-                      className="object-cover rounded-full w-9 h-9"
+                      className="object-cover rounded-full w-9 h-9 border"
                     />
                   ) : (
                     <div className="w-9 h-9 rounded-full flex items-center justify-center bg-black text-white font-bold">

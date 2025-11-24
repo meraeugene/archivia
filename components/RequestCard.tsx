@@ -41,7 +41,7 @@ const RequestCard = ({
               <img
                 src={request.student_profile_picture}
                 alt={request.student_name}
-                className="w-full h-full object-cover"
+                className="w-full h-full object-cover border"
               />
             ) : (
               getInitials(request?.student_name)
