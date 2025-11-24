@@ -10,7 +10,7 @@ export default async function page() {
     <main className="flex-1">
       <DashboardMobileHeader headerTitle="Settings" />
 
-      <div className="sticky top-0 z-40 shadow-xs px-8 py-4  bg-white hidden md:block">
+      <div className="sticky top-0 z-40 shadow-xs px-8 py-4  bg-white hidden lg:block">
         <h1 className="text-lg font-bold text-gray-900">Settings</h1>
       </div>
 

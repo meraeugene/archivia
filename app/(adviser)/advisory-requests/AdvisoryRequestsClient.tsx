@@ -30,7 +30,7 @@ export default function AdvisoryRequestsClient({
     <main className="flex-1">
       <DashboardMobileHeader headerTitle="Advisory Requests" />
 
-      <div className="sticky hidden md:block shadow-xs top-0 z-40 px-8 py-4 bg-white ">
+      <div className="sticky hidden lg:block shadow-xs top-0 z-40 px-8 py-4 bg-white ">
         <h1 className="text-lg font-bold text-gray-900">Advisory Requests</h1>
       </div>
 

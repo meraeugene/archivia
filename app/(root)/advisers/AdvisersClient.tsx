@@ -55,7 +55,7 @@ const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
         {/* Grid pattern overlay */}
         <div className="absolute inset-0   bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
 
-        <div className="grid max-w-7xl mx-auto  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8  py-12 px-4 md:px-6 xl:px-0 ">
+        <div className="grid max-w-7xl mx-auto  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-8  md:py-12 px-4 md:px-6 xl:px-0 ">
           {advisers.map((adviser) => (
             <div
               key={adviser.id}

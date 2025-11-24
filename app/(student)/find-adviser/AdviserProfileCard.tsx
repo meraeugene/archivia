@@ -200,7 +200,7 @@ const AdviserProfileCard = ({
               <button
                 onClick={onConnect}
                 disabled={adviser.already_requested || adviser.is_full} // disable if already requested or full
-                className={`group/btn w-full py-5 font-bold text-lg rounded-2xl transition-all duration-500 shadow-2xl relative overflow-hidden ${
+                className={`group/btn w-full py-3 md:py-5 font-bold text-lg rounded-2xl transition-all duration-500 shadow-2xl relative overflow-hidden ${
                   adviser.already_requested
                     ? "backdrop-blur-xl bg-green-500/20 border border-green-500/30 text-green-400 cursor-not-allowed"
                     : adviser.is_full

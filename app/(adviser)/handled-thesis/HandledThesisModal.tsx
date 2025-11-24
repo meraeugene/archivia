@@ -27,7 +27,7 @@ const HandledThesisModal: React.FC<HandledThesisModalProps> = ({
       {/* Fixed Close Button */}
       <button
         onClick={onClose}
-        className="fixed top-5 right-5 z-50 cursor-pointer text-gray-600 hover:text-black transition-colors lg:hidden "
+        className="fixed top-5 right-5 z-50 cursor-pointer text-gray-600 hover:text-black transition-colors md:hidden "
       >
         <X size={24} />
       </button>
@@ -39,13 +39,13 @@ const HandledThesisModal: React.FC<HandledThesisModalProps> = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute cursor-pointer top-5 right-5 text-gray-600 hover:text-black transition-colors md:hidden lg:block"
+          className="absolute cursor-pointer top-5 right-5 text-gray-600 hover:text-black transition-colors hidden  md:block"
         >
           <X size={24} />
         </button>
 
         <div className="p-10 mt-4">
-          <h2 className="text-2xl font-bold mb-5">{thesis.title}</h2>
+          <h2 className="text-xl md:text-2xl font-bold mb-5">{thesis.title}</h2>
 
           <div className="mb-4 space-y-2 text-gray-700">
             <div>

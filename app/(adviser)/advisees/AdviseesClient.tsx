@@ -13,7 +13,7 @@ export default function AdviseesClient({ requests }: Props) {
     <main className="flex-1">
       <DashboardMobileHeader headerTitle="Advisees" />
 
-      <div className="sticky  shadow-xs top-0 z-40 px-8 py-4  bg-white hidden md:block">
+      <div className="sticky  shadow-xs top-0 z-40 px-8 py-4  bg-white hidden lg:block">
         <h1 className="text-lg font-bold text-gray-900">Advisees</h1>
       </div>
 

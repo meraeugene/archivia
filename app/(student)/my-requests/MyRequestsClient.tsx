@@ -44,23 +44,24 @@ export default function MyRequestsClient({
     <main className=" mx-auto bg-gray-50 relative ">
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-r from-black via-gray-900 to-black"></div>
-        <div className="relative max-w-7xl mx-auto px-6 md:py-20 py-12 text-center">
+        <div className="relative max-w-7xl mx-auto px-12 md:py-20 py-12 text-center">
           <h1 className="text-4xl md:text-5xl text-white font-extrabold mb-5 tracking-tight">
             My Requests
           </h1>
 
           <div className="w-32 h-1 bg-white mx-auto md:mb-8 mb-6"></div>
           <p className="md:text-lg text-gray-300 max-w-xl mx-auto ">
-            Track the status of your advisory requests below. You can cancel any
-            pending requests at any time.
+            Track the status of your advisory requests below.
           </p>
+          {/*  You can cancel any
+            pending requests at any time. */}
         </div>
 
         {/* Grid pattern overlay */}
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]"></div>
       </div>
 
-      <div className="max-w-6xl mx-auto py-14 px-4 md:px-6 xl:px-0 ">
+      <div className="max-w-6xl mx-auto md:py-14 px-4 py-8 md:px-6 xl:px-0 ">
         <Masonry
           breakpointCols={breakpointColumnsObj}
           className="flex gap-8"

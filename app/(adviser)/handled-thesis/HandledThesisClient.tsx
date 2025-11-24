@@ -51,7 +51,7 @@ export default function HandledThesisClient({
     <main className="flex-1">
       <DashboardMobileHeader headerTitle="Handled Theses" />
 
-      <div className="sticky shadow-xs top-0 z-40 px-8 py-4  bg-white hidden md:block ">
+      <div className="sticky shadow-xs top-0 z-40 px-8 py-4  bg-white hidden lg:block ">
         <h1 className="text-lg font-bold text-gray-900">Handled Theses</h1>
       </div>
 
@@ -108,7 +108,7 @@ export default function HandledThesisClient({
                 ) : null}
 
                 {thesis.abstract && (
-                  <p className="mt-3 text-gray-700  line-clamp-3">
+                  <p className="mt-3 text-gray-700 text-sm md:text-base  line-clamp-5">
                     {thesis.abstract}
                   </p>
                 )}

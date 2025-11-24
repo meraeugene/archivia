@@ -1,14 +1,14 @@
 export default function Loading() {
   return (
     <main className="flex-1">
-      <div className="px-8 py-4 border-b bg-white border-gray-200">
+      <div className="md:px-8 px-4 py-6  md:py-4 border-b bg-white border-gray-200">
         <h1 className="text-lg font-bold text-gray-900">Dashboard</h1>
       </div>
 
-      <div className="p-8 space-y-12">
+      <div className="p-8 px-4 py-6 md:p-8 space-y-12">
         {/* Statistics Overview */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-5 gap-6">
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}

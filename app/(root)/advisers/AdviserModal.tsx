@@ -65,9 +65,9 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
           </div>
 
           {/* Right Side - Content */}
-          <div className="md:w-[30%] p-6 pr-0 overflow-y-auto">
+          <div className="md:w-[30%] p-6 md:pr-0 overflow-y-auto">
             <div className="mb-6">
-              <h3 className="text-3xl font-light text-gray-900 mb-2">
+              <h3 className="text-2xl md:text-3xl font-light text-gray-900 mb-2">
                 {selectedAdviser.full_name}
               </h3>
               {(selectedAdviser.prefix || selectedAdviser.suffix) && (

@@ -58,7 +58,7 @@ const InputPanel = ({
             >
               Find Your
               <br />
-              Perfect Adviser
+              Adviser
             </h1>
             <p className="text-gray-400 text-lg md:text-xl max-w-lg mx-auto font-light">
               Match with research advisers based on your research interests and

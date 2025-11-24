@@ -23,7 +23,7 @@ MobileHeaderProps) => {
   const pathname = usePathname();
 
   return (
-    <header className="px-4 py-2 sticky md:hidden top-0 z-50 bg-white border-b border-gray-100 ">
+    <header className="px-4 py-2 md:px-8 sticky lg:hidden top-0 z-50 bg-white border-b border-gray-100 ">
       {/* Header always visible */}
       <div className="flex justify-between items-center py-2  relative z-50 bg-white">
         <div className="flex items-center font-bold">{headerTitle}</div>
@@ -44,7 +44,7 @@ MobileHeaderProps) => {
 
       {/* Mobile Menu + Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40">
+        <div className="lg:hidden fixed inset-0 z-40">
           {/* Blur overlay only behind menu panel */}
           <div
             className="absolute top-[4rem] bottom-0 left-0 right-0 bg-black/10 backdrop-blur-xs"
@@ -56,7 +56,7 @@ MobileHeaderProps) => {
             className="absolute top-[55px]  left-0 right-0 bg-white border-t z-50 animate-in fade-in slide-in-from-top-2 duration-300"
             onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
           >
-            <div className="flex flex-col  p-4 py-2">
+            <div className="flex flex-col  p-4 py-2 ">
               {/* Navigation links */}
               {adviserNavLinks.map((link, index) => {
                 const isActive = pathname === link.href;

@@ -109,7 +109,7 @@ const UploadThesisClient = ({
           </p>
 
           <div
-            className={`mt-10 flex items-center justify-center gap-12 text-sm text-gray-500 transition-all duration-1000 delay-300 ${
+            className={`mt-10 flex items-center justify-center gap-8 md:gap-12 text-sm text-gray-500 transition-all duration-1000 delay-300 ${
               mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >

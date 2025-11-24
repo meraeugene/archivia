@@ -42,10 +42,10 @@ export default async function FacultyDashboard() {
 
   return (
     <main className="flex-1 ">
-      <DashboardMobileHeader headerTitle="Dashboard" />
+      <DashboardMobileHeader headerTitle="Faculty Dashboard" />
 
-      <div className="sticky hidden md:block top-0 z-40 md:px-8 p-4 shadow-xs bg-white ">
-        <h1 className="text-lg font-bold text-gray-900">Dashboard</h1>
+      <div className="sticky hidden lg:block top-0 z-40 md:px-8 p-4 shadow-xs bg-white ">
+        <h1 className="text-lg font-bold text-gray-900">Faculty Dashboard</h1>
       </div>
 
       <div className="px-4 py-6 md:p-8 ">
