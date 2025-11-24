@@ -25,14 +25,14 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
     >
       <button
         onClick={closeModal}
-        className="absolute top-14 right-8 z-50 cursor-pointer 
+        className="absolute top-20 right-8 z-50 cursor-pointer 
       text-gray-600 hover:text-black xl:hidden transition-colors"
       >
         <X size={24} />
       </button>
 
       <div
-        className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[90vh] relative animate-fadeInScale scrollbar-none"
+        className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[85vh] relative animate-fadeInScale scrollbar-none"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
@@ -43,9 +43,23 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
           <X className="w-8 h-8" />
         </button>
 
-        <div className="flex flex-col md:flex-row  h-full">
-          {/* Left Side - Large Profile Picture */}
-          <div className="md:w-[40%] md:h-auto relative overflow-hidden">
+        <div
+          className="    grid grid-cols-1
+  md:grid-cols-10
+  lg:grid-cols-12
+  xl:grid-cols-12
+  2xl:grid-cols-13
+  h-full"
+        >
+          {/* Left Side (40%) */}
+          <div
+            className="  md:col-span-10
+      lg:col-span-7
+      xl:col-span-6
+      2xl:col-span-5
+      relative overflow-hidden
+      order-1"
+          >
             {selectedAdviser.profile_picture ? (
               <img
                 src={selectedAdviser.profile_picture}
@@ -64,17 +78,26 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
             <div className="absolute inset-0 bg-gradient-to-r from-transparent to-black/10"></div>
           </div>
 
-          {/* Right Side - Content */}
-          <div className="md:w-[30%] p-6 md:pr-0 overflow-y-auto">
+          {/* Right Content  */}
+          <div
+            className="  md:col-span-10
+      lg:col-span-5
+      xl:col-span-6
+      2xl:col-span-4
+      p-6 overflow-y-auto
+      order-2"
+          >
             <div className="mb-6">
               <h3 className="text-2xl md:text-3xl font-light text-gray-900 mb-2">
                 {selectedAdviser.full_name}
               </h3>
+
               {(selectedAdviser.prefix || selectedAdviser.suffix) && (
                 <p className="text-sm text-gray-500 mb-2 font-light tracking-wider uppercase">
                   {selectedAdviser.prefix} {selectedAdviser.suffix}
                 </p>
               )}
+
               <p className="text-gray-700 font-medium mb-4">
                 {selectedAdviser.position}
               </p>
@@ -100,6 +123,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
               </div>
             )}
 
+            {/* Research Interests */}
             {selectedAdviser.research_interest && (
               <div className="mb-8">
                 <h4 className="text-gray-900 text-sm font-medium mb-4 uppercase tracking-wider flex items-center">
@@ -112,7 +136,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
                     .map((spec, idx) => (
                       <div
                         key={idx}
-                        className="bg-gray-800 text-white w-fit  border text-sm px-4 py-3 rounded border-l-4 border-l-blue-200  transform hover:translateX-1 transition-transform duration-200"
+                        className="bg-gray-800 text-white w-fit border text-sm px-4 py-3 rounded border-l-4 border-l-blue-200 transform hover:translate-x-1 transition-transform duration-200"
                       >
                         {spec.trim()}
                       </div>
@@ -135,7 +159,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
                       .map((spec, idx) => (
                         <div
                           key={idx}
-                          className="bg-gray-800 text-white w-fit  border text-sm px-4 py-3 rounded border-l-4 border-l-blue-200  transform hover:translateX-1 transition-transform duration-200"
+                          className="bg-gray-800 text-white w-fit border text-sm px-4 py-3 rounded border-l-4 border-l-blue-200 transform hover:translate-x-1 transition-transform duration-200"
                         >
                           {spec.trim()}
                         </div>
@@ -151,6 +175,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
                   <LinkIcon className="w-4 h-4 mr-2" />
                   ORCID
                 </h4>
+
                 {selectedAdviser.orcid === "To be provided" ? (
                   <span>To be provided</span>
                 ) : (
@@ -168,7 +193,18 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
           </div>
 
           {/* Biography */}
-          <div className="md:w-[30%] p-6 pt-2 md:pb-6  md:pt-24 overflow-y-auto">
+          <div
+            className="
+      md:col-span-10        
+      lg:col-span-12        
+      xl:col-span-12        
+      2xl:col-span-4
+      p-6 pt-2 md:pt-8 md:pb-6 overflow-y-auto
+      
+      order-3             
+      xl:order-3           
+    "
+          >
             {selectedAdviser.bio && (
               <div>
                 <h4 className="text-gray-900 text-sm font-medium mb-4 uppercase tracking-wider flex items-center">
