@@ -75,8 +75,13 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
                 <div className="flex items-center gap-2">
                   <Users className="h-4 w-4 text-black" />
                   <span className="text-lg font-bold text-black">
-                    {adviser.total_accepted} / {adviser.max_limit || 0}
+                    {" "}
+                    {adviser.total_accepted}{" "}
+                    {adviser.max_limit && adviser.max_limit > 0
+                      ? ` / ${adviser.max_limit}`
+                      : ""}{" "}
                   </span>
+
                   <span className="text-xs text-gray-600 uppercase tracking-wider">
                     advisees
                   </span>
