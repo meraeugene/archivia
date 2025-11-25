@@ -23,6 +23,19 @@ export async function updateAdviserProfile(formData: {
 
   const supabase = await createClient();
 
+  // Check if email is already used by another user
+  const { data: existingUser } = await supabase
+    .from("user_profiles")
+    .select("user_id")
+    .eq("email", formData.email)
+    .neq("user_id", session.sub)
+    .single();
+
+  if (existingUser) {
+    return { error: "Email is already registered to another user." };
+  }
+
+  // Proceed to update profile
   const { error } = await supabase
     .from("user_profiles")
     .update({
@@ -37,7 +50,7 @@ export async function updateAdviserProfile(formData: {
       research_interest: formData.research_interest,
       profile_picture: formData.profile_picture,
     })
-    .eq("user_id", session?.sub);
+    .eq("user_id", session.sub);
 
   if (error) {
     console.error("Error updating profile:", error.message);
@@ -45,4 +58,5 @@ export async function updateAdviserProfile(formData: {
   }
 
   revalidatePath("/settings");
+  return { success: true };
 }

@@ -7,6 +7,7 @@ import { Thesis } from "@/types/thesis";
 import ThesisModal from "@/components/ThesisModal";
 import { toggleBookmark } from "@/actions/common/toggleBookmark";
 import NoBookmarks from "./NoBookmarks";
+import GridOverlay from "@/components/GridOverlay";
 
 interface BookmarksClientProps {
   bookmarks: Thesis[];
@@ -72,8 +73,7 @@ export default function BookmarksClient({
         <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]"></div>
       </div>
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0  bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
+      <GridOverlay />
 
       <div className="max-w-6xl mx-auto px-4 py-8 md:px-6 xl:px-0 md:py-14 grid grid-cols-1 lg:grid-cols-2 gap-8 ">
         {bookmarks.map((thesis) => (

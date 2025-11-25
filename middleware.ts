@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import { verifyToken } from "@/lib/jwt";
 import { createClient } from "./utils/supabase/server";
 
-const PUBLIC_PATHS = ["/auth/login"];
+const PUBLIC_PATHS = ["/auth/login", "/auth/forgot-password"];
 const PROTECTED_PATHS = [
   // root
   "/",

@@ -6,6 +6,14 @@ import { useAdvisoryRequests } from "@/hooks/useAdvisoryRequests";
 import ConfirmationModal from "../../../components/ConfirmationModal";
 import { ReferredAdviser } from "@/types/referredAdvisers";
 import DashboardMobileHeader from "@/components/DashboardMobileHeader";
+import Masonry from "react-masonry-css";
+
+const breakpointColumnsObj = {
+  default: 3,
+  768: 1,
+  1024: 1,
+  1440: 2,
+};
 
 export default function AdvisoryRequestsClient({
   requests,
@@ -42,7 +50,11 @@ export default function AdvisoryRequestsClient({
         </div>
       )}
 
-      <div className="grid gap-6  xl:grid-cols-2 2xl:grid-cols-3 px-4 py-6 md:p-8">
+      <Masonry
+        breakpointCols={breakpointColumnsObj}
+        className="flex gap-8 px-4 py-6 md:p-8"
+        columnClassName="space-y-8"
+      >
         {requests.map((request) => (
           <RequestCard
             key={request.id}
@@ -53,7 +65,7 @@ export default function AdvisoryRequestsClient({
             handleOpenModal={openModal}
           />
         ))}
-      </div>
+      </Masonry>
 
       {/* Modal */}
       <ConfirmationModal

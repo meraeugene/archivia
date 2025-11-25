@@ -19,6 +19,7 @@ import {
   SelectItem,
 } from "@/components/ui/select";
 import SearchLoading from "@/components/SearchLoading";
+import GridOverlay from "@/components/GridOverlay";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
@@ -67,8 +68,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
     <main className="min-h-screen bg-gray-50 text-black relative ">
       <Hero />
 
-      {/* Grid pattern overlay */}
-      <div className="absolute inset-0 hidden md:block  bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
+      <GridOverlay />
 
       <SearchCategory
         searchQuery={searchQuery}

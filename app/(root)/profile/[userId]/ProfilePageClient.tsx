@@ -86,12 +86,7 @@ export default function ProfilePageClient({
                 <div className="mt-8 md:block md:p-6 p-4 border border-gray-800 hidden ">
                   <div className="flex items-start gap-3">
                     <Mail className="w-5 h-5 mt-1 flex-shrink-0" />
-                    <a
-                      href={`mailto:${profile.email}`}
-                      className="hover:underline break-all"
-                    >
-                      {profile.email}
-                    </a>
+                    <p className="h">{profile.email}</p>
                   </div>
                 </div>
               )

@@ -208,3 +208,15 @@
   -ms-overflow-style: none; /* IE and Edge */
   scrollbar-width: none; /* Firefox */
 }
+
+.reset-password-input {
+  @apply w-full pl-12 pr-4 py-3.5 bg-gray-50 border-2 border-gray-200 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300;
+}
+
+.reset-password-otp {
+  @apply w-12 h-14 bg-gray-50 border-2 border-gray-200 rounded-xl text-center text-xl font-bold text-gray-800 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300;
+}
+
+.reset-password-btn {
+  @apply w-full bg-black text-white py-3.5 rounded-xl font-semibold   disabled:cursor-not-allowed hover:bg-black/90 cursor-pointer  flex items-center justify-center gap-2;
+}

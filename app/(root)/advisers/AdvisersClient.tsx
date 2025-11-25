@@ -8,6 +8,7 @@ import { Adviser } from "@/types/advisers";
 import { AdviserCard } from "./AdviserCard";
 import { StudentAdviser } from "@/types/studentAdviser";
 import AdviserModal from "./AdviserModal";
+import GridOverlay from "@/components/GridOverlay";
 
 interface AdvisersClientProps {
   advisers: Adviser[];
@@ -52,8 +53,7 @@ const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
           <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.02)_1px,transparent_1px)] bg-[size:80px_80px]"></div>
         </div>
 
-        {/* Grid pattern overlay */}
-        <div className="absolute inset-0   bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)] bg-[size:80px_80px] pointer-events-none"></div>
+        <GridOverlay />
 
         <div className="grid max-w-7xl mx-auto  grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 py-8  md:py-12 px-4 md:px-6 xl:px-0 ">
           {advisers.map((adviser) => (

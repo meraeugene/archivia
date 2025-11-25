@@ -77,7 +77,5 @@ export const getThesesCount = cache(async (category = "all") => {
     return 0;
   }
 
-  console.log("count", count);
-
   return count ?? 0;
 });

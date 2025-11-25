@@ -6,6 +6,8 @@ import { User, Lock, Eye, EyeOff } from "lucide-react";
 import { toast } from "sonner";
 import { useAdviserStore } from "@/store/adviserStore";
 import { login } from "@/actions/auth/login";
+import Link from "next/link";
+import GridOverlay from "@/components/GridOverlay";
 
 interface FormData {
   userId: string;
@@ -67,19 +69,11 @@ export default function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center md:px-6 bg-gray-50  relative">
-      {/* Blurry Gradient Background */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 10%, rgba(255,255,255,0.4) 40%, rgba(255,255,255,0) 100%)",
-          filter: "blur(100px)",
-        }}
-      />
+      <GridOverlay />
 
       <div className="w-full md:max-w-6xl h-screen flex flex-col   md:h-[90vh] bg-white   z-10  relative md:rounded-3xl  md:border border-gray-200 md:flex-row     overflow-hidden md:flex items-center justify-center ">
         {/* Left Side - Login */}
-        <div className="flex flex-col  md:px-10 lg:px-20 md:py-34    md:w-1/2">
+        <div className="flex flex-col w-full px-8  md:px-10 lg:px-20 md:py-34    md:w-1/2">
           {/* Header */}
           <div className="mb-4 ">
             <div className="flex items-center justify-center md:mb-18 mb-4">
@@ -108,18 +102,19 @@ export default function Login() {
               >
                 Username
               </label>
-              <div className="relative">
+              <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
+                  <User className="h-5 w-5 text-gray-400 group-focus-within:text-black transition-colors" />
                 </div>
                 <input
                   id="userId"
                   name="userId"
                   autoComplete="username"
                   type="text"
+                  placeholder="School ID"
                   value={formData.userId}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-4 py-3 text-black border border-gray-100 shadow-sm rounded-md focus:shadow-md focus:border-gray-100 outline-none"
+                  className=" outline-none w-full pl-10 pr-4 py-3  border-2 border-gray-100 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300"
                 />
               </div>
             </div>
@@ -132,18 +127,19 @@ export default function Login() {
               >
                 Password
               </label>
-              <div className="relative">
+              <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-gray-400 group-focus-within:text-black transition-colors" />
                 </div>
                 <input
                   id="password"
                   autoComplete="current-password"
                   name="password"
                   type={showPassword ? "text" : "password"}
+                  placeholder="**********"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="w-full pl-10 pr-12 py-3 text-black border border-gray-100 shadow-sm rounded-md focus:shadow-md focus:border-gray-100 outline-none"
+                  className=" outline-none w-full pl-10 pr-4 py-3  border-2 border-gray-100 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300"
                 />
                 <button
                   type="button"
@@ -172,10 +168,19 @@ export default function Login() {
             </button>
           </form>
 
-          <div className="text-center mt-6">
-            <p className="text-sm text-gray-600">
+          <div className="text-center mt-6 flex flex-col gap-2 ">
+            <Link
+              className="text-sm text-black hover:underline font-medium"
+              href="/auth/forgot-password"
+            >
+              Forgotten your password?
+            </Link>
+            <p className="text-sm text-gray-600 ">
               Need help? Contact{" "}
-              <a href="#" className="text-black hover:underline font-medium">
+              <a
+                href="mailto:capstone.archivia@gmail.com"
+                className="text-black hover:underline font-medium"
+              >
                 IT Support
               </a>
             </p>

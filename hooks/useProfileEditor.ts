@@ -5,6 +5,7 @@ import { toast } from "sonner";
 import { uploadImageToCloudinary } from "@/utils/cloudinary/uploadImageToCloundinary";
 import { CurrentUser } from "@/types/currentUser";
 import { updateStudentProfile } from "@/actions/student/updateStudentProfile";
+import { isValidEmail } from "@/utils/isValidEmail";
 
 type FormDataState = {
   email: string;
@@ -78,12 +79,20 @@ export function useProfileEditor(profile: CurrentUser) {
         profilePictureUrl = "";
       }
 
+      if (!isValidEmail(formData.email)) {
+        toast.error("Please enter a valid email address");
+        return;
+      }
+
       const result = await updateStudentProfile({
         ...formData,
         profile_picture: profilePictureUrl,
       });
 
-      if (result?.error) console.log(result.error);
+      if (result?.error) {
+        toast.error(result.error);
+        return;
+      }
 
       toast.success("Profile updated successfully!");
       setIsEditing(false);

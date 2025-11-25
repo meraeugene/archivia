@@ -95,6 +95,16 @@ export async function addUser({
     throw new Error("Unauthorized");
   }
 
+  // Check if email is already registered
+  const { data: existingEmail, error: checkError } = await supabase
+    .from("user_profiles")
+    .select("user_id")
+    .eq("email", email)
+    .single();
+
+  if (checkError) throw new Error(checkError.message);
+  if (existingEmail) throw new Error("Email is already registered.");
+
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // Step 1: Create user in 'users'
