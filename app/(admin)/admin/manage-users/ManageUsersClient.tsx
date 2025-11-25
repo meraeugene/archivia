@@ -72,7 +72,7 @@ export default function ManageUsersClient({
               <Input
                 type="text"
                 placeholder="Search user by ID, name, or email"
-                className="w-full py-5 pl-9 rounded border focus:ring-gray-500"
+                className="w-full py-3 pl-9 rounded border focus:ring-gray-500"
                 onChange={(e) => {
                   const params = new URLSearchParams(searchParams);
                   params.set("search", e.target.value);
@@ -90,7 +90,7 @@ export default function ManageUsersClient({
               }}
               defaultValue={searchParams.get("sortBy") || "newest"}
             >
-              <SelectTrigger className="md:w-[150px] w-full py-5 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
+              <SelectTrigger className="md:w-[150px] w-full py-3 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
                 <SelectValue placeholder="Sort by" />
               </SelectTrigger>
               <SelectContent>
@@ -108,7 +108,7 @@ export default function ManageUsersClient({
               setIsAddOpen(true);
               document.body.classList.add("modal-open");
             }}
-            className="bg-black text-white py-5 hover:bg-gray-800 rounded shadow-sm transition-all w-full md:w-fit"
+            className="bg-black text-white py-3 hover:bg-gray-800 rounded shadow-sm transition-all w-full md:w-fit"
           >
             Add User
           </Button>

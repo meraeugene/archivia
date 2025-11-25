@@ -13,44 +13,76 @@ export default function Pagination({
   totalPages,
   onPageChange,
 }: PaginationProps) {
-  if (totalPages <= 1) return null; // hide pagination if only one page
+  if (totalPages <= 1) return null;
+
+  const maxVisiblePages = 5;
+  let startPage = Math.max(1, page - 2);
+  const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
+
+  // Adjust startPage if we are near the end
+  if (endPage - startPage + 1 < maxVisiblePages) {
+    startPage = Math.max(1, endPage - maxVisiblePages + 1);
+  }
+
+  const visiblePages = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i
+  );
 
   return (
-    <div className="flex justify-center  gap-2 pt-4 lg:flex ">
+    <div className="flex justify-center items-center gap-2 pt-6 flex-wrap">
+      {/* First Button */}
+      <Button
+        variant="outline"
+        disabled={page === 1}
+        onClick={() => onPageChange(1)}
+        className="rounded"
+      >
+        First
+      </Button>
+
       {/* Previous Button */}
       <Button
         variant="outline"
         disabled={page <= 1}
         onClick={() => onPageChange(page - 1)}
-        className="rounded lg:hidden"
+        className="rounded"
       >
-        Previous
+        Prev
       </Button>
 
-      <div className="overflow-scroll flex gap-1 lg:overflow-auto lg:block lg:gap-0 lg:space-x-2 lg:space-y-2">
-        {/* Page Numbers */}
-        {Array.from({ length: totalPages }, (_, i) => i + 1).map((p) => (
-          <Button
-            key={p}
-            variant={p === page ? "default" : "outline"}
-            className={`px-4 rounded ${
-              p === page ? "bg-black text-white hover:bg-gray-800" : ""
-            }`}
-            onClick={() => onPageChange(p)}
-          >
-            {p}
-          </Button>
-        ))}
-      </div>
+      {/* Page Numbers */}
+      {visiblePages.map((p) => (
+        <Button
+          key={p}
+          variant={p === page ? "default" : "outline"}
+          className={`px-3 rounded ${
+            p === page ? "bg-black text-white hover:bg-gray-800" : ""
+          }`}
+          onClick={() => onPageChange(p)}
+        >
+          {p}
+        </Button>
+      ))}
 
       {/* Next Button */}
       <Button
         variant="outline"
         disabled={page >= totalPages}
         onClick={() => onPageChange(page + 1)}
-        className="rounded lg:hidden"
+        className="rounded"
       >
         Next
+      </Button>
+
+      {/* Last Button */}
+      <Button
+        variant="outline"
+        disabled={page === totalPages}
+        onClick={() => onPageChange(totalPages)}
+        className="rounded"
+      >
+        Last
       </Button>
     </div>
   );

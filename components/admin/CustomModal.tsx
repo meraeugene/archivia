@@ -58,7 +58,7 @@ export function CustomModal({
         <div className="flex gap-3">
           <button
             onClick={onClose}
-            className="flex-1 px-4 cursor-pointer py-2 rounded border border-gray-200 bg-white text-gray-700 font-medium hover:bg-gray-100 transition-all"
+            className="flex-1 px-4 cursor-pointer py-2 rounded border border-gray-200 bg-white text-gray-700 font-medium hover:bg-gray-50 transition-all"
           >
             {cancelText}
           </button>

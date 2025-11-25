@@ -27,7 +27,7 @@ const ThesesTable = ({
     <table className="w-full text-left border-collapse">
       <thead className="bg-black text-white uppercase text-sm">
         <tr>
-          <th className="px-4 py-3 font-medium ">Number</th>
+          <th className="px-4 py-3 font-medium  w-[20px]">Number</th>
           <th className="px-4 py-3 font-medium">Title</th>
           <th className="px-4 py-3 font-medium">Adviser</th>
           <th className="px-4 py-3 font-medium">Panel Chair</th>
@@ -49,15 +49,15 @@ const ThesesTable = ({
               key={thesis.id}
               className="border-b border-gray-100 hover:bg-gray-50 transition"
             >
-              <td className="px-4 py-2 text-gray-700 text-center">
+              <td className="px-4 py-2 text-gray-700 text-center ">
                 {(page - 1) * limit + index + 1}
               </td>
 
-              <td className="px-4 py-2 font-medium text-gray-900 truncate max-w-xs whitespace-nowrap">
+              <td className="px-4 py-2 font-medium text-gray-900 truncate max-w-[15rem] whitespace-nowrap">
                 {thesis.title}
               </td>
 
-              <td className="px-4 py-3 text-gray-900 text-nowrap">
+              <td className="px-4 py-3 text-gray-900 text-nowrap ">
                 {thesis.adviser_name || "—"}
               </td>
               <td className="px-4 py-3 text-gray-900  text-nowrap">

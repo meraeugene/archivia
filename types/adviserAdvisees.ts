@@ -1,6 +1,6 @@
 export interface Advisee {
   student_id: string;
-  student_name: string | null;
+  student_name: string;
   status:
     | "pending"
     | "accepted"
@@ -8,8 +8,14 @@ export interface Advisee {
     | "referred"
     | "reserved"
     | "returned";
-  title: string | null;
+  title: string;
   created_at: string; // ISO timestamp
+  abstract: string;
+  student_email: string;
+  student_profile: string;
+  student_section: string;
+  student_year: string;
+  thesis_url: string;
 }
 
 export type AdviserWithAdvisees = {
@@ -20,4 +26,6 @@ export type AdviserWithAdvisees = {
   advisees: Advisee[] | null; // null if none (because of json_agg)
   max_limit: number;
   profile_picture: string | null;
+  total_accepted: number;
+  total_pending: number;
 };

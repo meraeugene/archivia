@@ -66,7 +66,7 @@ export default function ManageThesisClient({
             <Input
               type="text"
               placeholder="Search by title or adviser"
-              className="w-full py-5 pl-9 rounded border focus:ring-gray-500"
+              className="w-full py-3 pl-9 rounded border focus:ring-gray-500"
               onChange={(e) => {
                 const params = new URLSearchParams(searchParams);
                 params.set("search", e.target.value);
@@ -84,7 +84,7 @@ export default function ManageThesisClient({
             }}
             defaultValue={searchParams.get("sortBy") || "newest"}
           >
-            <SelectTrigger className="md:w-[150px] w-full py-5 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
+            <SelectTrigger className="md:w-[150px] w-full py-3 rounded cursor-pointer hover:bg-gray-100 border focus:ring-gray-500">
               <SelectValue placeholder="Sort by" />
             </SelectTrigger>
             <SelectContent>
@@ -97,7 +97,7 @@ export default function ManageThesisClient({
         </div>
 
         {/* Theses Table */}
-        <div className="mt-8 w-full bg-white rounded overflow-scroll lg:overflow-hidden border">
+        <div className="mt-8 w-full bg-white rounded overflow-x-auto border">
           <ThesesTable
             filteredTheses={theses}
             setIsEditOpen={setIsEditOpen}
