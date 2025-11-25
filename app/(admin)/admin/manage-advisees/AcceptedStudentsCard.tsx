@@ -23,7 +23,10 @@ const AcceptedStudentsCard = ({
           <div
             key={student.student_id}
             className="group bg-white p-4 rounded-md shadow-xl border border-gray-100 hover:translate-x-[-2px] hover:translate-y-[-2px] cursor-pointer hover:shadow-2xl transition-all duration-200"
-            onClick={() => setSelectedStudent(student)}
+            onClick={() => {
+              setSelectedStudent(student);
+              document.body.classList.add("modal-open");
+            }}
           >
             <div className="flex items-start gap-4">
               <div className="flex-shrink-0 w-8 h-8 bg-black text-white flex items-center justify-center font-bold text-sm">
