@@ -1,21 +1,21 @@
 "use client";
 
-import { removeSession, signOutAllDevices } from "@/actions/auth/sessions";
+// import { removeSession, signOutAllDevices } from "@/actions/auth/sessions";
 import { UserSession } from "@/types/userSession";
 import {
-  AlertTriangle,
-  LogOut,
+  //   AlertTriangle,
+  //   LogOut,
   Clock,
   MapPin,
   Monitor,
   Tablet,
   Smartphone,
 } from "lucide-react";
-import { useState, useTransition } from "react";
+// import { useState, useTransition } from "react";
 
 const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
-  const [showSignOutAll, setShowSignOutAll] = useState(false);
-  const [isPending, startTransition] = useTransition();
+  //   const [showSignOutAll, setShowSignOutAll] = useState(false);
+  //   const [isPending, startTransition] = useTransition();
 
   const getDeviceIcon = (type: string) => {
     switch (type) {
@@ -39,18 +39,18 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
     return `${Math.floor(seconds / 86400)}d ago`;
   };
 
-  const handleRemoveSession = (id: string, current: boolean) => {
-    startTransition(async () => {
-      await removeSession(id, current);
-    });
-  };
+  //   const handleRemoveSession = (id: string, current: boolean) => {
+  //     startTransition(async () => {
+  //       await removeSession(id, current);
+  //     });
+  //   };
 
-  const handleSignOutAll = () => {
-    startTransition(async () => {
-      await signOutAllDevices();
-      setShowSignOutAll(false);
-    });
-  };
+  //   const handleSignOutAll = () => {
+  //     startTransition(async () => {
+  //       await signOutAllDevices();
+  //       setShowSignOutAll(false);
+  //     });
+  //   };
 
   return (
     <div className="md:mt-16 mt-12 ">
@@ -126,7 +126,7 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
               </div>
 
               {/* Sign Out Button */}
-              {!s.is_current && (
+              {/* {!s.is_current && (
                 <button
                   className="mt-3 md:mt-0 flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/20 bg-red-500/10 cursor-pointer rounded transition-colors duration-200"
                   onClick={() => handleRemoveSession(s.id, s.is_current)}
@@ -144,13 +144,13 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                     )}
                   </span>
                 </button>
-              )}
+              )} */}
             </div>
           </div>
         ))}
       </div>
 
-      {sessions.length > 1 && (
+      {/* {sessions.length > 1 && (
         <div className="border border-slate-700/50  p-6">
           <div className="flex items-start gap-4">
             <div className="p-2 bg-red-500/10 rounded-lg">
@@ -199,7 +199,7 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };
