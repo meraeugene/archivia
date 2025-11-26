@@ -69,7 +69,7 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
 
           {/* Menu Panel */}
           <div
-            className="fixed top-16 left-0 right-0 z-50 bg-white border-y border-gray-200 shadow-lg fade-slide-down"
+            className="fixed top-16 left-0 right-0 z-50 bg-white border-y border-gray-200 shadow-lg animate-in fade-in slide-in-from-top-2 duration-300"
             onClick={(e) => e.stopPropagation()}
           >
             <nav className="divide-y divide-gray-100">
@@ -113,8 +113,6 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
                     <span className="text-sm font-medium uppercase tracking-wide">
                       {link.label}
                     </span>
-
-                    {isActive && <div className="ml-auto w-1 h-1 bg-white" />}
                   </Link>
                 );
               })}

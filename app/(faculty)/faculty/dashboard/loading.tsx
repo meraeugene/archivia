@@ -1,8 +1,8 @@
 export default function Loading() {
   return (
     <main className="flex-1">
-      <div className="md:px-8 px-4 py-6  md:py-4 border-b bg-white border-gray-200 animate-pulse">
-        <div className="h-6 w-48 bg-gray-200 rounded mb-2" />
+      <div className="px-4 md:px-8  flex items-center justify-between p-4 h-16 border-b bg-white border-gray-200 animate-pulse">
+        <div className="h-4 w-48 bg-gray-100 rounded " />
       </div>
 
       <div className="p-8 px-4 py-6 md:p-8 space-y-12">
