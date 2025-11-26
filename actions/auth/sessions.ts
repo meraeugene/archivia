@@ -16,9 +16,17 @@ export async function trackSession(userId: string) {
   const info = parser.getResult();
 
   const deviceType = info.device.type ?? "desktop";
-  const deviceName = `${deviceType === "desktop" ? "PC" : deviceType} ${
-    info.browser.name
-  } - ${info.os.name}`;
+
+  const deviceLabel =
+    deviceType === "desktop"
+      ? "PC"
+      : deviceType === "mobile"
+      ? "Mobile"
+      : deviceType === "tablet"
+      ? "Tablet"
+      : "Unknown";
+
+  const deviceName = `${deviceLabel} ${info.browser.name} - ${info.os.name}`;
 
   // Optional location
   let location = null;
@@ -30,16 +38,46 @@ export async function trackSession(userId: string) {
     console.error("Error fetching location:", err);
   }
 
-  await supabase.from("user_sessions").insert({
-    user_id: userId,
-    device: deviceName,
-    device_type: deviceType,
-    ip_address: ip,
-    location,
-    last_active: new Date(),
-    user_agent: userAgent,
-    is_current: true,
-  });
+  // 1. Mark all existing sessions as not current
+  await supabase
+    .from("user_sessions")
+    .update({ is_current: false })
+    .eq("user_id", userId);
+
+  // 2. Check if a session with the same device + IP exists
+  const { data: existing } = await supabase
+    .from("user_sessions")
+    .select("*")
+    .eq("user_id", userId)
+    .eq("device_type", deviceType)
+    .eq("ip_address", ip)
+    .single();
+
+  if (existing) {
+    // Update existing session
+    await supabase
+      .from("user_sessions")
+      .update({
+        last_active: new Date(),
+        is_current: true,
+        device: deviceName,
+        user_agent: userAgent,
+        location,
+      })
+      .eq("id", existing.id);
+  } else {
+    // Insert new session
+    await supabase.from("user_sessions").insert({
+      user_id: userId,
+      device: deviceName,
+      device_type: deviceType,
+      ip_address: ip,
+      location,
+      last_active: new Date(),
+      user_agent: userAgent,
+      is_current: true,
+    });
+  }
 
   return true;
 }
@@ -76,7 +114,7 @@ export async function removeSession(sessionId: string) {
   return true;
 }
 
-export async function signOutAllDevices(userId: string) {
+export async function signOutAllDevices() {
   const supabase = await createClient();
 
   const session = await getSession();
@@ -84,7 +122,7 @@ export async function signOutAllDevices(userId: string) {
     return false;
   }
 
-  await supabase.from("user_sessions").delete().eq("user_id", userId);
+  await supabase.from("user_sessions").delete().eq("user_id", session.sub);
 
   return true;
 }

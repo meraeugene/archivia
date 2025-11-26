@@ -1,5 +1,6 @@
 "use client";
 
+import { removeSession, signOutAllDevices } from "@/actions/auth/sessions";
 import { UserSession } from "@/types/userSession";
 import {
   AlertTriangle,
@@ -35,6 +36,14 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
     if (seconds < 3600) return `${Math.floor(seconds / 60)}m ago`;
     if (seconds < 86400) return `${Math.floor(seconds / 3600)}h ago`;
     return `${Math.floor(seconds / 86400)}d ago`;
+  };
+
+  const handleRemoveSession = async (id: string) => {
+    await removeSession(id);
+  };
+
+  const handleSignOutAll = async () => {
+    await signOutAllDevices();
   };
 
   return (
@@ -114,7 +123,7 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
               {!s.is_current && (
                 <button
                   className="mt-3 md:mt-0 flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/20 bg-red-500/10 cursor-pointer rounded transition-colors duration-200"
-                  // onClick={() => removeSession(s.id)}
+                  onClick={() => handleRemoveSession(s.id)}
                 >
                   <LogOut className="w-4 h-4" />
                   <span className="text-sm font-medium">Sign Out</span>
@@ -150,7 +159,7 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
               ) : (
                 <div className="flex items-center gap-3">
                   <button
-                    // onClick={signOutAllDevices}
+                    onClick={handleSignOutAll}
                     className="px-5 py-2.5 bg-red-500 hover:bg-red-700 rounded text-white  font-medium cursor-pointer  transition-colors duration-200"
                   >
                     Confirm Sign Out
