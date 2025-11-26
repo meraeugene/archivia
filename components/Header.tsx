@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, ClipboardList, Menu, X, Settings } from "lucide-react";
+import { User, ClipboardList, Settings } from "lucide-react";
 import { getInitials } from "@/utils/getInitials";
 import { CurrentUser } from "@/types/currentUser";
 import { StudentAdviser } from "@/types/studentAdviser";
@@ -63,7 +63,12 @@ export default function ResponsiveHeader({
                   ? "font-semibold text-black"
                   : "text-gray-800 hover:text-black"
               }
-              onClick={() => isMobile && setMobileMenuOpen(false)}
+              onClick={() => {
+                if (isMobile) {
+                  setMobileMenuOpen(false);
+                  document.body.style.overflow = "auto";
+                }
+              }}
             >
               {label}
             </Link>
@@ -79,7 +84,12 @@ export default function ResponsiveHeader({
               ? "font-semibold text-black"
               : "text-gray-800 hover:text-black"
           }
-          onClick={() => isMobile && setMobileMenuOpen(false)}
+          onClick={() => {
+            if (isMobile) {
+              setMobileMenuOpen(false);
+              document.body.style.overflow = "auto";
+            }
+          }}
         >
           Publish Thesis
         </Link>
@@ -94,7 +104,12 @@ export default function ResponsiveHeader({
               ? "font-semibold text-black"
               : "text-gray-800 hover:text-black"
           }
-          onClick={() => isMobile && setMobileMenuOpen(false)}
+          onClick={() => {
+            if (isMobile) {
+              setMobileMenuOpen(false);
+              document.body.style.overflow = "auto";
+            }
+          }}
         >
           Dashboard
         </Link>
@@ -109,7 +124,12 @@ export default function ResponsiveHeader({
               ? "font-semibold text-black"
               : "text-gray-800 hover:text-black"
           }
-          onClick={() => isMobile && setMobileMenuOpen(false)}
+          onClick={() => {
+            if (isMobile) {
+              setMobileMenuOpen(false);
+              document.body.style.overflow = "auto";
+            }
+          }}
         >
           Dashboard
         </Link>
@@ -129,19 +149,6 @@ export default function ResponsiveHeader({
               RCHIVIA
             </Link>
           </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden p-2 hover:bg-gray-100 rounded-md transition-colors"
-            aria-label="Toggle menu"
-          >
-            {mobileMenuOpen ? (
-              <X className="w-6 h-6 text-gray-900" />
-            ) : (
-              <Menu className="w-6 h-6 text-gray-900" />
-            )}
-          </button>
 
           <nav className="hidden md:flex items-center space-x-6">
             {renderLinks(false)}
@@ -182,7 +189,10 @@ export default function ResponsiveHeader({
                       prefetch
                       href={`/profile/${currentUser.user_id}`}
                       className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100"
-                      onClick={() => setOpen(false)}
+                      onClick={() => {
+                        setOpen(false);
+                        document.body.style.overflow = "auto";
+                      }}
                     >
                       <User size={16} />
                       <span>Profile</span>
@@ -193,7 +203,10 @@ export default function ResponsiveHeader({
                         prefetch
                         href="/faculty/settings"
                         className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100"
-                        onClick={() => setOpen(false)}
+                        onClick={() => {
+                          setOpen(false);
+                          document.body.style.overflow = "auto";
+                        }}
                       >
                         <Settings size={16} />
                         <span>Settings</span>
@@ -205,7 +218,10 @@ export default function ResponsiveHeader({
                         prefetch
                         href="/my-requests"
                         className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100"
-                        onClick={() => setOpen(false)}
+                        onClick={() => {
+                          setOpen(false);
+                          document.body.style.overflow = "auto";
+                        }}
                       >
                         <ClipboardList size={16} />
                         <span>My Requests</span>
