@@ -14,7 +14,7 @@ export async function logout() {
     await supabase
       .from("user_sessions")
       .update({ logged_in: false })
-      .eq("user_id", session.sub); // mark this session as logged out
+      .eq("id", session.session_id); // only current device
   }
 
   const cookieStore = await cookies();

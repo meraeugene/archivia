@@ -44,23 +44,27 @@ export async function trackSession(userId: string) {
     console.error("Error fetching location:", err);
   }
 
-  await supabase
+  const { data, error } = await supabase
     .from("user_sessions")
-    .update({ is_current: false })
-    .eq("user_id", userId);
+    .insert({
+      user_id: userId,
+      device: deviceName,
+      device_type: deviceType,
+      ip_address: ip,
+      location,
+      last_active: new Date(),
+      user_agent: userAgent,
+      logged_in: true,
+    })
+    .select("id")
+    .single();
 
-  await supabase.from("user_sessions").insert({
-    user_id: userId,
-    device: deviceName,
-    device_type: deviceType,
-    ip_address: ip,
-    location,
-    last_active: new Date(),
-    user_agent: userAgent,
-    logged_in: true,
-  });
+  if (error) {
+    console.error("Failed to track session:", error);
+    return null;
+  }
 
-  return true;
+  return data?.id;
 }
 
 export async function getSessions() {

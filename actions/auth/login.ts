@@ -36,8 +36,14 @@ export async function login(userId: string, password: string) {
     return { error: "Invalid credentials" }; // incorrect password
   }
 
+  const sessionId = await trackSession(user.id);
+
   // 3. Sign a JWT containing user ID and role
-  const token = await signToken({ sub: user.id, role: user.role });
+  const token = await signToken({
+    sub: user.id,
+    role: user.role,
+    session_id: sessionId,
+  });
 
   // 4. Save JWT in a secure HTTP-only cookie
   const cookieStore = await cookies();
@@ -48,9 +54,6 @@ export async function login(userId: string, password: string) {
     // maxAge: 60 * 60, // 1 hour
     sameSite: "strict", // CSRF protection
   });
-
-  // 5. TRACK SESSION HERE
-  await trackSession(user.id);
 
   if (user.role === "faculty") {
     redirect("/faculty/dashboard");
