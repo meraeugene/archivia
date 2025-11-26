@@ -112,7 +112,10 @@ const MobileHeader = ({
                       ? "font-semibold text-black"
                       : "text-gray-800 hover:text-black"
                   }`}
-                  onClick={() => setMobileMenuOpen(false)}
+                  onClick={() => {
+                    setMobileMenuOpen(false);
+                    document.body.style.overflow = "auto";
+                  }}
                 >
                   Profile
                 </Link>
