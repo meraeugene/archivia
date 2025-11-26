@@ -6,7 +6,6 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { trackSession } from "./sessions";
-import { revalidatePath } from "next/cache";
 
 export async function login(userId: string, password: string) {
   const sanitizedUserId = userId.trim();
@@ -63,6 +62,5 @@ export async function login(userId: string, password: string) {
     redirect("/admin/dashboard");
   }
 
-  revalidatePath("/profile");
   redirect("/");
 }

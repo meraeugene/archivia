@@ -4,7 +4,6 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getSession } from "./getSession";
-import { revalidatePath } from "next/cache";
 
 export async function logout() {
   const supabase = await createClient();
@@ -20,6 +19,5 @@ export async function logout() {
   const cookieStore = await cookies();
   cookieStore.delete("session");
 
-  revalidatePath("/profile");
   redirect("/auth/login");
 }
