@@ -13,7 +13,7 @@ export async function logout() {
     await supabase
       .from("user_sessions")
       .update({ logged_in: false })
-      .eq("id", session.session_id); // mark this session as logged out
+      .eq("id", session.sub); // mark this session as logged out
   }
 
   const cookieStore = await cookies();

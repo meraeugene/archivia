@@ -60,6 +60,6 @@ export async function login(userId: string, password: string) {
     redirect("/admin/dashboard");
   }
 
-  revalidatePath("/profile/[userId]/manage-access-devices");
+  revalidatePath("/profile/[userId]");
   redirect("/");
 }
