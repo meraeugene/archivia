@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { getSession } from "./getSession";
+import { revalidatePath } from "next/cache";
 
 export async function logout() {
   const supabase = await createClient();
@@ -13,11 +14,12 @@ export async function logout() {
     await supabase
       .from("user_sessions")
       .update({ logged_in: false })
-      .eq("id", session.sub); // mark this session as logged out
+      .eq("user_id", session.sub); // mark this session as logged out
   }
 
   const cookieStore = await cookies();
   cookieStore.delete("session");
 
+  revalidatePath("/profile");
   redirect("/auth/login");
 }
