@@ -20,27 +20,19 @@ interface AdviserModalProps {
 const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
   return (
     <div
-      className="fixed  inset-0 z-50 flex items-center justify-center  bg-black/20 backdrop-blur-sm px-4 "
+      className="fixed  inset-0 z-50 flex items-center justify-center  bg-black/20 backdrop-blur-sm md:px-6 "
       onClick={closeModal}
     >
-      <button
-        onClick={closeModal}
-        className="absolute top-20 right-8 z-50 cursor-pointer 
-      text-gray-600 hover:text-black xl:hidden transition-colors"
-      >
-        <X size={24} />
-      </button>
-
       <div
-        className="bg-white rounded-lg shadow-2xl w-full max-w-7xl overflow-auto max-h-[85vh] relative animate-fadeInScale scrollbar-none"
+        className="bg-white md:rounded-2xl shadow-2xl w-full max-w-7xl   relative animate-fadeInScale  overflow-auto h-full md:h-[90vh]"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Close Button */}
         <button
           onClick={closeModal}
-          className="absolute hidden top-4 right-4 z-10    text-gray-700 rounded-full xl:flex items-center justify-center hover:text-gray-900 cursor-pointer"
+          className="absolute  top-4 right-4 z-10    text-gray-700 rounded-full xl:flex items-center justify-center hover:text-gray-900 cursor-pointer"
         >
-          <X className="w-8 h-8" />
+          <X size={24} />
         </button>
 
         <div
@@ -49,7 +41,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
   lg:grid-cols-12
   xl:grid-cols-12
   2xl:grid-cols-13
-  h-full"
+  h-full overflow-y-auto scrollbar-none"
         >
           {/* Left Side (40%) */}
           <div
@@ -57,7 +49,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
       lg:col-span-7
       xl:col-span-6
       2xl:col-span-5
-      relative overflow-hidden
+      relative 
       order-1"
           >
             {selectedAdviser.profile_picture ? (
@@ -84,7 +76,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
       lg:col-span-5
       xl:col-span-6
       2xl:col-span-4
-      p-6 overflow-y-auto
+      p-6 
       order-2"
           >
             <div className="mb-6">
@@ -199,7 +191,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
       lg:col-span-12        
       xl:col-span-12        
       2xl:col-span-4
-      p-6 pt-2 md:pt-8 md:pb-6 overflow-y-auto
+      p-6 pt-2 md:pt-8 md:pb-6 
       
       order-3             
       xl:order-3           

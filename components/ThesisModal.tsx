@@ -24,30 +24,22 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
       onClick={onClose}
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/20 backdrop-blur-sm md:px-6 "
     >
-      <button
-        onClick={onClose}
-        className="fixed  top-5 right-5 z-5 md:hidden cursor-pointer text-gray-600 hover:text-black transition-colors"
-      >
-        <X size={24} />
-      </button>
-
       <div
         onClick={(e) => e.stopPropagation()}
         className="bg-white/90 backdrop-blur-md 
-             w-full h-full md:w-full md:max-w-5xl md:max-h-[80vh]
-             overflow-y-auto scrollbar-none
+             w-full h-full md:w-full md:max-w-5xl md:h-[80vh]
              relative shadow-lg border border-white/30
              animate-fadeInScale
-             flex flex-col rounded-none md:rounded-lg"
+             flex flex-col rounded-none md:rounded-lg overflow-hidden"
       >
         <button
           onClick={onClose}
-          className="fixed hidden md:block  top-5 right-5 z-50 cursor-pointer text-gray-600 hover:text-black transition-colors"
+          className="absolute md:block  top-5 right-5 z-10 cursor-pointer text-gray-600 hover:text-black transition-colors"
         >
           <X size={24} />
         </button>
 
-        <div className="md:p-10 py-10 px-6 mt-4">
+        <div className="md:p-10 md:pt-14 py-10 px-6 pt-14 overflow-y-auto scrollbar-none ">
           <h2 className="text-lg md:text-2xl font-bold mb-5">{thesis.title}</h2>
           <div className="mb-4 space-y-2 text-gray-700">
             <div>

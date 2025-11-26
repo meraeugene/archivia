@@ -99,7 +99,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
 
                 <div className="flex gap-4 flex-col md:flex-row  w-full md:w-fit  ">
                   <Select value={sort} onValueChange={handleSortChange}>
-                    <SelectTrigger className="w-full md:w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer ">
+                    <SelectTrigger className="w-full py-5 md:w-[150px] border-gray-200 shadow-sm text-sm hover:shadow-md transition-all rounded-sm bg-white z-5 cursor-pointer ">
                       <SelectValue placeholder="Sort by" />
                     </SelectTrigger>
                     <SelectContent>
@@ -113,7 +113,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                     value={currentCategory}
                     onValueChange={(val) => handleCategoryChange(val)}
                   >
-                    <SelectTrigger className="w-full min-w-[150px]  border-gray-200 shadow-sm text-sm hover:shadow-md transition-all cursor-pointer">
+                    <SelectTrigger className="w-full py-5  min-w-[150px] bg-white z-5   border-gray-200 shadow-sm text-sm rounded-sm hover:shadow-md transition-all cursor-pointer">
                       <SelectValue placeholder="Select Category" />
                     </SelectTrigger>
                     <SelectContent>

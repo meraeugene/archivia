@@ -121,7 +121,7 @@ export default function ChangePasswordPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="px-6 py-3 cursor-pointer rounded-lg font-medium transition-colors bg-gray-900 text-white hover:bg-gray-800 disabled:opacity-80 flex items-center justify-center gap-2 min-w-[150px]"
+              className="px-6 md:py-3 py-2 cursor-pointer rounded-lg font-medium transition-colors bg-gray-900 text-white hover:bg-gray-800 disabled:opacity-80 flex items-center justify-center gap-2 min-w-[150px]"
             >
               {isPending && (
                 <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

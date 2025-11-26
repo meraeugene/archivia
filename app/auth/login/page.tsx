@@ -71,7 +71,7 @@ export default function Login() {
     <div className="min-h-screen flex items-center justify-center md:px-6 bg-gray-50  relative">
       <GridOverlay />
 
-      <div className="w-full md:max-w-6xl h-screen flex flex-col   md:h-[90vh] bg-white   z-10  relative md:rounded-3xl  md:border border-gray-200 md:flex-row     overflow-hidden md:flex items-center justify-center ">
+      <div className="w-full md:max-w-6xl h-screen flex flex-col   md:h-[90vh] bg-white   z-10  relative md:shadow-2xl shadow-gray-200/50 md:rounded-3xl  md:border border-gray-200 md:flex-row     overflow-hidden md:flex items-center justify-center ">
         {/* Left Side - Login */}
         <div className="flex flex-col w-full px-8  md:px-10 lg:px-20 md:py-34    md:w-1/2">
           {/* Header */}

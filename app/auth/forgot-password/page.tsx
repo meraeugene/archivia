@@ -32,7 +32,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen  relative overflow-hidden flex items-center justify-center md:p-4 bg-gray-50">
+    <div className="min-h-screen  relative overflow-hidden flex items-center justify-center md:p-4 bg-gray-50 ">
       <GridOverlay />
 
       {/* Main Card */}
