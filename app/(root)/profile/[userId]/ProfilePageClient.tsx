@@ -306,130 +306,134 @@ export default function ProfilePageClient({
 
         <DecorativeFooter />
 
-        <div className="md:mt-16 mt-12 ">
-          <div className="mb-12">
-            <h1 className="text-3xl uppercase md:text-4xl font-black tracking-tight  text-white mb-3">
-              Manage Access & Devices
-            </h1>
-            <p className="text-slate-400">
-              Monitor and control devices that have access to your account
-            </p>
-          </div>
-
-          <div className="space-y-4 mb-6">
-            {sessions?.map((s) => (
-              <div
-                key={s.id}
-                className="border border-slate-700/50  p-6 hover:border-slate-600/50 transition-all duration-200"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex items-start gap-4 flex-1">
-                    <div className="p-3 bg-slate-700/50 rounded-sm text-slate-300">
-                      {getDeviceIcon(s.device_type ?? "desktop")}
-                    </div>
-
-                    <div className="flex-1">
-                      <div className="flex items-center gap-4 mb-2">
-                        <h3 className="text-white font-semibold">{s.device}</h3>
-                        {s.is_current && (
-                          <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-medium rounded-full border border-green-500/30">
-                            Current Session
-                          </span>
-                        )}
-                      </div>
-
-                      <div className="space-y-1.5">
-                        <div className="flex items-center gap-2 text-slate-400 text-sm">
-                          <MapPin className="w-4 h-4" />
-                          <span>{s.location || "Unknown Location"}</span>
-                        </div>
-                        <div className="flex items-center gap-2 text-slate-400 text-sm">
-                          <Clock className="w-4 h-4" />
-                          <span>
-                            Active{" "}
-                            {s.last_active
-                              ? getTimeAgo(s.last_active)
-                              : "Unknown"}
-                          </span>
-                          <span className="text-slate-500">•</span>
-                          <span className="text-slate-500">
-                            {s.last_active
-                              ? new Date(s.last_active).toLocaleString(
-                                  undefined,
-                                  {
-                                    year: "numeric",
-                                    month: "short",
-                                    day: "numeric",
-                                    hour: "2-digit",
-                                    minute: "2-digit",
-                                    hour12: true,
-                                  }
-                                )
-                              : "-"}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {!s.is_current && (
-                    <button
-                      // onClick={() => removeSession(s.id)}
-                      className="flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/20 bg-red-500/10 cursor-pointer rounded transition-colors duration-200"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      <span className="text-sm font-medium">Sign Out</span>
-                    </button>
-                  )}
-                </div>
-              </div>
-            ))}
-          </div>
-
-          {sessions && sessions.length > 1 && (
-            <div className="border border-slate-700/50  p-6">
-              <div className="flex items-start gap-4">
-                <div className="p-2 bg-red-500/10 rounded-lg">
-                  <AlertTriangle className="w-5 h-5 text-red-400" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-white font-semibold mb-1">
-                    Sign Out All Other Devices
-                  </h3>
-                  <p className="text-slate-400 text-sm mb-4">
-                    This will sign you out from all devices except your current
-                    session. You&rsquo;ll need to sign in again on those
-                    devices.
-                  </p>
-                  {!showSignOutAll ? (
-                    <button
-                      onClick={() => setShowSignOutAll(true)}
-                      className="px-4 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded font-medium  cursor-pointer transition-colors duration-200 flex items-center gap-2"
-                    >
-                      <LogOut className="w-4 h-4" />
-                      Sign Out All Devices
-                    </button>
-                  ) : (
-                    <div className="flex items-center gap-3">
-                      <button
-                        // onClick={signOutAllDevices}
-                        className="px-5 py-2.5 bg-red-500 hover:bg-red-700 rounded text-white  font-medium cursor-pointer  transition-colors duration-200"
-                      >
-                        Confirm Sign Out
-                      </button>
-                      <button
-                        onClick={() => setShowSignOutAll(false)}
-                        className="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 rounded text-white cursor-pointer   font-medium transition-colors duration-200"
-                      >
-                        Cancel
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
+        {sessions && (
+          <div className="md:mt-16 mt-12 ">
+            <div className="mb-12">
+              <h1 className="text-3xl uppercase md:text-4xl font-black tracking-tight  text-white mb-3">
+                Manage Access & Devices
+              </h1>
+              <p className="text-slate-400">
+                Monitor and control devices that have access to your account
+              </p>
             </div>
-          )}
-        </div>
+
+            <div className="space-y-4 mb-6">
+              {sessions.map((s) => (
+                <div
+                  key={s.id}
+                  className="border border-slate-700/50  p-6 hover:border-slate-600/50 transition-all duration-200"
+                >
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-start gap-4 flex-1">
+                      <div className="p-3 bg-slate-700/50 rounded-sm text-slate-300">
+                        {getDeviceIcon(s.device_type ?? "desktop")}
+                      </div>
+
+                      <div className="flex-1">
+                        <div className="flex items-center gap-4 mb-2">
+                          <h3 className="text-white font-semibold">
+                            {s.device}
+                          </h3>
+                          {s.is_current && (
+                            <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-medium rounded-full border border-green-500/30">
+                              Current Session
+                            </span>
+                          )}
+                        </div>
+
+                        <div className="space-y-1.5">
+                          <div className="flex items-center gap-2 text-slate-400 text-sm">
+                            <MapPin className="w-4 h-4" />
+                            <span>{s.location || "Unknown Location"}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-slate-400 text-sm">
+                            <Clock className="w-4 h-4" />
+                            <span>
+                              Active{" "}
+                              {s.last_active
+                                ? getTimeAgo(s.last_active)
+                                : "Unknown"}
+                            </span>
+                            <span className="text-slate-500">•</span>
+                            <span className="text-slate-500">
+                              {s.last_active
+                                ? new Date(s.last_active).toLocaleString(
+                                    undefined,
+                                    {
+                                      year: "numeric",
+                                      month: "short",
+                                      day: "numeric",
+                                      hour: "2-digit",
+                                      minute: "2-digit",
+                                      hour12: true,
+                                    }
+                                  )
+                                : "-"}
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {!s.is_current && (
+                      <button
+                        // onClick={() => removeSession(s.id)}
+                        className="flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/20 bg-red-500/10 cursor-pointer rounded transition-colors duration-200"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span className="text-sm font-medium">Sign Out</span>
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {sessions.length > 1 && (
+              <div className="border border-slate-700/50  p-6">
+                <div className="flex items-start gap-4">
+                  <div className="p-2 bg-red-500/10 rounded-lg">
+                    <AlertTriangle className="w-5 h-5 text-red-400" />
+                  </div>
+                  <div className="flex-1">
+                    <h3 className="text-white font-semibold mb-1">
+                      Sign Out All Other Devices
+                    </h3>
+                    <p className="text-slate-400 text-sm mb-4">
+                      This will sign you out from all devices except your
+                      current session. You&rsquo;ll need to sign in again on
+                      those devices.
+                    </p>
+                    {!showSignOutAll ? (
+                      <button
+                        onClick={() => setShowSignOutAll(true)}
+                        className="px-4 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 rounded font-medium  cursor-pointer transition-colors duration-200 flex items-center gap-2"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        Sign Out All Devices
+                      </button>
+                    ) : (
+                      <div className="flex items-center gap-3">
+                        <button
+                          // onClick={signOutAllDevices}
+                          className="px-5 py-2.5 bg-red-500 hover:bg-red-700 rounded text-white  font-medium cursor-pointer  transition-colors duration-200"
+                        >
+                          Confirm Sign Out
+                        </button>
+                        <button
+                          onClick={() => setShowSignOutAll(false)}
+                          className="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 rounded text-white cursor-pointer   font-medium transition-colors duration-200"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            )}
+          </div>
+        )}
       </main>
     </div>
   );
