@@ -17,6 +17,7 @@ export async function trackSession(userId: string) {
 
   const deviceType = info.device.type ?? "desktop";
 
+  // Device label
   const deviceLabel =
     deviceType === "desktop"
       ? "PC"
@@ -26,7 +27,15 @@ export async function trackSession(userId: string) {
       ? "Tablet"
       : "Unknown";
 
-  const deviceName = `${deviceLabel} ${info.browser.name} - ${info.os.name}`;
+  // Browser name fix
+  let browserName = info.browser.name || "Unknown Browser";
+  if (browserName.toLowerCase() === "mobile") {
+    browserName = "Chrome"; // default for Android; adjust if needed
+  }
+
+  const osName = info.os.name || "Unknown OS";
+
+  const deviceName = `${deviceLabel} ${browserName} - ${osName}`;
 
   // Optional location
   let location = null;
