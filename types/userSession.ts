@@ -8,4 +8,5 @@ export interface UserSession {
   last_active: string;
   user_agent: string;
   logged_in: boolean;
+  organization_name: string;
 }

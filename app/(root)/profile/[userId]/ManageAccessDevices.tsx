@@ -10,6 +10,7 @@ import {
   Monitor,
   Tablet,
   Smartphone,
+  Wifi,
 } from "lucide-react";
 // import { useState, useTransition } from "react";
 
@@ -125,6 +126,12 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                             })
                           : "-"}
                       </span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Wifi className="w-4 h-4 flex-shrink-0" />
+                      {s.organization_name && (
+                        <span className="truncate">{s.organization_name}</span>
+                      )}
                     </div>
                   </div>
                 </div>

@@ -34,11 +34,15 @@ export async function trackSession(userId: string) {
 
   // --- GEOJS LOCATION ---
   let location = null;
+  let organizationName = null;
   if (ip) {
     try {
       const geoRes = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`);
       const geo = await geoRes.json();
-      location = `${geo.city}, ${geo.country}`;
+      location = `${geo.city || "Unknown City"}, ${
+        geo.country || "Unknown Country"
+      }`;
+      organizationName = geo.organization_name || "Unknown Org";
     } catch (err) {
       console.error("Error fetching location:", err);
     }
@@ -55,6 +59,7 @@ export async function trackSession(userId: string) {
       last_active: new Date(),
       user_agent: userAgent,
       logged_in: true,
+      organization_name: organizationName,
     })
     .select("id")
     .single();
