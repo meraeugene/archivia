@@ -34,14 +34,14 @@ export async function trackSession(userId: string) {
 
   // --- GEOJS LOCATION ---
   let location = null;
-  try {
-    const geoRes = await fetch(`https://get.geojs.io/v1/ip/geo.json`);
-    const geo = await geoRes.json();
-    location = `${geo.city || "Unknown City"}, ${
-      geo.country || "Unknown Country"
-    }`;
-  } catch (err) {
-    console.error("Error fetching location:", err);
+  if (ip) {
+    try {
+      const geoRes = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`);
+      const geo = await geoRes.json();
+      location = `${geo.city}, ${geo.country}`;
+    } catch (err) {
+      console.error("Error fetching location:", err);
+    }
   }
 
   const { data, error } = await supabase
