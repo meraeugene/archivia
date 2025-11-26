@@ -93,9 +93,9 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                   <div className="space-y-1.5 text-sm text-slate-400 flex flex-col ">
                     <div className="flex items-center gap-2">
                       <MapPin className="w-4 h-4 flex-shrink-0" />
-                      <span className="truncate">
-                        {s.location || "Unknown Location"}
-                      </span>
+                      {s.location && (
+                        <span className="truncate">{s.location}</span>
+                      )}
                     </div>
                     <div className="flex md:items-center gap-2 flex-col md:flex-row">
                       <div className="flex items-center gap-2">
