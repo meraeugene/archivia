@@ -10,7 +10,7 @@ import {
   Monitor,
   Tablet,
   Smartphone,
-  Wifi,
+  Building,
 } from "lucide-react";
 // import { useState, useTransition } from "react";
 
@@ -103,6 +103,12 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                         <span className="truncate">{s.location}</span>
                       )}
                     </div>
+                    <div className="flex items-center gap-2">
+                      <Building className="w-4 h-4 flex-shrink-0" />
+                      {s.organization_name && (
+                        <span className="truncate">{s.organization_name}</span>
+                      )}
+                    </div>
                     <div className="flex md:items-center gap-2 flex-col md:flex-row">
                       <div className="flex items-center gap-2">
                         <Clock className="w-4 h-4 flex-shrink-0" />
@@ -126,12 +132,6 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                             })
                           : "-"}
                       </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Wifi className="w-4 h-4 flex-shrink-0" />
-                      {s.organization_name && (
-                        <span className="truncate">{s.organization_name}</span>
-                      )}
                     </div>
                   </div>
                 </div>
