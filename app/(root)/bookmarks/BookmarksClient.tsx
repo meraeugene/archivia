@@ -99,17 +99,15 @@ export default function BookmarksClient({
                 <strong>Adviser:</strong> {thesis.adviser_name || "N/A"}
               </div>
 
-              <div className="gap-2 hidden md:flex">
-                <strong>Panel:</strong>
-                <div className="flex flex-wrap gap-2">
-                  {[
-                    thesis.panel_member1 && `${thesis.panel_member1} (Chair)`,
-                    thesis.panel_member2,
-                    thesis.panel_member3,
-                  ]
-                    .filter(Boolean)
-                    .join(", ") || "N/A"}
-                </div>
+              <div>
+                <strong>Panel:</strong>{" "}
+                {[
+                  thesis.panel_member1 && `${thesis.panel_member1} (Chair)`,
+                  thesis.panel_member2,
+                  thesis.panel_member3,
+                ]
+                  .filter(Boolean)
+                  .join(", ") || "N/A"}
               </div>
 
               <div className="hidden md:block">

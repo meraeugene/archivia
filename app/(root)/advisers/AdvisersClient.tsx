@@ -109,17 +109,25 @@ const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
 
                     {/* Bottom Info Overlay */}
                     <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
-                      <h3 className="text-lg font-medium mb-1 leading-tight">
-                        {adviser.full_name}
-                      </h3>
-                      {(adviser.prefix || adviser.suffix) && (
-                        <p className="text-xs text-gray-300 mb-1 font-light tracking-wider uppercase">
-                          {adviser.prefix} {adviser.suffix}
+                      <div className="flex items-end">
+                        <div className="flex-1">
+                          <h3 className="text-lg font-medium mb-1 leading-tight ">
+                            {adviser.full_name}
+                          </h3>
+                          {(adviser.prefix || adviser.suffix) && (
+                            <p className="text-xs text-gray-300 mb-1 font-light tracking-wider uppercase">
+                              {adviser.prefix} {adviser.suffix}
+                            </p>
+                          )}
+                          <p className="text-sm text-gray-200 font-light">
+                            {adviser.position}
+                          </p>
+                        </div>
+
+                        <p className="text-xs lg:invisible group-hover:visible animate-pulse text-gray-200">
+                          View profile
                         </p>
-                      )}
-                      <p className="text-sm text-gray-200 font-light">
-                        {adviser.position}
-                      </p>
+                      </div>
                     </div>
                   </div>
                 </div>

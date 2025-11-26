@@ -39,23 +39,21 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
           <X size={24} />
         </button>
 
-        <div className="md:p-10 md:pt-14 py-10 px-6 pt-14 overflow-y-auto scrollbar-none ">
+        <div className="md:p-12 md:pt-14 py-12 px-6 pt-14 overflow-y-auto scrollbar-none ">
           <h2 className="text-lg md:text-2xl font-bold mb-5">{thesis.title}</h2>
           <div className="mb-4 space-y-2 text-gray-700">
             <div>
               <strong>Adviser:</strong> <span>{thesis.adviser_name}</span>{" "}
             </div>
-            <div className="flex gap-2">
-              <strong>Panel:</strong>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  thesis.panel_member1 && `${thesis.panel_member1} (Chair)`,
-                  thesis.panel_member2,
-                  thesis.panel_member3,
-                ]
-                  .filter(Boolean)
-                  .join(", ") || "N/A"}
-              </div>
+            <div>
+              <strong>Panel:</strong>{" "}
+              {[
+                thesis.panel_member1 && `${thesis.panel_member1} (Chair)`,
+                thesis.panel_member2,
+                thesis.panel_member3,
+              ]
+                .filter(Boolean)
+                .join(", ") || "N/A"}
             </div>
 
             <div>
