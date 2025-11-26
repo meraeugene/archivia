@@ -305,10 +305,10 @@ const UploadThesisClient = ({
             <button
               onClick={handleSubmitThesis}
               disabled={isPending}
-              className={`group/btn relative cursor-pointer px-16 py-3 md:py-6 bg-white text-black font-bold text-xl w-full rounded-full transition-all duration-500 overflow-hidden ${
+              className={`group/btn relative  px-16 py-3 md:py-6 bg-white text-black font-bold text-xl w-full md:w-fit rounded-full transition-all duration-500 overflow-hidden ${
                 isPending
                   ? "opacity-70 cursor-not-allowed"
-                  : "hover:scale-105 hover:shadow-2xl hover:shadow-white/30 active:scale-95 shadow-xl shadow-white/20"
+                  : "hover:scale-105 hover:shadow-2xl hover:shadow-white/30 active:scale-95 shadow-xl shadow-white/20 cursor-pointer"
               }`}
             >
               {/* Animated gradient background on hover */}
