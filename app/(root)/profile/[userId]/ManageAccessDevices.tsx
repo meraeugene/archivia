@@ -60,7 +60,7 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
           View Accessed Devices
         </h1>
         <p className="text-slate-400">
-          View devices that have accessed your account.
+          Track devices that have logged into your account.{" "}
         </p>
       </div>
 
