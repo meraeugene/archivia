@@ -40,15 +40,30 @@ const MobileHeader = ({
 
         {/* Mobile Menu Button */}
         <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className=" hover:bg-gray-100 rounded-md transition-colors"
+          onClick={() => {
+            setMobileMenuOpen(!mobileMenuOpen);
+            document.body.style.overflow = mobileMenuOpen ? "auto" : "hidden";
+          }}
+          className="relative  hover:bg-gray-100/80 rounded-xl transition-all duration-200 active:scale-95"
           aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
         >
-          {mobileMenuOpen ? (
-            <X className="w-6 h-6 text-gray-900" />
-          ) : (
-            <Menu className="w-6 h-6 text-gray-900" />
-          )}
+          <div className="relative w-6 h-6">
+            <Menu
+              className={`absolute inset-0 w-6 h-6 text-gray-900 transition-all duration-300 ${
+                mobileMenuOpen
+                  ? "opacity-0 rotate-90 scale-50"
+                  : "opacity-100 rotate-0 scale-100"
+              }`}
+            />
+            <X
+              className={`absolute inset-0 w-6 h-6 text-gray-900 transition-all duration-300 ${
+                mobileMenuOpen
+                  ? "opacity-100 rotate-0 scale-100"
+                  : "opacity-0 -rotate-90 scale-50"
+              }`}
+            />
+          </div>
         </button>
       </div>
 
@@ -56,10 +71,7 @@ const MobileHeader = ({
       {mobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-40">
           {/* Blur overlay only behind menu panel */}
-          <div
-            className="absolute top-[4rem] bottom-0 left-0 right-0 bg-black/10 backdrop-blur-xs"
-            onClick={() => setMobileMenuOpen(false)}
-          />
+          <div className="absolute top-[4rem] bottom-0 left-0 right-0 bg-black/10 backdrop-blur-xs" />
 
           {/* Menu panel */}
           <div

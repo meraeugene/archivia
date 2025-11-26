@@ -231,7 +231,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                       `}
                       >
                         <div className="flex flex-col  text-left w-full">
-                          <div className="flex items-center justify-between  gap-3">
+                          <div className="flex items-center justify-between  gap-2">
                             <span className="font-semibold text-gray-900">
                               {adviser.full_name}
                             </span>

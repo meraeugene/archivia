@@ -33,7 +33,10 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
 
           {/* Menu Button */}
           <button
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            onClick={() => {
+              setMobileMenuOpen(!mobileMenuOpen);
+              document.body.style.overflow = mobileMenuOpen ? "auto" : "hidden";
+            }}
             className="relative  hover:bg-gray-100/80 rounded-xl transition-all duration-200 active:scale-95"
             aria-label="Toggle menu"
             aria-expanded={mobileMenuOpen}
@@ -62,16 +65,10 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
       {mobileMenuOpen && (
         <>
           {/* Backdrop below header */}
-          <div
-            className="fixed inset-x-0 top-16 bottom-0 z-40 bg-black/20 backdrop-blur-sm transition-opacity duration-300"
-            onClick={() => setMobileMenuOpen(false)}
-          />
+          <div className="fixed inset-x-0 top-16 bottom-0  bg-black/20 backdrop-blur-sm transition-opacity duration-300" />
 
           {/* Menu Panel */}
-          <div
-            className="fixed top-16 left-0 right-0 z-50 bg-white border-y border-gray-200 shadow-lg animate-in fade-in slide-in-from-top-2 duration-300"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="fixed top-16 left-0 right-0 z-50 bg-white border-y border-gray-200 shadow-lg animate-in fade-in slide-in-from-top-1 duration-300">
             <nav className="divide-y divide-gray-100">
               {adviserNavLinks.map((link, index) => {
                 const isActive = pathname === link.href;
@@ -83,7 +80,7 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
                       key="logout"
                       onClick={handleLogout}
                       disabled={isPending}
-                      className="w-full group flex items-center gap-4 px-6 md:px-8 h-14 text-left transition-colors duration-150 hover:bg-gray-50 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed border-t border-gray-200"
+                      className="w-full group flex items-center gap-4 px-6 pl-4 md:px-8 h-14 text-left transition-colors duration-150 hover:bg-gray-50 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed border-t border-gray-200"
                     >
                       {isPending ? (
                         <div className="h-5 w-5 border-2 border-gray-900 border-t-transparent animate-spin rounded-full" />
@@ -103,7 +100,7 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
                     prefetch
                     href={link.href}
                     onClick={() => setMobileMenuOpen(false)}
-                    className={`group flex items-center gap-4 px-6 md:px-8 h-14 transition-colors duration-150 ${
+                    className={`group flex items-center gap-4 px-6 pl-4 md:px-8 h-14 transition-colors duration-150 ${
                       isActive
                         ? "bg-gray-900 text-white"
                         : "text-gray-700 hover:bg-gray-50"
