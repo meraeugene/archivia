@@ -164,10 +164,12 @@ const InputPanel = ({
         <button
           onClick={onSubmit}
           disabled={isLoading || !studentData.title || !studentData.abstract}
-          className={`mt-10 w-full px-8 py-3 md:py-6 rounded-2xl bg-white text-black font-bold text-lg transition-all duration-500 shadow-2xl shadow-white/20 flex items-center justify-center gap-3 group/btn relative overflow-hidden ${
+          className={`mt-10 w-full px-8 py-3 md:py-6 rounded-2xl bg-white text-black font-bold text-lg transition-all  delay-200 duration-1000 shadow-2xl shadow-white/20 flex items-center justify-center gap-3 group/btn relative overflow-hidden ${
             isLoading || !studentData.title || !studentData.abstract
               ? "opacity-50 cursor-not-allowed"
               : "hover:scale-[1.02] hover:shadow-white/30 active:scale-95 cursor-pointer"
+          } ${
+            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
           {/* Shimmer effect */}
