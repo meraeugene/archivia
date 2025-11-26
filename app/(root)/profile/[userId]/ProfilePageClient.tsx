@@ -37,7 +37,7 @@ export default function ProfilePageClient({
 
   const handleEditProfileClick = () => {
     if (isFaculty) {
-      router.push(`/settings`);
+      router.push(`/faculty/settings`);
     } else {
       setIsEditing(true);
     }
