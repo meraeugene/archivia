@@ -56,10 +56,10 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
     <div className="md:mt-16 mt-12 ">
       <div className="mb-12">
         <h1 className="text-2xl uppercase md:text-4xl font-black tracking-tight  text-white mb-3">
-          Manage Access & Devices
+          Manage Access Devices
         </h1>
         <p className="text-slate-400">
-          Monitor and control devices that have access to your account
+          View and manage devices that have access to your account.
         </p>
       </div>
 
@@ -83,8 +83,14 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                       {s.device}
                     </h3>
 
-                    <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-medium rounded-full border w-fit border-green-500/30">
-                      Logged In
+                    <span
+                      className={`px-2 py-0.5 text-xs font-medium rounded-full border w-fit ${
+                        s.logged_in
+                          ? "bg-green-500/20 text-green-400 border-green-500/30"
+                          : "bg-red-500/20 text-red-400 border-red-500/30"
+                      }`}
+                    >
+                      {s.logged_in ? "Logged In" : "Logged Out"}
                     </span>
                   </div>
 

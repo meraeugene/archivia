@@ -7,5 +7,5 @@ export interface UserSession {
   location: string;
   last_active: string;
   user_agent: string;
-  is_current: boolean;
+  logged_in: boolean;
 }

@@ -4,8 +4,6 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { UAParser } from "ua-parser-js";
 import { getSession } from "./getSession";
-import { logout } from "./logout";
-import { revalidatePath } from "next/cache";
 
 export async function trackSession(userId: string) {
   const supabase = await createClient();
@@ -39,7 +37,9 @@ export async function trackSession(userId: string) {
   try {
     const res = await fetch(`https://ipapi.co/${ip}/json/`);
     const geo = await res.json();
-    location = `${geo.city}, ${geo.country_name}`;
+    location = `${geo.city || "Unknown City"}, ${
+      geo.country_name || "Unknown Country"
+    }`;
   } catch (err) {
     console.error("Error fetching location:", err);
   }
@@ -57,6 +57,7 @@ export async function trackSession(userId: string) {
     location,
     last_active: new Date(),
     user_agent: userAgent,
+    logged_in: true,
   });
 
   return true;
@@ -80,35 +81,35 @@ export async function getSessions() {
   return data;
 }
 
-export async function removeSession(sessionId: string, current = false) {
-  const supabase = await createClient();
+// export async function removeSession(sessionId: string, current = false) {
+//   const supabase = await createClient();
 
-  const session = await getSession();
+//   const session = await getSession();
 
-  if (!session) {
-    return false;
-  }
+//   if (!session) {
+//     return false;
+//   }
 
-  await supabase.from("user_sessions").delete().eq("id", sessionId);
+//   await supabase.from("user_sessions").delete().eq("id", sessionId);
 
-  if (current) {
-    await logout();
-  }
+//   if (current) {
+//     await logout();
+//   }
 
-  revalidatePath("/profile/[userId]/manage-access-devices");
-  return true;
-}
+//   revalidatePath("/profile/[userId]/manage-access-devices");
+//   return true;
+// }
 
-export async function signOutAllDevices() {
-  const supabase = await createClient();
+// export async function signOutAllDevices() {
+//   const supabase = await createClient();
 
-  const session = await getSession();
-  if (!session) {
-    return false;
-  }
+//   const session = await getSession();
+//   if (!session) {
+//     return false;
+//   }
 
-  await supabase.from("user_sessions").delete().eq("user_id", session.sub);
+//   await supabase.from("user_sessions").delete().eq("user_id", session.sub);
 
-  revalidatePath("/profile/[userId]/manage-access-devices");
-  return true;
-}
+//   revalidatePath("/profile/[userId]/manage-access-devices");
+//   return true;
+// }
