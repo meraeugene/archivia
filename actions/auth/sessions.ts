@@ -26,7 +26,9 @@ export async function trackSession(userId: string) {
     const res = await fetch(`https://ipapi.co/${ip}/json/`);
     const geo = await res.json();
     location = `${geo.city}, ${geo.country_name}`;
-  } catch {}
+  } catch (err) {
+    console.error("Error fetching location:", err);
+  }
 
   await supabase.from("user_sessions").insert({
     user_id: userId,

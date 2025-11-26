@@ -49,7 +49,6 @@ export async function login(userId: string, password: string) {
   });
 
   // 5. TRACK SESSION HERE
-  // mark this device as current login
   await trackSession(user.id);
 
   if (user.role === "faculty") {
