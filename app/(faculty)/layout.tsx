@@ -2,7 +2,6 @@ import { getCurrentUser } from "@/actions/auth/getCurrentUser";
 import {
   getAdviserCurrentLeadersCount,
   getPendingAdviserRequestsCount,
-  getThesisSubmissionCount,
 } from "@/actions/faculty/count";
 import BackToTopButton from "@/components/BackToTopButton";
 import { redirect } from "next/navigation";
@@ -20,15 +19,11 @@ export default async function FacultyLayout({
     redirect("/");
   }
 
-  const [
-    pendingAdviserRequestCount,
-    currentAdviserLeadersCount,
-    thesisSubmissionsCount,
-  ] = await Promise.all([
-    getPendingAdviserRequestsCount(),
-    getAdviserCurrentLeadersCount(),
-    getThesisSubmissionCount("pending"),
-  ]);
+  const [pendingAdviserRequestCount, currentAdviserLeadersCount] =
+    await Promise.all([
+      getPendingAdviserRequestsCount(),
+      getAdviserCurrentLeadersCount(),
+    ]);
 
   return (
     <main className="min-h-screen lg:flex bg-gray-50">
@@ -36,7 +31,6 @@ export default async function FacultyLayout({
         currentUser={currentUser}
         pendingAdviserRequestCount={pendingAdviserRequestCount}
         currentAdviserLeadersCount={currentAdviserLeadersCount}
-        thesisSubmissionsCount={thesisSubmissionsCount}
       />
       <BackToTopButton />
       <div className="flex-1 lg:ml-64">{children}</div>

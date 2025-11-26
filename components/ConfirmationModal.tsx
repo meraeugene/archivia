@@ -131,8 +131,14 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
   );
 
   return (
-    <div className="fixed  inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm  ">
-      <div className="bg-white  animate-fadeInScale rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-200 relative ">
+    <div
+      className="fixed  inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm  "
+      onClick={onClose}
+    >
+      <div
+        onClick={(e) => e.stopPropagation()}
+        className="bg-white  animate-fadeInScale rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-200 relative "
+      >
         {/* Icon */}
         <div className="text-center mb-6">
           <div
@@ -225,7 +231,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                       `}
                       >
                         <div className="flex flex-col  text-left w-full">
-                          <div className="flex items-center justify-between ">
+                          <div className="flex items-center justify-between  gap-3">
                             <span className="font-semibold text-gray-900">
                               {adviser.full_name}
                             </span>

@@ -14,7 +14,6 @@ interface MobileHeaderProps {
 const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
-
   const [isPending, startTransition] = useTransition();
 
   const handleLogout = async () => {
@@ -24,41 +23,56 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
   };
 
   return (
-    <header className="px-4 py-2 md:px-8 sticky lg:hidden top-0 z-50 bg-white border-b border-gray-100 ">
-      {/* Header always visible */}
-      <div className="flex justify-between items-center py-2  relative z-50 bg-white">
-        <div className="flex items-center font-bold">{headerTitle}</div>
+    <header className="sticky top-0 z-50 lg:hidden">
+      {/* Header Bar */}
+      <div className="relative bg-white border-b border-gray-200">
+        <div className="px-4 md:px-8 h-16 flex items-center justify-between">
+          <h1 className="text-base md:text-lg font-semibold text-gray-900 ">
+            {headerTitle}
+          </h1>
 
-        {/* Mobile Menu Button */}
-        <button
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          className=" hover:bg-gray-100 rounded-md transition-colors"
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? (
-            <X className="w-6 h-6 text-gray-900" />
-          ) : (
-            <Menu className="w-6 h-6 text-gray-900" />
-          )}
-        </button>
+          {/* Menu Button */}
+          <button
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            className="relative  hover:bg-gray-100/80 rounded-xl transition-all duration-200 active:scale-95"
+            aria-label="Toggle menu"
+            aria-expanded={mobileMenuOpen}
+          >
+            <div className="relative w-6 h-6">
+              <Menu
+                className={`absolute inset-0 w-6 h-6 text-gray-900 transition-all duration-300 ${
+                  mobileMenuOpen
+                    ? "opacity-0 rotate-90 scale-50"
+                    : "opacity-100 rotate-0 scale-100"
+                }`}
+              />
+              <X
+                className={`absolute inset-0 w-6 h-6 text-gray-900 transition-all duration-300 ${
+                  mobileMenuOpen
+                    ? "opacity-100 rotate-0 scale-100"
+                    : "opacity-0 -rotate-90 scale-50"
+                }`}
+              />
+            </div>
+          </button>
+        </div>
       </div>
 
-      {/* Mobile Menu + Overlay */}
+      {/* Mobile Menu Overlay */}
       {mobileMenuOpen && (
-        <div className="lg:hidden fixed inset-0 z-40">
-          {/* Blur overlay only behind menu panel */}
+        <>
+          {/* Backdrop below header */}
           <div
-            className="absolute top-[4rem] bottom-0 left-0 right-0 bg-black/10 backdrop-blur-xs"
+            className="fixed inset-x-0 top-16 bottom-0 z-40 bg-black/20 backdrop-blur-sm transition-opacity duration-300"
             onClick={() => setMobileMenuOpen(false)}
           />
 
-          {/* Menu panel */}
+          {/* Menu Panel */}
           <div
-            className="absolute top-[55px]  left-0 right-0 bg-white border-t z-50 animate-in fade-in slide-in-from-top-2 duration-300"
-            onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+            className="fixed top-16 left-0 right-0 z-50 bg-white border-y border-gray-200 shadow-lg fade-slide-down"
+            onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex flex-col  p-4 py-2 ">
-              {/* Navigation links */}
+            <nav className="divide-y divide-gray-100">
               {adviserNavLinks.map((link, index) => {
                 const isActive = pathname === link.href;
                 const Icon = link.icon;
@@ -69,18 +83,16 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
                       key="logout"
                       onClick={handleLogout}
                       disabled={isPending}
-                      className={`w-full flex cursor-pointer items-center py-2 transition-colors
-                    text-gray-800 hover:text-black `}
+                      className="w-full group flex items-center gap-4 px-6 md:px-8 h-14 text-left transition-colors duration-150 hover:bg-gray-50 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed border-t border-gray-200"
                     >
-                      <Icon className="h-5 w-5 mr-3" />
                       {isPending ? (
-                        <div className="flex items-center space-x-2">
-                          <div className="h-5 w-5 border-2 border-gray-600 border-t-transparent rounded-full animate-spin" />
-                          <span>Logging out...</span>
-                        </div>
+                        <div className="h-5 w-5 border-2 border-gray-900 border-t-transparent animate-spin" />
                       ) : (
-                        link.label
+                        <Icon className="h-5 w-5" />
                       )}
+                      <span className="text-sm font-medium uppercase tracking-wide">
+                        {isPending ? "Logging out..." : link.label}
+                      </span>
                     </button>
                   );
                 }
@@ -90,21 +102,25 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
                     key={index}
                     prefetch
                     href={link.href}
-                    className={`py-2  flex  items-center ${
-                      isActive
-                        ? "font-semibold text-black"
-                        : "text-gray-800 hover:text-black"
-                    }`}
                     onClick={() => setMobileMenuOpen(false)}
+                    className={`group flex items-center gap-4 px-6 md:px-8 h-14 transition-colors duration-150 ${
+                      isActive
+                        ? "bg-gray-900 text-white"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }`}
                   >
-                    <Icon className="h-5 w-5 mr-3" />
-                    {link.label}
+                    <Icon className="h-5 w-5" />
+                    <span className="text-sm font-medium uppercase tracking-wide">
+                      {link.label}
+                    </span>
+
+                    {isActive && <div className="ml-auto w-1 h-1 bg-white" />}
                   </Link>
                 );
               })}
-            </div>
+            </nav>
           </div>
-        </div>
+        </>
       )}
     </header>
   );

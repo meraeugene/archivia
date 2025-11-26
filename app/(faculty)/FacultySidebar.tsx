@@ -37,14 +37,12 @@ interface SidebarProps {
   currentUser: CurrentUser;
   pendingAdviserRequestCount: number;
   currentAdviserLeadersCount: number;
-  thesisSubmissionsCount: number | null;
 }
 
 const FacultySidebar = ({
   currentUser,
   pendingAdviserRequestCount,
   currentAdviserLeadersCount,
-  thesisSubmissionsCount,
 }: SidebarProps) => {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -164,13 +162,6 @@ const FacultySidebar = ({
                   pendingAdviserRequestCount > 0 && (
                     <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
                       {pendingAdviserRequestCount}
-                    </span>
-                  )}
-
-                {item.label === "Thesis Approval" &&
-                  thesisSubmissionsCount !== 0 && (
-                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
-                      {thesisSubmissionsCount}
                     </span>
                   )}
               </Link>
