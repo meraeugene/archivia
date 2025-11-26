@@ -136,7 +136,7 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                   <span className="text-sm font-medium">
                     {isPending ? (
                       <div className="flex items-center space-x-2">
-                        <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                         <span>Signing out...</span>
                       </div>
                     ) : (
@@ -181,7 +181,7 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                   >
                     {isPending ? (
                       <div className="flex items-center space-x-2">
-                        <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                        <div className="h-4 w-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
                         <span>Signing out...</span>
                       </div>
                     ) : (

@@ -35,29 +35,27 @@ export async function login(userId: string, password: string) {
     return { error: "Invalid credentials" }; // incorrect password
   }
 
-  // 3. Sign a JWT containing user ID and role
-  const token = await signToken({ sub: user.id, role: user.role });
+  // 3. TRACK SESSION HERE and get sessionId
+  const sessionId = await trackSession(user.id);
 
-  // 4. Save JWT in a secure HTTP-only cookie
+  // 4. Sign a JWT containing user ID, role, and sessionId
+  const token = await signToken({
+    sub: user.id,
+    role: user.role,
+    session_id: sessionId,
+  });
+
+  // 5. Save JWT in a secure HTTP-only cookie
   const cookieStore = await cookies();
   cookieStore.set("session", token, {
     httpOnly: true, // not accessible via JS
     secure: process.env.NODE_ENV === "production", // only over HTTPS in prod
     path: "/", // valid for all routes
-    // maxAge: 60 * 60, // 1 hour
     sameSite: "strict", // CSRF protection
   });
 
-  // 5. TRACK SESSION HERE
-  await trackSession(user.id);
-
-  if (user.role === "faculty") {
-    redirect("/faculty/dashboard");
-  }
-
-  if (user.role === "admin") {
-    redirect("/admin/dashboard");
-  }
-
+  // 6. Redirect based on role
+  if (user.role === "faculty") redirect("/faculty/dashboard");
+  if (user.role === "admin") redirect("/admin/dashboard");
   redirect("/");
 }

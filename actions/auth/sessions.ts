@@ -5,6 +5,7 @@ import { headers } from "next/headers";
 import { UAParser } from "ua-parser-js";
 import { getSession } from "./getSession";
 import { logout } from "./logout";
+import { revalidatePath } from "next/cache";
 
 export async function trackSession(userId: string) {
   const supabase = await createClient();
@@ -43,36 +44,16 @@ export async function trackSession(userId: string) {
     console.error("Error fetching location:", err);
   }
 
-  // 1. Mark all existing sessions as not current
+  // Mark all existing sessions as not current
   await supabase
     .from("user_sessions")
     .update({ is_current: false })
     .eq("user_id", userId);
 
-  // 2. Check if a session with the same device + IP exists
-  const { data: existing } = await supabase
+  // Insert new session
+  const { data } = await supabase
     .from("user_sessions")
-    .select("*")
-    .eq("user_id", userId)
-    .eq("device_type", deviceType)
-    .eq("ip_address", ip)
-    .single();
-
-  if (existing) {
-    // Update existing session
-    await supabase
-      .from("user_sessions")
-      .update({
-        last_active: new Date(),
-        is_current: true,
-        device: deviceName,
-        user_agent: userAgent,
-        location,
-      })
-      .eq("id", existing.id);
-  } else {
-    // Insert new session
-    await supabase.from("user_sessions").insert({
+    .insert({
       user_id: userId,
       device: deviceName,
       device_type: deviceType,
@@ -81,10 +62,11 @@ export async function trackSession(userId: string) {
       last_active: new Date(),
       user_agent: userAgent,
       is_current: true,
-    });
-  }
+    })
+    .select("id")
+    .single();
 
-  return true;
+  return data?.id; // return the new session ID
 }
 
 export async function getSessions() {
@@ -120,6 +102,7 @@ export async function removeSession(sessionId: string, current = false) {
     await logout();
   }
 
+  revalidatePath("/profile/[userId]/manage-access-devices");
   return true;
 }
 
@@ -133,5 +116,6 @@ export async function signOutAllDevices() {
 
   await supabase.from("user_sessions").delete().eq("user_id", session.sub);
 
+  revalidatePath("/profile/[userId]/manage-access-devices");
   return true;
 }
