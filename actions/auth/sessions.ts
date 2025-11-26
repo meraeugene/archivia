@@ -44,16 +44,36 @@ export async function trackSession(userId: string) {
     console.error("Error fetching location:", err);
   }
 
-  // Mark all existing sessions as not current
+  // 1. Mark all existing sessions as not current
   await supabase
     .from("user_sessions")
     .update({ is_current: false })
     .eq("user_id", userId);
 
-  // Insert new session
-  const { data } = await supabase
+  // 2. Check if a session with the same device + IP exists
+  const { data: existing } = await supabase
     .from("user_sessions")
-    .insert({
+    .select("*")
+    .eq("user_id", userId)
+    .eq("device_type", deviceType)
+    .eq("ip_address", ip)
+    .single();
+
+  if (existing) {
+    // Update existing session
+    await supabase
+      .from("user_sessions")
+      .update({
+        last_active: new Date(),
+        is_current: true,
+        device: deviceName,
+        user_agent: userAgent,
+        location,
+      })
+      .eq("id", existing.id);
+  } else {
+    // Insert new session
+    await supabase.from("user_sessions").insert({
       user_id: userId,
       device: deviceName,
       device_type: deviceType,
@@ -62,11 +82,10 @@ export async function trackSession(userId: string) {
       last_active: new Date(),
       user_agent: userAgent,
       is_current: true,
-    })
-    .select("id")
-    .single();
+    });
+  }
 
-  return data?.id; // return the new session ID
+  return true;
 }
 
 export async function getSessions() {

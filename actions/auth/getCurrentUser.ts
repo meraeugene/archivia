@@ -3,15 +3,11 @@
 import { createClient } from "@/utils/supabase/server";
 import { cache } from "react";
 import { getSession } from "./getSession";
-import { logout } from "./logout";
 
 export const getCurrentUser = cache(async () => {
   // 1. Decode JWT
   const session = await getSession();
-  if (!session) {
-    await logout();
-    return null;
-  }
+  if (!session) return null;
 
   const supabase = await createClient();
 
