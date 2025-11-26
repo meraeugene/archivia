@@ -86,7 +86,7 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
                       className="w-full group flex items-center gap-4 px-6 md:px-8 h-14 text-left transition-colors duration-150 hover:bg-gray-50 text-gray-700 disabled:opacity-50 disabled:cursor-not-allowed border-t border-gray-200"
                     >
                       {isPending ? (
-                        <div className="h-5 w-5 border-2 border-gray-900 border-t-transparent animate-spin" />
+                        <div className="h-5 w-5 border-2 border-gray-900 border-t-transparent animate-spin rounded-full" />
                       ) : (
                         <Icon className="h-5 w-5" />
                       )}
