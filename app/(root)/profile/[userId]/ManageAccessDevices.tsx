@@ -11,10 +11,11 @@ import {
   Tablet,
   Smartphone,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
   const [showSignOutAll, setShowSignOutAll] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const getDeviceIcon = (type: string) => {
     switch (type) {
@@ -38,12 +39,17 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
     return `${Math.floor(seconds / 86400)}d ago`;
   };
 
-  const handleRemoveSession = async (id: string) => {
-    await removeSession(id);
+  const handleRemoveSession = (id: string, current: boolean) => {
+    startTransition(async () => {
+      await removeSession(id, current);
+    });
   };
 
-  const handleSignOutAll = async () => {
-    await signOutAllDevices();
+  const handleSignOutAll = () => {
+    startTransition(async () => {
+      await signOutAllDevices();
+      setShowSignOutAll(false);
+    });
   };
 
   return (
@@ -123,10 +129,20 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
               {!s.is_current && (
                 <button
                   className="mt-3 md:mt-0 flex items-center gap-2 px-4 py-2 text-red-400 hover:bg-red-500/20 bg-red-500/10 cursor-pointer rounded transition-colors duration-200"
-                  onClick={() => handleRemoveSession(s.id)}
+                  onClick={() => handleRemoveSession(s.id, s.is_current)}
+                  disabled={isPending}
                 >
                   <LogOut className="w-4 h-4" />
-                  <span className="text-sm font-medium">Sign Out</span>
+                  <span className="text-sm font-medium">
+                    {isPending ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="h-5 w-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        <span>Signing out...</span>
+                      </div>
+                    ) : (
+                      "Sign Out"
+                    )}
+                  </span>
                 </button>
               )}
             </div>
@@ -160,13 +176,21 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                 <div className="flex items-center gap-3">
                   <button
                     onClick={handleSignOutAll}
-                    className="px-5 py-2.5 bg-red-500 hover:bg-red-700 rounded text-white  font-medium cursor-pointer  transition-colors duration-200"
+                    className="px-5 py-2.5 bg-red-500 hover:bg-red-700 rounded text-white font-medium cursor-pointer transition-colors duration-200"
+                    disabled={isPending}
                   >
-                    Confirm Sign Out
+                    {isPending ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="h-5 w-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        <span>Logging out...</span>
+                      </div>
+                    ) : (
+                      "Confirm Sign Out"
+                    )}
                   </button>
                   <button
                     onClick={() => setShowSignOutAll(false)}
-                    className="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 rounded text-white cursor-pointer   font-medium transition-colors duration-200"
+                    className="px-5 py-2.5 bg-slate-700 hover:bg-slate-600 rounded text-white cursor-pointer font-medium transition-colors duration-200"
                   >
                     Cancel
                   </button>

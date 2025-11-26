@@ -1,11 +1,11 @@
 export interface UserSession {
   id: string;
-  user_id: string | null;
-  device: string | null;
-  device_type: string | null;
-  ip_address: string | null;
-  location: string | null;
-  last_active: string | null;
-  user_agent: string | null;
-  is_current: boolean | null;
+  user_id: string;
+  device: string;
+  device_type: string;
+  ip_address: string;
+  location: string;
+  last_active: string;
+  user_agent: string;
+  is_current: boolean;
 }

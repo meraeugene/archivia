@@ -4,6 +4,7 @@ import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { UAParser } from "ua-parser-js";
 import { getSession } from "./getSession";
+import { logout } from "./logout";
 
 export async function trackSession(userId: string) {
   const supabase = await createClient();
@@ -109,7 +110,7 @@ export async function getSessions() {
   return data;
 }
 
-export async function removeSession(sessionId: string) {
+export async function removeSession(sessionId: string, current = false) {
   const supabase = await createClient();
 
   const session = await getSession();
@@ -119,6 +120,10 @@ export async function removeSession(sessionId: string) {
   }
 
   await supabase.from("user_sessions").delete().eq("id", sessionId);
+
+  if (current) {
+    await logout();
+  }
 
   return true;
 }
