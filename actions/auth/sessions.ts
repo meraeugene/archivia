@@ -10,7 +10,7 @@ export async function trackSession(userId: string) {
   const h = await headers();
 
   const userAgent = h.get("user-agent") || "";
-  const ip = h.get("x-forwarded-for")?.split(",")[0] || "unknown";
+  const ip = h.get("x-forwarded-for")?.split(",")[0] || "";
 
   const parser = new UAParser(userAgent);
   const info = parser.getResult();
@@ -32,13 +32,13 @@ export async function trackSession(userId: string) {
   const osName = info.os.name || "Unknown OS";
   const deviceName = `${deviceLabel} ${browserName} - ${osName}`;
 
-  // Optional location
+  // --- GEOJS LOCATION ---
   let location = null;
   try {
-    const res = await fetch(`https://ipapi.co/${ip}/json/`);
-    const geo = await res.json();
+    const geoRes = await fetch(`https://get.geojs.io/v1/ip/geo.json`);
+    const geo = await geoRes.json();
     location = `${geo.city || "Unknown City"}, ${
-      geo.country_name || "Unknown Country"
+      geo.country || "Unknown Country"
     }`;
   } catch (err) {
     console.error("Error fetching location:", err);
