@@ -4,8 +4,8 @@ import { Menu, X } from "lucide-react";
 import { logout } from "@/actions/auth/logout";
 import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
-import { adviserNavLinks } from "@/app/(adviser)/FacultySidebar";
 import Link from "next/link";
+import { adviserNavLinks } from "@/app/(faculty)/faculty/FacultySidebar";
 
 interface MobileHeaderProps {
   headerTitle: string;

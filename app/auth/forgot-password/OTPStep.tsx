@@ -1,7 +1,7 @@
 "use client";
 
 import { useOTP } from "@/hooks/useOTP";
-import { ArrowLeft, CheckCircle2 } from "lucide-react";
+import { CheckCircle2 } from "lucide-react";
 
 interface OTPStepProps {
   isLoading: boolean;
@@ -87,7 +87,7 @@ const OTPStep = ({
         )}
       </button>
 
-      <button
+      {/* <button
         onClick={() => setStep("email")}
         className="w-full text-gray-500 text-sm hover:text-black cursor-pointer transition-colors duration-300 flex items-center group justify-center gap-2 font-medium"
       >
@@ -96,7 +96,7 @@ const OTPStep = ({
           size={16}
         />
         Back to Email
-      </button>
+      </button> */}
     </form>
   );
 };

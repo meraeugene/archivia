@@ -4,7 +4,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { User, ClipboardList, Menu, X } from "lucide-react";
+import { User, ClipboardList, Menu, X, Settings } from "lucide-react";
 import { getInitials } from "@/utils/getInitials";
 import { CurrentUser } from "@/types/currentUser";
 import { StudentAdviser } from "@/types/studentAdviser";
@@ -103,9 +103,9 @@ export default function ResponsiveHeader({
       {currentUser?.role === "faculty" && (
         <Link
           prefetch
-          href="/dashboard"
+          href="/faculty/dashboard"
           className={
-            pathname === "/dashboard"
+            pathname === "/faculty/dashboard"
               ? "font-semibold text-black"
               : "text-gray-800 hover:text-black"
           }
@@ -187,6 +187,18 @@ export default function ResponsiveHeader({
                       <User size={16} />
                       <span>Profile</span>
                     </Link>
+
+                    {currentUser.role === "faculty" && (
+                      <Link
+                        prefetch
+                        href="/faculty/settings"
+                        className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100"
+                        onClick={() => setOpen(false)}
+                      >
+                        <Settings size={16} />
+                        <span>Settings</span>
+                      </Link>
+                    )}
 
                     {currentUser.role === "student" && (
                       <Link

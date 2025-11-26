@@ -6,13 +6,18 @@ import { GraduationCap, FileText, BookOpen, Award } from "lucide-react";
 const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
   return (
     <div className="md:pt-16 pt-12">
-      <h2 className="text-3xl md:text-4xl font-black mb-12 tracking-tight">
-        ACADEMIC PROFILE
-      </h2>
+      <div className="mb-12">
+        <h2 className="text-3xl md:text-4xl font-black  tracking-tight mb-3">
+          ACADEMIC PROFILE
+        </h2>
+        <p className="text-slate-400">
+          Detailed academic information about the faculty member
+        </p>
+      </div>
 
       <div className="grid md:grid-cols-2 gap-8">
         {profile.highest_educational_attainment && (
-          <div className="group cursor-pointer border-gray-800 border">
+          <div className="group border-gray-800 border">
             <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
               <div className="flex items-center gap-3 mb-4">
                 <GraduationCap className="w-6 h-6" />
@@ -28,7 +33,7 @@ const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
         )}
 
         {profile.research_interest && (
-          <div className="group cursor-pointer border-gray-800 border">
+          <div className="group  border-gray-800 border">
             <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
               <div className="flex items-center gap-3 mb-4">
                 <FileText className="w-6 h-6" />
@@ -44,7 +49,7 @@ const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
         )}
 
         {profile.handled_subjects && (
-          <div className="group cursor-pointer border-gray-800 border">
+          <div className="group  border-gray-800 border">
             <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
               <div className="flex items-center gap-3 mb-4">
                 <BookOpen className="w-6 h-6" />
@@ -60,7 +65,7 @@ const FacultyAcademicInfo = ({ profile }: { profile: CurrentUser }) => {
         )}
 
         {profile.orcid && (
-          <div className="group cursor-pointer border-gray-800 border">
+          <div className="group  border-gray-800 border">
             <div className="border border-black p-8 h-full transition-all duration-300 hover:bg-black hover:text-white">
               <div className="flex items-center gap-3 mb-4">
                 <Award className="w-6 h-6" />

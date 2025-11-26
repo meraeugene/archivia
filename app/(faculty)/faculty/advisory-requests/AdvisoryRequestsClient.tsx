@@ -1,9 +1,9 @@
 "use client";
 
 import { Request } from "@/types/request";
-import RequestCard from "../../../components/RequestCard";
+import RequestCard from "../../../../components/RequestCard";
 import { useAdvisoryRequests } from "@/hooks/useAdvisoryRequests";
-import ConfirmationModal from "../../../components/ConfirmationModal";
+import ConfirmationModal from "../../../../components/ConfirmationModal";
 import { ReferredAdviser } from "@/types/referredAdvisers";
 import DashboardMobileHeader from "@/components/DashboardMobileHeader";
 import Masonry from "react-masonry-css";

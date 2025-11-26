@@ -7,8 +7,8 @@ import { InputField } from "./InputField";
 import { TextAreaField } from "./TextAreaField";
 import { getInitials } from "@/utils/getInitials";
 import { ProfileFormFields } from "@/data/profileFormFields";
-import { ResearchInterestSelector } from "@/app/(adviser)/settings/ResearchInterestSelector";
 import { HandledSubjectsSelector } from "./HandledSubjectsSelector";
+import { ResearchInterestSelector } from "./ResearchInterestSelector";
 
 interface ProfileFormProps {
   currentUser: CurrentUser | null;

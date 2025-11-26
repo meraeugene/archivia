@@ -4,11 +4,12 @@ import {
   Clock,
   FileCheck,
   FileText,
+  Settings,
   Users,
 } from "lucide-react";
 import RequestsList from "@/components/RequestsList";
-import StatsCard from "../../../components/StatsCard";
-import QuickActionsCard from "../../../components/QuickActionsCard";
+import StatsCard from "../../../../components/StatsCard";
+import QuickActionsCard from "../../../../components/QuickActionsCard";
 import Link from "next/link";
 import {
   getAdviserCurrentLeadersCount,
@@ -104,11 +105,11 @@ export default async function FacultyDashboard() {
               title="Review Advisory Requests"
               desc="Review and manage pending student requests"
               icon={<FileText className="h-6 w-6" />}
-              link="/advisory-requests"
+              link="/faculty/advisory-requests"
             />
             <QuickActionsCard
               title="View Advisees"
-              link="/advisees"
+              link="/faculty/advisees"
               desc="View the students you are currently advising."
               icon={<Users className="h-6 w-6" />}
             />
@@ -122,9 +123,16 @@ export default async function FacultyDashboard() {
 
             <QuickActionsCard
               title="Handled Thesis"
-              link="/handled-thesis"
+              link="/faculty/handled-thesis"
               desc="View all thesis you have handled"
               icon={<BookOpen className="h-6 w-6" />}
+            />
+
+            <QuickActionsCard
+              title="Settings"
+              link="/faculty/settings"
+              desc="Manage your faculty account settings"
+              icon={<Settings className="h-6 w-6" />}
             />
           </div>
         </section>

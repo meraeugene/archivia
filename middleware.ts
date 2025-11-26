@@ -17,11 +17,11 @@ const PROTECTED_PATHS = [
   "/publish-thesis",
 
   // faculty
-  "/advisees",
-  "/advisory-requests",
-  "/dashboard",
-  "/handled-thesis",
-  "/thesis-approval",
+  "/faculty/advisees",
+  "/faculty/advisory-requests",
+  "/faculty/dashboard",
+  "/faculty/handled-thesis",
+  "/faculty/settings",
 
   // admin
   "/backup",

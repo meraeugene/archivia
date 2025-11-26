@@ -5,6 +5,7 @@ import { signToken } from "@/lib/jwt";
 import { createClient } from "@/utils/supabase/server";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { trackSession } from "./sessions";
 
 export async function login(userId: string, password: string) {
   const sanitizedUserId = userId.trim();
@@ -47,8 +48,12 @@ export async function login(userId: string, password: string) {
     sameSite: "strict", // CSRF protection
   });
 
+  // 5. TRACK SESSION HERE
+  // mark this device as current login
+  await trackSession(user.id);
+
   if (user.role === "faculty") {
-    redirect("/dashboard");
+    redirect("/faculty/dashboard");
   }
 
   if (user.role === "admin") {

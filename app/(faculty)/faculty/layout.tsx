@@ -4,9 +4,9 @@ import {
   getPendingAdviserRequestsCount,
   getThesisSubmissionCount,
 } from "@/actions/faculty/count";
-import FacultySidebar from "@/app/(adviser)/FacultySidebar";
 import BackToTopButton from "@/components/BackToTopButton";
 import { redirect } from "next/navigation";
+import FacultySidebar from "./FacultySidebar";
 
 export default async function FacultyLayout({
   children,

@@ -6,13 +6,13 @@ import { revalidatePath } from "next/cache";
 
 export async function cancelRequest(requestId: string) {
   const supabase = await createClient();
-  const user = await getSession();
+  const session = await getSession();
 
-  if (!user) {
+  if (!session) {
     return { error: "User not authenticated" };
   }
 
-  if (user.role !== "student") {
+  if (session.role !== "student") {
     return { error: "Only students can cancel requests" };
   }
 
@@ -27,7 +27,7 @@ export async function cancelRequest(requestId: string) {
     return { error: "Request not found" };
   }
 
-  if (request.student_id !== user.sub) {
+  if (request.student_id !== session.sub) {
     return { error: "Unauthorized" };
   }
 

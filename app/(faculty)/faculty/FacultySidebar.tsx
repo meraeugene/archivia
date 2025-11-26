@@ -20,12 +20,16 @@ import { logout } from "@/actions/auth/logout";
 
 export const adviserNavLinks = [
   { label: "Home", href: "/", icon: Home },
-  { label: "Dashboard", href: "/dashboard", icon: LayoutDashboard },
-  { label: "Advisory Requests", href: "/advisory-requests", icon: FileText },
-  { label: "Advisees", href: "/advisees", icon: Users },
+  { label: "Dashboard", href: "/faculty/dashboard", icon: LayoutDashboard },
+  {
+    label: "Advisory Requests",
+    href: "/faculty/advisory-requests",
+    icon: FileText,
+  },
+  { label: "Advisees", href: "/faculty/advisees", icon: Users },
   // { label: "Thesis Approval", href: "/thesis-approval", icon: FileCheck },
-  { label: "Handled Thesis", href: "/handled-thesis", icon: BookOpen },
-  { label: "Settings", href: "/settings", icon: Settings },
+  { label: "Handled Thesis", href: "/faculty/handled-thesis", icon: BookOpen },
+  { label: "Settings", href: "/faculty/settings", icon: Settings },
   { label: "Logout", href: "/", icon: LogOutIcon },
 ];
 
