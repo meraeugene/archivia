@@ -39,10 +39,8 @@ export async function trackSession(userId: string) {
     try {
       const geoRes = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`);
       const geo = await geoRes.json();
-      location = `${geo.city || "Unknown City"}, ${
-        geo.country || "Unknown Country"
-      }`;
-      organizationName = geo.organization_name || "Unknown Org";
+      location = `${geo.city}, ${geo.country}`;
+      organizationName = geo.organization_name;
     } catch (err) {
       console.error("Error fetching location:", err);
     }
