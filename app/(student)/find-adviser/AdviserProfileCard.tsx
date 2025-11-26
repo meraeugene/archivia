@@ -115,17 +115,11 @@ const AdviserProfileCard = ({
                 <div className="absolute bottom-0 w-full b p-6 pb-3 md:space-y-4">
                   {/* Name & Title */}
                   <div>
-                    <h3 className="text-xl md:text-3xl font-bold text-white leading-tight mb-2">
+                    <h3 className="text-xl md:text-3xl font-bold leading-tight mb-1 text-outline">
                       {adviser.full_name}
                     </h3>
-                    {(adviser.prefix || adviser.suffix) && (
-                      <p className="text-xs text-gray-400 mb-2">
-                        {[adviser.prefix, adviser.suffix]
-                          .filter(Boolean)
-                          .join(" · ")}
-                      </p>
-                    )}
-                    <p className="text-sm text-gray-300">{adviser.position}</p>
+
+                    <p className="text-sm text-outline">{adviser.position}</p>
                   </div>
 
                   {/* Badges */}

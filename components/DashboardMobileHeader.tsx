@@ -5,7 +5,7 @@ import { logout } from "@/actions/auth/logout";
 import { useState, useTransition } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
-import { adviserNavLinks } from "@/app/(faculty)/faculty/FacultySidebar";
+import { adviserNavLinks } from "@/app/(faculty)/FacultySidebar";
 
 interface MobileHeaderProps {
   headerTitle: string;
