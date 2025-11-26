@@ -31,7 +31,7 @@ const RequestCard = ({
   handleOpenModal,
 }: RequestCardProps) => {
   return (
-    <div className="bg-white h-fit border border-gray-100 overflow-hidden  p-6 transition-shadow  rounded-lg shadow-lg hover:shadow-xl tra">
+    <div className="bg-white h-fit border border-gray-100 overflow-hidden  p-6 transition-shadow  rounded-lg shadow-lg hover:shadow-xl duration-200">
       {/* Header */}
       <div className="flex items-start justify-between mb-3">
         <div className="flex items-center space-x-3">
@@ -188,7 +188,7 @@ const RequestCard = ({
           <button
             disabled={isPending}
             onClick={() => handleOpenModal?.(request, "refer")}
-            className="flex-1 shadow-md hover:shadow-lg  cursor-pointer bg-white text-gray-700 border border-gray-100 px-4 py-3 lg:py-2  rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
+            className="flex-1 shadow-sm hover:shadow-md  cursor-pointer bg-white text-gray-700 border border-gray-100 px-4 py-3 lg:py-2  rounded-md text-sm font-medium hover:bg-gray-50 transition-colors flex items-center justify-center"
           >
             <CornerUpRight className="h-4 w-4 mr-2" />
             Refer Adviser

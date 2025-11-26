@@ -17,6 +17,7 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
   const [isPending, startTransition] = useTransition();
 
   const handleLogout = async () => {
+    document.body.style.overflow = "auto";
     startTransition(async () => {
       await logout();
     });

@@ -146,7 +146,7 @@ export default async function FacultyDashboard() {
               </h2>
 
               <Link
-                href="/advisory-requests"
+                href="/faculty/advisory-requests"
                 className="text-sm font-medium text-gray-800 hover:underline"
               >
                 View All

@@ -39,6 +39,13 @@ export default function ResponsiveHeader({
     studentAdviser &&
     isAuthorizedToUploadThesis;
 
+  const handleClose = (isMobile: boolean) => {
+    if (isMobile) {
+      setMobileMenuOpen(false);
+      document.body.style.overflow = "auto";
+    }
+  };
+
   const renderLinks = (isMobile = false) => (
     <div
       className={
@@ -63,12 +70,7 @@ export default function ResponsiveHeader({
                   ? "font-semibold text-black"
                   : "text-gray-800 hover:text-black"
               }
-              onClick={() => {
-                if (isMobile) {
-                  setMobileMenuOpen(false);
-                  document.body.style.overflow = "auto";
-                }
-              }}
+              onClick={() => handleClose(isMobile)}
             >
               {label}
             </Link>
@@ -84,12 +86,7 @@ export default function ResponsiveHeader({
               ? "font-semibold text-black"
               : "text-gray-800 hover:text-black"
           }
-          onClick={() => {
-            if (isMobile) {
-              setMobileMenuOpen(false);
-              document.body.style.overflow = "auto";
-            }
-          }}
+          onClick={() => handleClose(isMobile)}
         >
           Publish Thesis
         </Link>
@@ -104,12 +101,7 @@ export default function ResponsiveHeader({
               ? "font-semibold text-black"
               : "text-gray-800 hover:text-black"
           }
-          onClick={() => {
-            if (isMobile) {
-              setMobileMenuOpen(false);
-              document.body.style.overflow = "auto";
-            }
-          }}
+          onClick={() => handleClose(isMobile)}
         >
           Dashboard
         </Link>
@@ -124,12 +116,7 @@ export default function ResponsiveHeader({
               ? "font-semibold text-black"
               : "text-gray-800 hover:text-black"
           }
-          onClick={() => {
-            if (isMobile) {
-              setMobileMenuOpen(false);
-              document.body.style.overflow = "auto";
-            }
-          }}
+          onClick={() => handleClose(isMobile)}
         >
           Dashboard
         </Link>
@@ -189,10 +176,7 @@ export default function ResponsiveHeader({
                       prefetch
                       href={`/profile/${currentUser.user_id}`}
                       className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100"
-                      onClick={() => {
-                        setOpen(false);
-                        document.body.style.overflow = "auto";
-                      }}
+                      onClick={() => setOpen(false)}
                     >
                       <User size={16} />
                       <span>Profile</span>
@@ -203,10 +187,7 @@ export default function ResponsiveHeader({
                         prefetch
                         href="/faculty/settings"
                         className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100"
-                        onClick={() => {
-                          setOpen(false);
-                          document.body.style.overflow = "auto";
-                        }}
+                        onClick={() => setOpen(false)}
                       >
                         <Settings size={16} />
                         <span>Settings</span>
@@ -218,10 +199,7 @@ export default function ResponsiveHeader({
                         prefetch
                         href="/my-requests"
                         className="flex items-center space-x-2 px-4 py-2 text-sm hover:bg-gray-100"
-                        onClick={() => {
-                          setOpen(false);
-                          document.body.style.overflow = "auto";
-                        }}
+                        onClick={() => setOpen(false)}
                       >
                         <ClipboardList size={16} />
                         <span>My Requests</span>

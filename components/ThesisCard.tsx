@@ -134,7 +134,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
       <div className="flex gap-3 mt-6">
         <button
           onClick={() => onPreview(thesis)}
-          className="flex-1 bg-gray-50 border cursor-pointer shadow-md border-gray-200 text-black px-4 py-2.5 rounded font-medium text-sm md:text-base hover:shadow-lg transition-colors flex items-center justify-center gap-2"
+          className="flex-1 bg-gray-50 border cursor-pointer shadow-xs border-gray-200 text-black px-4 py-2.5 rounded font-medium text-sm md:text-base hover:shadow-sm transition-colors flex items-center justify-center gap-2"
         >
           <Eye size={16} /> Preview
         </button>

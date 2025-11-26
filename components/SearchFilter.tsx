@@ -50,8 +50,8 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
             value={searchQuery}
             onChange={(e) => handleChange(e.target.value)}
             placeholder="Search by title, adviser, proponents, and keywords..."
-            className="w-full pl-10 pr-12 py-3 md:text-base shadow-sm border border-gray-200 
-              text-sm bg-white focus:shadow-md focus:outline-none transition-colors rounded-sm"
+            className="w-full pl-10 pr-12 py-3 md:text-base shadow-xs border border-gray-200 
+              text-sm bg-white focus:shadow-sm focus:outline-none transition-colors rounded-sm"
           />
 
           <Search

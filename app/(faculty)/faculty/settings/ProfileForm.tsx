@@ -28,7 +28,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
   } = useAdviserProfileEditor(currentUser!);
 
   return (
-    <div className="bg-white rounded-lg  border shadow-xl border-gray-100 overflow-hidden">
+    <div className="bg-white rounded-lg  border shadow-xs hover:shadow-sm border-gray-100 overflow-hidden">
       <div className="px-6 py-4 border-b border-gray-100">
         <h3 className="text-lg font-semibold text-gray-900 flex items-center">
           <User className="h-5 w-5 mr-2" />

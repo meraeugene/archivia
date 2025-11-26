@@ -129,7 +129,10 @@ const MobileHeader = ({
                         ? "font-semibold text-black"
                         : "text-gray-800 hover:text-black"
                     }`}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      document.body.style.overflow = "auto";
+                    }}
                   >
                     My Requests
                   </Link>
@@ -144,6 +147,7 @@ const MobileHeader = ({
             {currentUser && (
               <form
                 onSubmit={async (e) => {
+                  document.body.style.overflow = "auto";
                   e.preventDefault();
                   setIsLoggingOut(true);
                   await logout(); // call server action
