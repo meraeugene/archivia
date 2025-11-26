@@ -77,16 +77,15 @@ const ManageAccessDevices = ({ sessions }: { sessions: UserSession[] }) => {
                 </div>
 
                 <div className="flex-1">
-                  {/* Device Name and Current Session */}
+                  {/*  Device Name and Logged in Track */}
                   <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 mb-2">
                     <h3 className="text-white font-semibold break-words">
                       {s.device}
                     </h3>
-                    {s.is_current && (
-                      <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-medium rounded-full border w-fit border-green-500/30">
-                        Current Session
-                      </span>
-                    )}
+
+                    <span className="px-2 py-0.5 bg-green-500/20 text-green-400 text-xs font-medium rounded-full border w-fit border-green-500/30">
+                      Logged In
+                    </span>
                   </div>
 
                   {/* Location and Last Active */}

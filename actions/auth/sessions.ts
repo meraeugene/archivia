@@ -39,51 +39,25 @@ export async function trackSession(userId: string) {
   try {
     const res = await fetch(`https://ipapi.co/${ip}/json/`);
     const geo = await res.json();
-    location = `${geo.city || null}, ${geo.country_name || null}`;
+    location = `${geo.city}, ${geo.country_name}`;
   } catch (err) {
     console.error("Error fetching location:", err);
   }
 
-  // 1. Mark all existing sessions as not current
   await supabase
     .from("user_sessions")
     .update({ is_current: false })
     .eq("user_id", userId);
 
-  // 2. Check if a session with the same device + IP exists
-  const { data: existing } = await supabase
-    .from("user_sessions")
-    .select("*")
-    .eq("user_id", userId)
-    .eq("device_type", deviceType)
-    .eq("ip_address", ip)
-    .single();
-
-  if (existing) {
-    // Update existing session
-    await supabase
-      .from("user_sessions")
-      .update({
-        last_active: new Date(),
-        is_current: true,
-        device: deviceName,
-        user_agent: userAgent,
-        location,
-      })
-      .eq("id", existing.id);
-  } else {
-    // Insert new session
-    await supabase.from("user_sessions").insert({
-      user_id: userId,
-      device: deviceName,
-      device_type: deviceType,
-      ip_address: ip,
-      location,
-      last_active: new Date(),
-      user_agent: userAgent,
-      is_current: true,
-    });
-  }
+  await supabase.from("user_sessions").insert({
+    user_id: userId,
+    device: deviceName,
+    device_type: deviceType,
+    ip_address: ip,
+    location,
+    last_active: new Date(),
+    user_agent: userAgent,
+  });
 
   return true;
 }
