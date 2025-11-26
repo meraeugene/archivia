@@ -33,12 +33,12 @@ export function useAdvisoryRequests() {
     request: Request,
     type: "accept" | "reserve" | "refer" | "returned" | "authorize"
   ) => {
-    document.body.classList.add("modal-open");
+    document.body.style.overflow = "hidden";
     setModalState({ open: true, type, request });
   };
 
   const closeModal = () => {
-    document.body.classList.remove("modal-open");
+    document.body.style.overflow = "auto";
     setModalState({ open: false, type: "accept", request: null });
   };
 

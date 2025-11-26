@@ -99,7 +99,10 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
                     key={index}
                     prefetch
                     href={link.href}
-                    onClick={() => setMobileMenuOpen(false)}
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      document.body.style.overflow = "auto";
+                    }}
                     className={`group flex items-center gap-4 px-6 pl-4 md:px-8 h-14 transition-colors duration-150 ${
                       isActive
                         ? "bg-gray-900 text-white"
