@@ -25,7 +25,7 @@ export async function trackSession(userId: string) {
   try {
     const res = await fetch(`https://ipapi.co/${ip}/json/`);
     const geo = await res.json();
-    location = `${geo.city}, ${geo.country_name}`;
+    location = `${geo.city || "Unknown"}, ${geo.country_name || "Unknown"}`;
   } catch (err) {
     console.error("Error fetching location:", err);
   }

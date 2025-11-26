@@ -4,7 +4,7 @@ const Decoratives = () => {
       {/* Animated mesh gradient background */}
       <div className="absolute inset-0 opacity-40 pointer-events-none">
         <div
-          className="absolute top-[25%] left-1/2 w-[600px] h-[600px] bg-gray-700 rounded-full blur-[120px] animate-pulse
+          className="absolute top-[50%] left-1/2 w-[600px] h-[600px] bg-gray-700 rounded-full blur-[120px] animate-pulse
                -translate-x-1/2 -translate-y-1/2"
           style={{
             transition: "transform 0.5s ease-out",

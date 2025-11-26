@@ -10,7 +10,7 @@ export function LogoutButton() {
     <button
       type="submit"
       disabled={pending}
-      className="flex text-sm cursor-pointer items-center space-x-2 w-full text-left  py-2 hover:bg-gray-100 disabled:opacity-50  md:px-4"
+      className="flex text-sm cursor-pointer items-center space-x-2 w-full text-left  py-2 hover:bg-gray-100 rounded-br-md rounded-bl-md disabled:opacity-50  md:px-4"
     >
       {pending ? (
         <div className="flex items-center space-x-2">
