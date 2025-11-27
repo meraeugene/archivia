@@ -58,7 +58,7 @@ const EmailStep = ({
       style={{ animationDelay: "0.2s" }}
     >
       <div className="group">
-        <label className="md:block  text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-black">
+        <label className="hidden md:block  text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-black">
           Email Address
         </label>
 
