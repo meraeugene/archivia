@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { StudentData, StudentDataField } from "@/types/advisers";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 interface InputPanelProps {
   studentData: StudentData;
@@ -45,12 +46,26 @@ const InputPanel = ({
               mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
             }`}
           >
-            <div className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 bg-white/10 backdrop-blur-xl border border-white/20 text-white rounded-full text-sm font-medium">
-              <Sparkles className="w-4 h-4 animate-pulse" />
-              <span className="bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent font-semibold">
+            <motion.div
+              className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 bg-white   text-black rounded-full text-sm font-medium "
+              animate={{
+                boxShadow: [
+                  "0 0 10px rgba(255, 255, 255, 0.4)",
+                  "0 0 20px rgba(255, 255, 255, 0.8)",
+                  "0 0 10px rgba(255, 255, 255, 0.4)",
+                ],
+              }}
+              transition={{
+                repeat: Infinity,
+                duration: 1.5,
+                ease: "easeInOut",
+              }}
+            >
+              <Sparkles className="w-4 h-4" />
+              <span className=" text-black  font-semibold">
                 AI-Powered Matching
               </span>
-            </div>
+            </motion.div>
 
             <h1
               className="text-6xl lg:text-7xl    font-bold mb-6 bg-gradient-to-b from-white via-white to-gray-500 bg-clip-text text-transparent tracking-tight"

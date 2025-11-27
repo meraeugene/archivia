@@ -35,13 +35,16 @@ export async function trackSession(userId: string) {
   // --- GEOJS LOCATION ---
   let location = null;
   let organizationName = null;
+
   if (ip) {
     try {
       const geoRes = await fetch(`https://get.geojs.io/v1/ip/geo/${ip}.json`);
       const geo = await geoRes.json();
+
       location = `${geo.city || "Unknown City"}, ${
         geo.country || "Unknown Country"
       }`;
+
       organizationName = geo.organization_name || "Unknown Org";
     } catch (err) {
       console.error("Error fetching location:", err);
@@ -50,17 +53,22 @@ export async function trackSession(userId: string) {
 
   const { data, error } = await supabase
     .from("user_sessions")
-    .insert({
-      user_id: userId,
-      device: deviceName,
-      device_type: deviceType,
-      ip_address: ip,
-      location,
-      last_active: new Date(),
-      user_agent: userAgent,
-      logged_in: true,
-      organization_name: organizationName,
-    })
+    .upsert(
+      {
+        user_id: userId,
+        device: deviceName,
+        device_type: deviceType,
+        ip_address: ip,
+        location,
+        last_active: new Date(),
+        user_agent: userAgent,
+        logged_in: true,
+        organization_name: organizationName,
+      },
+      {
+        onConflict: "user_id,device",
+      }
+    )
     .select("id")
     .single();
 
