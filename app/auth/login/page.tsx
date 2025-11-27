@@ -68,15 +68,15 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center md:px-6 bg-gray-50  relative">
+    <div className="min-h-screen flex items-center justify-center px-5 md:px-6 bg-gray-50  relative">
       <GridOverlay />
 
-      <div className="w-full md:max-w-6xl flex flex-col md:h-[90vh]   z-10  relative md:shadow-sm md:bg-white md:rounded-3xl  md:flex-row     overflow-hidden md:flex items-center justify-center ">
+      <div className="w-full md:max-w-6xl flex flex-col md:h-[90vh]   z-10  relative shadow-sm bg-white  py-10 md:py-0 rounded-lg md:rounded-3xl  md:flex-row     overflow-hidden md:flex items-center justify-center ">
         {/* Left Side - Login */}
-        <div className="flex flex-col w-full px-8  md:px-10 lg:px-20 md:py-34    md:w-1/2">
+        <div className="flex flex-col w-full px-4  md:px-10 lg:px-20 md:py-34    md:w-1/2">
           {/* Header */}
-          <div className="mb-4 ">
-            <div className="flex items-center justify-center md:mb-18 mb-4">
+          <div>
+            <div className="flex items-center justify-center md:mb-18">
               <img
                 src="/images/logo.png"
                 alt="Archivia Logo"
@@ -86,10 +86,10 @@ export default function Login() {
                 rchivia
               </h2>
             </div>
-            <p className="text-gray-600 text-center">
+            <p className="text-gray-600 text-center block mb-8 mt-4 md:mb-0 ">
               Sign in to your school account
             </p>
-            <div className="border-b border-gray-100 mt-4" />
+            <div className="hidden md:block border-b border-gray-100 mt-4 mb-7 md:mb-4 " />
           </div>
 
           {/* Form */}
@@ -98,7 +98,7 @@ export default function Login() {
             <div>
               <label
                 htmlFor="userId"
-                className="block text-sm text-black font-semibold mb-2"
+                className="hidden md:block text-sm text-black font-semibold mb-2"
               >
                 Username
               </label>
@@ -114,7 +114,7 @@ export default function Login() {
                   placeholder="School ID"
                   value={formData.userId}
                   onChange={handleInputChange}
-                  className=" outline-none w-full pl-10 pr-4 py-3  border-2 border-gray-200 rounded-xl text-gray-800 bg-gray-50  placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300"
+                  className=" outline-none w-full pl-10 pr-4 py-3  border border-gray-200  text-gray-800 bg-gray-50  placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300 rounded-md"
                 />
               </div>
             </div>
@@ -123,7 +123,7 @@ export default function Login() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-semibold text-black mb-2"
+                className="md:block text-sm hidden font-semibold text-black mb-2"
               >
                 Password
               </label>
@@ -139,7 +139,7 @@ export default function Login() {
                   placeholder="**********"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className=" outline-none w-full pl-10 pr-4 py-3  border-2 border-gray-200 rounded-xl text-gray-800 bg-gray-50  placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300"
+                  className=" outline-none w-full pl-10 pr-4 py-3  border border-gray-200  text-gray-800 bg-gray-50  placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300 rounded-md"
                 />
                 <button
                   type="button"

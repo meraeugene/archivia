@@ -32,7 +32,7 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen  relative overflow-hidden flex items-center justify-center md:p-4 bg-gray-50 ">
+    <div className="min-h-screen  relative overflow-hidden flex items-center justify-center md:p-6 bg-gray-50 px-4 ">
       <GridOverlay />
 
       {/* Main Card */}
@@ -41,7 +41,7 @@ export default function ForgotPassword() {
         <ProgressIndicator step={step} />
 
         {/* Card */}
-        <div className="md:bg-white   md:rounded-3xl md:shadow-sm  px-6 pb-8 md:p-8 relative overflow-hidden">
+        <div className="bg-white rounded-lg   md:rounded-3xl shadow-sm  px-4 py-8 md:p-8 relative overflow-hidden">
           {/* Logo */}
           <div className="flex items-center justify-center mb-12">
             <img
