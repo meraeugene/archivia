@@ -2,7 +2,7 @@
 
 import { forgotPassword } from "@/actions/auth/forgotPassword";
 import { isValidEmail } from "@/utils/isValidEmail";
-import { Mail, Send } from "lucide-react";
+import { Mail } from "lucide-react";
 import { useState } from "react";
 import { toast } from "sonner";
 
@@ -58,7 +58,7 @@ const EmailStep = ({
       style={{ animationDelay: "0.2s" }}
     >
       <div className="group">
-        <label className="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-black">
+        <label className="md:block  text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-black">
           Email Address
         </label>
 
@@ -75,7 +75,7 @@ const EmailStep = ({
               setLocalEmail(e.target.value);
               setEmail(e.target.value);
             }}
-            placeholder="your.email@example.com"
+            placeholder="Email Address"
             className="reset-password-input"
           />
         </div>
@@ -88,10 +88,7 @@ const EmailStep = ({
             Sending...
           </>
         ) : (
-          <>
-            <Send size={18} />
-            Send Reset Code
-          </>
+          <span>Send Reset Code</span>
         )}
       </button>
     </form>

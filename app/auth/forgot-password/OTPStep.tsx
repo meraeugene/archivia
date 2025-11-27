@@ -1,7 +1,6 @@
 "use client";
 
 import { useOTP } from "@/hooks/useOTP";
-import { CheckCircle2 } from "lucide-react";
 
 interface OTPStepProps {
   isLoading: boolean;
@@ -34,9 +33,9 @@ const OTPStep = ({
     <form onSubmit={handleVerifyOTP} className="space-y-6 animate-slide-in">
       <div>
         <label className="block text-sm font-semibold text-gray-700 mb-4 text-center">
-          Enter 6-Digit Code
+          Enter 5-Digit Code
         </label>
-        <div className="flex gap-2 justify-center mb-4">
+        <div className="flex gap-2 justify-center mb-4 ">
           {otp.map((digit, index) => (
             <input
               key={index}
@@ -72,7 +71,7 @@ const OTPStep = ({
       <button
         type="submit"
         disabled={isLoading || isResending}
-        className="w-full bg-black text-white py-3.5 rounded-xl font-semibold   disabled:cursor-not-allowed disabled:opacity-90 hover:bg-black/90 cursor-pointer  flex items-center justify-center gap-2"
+        className="w-full bg-black text-white py-3.5 rounded-md font-semibold   disabled:cursor-not-allowed disabled:opacity-90 hover:bg-black/90 cursor-pointer  flex items-center justify-center gap-2"
       >
         {isLoading ? (
           <>
@@ -80,10 +79,7 @@ const OTPStep = ({
             Verifying...
           </>
         ) : (
-          <>
-            <CheckCircle2 size={18} />
-            Verify Code
-          </>
+          <span>Verify Code</span>
         )}
       </button>
 

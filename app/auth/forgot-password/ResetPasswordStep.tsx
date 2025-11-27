@@ -2,7 +2,7 @@
 
 import { resetPassword } from "@/actions/auth/resetPassword";
 import { isStrongPassword } from "@/utils/isStrongPassword";
-import { CheckCircle2, Lock, Eye, EyeOff } from "lucide-react";
+import { Lock, Eye, EyeOff } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -62,7 +62,7 @@ const ResetPasswordStep = ({
     <form onSubmit={handleResetPassword} className="space-y-5 animate-slide-in">
       {/* New Password */}
       <div className="group relative">
-        <label className="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-gray-600">
+        <label className="hidden md:block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-gray-600">
           New Password
         </label>
         <div className="relative">
@@ -90,7 +90,7 @@ const ResetPasswordStep = ({
 
       {/* Confirm Password */}
       <div className="group relative">
-        <label className="block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-gray-600">
+        <label className="hidden md:block text-sm font-semibold text-gray-700 mb-2 transition-colors group-focus-within:text-gray-600">
           Confirm Password
         </label>
         <div className="relative">
@@ -119,7 +119,7 @@ const ResetPasswordStep = ({
       <button
         type="submit"
         disabled={isLoading}
-        className="w-full bg-black text-white py-3.5 rounded-xl font-semibold disabled:cursor-not-allowed hover:bg-black/90 cursor-pointer flex items-center justify-center gap-2"
+        className="w-full bg-black text-white py-3.5 rounded-md font-semibold disabled:cursor-not-allowed hover:bg-black/90 cursor-pointer flex items-center justify-center gap-2"
       >
         {isLoading ? (
           <>
@@ -127,10 +127,7 @@ const ResetPasswordStep = ({
             Resetting...
           </>
         ) : (
-          <>
-            <CheckCircle2 size={18} />
-            Reset Password
-          </>
+          <span>Reset Password</span>
         )}
       </button>
     </form>

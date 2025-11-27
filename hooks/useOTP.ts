@@ -20,15 +20,15 @@ export function useOTP({
   setIsLoading,
   setStep,
 }: useOTPProps) {
-  const [otp, setOtp] = useState(["", "", "", "", "", ""]);
+  const [otp, setOtp] = useState(["", "", "", "", ""]);
   const [isResending, setIsResending] = useState(false);
 
   const handleVerifyOTP = async (e: React.FormEvent) => {
     e.preventDefault();
     const otpCode = otp.join("");
 
-    if (otpCode.length !== 6) {
-      toast.error("Please enter all 6 digits");
+    if (otpCode.length !== 5) {
+      toast.error("Please enter all 5 digits");
       return;
     }
 

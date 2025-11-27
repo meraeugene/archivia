@@ -73,7 +73,7 @@ export default function Login() {
 
       <div className="w-full md:max-w-6xl flex flex-col md:h-[90vh]   z-10  relative shadow-sm bg-white  py-10 md:py-0 rounded-lg md:rounded-3xl  md:flex-row     overflow-hidden md:flex items-center justify-center ">
         {/* Left Side - Login */}
-        <div className="flex flex-col w-full px-4  md:px-10 lg:px-20 md:py-34    md:w-1/2">
+        <div className="flex flex-col w-full px-4 md:px-8 lg:px-10 xl:px-20 md:py-34    md:w-1/2">
           {/* Header */}
           <div>
             <div className="flex items-center justify-center md:mb-18">
@@ -111,7 +111,7 @@ export default function Login() {
                   name="userId"
                   autoComplete="username"
                   type="text"
-                  placeholder="School ID"
+                  placeholder="ID Number"
                   value={formData.userId}
                   onChange={handleInputChange}
                   className=" outline-none w-full pl-10 pr-4 py-3  border border-gray-200  text-gray-800 bg-gray-50  placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300 rounded-md"
@@ -136,7 +136,7 @@ export default function Login() {
                   autoComplete="current-password"
                   name="password"
                   type={showPassword ? "text" : "password"}
-                  placeholder="**********"
+                  placeholder="Password"
                   value={formData.password}
                   onChange={handleInputChange}
                   className=" outline-none w-full pl-10 pr-4 py-3  border border-gray-200  text-gray-800 bg-gray-50  placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300 rounded-md"

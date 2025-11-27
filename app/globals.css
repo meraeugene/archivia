@@ -229,7 +229,7 @@
 }
 
 .reset-password-otp {
-  @apply w-12 h-14 bg-gray-50 border border-gray-200 rounded-md text-center text-xl font-bold text-gray-800 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300;
+  @apply w-12 h-12 bg-gray-50 border border-gray-200 rounded-md text-center text-xl font-bold text-gray-800 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300;
 }
 
 .reset-password-btn {
