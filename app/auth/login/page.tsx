@@ -114,7 +114,7 @@ export default function Login() {
                   placeholder="School ID"
                   value={formData.userId}
                   onChange={handleInputChange}
-                  className=" outline-none w-full pl-10 pr-4 py-3  border-2 border-gray-100 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300"
+                  className=" outline-none w-full pl-10 pr-4 py-3  border-2 border-gray-200 rounded-xl text-gray-800 bg-gray-50  placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300"
                 />
               </div>
             </div>
@@ -139,7 +139,7 @@ export default function Login() {
                   placeholder="**********"
                   value={formData.password}
                   onChange={handleInputChange}
-                  className=" outline-none w-full pl-10 pr-4 py-3  border-2 border-gray-100 rounded-xl text-gray-800 placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300"
+                  className=" outline-none w-full pl-10 pr-4 py-3  border-2 border-gray-200 rounded-xl text-gray-800 bg-gray-50  placeholder-gray-400 focus:outline-none focus:border-gray-500 focus:bg-white transition-all duration-300 hover:border-gray-300"
                 />
                 <button
                   type="button"
