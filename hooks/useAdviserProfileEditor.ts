@@ -18,6 +18,7 @@ type AdviserFormState = {
   research_interest: string;
   handled_subjects: string;
   profile_picture: string | File;
+  orcid: string;
 };
 
 interface SyntheticInputEvent {
@@ -47,6 +48,7 @@ export function useAdviserProfileEditor(profile: CurrentUser) {
     research_interest: profile.research_interest ?? "",
     handled_subjects: profile.handled_subjects ?? "",
     profile_picture: profile.profile_picture ?? "",
+    orcid: profile.orcid ?? "",
   });
 
   // Handle input & textarea changes
@@ -145,6 +147,7 @@ export function useAdviserProfileEditor(profile: CurrentUser) {
       research_interest: profile.research_interest ?? "",
       handled_subjects: profile.handled_subjects ?? "",
       profile_picture: profile.profile_picture ?? "",
+      orcid: profile.orcid ?? "",
     });
 
     setImagePreview(profile.profile_picture ?? "");

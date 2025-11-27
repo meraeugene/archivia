@@ -33,14 +33,14 @@ export default async function AdminDashboard() {
   ]);
 
   return (
-    <main className="flex-1">
+    <main className="flex-1 relative ">
       <div className="sticky top-0 z-40 px-8 py-4  bg-white shadow-xs">
         <h1 className="text-lg font-bold text-gray-900">Admin Dashboard</h1>
       </div>
 
       {/* Statistics Overview */}
-      <section className="p-8 pb-0">
-        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+      <section className="p-8 pb-0 ">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-5 gap-6 ">
           <StatsCard
             title="Total Advisory Requests"
             count={totalRequests}
@@ -83,7 +83,7 @@ export default async function AdminDashboard() {
         <h2 className="text-xl font-semibold text-gray-900 mb-4">
           Quick Actions
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 xl:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           <QuickActionsCard
             title="Manage advisees"
             desc="View and manage adviser advisees."

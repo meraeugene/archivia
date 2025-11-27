@@ -66,7 +66,7 @@ export default function ChangePasswordPage() {
                 type={showOldPassword ? "text" : "password"}
                 value={oldPassword}
                 onChange={(e) => setOldPassword(e.target.value)}
-                className="w-full border border-gray-50 focus:shadow-md focus:border-gray-100  shadow-sm  rounded-lg px-4 py-3 pr-10 focus:outline-none"
+                className="w-full border border-gray-50 focus:shadow-md focus:border-gray-100  shadow-sm  rounded-md px-4 py-3 pr-10 focus:outline-none"
                 placeholder="Enter your current password"
               />
               <button
@@ -94,7 +94,7 @@ export default function ChangePasswordPage() {
                 type={showNewPassword ? "text" : "password"}
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
-                className="w-full border border-gray-100 shadow-sm rounded-lg px-4 py-3 focus:shadow-md focus:border-gray-100  pr-10  focus:outline-none"
+                className="w-full border border-gray-100 shadow-sm rounded-md px-4 py-3 focus:shadow-md focus:border-gray-100  pr-10  focus:outline-none"
                 placeholder="Enter your new password"
               />
               <button
@@ -121,7 +121,7 @@ export default function ChangePasswordPage() {
             <button
               type="submit"
               disabled={isPending}
-              className="px-6 md:py-3 py-2 cursor-pointer rounded-lg font-medium transition-colors bg-gray-900 text-white hover:bg-gray-800 disabled:opacity-80 flex items-center justify-center gap-2 min-w-[150px]"
+              className="px-6 md:py-3 py-2 cursor-pointer rounded-md font-medium transition-colors bg-gray-900 text-white hover:bg-gray-800 disabled:opacity-80 flex items-center justify-center gap-2 min-w-[150px]"
             >
               {isPending && (
                 <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

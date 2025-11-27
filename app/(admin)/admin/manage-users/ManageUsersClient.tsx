@@ -56,14 +56,14 @@ export default function ManageUsersClient({
   };
 
   return (
-    <main className="flex-1 bg-gray-50 min-h-screen">
+    <main className=" bg-gray-50 min-h-screen">
       {/* Header */}
       <div className="sticky top-0 z-40 px-8 py-4 shadow-xs bg-white">
         <h1 className="text-xl font-bold text-gray-900">Manage Users</h1>
       </div>
 
       {/* Content */}
-      <div className="p-8">
+      <div className="p-8  ">
         <div className="flex justify-between items-center flex-wrap gap-3">
           {/* Left: Search and Sort */}
           <div className="flex items-center gap-3 flex-wrap">
@@ -115,7 +115,7 @@ export default function ManageUsersClient({
         </div>
 
         {/* Users Table */}
-        <div className="mt-8 w-full bg-white rounded overflow-scroll lg:overflow-hidden  border">
+        <div className="mt-8 w-full bg-white rounded border  overflow-auto ">
           <UsersTable
             filteredUsers={users}
             setIsEditOpen={setIsEditOpen}

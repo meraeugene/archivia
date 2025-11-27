@@ -8,7 +8,7 @@ export default function Loading() {
       <div className="p-8 space-y-8">
         {/* Statistics Overview */}
         <section>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-5 gap-6">
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
@@ -32,8 +32,8 @@ export default function Loading() {
         {/* Quick Actions */}
         <section>
           <div className="h-6 w-40 bg-gray-200 rounded mb-6 animate-pulse" />
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            {[...Array(4)].map((_, i) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-5 gap-6">
+            {[...Array(5)].map((_, i) => (
               <div
                 key={i}
                 className="bg-white p-6 rounded-lg shadow-sm border border-gray-200 animate-pulse"

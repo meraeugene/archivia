@@ -18,7 +18,7 @@ export default function Page() {
       {/* Content */}
       <div className="p-8 space-y-8">
         {/*  Warning Note */}
-        <div className="flex items-start gap-3 bg-yellow-50 w-1/2 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-sm">
+        <div className="flex items-start gap-3 bg-yellow-50 xl:w-1/2 border border-yellow-200 text-yellow-800 px-4 py-3 rounded-sm">
           <AlertTriangle className="w-5 h-5 mt-0.5 text-yellow-500 shrink-0" />
           <div>
             <strong>Important Note:</strong> Restoring data will directly insert
@@ -34,7 +34,7 @@ export default function Page() {
           <Button
             variant="outline"
             onClick={handleContactDeveloper}
-            className="flex items-center gap-2"
+            className="flex items-center gap-2 rounded-sm"
           >
             <Mail className="w-4 h-4" />
             Contact Developer
@@ -52,7 +52,7 @@ export default function Page() {
           <Button
             onClick={handleBackup}
             disabled={loading}
-            className="bg-black text-white hover:bg-gray-800"
+            className="bg-black rounded-sm text-white hover:bg-gray-800"
           >
             {loading ? "Backing up..." : "Download Full Backup"}
           </Button>
@@ -82,7 +82,7 @@ export default function Page() {
             />
             <Button
               disabled
-              className="bg-gray-300 text-gray-600 cursor-not-allowed flex items-center gap-2"
+              className="bg-gray-300 rounded-sm text-gray-600 cursor-not-allowed flex items-center gap-2"
             >
               <Lock className="w-4 h-4" />
               Locked

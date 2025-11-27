@@ -137,7 +137,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="bg-white  animate-fadeInScale rounded-2xl p-8 max-w-md w-full shadow-2xl border border-gray-200 relative "
+        className="bg-white  animate-fadeInScale rounded-lg p-8 max-w-md w-full shadow-2xl border border-gray-200 relative "
       >
         {/* Icon */}
         <div className="text-center mb-6">
@@ -175,7 +175,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
             )}
           </p>
 
-          <div className="p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
             <p className="font-bold text-black text-lg">{studentName}</p>
           </div>
 
@@ -189,7 +189,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
               <button
                 type="button"
                 onClick={() => setShowDropdown((prev) => !prev)}
-                className="w-full p-3  cursor-pointer border border-gray-200 rounded-xl text-sm flex justify-between items-center hover:ring focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black bg-white"
+                className="w-full p-3  cursor-pointer border border-gray-200 rounded-md text-sm flex justify-between items-center hover:ring focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black bg-white"
               >
                 <span className="truncate text-gray-800">
                   {referredAdvisers?.find((a) => a.id === selectedAdviser?.id)
@@ -271,7 +271,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                   value={feedback}
                   onChange={(e) => setFeedback(e.target.value)}
                   placeholder={content.placeholder}
-                  className="w-full p-3 border border-gray-200 rounded-xl resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm scrollbar-none"
+                  className="w-full p-3 border border-gray-200 rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black transition-all text-sm scrollbar-none"
                   rows={3}
                   maxLength={300}
                 />
@@ -288,14 +288,14 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
         <div className="flex gap-4">
           <button
             onClick={resetAndClose}
-            className="flex-1 px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-700 font-medium hover:bg-gray-100 transition-all cursor-pointer"
+            className="flex-1 px-4 py-3 rounded-md border border-gray-200 bg-white text-gray-700 font-medium hover:bg-gray-100 transition-all cursor-pointer"
           >
             Cancel
           </button>
           <button
             disabled={isPending}
             onClick={() => onConfirm(feedback.trim() || undefined)}
-            className={`flex-1  px-5 py-3 rounded-xl bg-black text-white font-semibold hover:bg-black/90 transition-all flex items-center justify-center gap-2 ${
+            className={`flex-1  px-5 py-3 rounded-md bg-black text-white font-semibold hover:bg-black/90 transition-all flex items-center justify-center gap-2 ${
               isPending ? "opacity-50 cursor-not-allowed" : "cursor-pointer"
             }`}
           >

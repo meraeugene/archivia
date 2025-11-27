@@ -168,7 +168,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
           <button
             type="button"
             onClick={handleCancel}
-            className="px-6 py-2 md:py-3 cursor-pointer border border-gray-100 shadow-xs text-gray-700 rounded-lg font-medium hover:shadow-sm transition-colors"
+            className="px-6 py-2 md:py-3 cursor-pointer border border-gray-100 shadow-xs text-gray-700 rounded-md font-medium hover:shadow-sm transition-colors"
           >
             Cancel
           </button>
@@ -176,7 +176,7 @@ export default function ProfileForm({ currentUser }: ProfileFormProps) {
           <button
             onClick={handleSave}
             disabled={pending}
-            className="px-6 py-2 md:py-3 rounded-lg font-medium transition-colors bg-gray-900 text-white hover:bg-gray-800 cursor-pointer disabled:opacity-80 flex items-center justify-center gap-2 min-w-[140px]"
+            className="px-6 py-2 md:py-3 rounded-md font-medium transition-colors bg-gray-900 text-white hover:bg-gray-800 cursor-pointer disabled:opacity-80 flex items-center justify-center gap-2 min-w-[140px]"
           >
             {pending && (
               <div className="h-5 w-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>

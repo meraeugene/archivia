@@ -23,7 +23,7 @@ export const InputField = ({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      className="w-full px-4 py-3 border border-gray-50  shadow-sm rounded-lg focus:outline-none  focus:shadow-md focus:border-gray-100 "
+      className="w-full px-4 py-3 border border-gray-50  shadow-sm rounded-md focus:outline-none  focus:shadow-md focus:border-gray-100 "
     />
   </div>
 );

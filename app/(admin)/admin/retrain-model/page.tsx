@@ -49,7 +49,7 @@ export default function RetrainModelPage() {
       {/* Content */}
       <div className="p-8 space-y-8">
         {/* Info Note */}
-        <div className="flex items-start gap-3 bg-blue-50 w-1/2 border border-blue-100 text-blue-800 px-4 py-3 rounded-sm">
+        <div className="flex items-start gap-3 bg-blue-50  xl:w-1/2  border border-blue-100 text-blue-800 px-4 py-3 rounded-sm">
           <Info className="w-5 h-5 mt-0.5 text-blue-400 shrink-0" />
           <div>
             <strong>Note:</strong> This process will retrain the adviser
@@ -69,7 +69,7 @@ export default function RetrainModelPage() {
           <Button
             variant="outline"
             onClick={handleContactDeveloper}
-            className="flex items-center gap-2"
+            className="flex rounded-sm items-center gap-2"
           >
             <Mail className="w-4 h-4" />
             Contact Developer
@@ -91,7 +91,7 @@ export default function RetrainModelPage() {
             className={`${
               loading
                 ? "cursor-not-allowed opacity-70"
-                : "bg-black  text-white hover:bg-gray-800 flex items-center gap-2"
+                : "bg-black rounded-sm text-white hover:bg-gray-800 flex items-center gap-2"
             }`}
           >
             {loading ? (

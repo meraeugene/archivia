@@ -8,4 +8,5 @@ export const ProfileFormFields = [
     label: "Highest Educational Attainment",
     name: "highest_educational_attainment",
   },
+  { label: "ORCID ID", name: "orcid" },
 ];
