@@ -41,7 +41,7 @@ export default function ForgotPassword() {
         <ProgressIndicator step={step} />
 
         {/* Card */}
-        <div className="md:bg-white/80  backdrop-blur-xl md:rounded-3xl md:shadow-2xl shadow-gray-200/50 md:border border-gray-200 px-6 pb-8 md:p-8 relative overflow-hidden">
+        <div className="md:bg-white   md:rounded-3xl md:shadow-sm  px-6 pb-8 md:p-8 relative overflow-hidden">
           {/* Logo */}
           <div className="flex items-center justify-center mb-12">
             <img
