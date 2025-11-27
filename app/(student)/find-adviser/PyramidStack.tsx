@@ -51,7 +51,7 @@ const PyramidStack = ({
               >
                 {globalIndex === 0 && (
                   <motion.div
-                    className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-black rounded-2xl px-6 py-2 font-bold text-sm flex items-center gap-2 z-20 shadow-lg"
+                    className="absolute -top-6 left-1/2 -translate-x-1/2 bg-white text-black rounded-2xl px-4 py-2 font-bold text-sm flex items-center gap-2 z-20 shadow-lg"
                     animate={{
                       boxShadow: [
                         "0 0 10px #fff",
