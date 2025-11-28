@@ -80,16 +80,6 @@ const InputPanel = ({
           </div>
         )}
 
-        {hasRecommendations && (
-          <h2
-            className={`text-4xl font-bold mb-10 text-white transition-all duration-1000 ${
-              mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-            }`}
-          >
-            Find Your Adviser
-          </h2>
-        )}
-
         {/* Input Fields */}
         <div
           className={`space-y-8 transition-all duration-1000 delay-200 ${
