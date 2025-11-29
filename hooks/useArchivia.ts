@@ -4,10 +4,11 @@ import { useState, useCallback, useTransition, useEffect } from "react";
 import { Thesis } from "@/types/thesis";
 import { toast } from "sonner";
 import {
-  searchTheses,
   getMoreTheses,
   getThesesCount,
+  // searchTheses,
 } from "@/actions/common/theses";
+import { semanticSearchTheses } from "@/actions/common/semanticSearchTheses";
 
 export function useArchivia(initialTheses?: Thesis[]) {
   const [displayedTheses, setDisplayedTheses] = useState<Thesis[]>(
@@ -78,7 +79,8 @@ export function useArchivia(initialTheses?: Thesis[]) {
       }
 
       startSearchTransition(async () => {
-        const { data, error } = await searchTheses(trimmedQuery);
+        // const { data, error } = await searchTheses(trimmedQuery);
+        const { data, error } = await semanticSearchTheses(trimmedQuery);
         if (error) toast.error("Error searching theses");
         else {
           const results = data || [];

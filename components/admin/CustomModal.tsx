@@ -36,7 +36,7 @@ export function CustomModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
-      <div className="bg-white rounded-md p-8 max-w-md w-full shadow-2xl border border-gray-200 relative">
+      <div className="bg-white rounded-md p-8 w-1/2 shadow-2xl border border-gray-200 relative overflow-y-auto max-h-[90vh]">
         {/* Close Icon */}
         <button
           onClick={onClose}

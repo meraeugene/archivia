@@ -6,6 +6,8 @@ import { Dispatch, SetStateAction } from "react";
 import { toast } from "sonner";
 import { EditableThesis, ManageThesis } from "@/types/manageThesis";
 import { editThesis } from "@/actions/admin/manageThesis";
+import { Textarea } from "@/components/ui/textarea";
+import TagInput from "./TagInput";
 
 interface EditThesisModalProps {
   isEditOpen: boolean;
@@ -71,9 +73,10 @@ const EditThesisModal = ({
       isLoading={isLoading}
       onClose={handleClose}
     >
-      <div className="space-y-4">
+      <div className="space-y-4  ">
+        {/* Title */}
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-xs tracking-wide uppercase text-gray-700 ">
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
             Title
           </label>
           <Input
@@ -85,8 +88,24 @@ const EditThesisModal = ({
           />
         </div>
 
+        {/* Abstract */}
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-xs tracking-wide uppercase text-gray-700 ">
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
+            Abstract
+          </label>
+          <Textarea
+            placeholder="Abstract"
+            value={editData.abstract || ""}
+            onChange={(e) =>
+              setEditData((prev) => ({ ...prev, abstract: e.target.value }))
+            }
+            rows={4}
+          />
+        </div>
+
+        {/* Adviser */}
+        <div className="flex flex-col gap-2">
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
             Adviser
           </label>
           <Input
@@ -98,74 +117,84 @@ const EditThesisModal = ({
           />
         </div>
 
+        {/* Panel Members */}
+        {["Panel Chair", "Panel Member 2", "Panel Member 3"].map(
+          (label, idx) => (
+            <div key={label} className="flex flex-col gap-2">
+              <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
+                {label}
+              </label>
+              <Input
+                placeholder={label}
+                value={
+                  idx === 0
+                    ? editData.panel_member1 || ""
+                    : idx === 1
+                    ? editData.panel_member2 || ""
+                    : editData.panel_member3 || ""
+                }
+                onChange={(e) =>
+                  setEditData((prev) => ({
+                    ...prev,
+                    panel_member1:
+                      idx === 0 ? e.target.value : prev.panel_member1,
+                    panel_member2:
+                      idx === 1 ? e.target.value : prev.panel_member2,
+                    panel_member3:
+                      idx === 2 ? e.target.value : prev.panel_member3,
+                  }))
+                }
+              />
+            </div>
+          )
+        )}
+
+        {/* Keywords */}
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-xs tracking-wide uppercase text-gray-700 ">
-            Panel Chair
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
+            Keywords
           </label>
-          <Input
-            placeholder="Panel Chair Name"
-            value={editData.panel_member1 || ""}
-            onChange={(e) =>
-              setEditData((prev) => ({
-                ...prev,
-                panel_member1: e.target.value,
-              }))
+          <TagInput
+            value={editData.keywords || []}
+            setValue={(val) =>
+              setEditData((prev) => ({ ...prev, keywords: val }))
             }
+            placeholder="Type a keyword and press Enter"
           />
         </div>
 
+        {/* Category */}
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-xs tracking-wide uppercase text-gray-700 ">
-            Panel Member 2
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
+            Category
           </label>
-          <Input
-            placeholder="Panel Member 2"
-            value={editData.panel_member2 || ""}
-            onChange={(e) =>
-              setEditData((prev) => ({
-                ...prev,
-                panel_member2: e.target.value,
-              }))
+
+          <TagInput
+            value={editData.category || []}
+            setValue={(val) =>
+              setEditData((prev) => ({ ...prev, category: val }))
             }
+            placeholder="Type a category and press Enter"
           />
         </div>
 
+        {/* Proponents */}
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-xs tracking-wide uppercase text-gray-700 ">
-            Panel Member 3
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
+            Proponents
           </label>
-          <Input
-            placeholder="Panel Member 3"
-            value={editData.panel_member3 || ""}
-            onChange={(e) =>
-              setEditData((prev) => ({
-                ...prev,
-                panel_member3: e.target.value,
-              }))
+          <TagInput
+            value={editData.proponents || []}
+            setValue={(val) =>
+              setEditData((prev) => ({ ...prev, proponents: val }))
             }
+            placeholder="Type a proponent and press Enter"
           />
         </div>
 
+        {/* Year */}
         <div className="flex flex-col gap-2">
-          <label className="font-medium text-xs tracking-wide uppercase text-gray-700 ">
-            Proponents <span className="text-gray-500">(comma separated)</span>
-          </label>
-          <Input
-            placeholder="Proponents"
-            value={editData.proponents?.join(", ") || ""}
-            onChange={(e) =>
-              setEditData((prev) => ({
-                ...prev,
-                proponents: e.target.value
-                  .split(",")
-                  .map((s: string) => s.trim()),
-              }))
-            }
-          />
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <label className="font-medium text-xs tracking-wide uppercase text-gray-700 ">
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
             Year
           </label>
           <Input
@@ -177,6 +206,20 @@ const EditThesisModal = ({
                 ...prev,
                 defense_year: Number(e.target.value),
               }))
+            }
+          />
+        </div>
+
+        {/* File URL */}
+        <div className="flex flex-col gap-2">
+          <label className="font-medium text-xs tracking-wide uppercase text-gray-700">
+            File URL
+          </label>
+          <Input
+            placeholder="File URL"
+            value={editData.file_url || ""}
+            onChange={(e) =>
+              setEditData((prev) => ({ ...prev, file_url: e.target.value }))
             }
           />
         </div>
