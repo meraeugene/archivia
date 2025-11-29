@@ -19,7 +19,6 @@ export function useArchivia(initialTheses?: Thesis[]) {
 
   const [searchQuery, setSearchQuery] = useState("");
   const [currentCategory, setCurrentCategory] = useState<string>("all");
-  const [sort, setSort] = useState("recent");
 
   const [isSearching, startSearchTransition] = useTransition();
   const [isSorting, startSortTransition] = useTransition();
@@ -30,20 +29,33 @@ export function useArchivia(initialTheses?: Thesis[]) {
   const [loadingMore, setLoadingMore] = useState(false);
 
   const [thesisCount, setThesisCount] = useState<number | null>(null);
+  const [searchPage, setSearchPage] = useState(1);
+  const [selectedYear, setSelectedYear] = useState<number | undefined>(
+    undefined
+  );
 
-  const fetchTotalCount = useCallback(async (category: string) => {
-    const count = await getThesesCount(category);
-    setThesisCount(count);
-  }, []);
+  const fetchTotalCount = useCallback(
+    async (category: string, year: number) => {
+      const count = await getThesesCount(category, year);
+      setThesisCount(count);
+    },
+    []
+  );
 
   useEffect(() => {
-    if (searchQuery.trim() === "") {
+    if (searchQuery === "") {
       setDisplayedTheses(initialTheses || []);
       setOffset(initialTheses?.length || 0);
       setHasMore(true);
-      fetchTotalCount(currentCategory);
+      fetchTotalCount(currentCategory, selectedYear || 0);
     }
-  }, [searchQuery, initialTheses, currentCategory, fetchTotalCount]);
+  }, [
+    searchQuery,
+    initialTheses,
+    currentCategory,
+    fetchTotalCount,
+    selectedYear,
+  ]);
 
   //  Fetch by category
   const handleCategoryChange = useCallback(
@@ -54,15 +66,15 @@ export function useArchivia(initialTheses?: Thesis[]) {
 
       startCategoryTransition(async () => {
         setDisplayedTheses([]);
-        const data = await getMoreTheses(0, sort, newCategory);
+        const data = await getMoreTheses(0, selectedYear, newCategory);
         setDisplayedTheses(data);
         setOffset(data.length);
         setHasMore(data.length > 0);
       });
 
-      fetchTotalCount(newCategory);
+      fetchTotalCount(newCategory, selectedYear || 0);
     },
-    [sort, fetchTotalCount]
+    [selectedYear, fetchTotalCount]
   );
 
   // Search (always searches across all theses, ignoring category)
@@ -74,38 +86,42 @@ export function useArchivia(initialTheses?: Thesis[]) {
         setDisplayedTheses(initialTheses || []);
         setOffset(initialTheses?.length || 0);
         setHasMore(true);
-        fetchTotalCount(currentCategory);
+        fetchTotalCount(currentCategory, selectedYear || 0);
         return;
       }
 
       startSearchTransition(async () => {
         // const { data, error } = await searchTheses(trimmedQuery);
-        const { data, error } = await semanticSearchTheses(trimmedQuery);
+        const { data, total, error } = await semanticSearchTheses(
+          trimmedQuery,
+          1
+        );
         if (error) toast.error("Error searching theses");
         else {
           const results = data || [];
           setDisplayedTheses(results);
           setOffset(results.length);
-          setHasMore(false);
-          setThesisCount(results.length);
+          setSearchPage(1);
+          setHasMore(results.length < total); // more pages if total > PAGE_SIZE
+          setThesisCount(total);
         }
       });
     },
-    [initialTheses, fetchTotalCount, currentCategory]
+    [initialTheses, fetchTotalCount, currentCategory, selectedYear]
   );
 
-  // Sorting handler
-  const handleSortChange = useCallback(
-    async (newSort: string) => {
-      setSort(newSort);
+  const handleYearChange = useCallback(
+    async (year?: number) => {
+      setSelectedYear(year);
       setDisplayedTheses([]);
       setOffset(0);
+      setHasMore(true);
 
       startSortTransition(async () => {
-        const sorted = await getMoreTheses(0, newSort, currentCategory);
-        setDisplayedTheses(sorted);
-        setOffset(sorted.length);
-        setHasMore(sorted.length > 0);
+        const filtered = await getMoreTheses(0, year, currentCategory);
+        setDisplayedTheses(filtered);
+        setOffset(filtered.length);
+        setHasMore(filtered.length > 0);
       });
     },
     [currentCategory]
@@ -113,16 +129,46 @@ export function useArchivia(initialTheses?: Thesis[]) {
 
   // Infinite scroll
   const loadMore = useCallback(async () => {
-    if (loadingMore || !hasMore || searchQuery.trim()) return;
+    if (loadingMore || !hasMore) return;
     setLoadingMore(true);
 
-    const newTheses = await getMoreTheses(offset, sort, currentCategory);
-    if (newTheses.length === 0) setHasMore(false);
+    if (searchQuery.trim()) {
+      const nextPage = searchPage + 1;
+      const { data, total, error } = await semanticSearchTheses(
+        searchQuery,
+        nextPage
+      );
+      if (!error && data?.length) {
+        setDisplayedTheses((prev) => {
+          const updated = [...prev, ...data];
+          setHasMore(updated.length < total);
+          return updated;
+        });
+        setSearchPage(nextPage);
+      } else {
+        setHasMore(false);
+      }
+    } else {
+      const newTheses = await getMoreTheses(
+        offset,
+        selectedYear,
+        currentCategory
+      );
+      if (newTheses.length === 0) setHasMore(false);
+      setDisplayedTheses((prev) => [...prev, ...newTheses]);
+      setOffset((prev) => prev + newTheses.length);
+    }
 
-    setDisplayedTheses((prev) => [...prev, ...newTheses]);
-    setOffset((prev) => prev + newTheses.length);
     setLoadingMore(false);
-  }, [offset, hasMore, loadingMore, searchQuery, sort, currentCategory]);
+  }, [
+    loadingMore,
+    hasMore,
+    searchQuery,
+    searchPage,
+    offset,
+    selectedYear,
+    currentCategory,
+  ]);
 
   const handlePreview = (thesis: Thesis) => {
     setSelectedThesis(thesis);
@@ -169,17 +215,16 @@ export function useArchivia(initialTheses?: Thesis[]) {
     selectedThesis,
     searchQuery,
     currentCategory,
-    sort,
     isSearching,
     isSorting,
     isCategorizing,
     hasMore,
     loadingMore,
     setSearchQuery,
-    setSort,
+    selectedYear,
     handleSearch,
+    handleYearChange,
     handlePreview,
-    handleSortChange,
     closeModal,
     loadMore,
     handleCategoryChange,

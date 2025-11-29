@@ -27,6 +27,7 @@ interface ArchiviaClientProps {
   categoryOptions: { key: string; label: string }[];
   userBookmarks?: number[];
   studentAdviser?: StudentAdviser | null;
+  thesisYears: number[];
 }
 
 const breakpointColumnsObj = {
@@ -40,6 +41,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
   categoryOptions,
   userBookmarks = [],
   studentAdviser,
+  thesisYears,
 }) => {
   const {
     displayedTheses,
@@ -58,9 +60,9 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
     loadMore,
     hasMore,
     loadingMore,
-    handleSortChange,
-    sort,
+    selectedYear,
     thesisCount,
+    handleYearChange,
     handleCategoryChange,
   } = useArchivia(initialTheses);
 
@@ -98,14 +100,22 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                 </div>
 
                 <div className="flex gap-4 flex-col md:flex-row  w-full md:w-fit  ">
-                  <Select value={sort} onValueChange={handleSortChange}>
+                  <Select
+                    value={selectedYear?.toString() || ""}
+                    onValueChange={(val) => handleYearChange(Number(val))}
+                  >
                     <SelectTrigger className="w-full py-5 md:w-[150px] border-none shadow-sm text-sm hover:shadow-md transition-all rounded-sm bg-white z-5 cursor-pointer ">
                       <SelectValue placeholder="Sort by" />
                     </SelectTrigger>
                     <SelectContent>
-                      <SelectItem value="recent">Newest</SelectItem>
-                      <SelectItem value="title">Title (A–Z)</SelectItem>
-                      <SelectItem value="adviser">Adviser (A–Z)</SelectItem>
+                      <SelectItem key={0} value="0">
+                        All
+                      </SelectItem>
+                      {thesisYears.map((year) => (
+                        <SelectItem key={year} value={year.toString()}>
+                          {year}
+                        </SelectItem>
+                      ))}
                     </SelectContent>
                   </Select>
 
@@ -140,23 +150,21 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                 className="flex gap-8"
                 columnClassName="space-y-8"
               >
-                {displayedTheses.map((thesis, index) => (
-                  <div
-                    key={`${currentCategory}-${sort}-${searchQuery}-${thesis.id}-${index}`}
-                    className="fade-slide-up"
-                  >
-                    <ThesisCard
-                      thesis={thesis}
-                      onPreview={handlePreview}
-                      onDownload={handleDownload}
-                      isInitiallyBookmarked={
-                        thesis.id !== undefined &&
-                        userBookmarks?.includes(thesis.id)
-                      }
-                      searchQuery={searchQuery}
-                    />
-                  </div>
-                ))}
+                {displayedTheses.map((thesis) =>
+                  thesis.id ? (
+                    <div key={thesis.id} className="fade-slide-up">
+                      <ThesisCard
+                        thesis={thesis}
+                        onPreview={handlePreview}
+                        onDownload={handleDownload}
+                        isInitiallyBookmarked={userBookmarks?.includes(
+                          thesis.id
+                        )}
+                        searchQuery={searchQuery}
+                      />
+                    </div>
+                  ) : null
+                )}
               </Masonry>
             )}
 

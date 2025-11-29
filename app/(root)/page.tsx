@@ -4,6 +4,7 @@ import { getAllCategories } from "@/actions/common/getAllCategories";
 import { getStudentAdviser } from "@/actions/student/getStudentAdviser";
 import { getUserBookmarksIds } from "@/actions/common/getUserBookmarksIds";
 import { getSession } from "@/actions/auth/getSession";
+import { getAllThesisYears } from "@/actions/common/getAllThesisYear";
 
 export default async function Page() {
   const [
@@ -12,12 +13,14 @@ export default async function Page() {
     categoryOptions,
     { data: userBookmarks = [] },
     studentAdviser,
+    thesisYears,
   ] = await Promise.all([
-    getMoreTheses(0),
+    getMoreTheses(0, 0, "all"),
     getSession(),
     getAllCategories(),
     getUserBookmarksIds(),
     getStudentAdviser(),
+    getAllThesisYears(),
   ]);
 
   return (
@@ -27,6 +30,7 @@ export default async function Page() {
       categoryOptions={categoryOptions}
       userBookmarks={userBookmarks}
       studentAdviser={studentAdviser}
+      thesisYears={thesisYears}
     />
   );
 }

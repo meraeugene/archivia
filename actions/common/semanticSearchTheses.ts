@@ -1,6 +1,6 @@
 import { getSession } from "../auth/getSession";
 
-export async function semanticSearchTheses(query: string) {
+export async function semanticSearchTheses(query: string, page = 1) {
   if (!query) {
     return { data: [], error: null };
   }
@@ -15,16 +15,18 @@ export async function semanticSearchTheses(query: string) {
     const res = await fetch(
       `https://web-production-6b29d.up.railway.app/search?query=${encodeURIComponent(
         query
-      )}`
+      )}&page=${page}`
     );
     // const res = await fetch(
-    //   `http://localhost:8000/search?query=${encodeURIComponent(query)}`
+    //   `http://localhost:8000/search?query=${encodeURIComponent(
+    //     query
+    //   )}&page=${page}`
     // );
 
     if (!res.ok) throw new Error("Semantic search failed");
 
-    const data = await res.json();
-    return { data, error: null };
+    const json = await res.json();
+    return { data: json.data, total: json.total, error: null };
   } catch (err) {
     console.error(err);
     return { data: null, error: err };

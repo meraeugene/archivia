@@ -75,7 +75,7 @@ const ThesesTable = ({
               <td className="px-4 py-2 text-gray-900 lg:whitespace-nowrap truncate lg:max-w-[150px] ">
                 {thesis.keywords?.join(", ") || "—"}
               </td>
-              <td className="px-4 py-2 text-gray-900 truncate lg:max-w-[150px] lg:whitespace-nowrap">
+              <td className="px-4 py-2 text-gray-900 ">
                 {thesis.category?.join(", ") || "—"}
               </td>
               <td className="px-4 py-2 text-gray-700 truncate lg:max-w-[100px] lg:whitespace-nowrap">
