@@ -1,14 +1,12 @@
 "use client";
 
 import { Thesis } from "@/types/thesis";
-import { highlightText } from "@/utils/highlightText";
 
 interface ConfirmThesisModalProps {
   thesis: Thesis;
   isOpen: boolean;
   onBack: () => void;
   onConfirm: () => void;
-  searchQuery?: string;
   isPending: boolean;
 }
 
@@ -17,7 +15,6 @@ const ConfirmThesisModal: React.FC<ConfirmThesisModalProps> = ({
   isOpen,
   onBack,
   onConfirm,
-  searchQuery = "",
   isPending,
 }) => {
   if (!isOpen) return null;
@@ -38,21 +35,13 @@ const ConfirmThesisModal: React.FC<ConfirmThesisModalProps> = ({
         {/* Scrollable Content */}
         <div className="overflow-y-auto scrollbar-none flex-1 p-4 md:p-6 ">
           {/* Title */}
-          <h3
-            className="text-lg font-extrabold leading-tight text-gray-900 uppercase mb-3"
-            dangerouslySetInnerHTML={{
-              __html: highlightText(thesis.title, searchQuery),
-            }}
-          />
+          <h3 className="text-lg font-extrabold leading-tight text-gray-900 uppercase mb-3">
+            {thesis.title}
+          </h3>
 
           {/* Adviser */}
           <div className="text-gray-700">
-            <strong>Adviser:</strong>{" "}
-            <span
-              dangerouslySetInnerHTML={{
-                __html: highlightText(thesis.adviser_name, searchQuery),
-              }}
-            />
+            <strong>Adviser:</strong> <span>{thesis.adviser_name}</span>
           </div>
 
           {/* Panel */}

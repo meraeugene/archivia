@@ -3,12 +3,14 @@
 import React from "react";
 import { X, Download } from "lucide-react";
 import { Thesis } from "@/types/thesis";
+import HighlightText from "./HighlightText";
 
 interface ThesisModalProps {
   thesis: Thesis | null;
   isOpen: boolean;
   onClose: () => void;
   onDownload: (t: Thesis) => void;
+  searchQuery?: string;
 }
 
 const ThesisModal: React.FC<ThesisModalProps> = ({
@@ -16,6 +18,7 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
   isOpen,
   onClose,
   onDownload,
+  searchQuery,
 }) => {
   if (!isOpen || !thesis) return null;
 
@@ -40,10 +43,17 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
         </button>
 
         <div className="md:p-12 md:pt-14 py-12 px-6 pt-14 overflow-y-auto scrollbar-none ">
-          <h2 className="text-lg md:text-2xl font-bold mb-5">{thesis.title}</h2>
+          <h2 className="text-lg md:text-2xl font-bold mb-5">
+            {/* Highlight Title */}
+            <HighlightText text={thesis.title} query={searchQuery} />
+          </h2>
           <div className="mb-4 space-y-2 text-gray-700">
             <div>
-              <strong>Adviser:</strong> <span>{thesis.adviser_name}</span>{" "}
+              <strong>Adviser:</strong>{" "}
+              <span>
+                {/* Highlight Adviser Name */}
+                <HighlightText text={thesis.adviser_name} query={searchQuery} />
+              </span>{" "}
             </div>
             <div>
               <strong>Panel:</strong>{" "}
@@ -57,8 +67,17 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
             </div>
 
             <div>
-              <strong>Proponents:</strong>{" "}
-              {thesis.proponents.join(", ") || "N/A"}
+              <strong>Proponents:</strong>
+
+              {/* Highlight Proponents */}
+              <HighlightText
+                text={
+                  Array.isArray(thesis.proponents)
+                    ? thesis.proponents.join(", ")
+                    : ""
+                }
+                query={searchQuery}
+              />
             </div>
 
             <div>
@@ -66,10 +85,17 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
             </div>
 
             <div>
-              <strong>Keywords:</strong>{" "}
-              {Array.isArray(thesis.keywords) && thesis.keywords.length > 0
-                ? thesis.keywords.join(", ")
-                : "N/A"}
+              <strong>Keywords:</strong>
+
+              {/* Highlight Keywords */}
+              <HighlightText
+                text={
+                  Array.isArray(thesis.keywords)
+                    ? thesis.keywords.join(", ")
+                    : ""
+                }
+                query={searchQuery}
+              />
             </div>
 
             <div className="flex gap-2 mt-3">
@@ -82,7 +108,8 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
                     key={index}
                     className="px-2 py-1 bg-gray-700 text-white shadow-sm text-xs md:text-sm md:font-medium rounded-full"
                   >
-                    {cat.trim()}
+                    {/* Highlight Category */}
+                    <HighlightText text={cat.trim()} query={searchQuery} />
                   </span>
                 ))}
               </div>
@@ -91,7 +118,8 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
 
           <h3 className="md:text-xl font-semibold md:mb-4 mb-2">Abstract</h3>
           <p className="leading-relaxed text-gray-800 mb-8">
-            {thesis.abstract}
+            {/* Highlight Abstract */}
+            <HighlightText text={thesis.abstract} query={searchQuery} />
           </p>
 
           <button

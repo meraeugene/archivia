@@ -239,6 +239,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
         isOpen={isModalOpen}
         onClose={closeModal}
         onDownload={handleDownload}
+        searchQuery={searchQuery}
       />
     </main>
   );

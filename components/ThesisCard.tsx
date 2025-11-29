@@ -4,7 +4,7 @@ import { Download, Eye, Bookmark } from "lucide-react";
 import { Thesis } from "@/types/thesis";
 import { useBookmark } from "@/hooks/useBookmark";
 import { useState } from "react";
-import { highlightText } from "@/utils/highlightText";
+import HighlightText from "./HighlightText";
 
 interface ThesisCardProps {
   thesis: Thesis;
@@ -37,12 +37,9 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
   return (
     <div className="bg-white border border-gray-100 rounded-lg p-6 shadow-lg hover:shadow-xl transition-all duration-300 h-fit">
       <div className="flex items-start justify-between gap-2 mb-3">
-        <h3
-          className="text-lg font-extrabold leading-tight text-gray-900 uppercase"
-          dangerouslySetInnerHTML={{
-            __html: highlightText(thesis.title, searchQuery),
-          }}
-        />
+        <h3 className="text-lg font-extrabold leading-tight text-gray-900 uppercase">
+          <HighlightText text={thesis.title} query={searchQuery} />
+        </h3>
         <button
           onClick={handleClick}
           disabled={isPending || thesis.id === undefined}
@@ -66,11 +63,9 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
       <div className="space-y-1 mb-4 text-gray-600">
         <div>
           <strong>Adviser:</strong>{" "}
-          <span
-            dangerouslySetInnerHTML={{
-              __html: highlightText(thesis.adviser_name, searchQuery),
-            }}
-          />
+          <span>
+            <HighlightText text={thesis.adviser_name} query={searchQuery} />
+          </span>
         </div>
 
         <div>
@@ -86,14 +81,16 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
 
         <div className=" gap-2 hidden md:flex">
           <strong>Proponents:</strong>{" "}
-          <span
-            dangerouslySetInnerHTML={{
-              __html:
+          <span>
+            <HighlightText
+              text={
                 Array.isArray(thesis.proponents) && thesis.proponents.length > 0
-                  ? highlightText(thesis.proponents.join(", "), searchQuery)
-                  : "N/A",
-            }}
-          />
+                  ? thesis.proponents.join(", ")
+                  : "N/A"
+              }
+              query={searchQuery}
+            />
+          </span>
         </div>
 
         <div>
