@@ -21,9 +21,6 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
   const [isLimitModalOpen, setIsLimitModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<Advisee | null>(null);
-  const [selectedStudentAdviserId, setSelectedStudentAdviserId] = useState<
-    string | null
-  >(null);
 
   const filteredData = data.filter((adviser) =>
     adviser.adviser_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -48,7 +45,9 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
           const accepted =
             adviser.advisees?.filter((a) => a.status === "accepted") || [];
           const pending =
-            adviser.advisees?.filter((a) => a.status === "pending") || [];
+            adviser.advisees?.filter(
+              (a) => a.status === "pending" || a.status === "referred"
+            ) || [];
 
           return (
             <div
@@ -98,6 +97,7 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
               <div className="p-6">
                 <div className="flex gap-2 mb-6">
                   <Button
+                    size="sm"
                     variant="outline"
                     className="rounded  hover:bg-gray-50 hover:text-black flex items-center gap-2"
                     onClick={() => {
@@ -139,8 +139,8 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
                       accepted={accepted}
                       setSelectedStudent={(student) => {
                         setSelectedStudent(student);
-                        setSelectedStudentAdviserId(adviser.adviser_id);
                       }}
+                      adviserId={adviser.adviser_id}
                     />
                   )}
 
@@ -160,7 +160,6 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
           setSelectedStudent={(student) => {
             setSelectedStudent(student);
           }}
-          adviserId={selectedStudentAdviserId}
         />
       )}
 

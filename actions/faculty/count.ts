@@ -2,35 +2,32 @@
 
 import { createClient } from "@/utils/supabase/server";
 import { getSession } from "../auth/getSession";
-import { cache } from "react";
 
-export const getAdviserCurrentLeadersCount = cache(
-  async (): Promise<number> => {
-    const supabase = await createClient();
-    const session = await getSession();
+export const getAdviserCurrentLeadersCount = async (): Promise<number> => {
+  const supabase = await createClient();
+  const session = await getSession();
 
-    if (!session) return 0;
+  if (!session) return 0;
 
-    if (session.role !== "faculty") {
-      return 0;
-    }
-
-    const { data, error } = await supabase
-      .from("adviser_current_leaders")
-      .select("current_leaders")
-      .eq("adviser_id", session.sub)
-      .single();
-
-    if (error || !data) {
-      console.error("Error fetching adviser current leaders:", error?.message);
-      return 0;
-    }
-
-    return data.current_leaders;
+  if (session.role !== "faculty") {
+    return 0;
   }
-);
 
-export const getAdviserRequestsCount = cache(async () => {
+  const { data, error } = await supabase
+    .from("adviser_current_leaders")
+    .select("current_leaders")
+    .eq("adviser_id", session.sub)
+    .single();
+
+  if (error || !data) {
+    console.error("Error fetching adviser current leaders:", error?.message);
+    return 0;
+  }
+
+  return data.current_leaders;
+};
+
+export const getAdviserRequestsCount = async () => {
   const supabase = await createClient();
   const session = await getSession();
 
@@ -51,9 +48,9 @@ export const getAdviserRequestsCount = cache(async () => {
   }
 
   return count ?? 0;
-});
+};
 
-export const getPendingAdviserRequestsCount = cache(async () => {
+export const getPendingAdviserRequestsCount = async () => {
   const supabase = await createClient();
   const session = await getSession();
 
@@ -75,36 +72,36 @@ export const getPendingAdviserRequestsCount = cache(async () => {
   }
 
   return count ?? 0;
-});
+};
 
-export const getThesisSubmissionCount = cache(
-  async (status?: "pending" | "approved" | "returned") => {
-    const supabase = await createClient();
-    const session = await getSession();
+export const getThesisSubmissionCount = async (
+  status?: "pending" | "approved" | "returned"
+) => {
+  const supabase = await createClient();
+  const session = await getSession();
 
-    if (!session?.sub) return 0;
+  if (!session?.sub) return 0;
 
-    let query = supabase
-      .from("thesis_submissions")
-      .select("id", { count: "exact", head: true })
-      .eq("adviser_id", session.sub);
+  let query = supabase
+    .from("thesis_submissions")
+    .select("id", { count: "exact", head: true })
+    .eq("adviser_id", session.sub);
 
-    if (status) {
-      query = query.eq("status", status);
-    }
-
-    const { count, error } = await query;
-
-    if (error) {
-      console.error("Error fetching thesis submission count:", error);
-      return 0;
-    }
-
-    return count || 0;
+  if (status) {
+    query = query.eq("status", status);
   }
-);
 
-export const getHandledThesisCount = cache(async () => {
+  const { count, error } = await query;
+
+  if (error) {
+    console.error("Error fetching thesis submission count:", error);
+    return 0;
+  }
+
+  return count || 0;
+};
+
+export const getHandledThesisCount = async () => {
   const supabase = await createClient();
   const session = await getSession();
 
@@ -123,9 +120,9 @@ export const getHandledThesisCount = cache(async () => {
   }
 
   return count || 0;
-});
+};
 
-export const getHandledThesesCount = cache(async () => {
+export const getHandledThesesCount = async () => {
   const supabase = await createClient();
   const session = await getSession();
 
@@ -144,4 +141,4 @@ export const getHandledThesesCount = cache(async () => {
   }
 
   return count ?? 0;
-});
+};

@@ -11,7 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Trash2 } from "lucide-react";
+import { UserMinus } from "lucide-react";
 
 interface ConfirmModalProps {
   title: string;
@@ -19,7 +19,8 @@ interface ConfirmModalProps {
   confirmText?: string;
   cancelText?: string;
   onConfirm: () => void;
-  mainText: string;
+  mainText?: string;
+  size?: "default" | "sm" | "lg" | "icon" | "icon-sm" | "icon-lg";
 }
 
 export const ConfirmModal = ({
@@ -29,6 +30,7 @@ export const ConfirmModal = ({
   cancelText = "Cancel",
   onConfirm,
   mainText,
+  size = "sm",
 }: ConfirmModalProps) => {
   const [open, setOpen] = useState(false);
 
@@ -36,10 +38,11 @@ export const ConfirmModal = ({
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button
+          size={size}
           variant="outline"
           className="text-red-600 border-red-300 hover:bg-red-50 rounded hover:text-red-700 flex items-center  gap-2 "
         >
-          <Trash2 className="w-4 h-4" />
+          <UserMinus className="w-4 h-4" />
           {mainText}
         </Button>
       </DialogTrigger>
