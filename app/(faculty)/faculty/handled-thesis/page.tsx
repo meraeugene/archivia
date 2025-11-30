@@ -1,4 +1,4 @@
-import { getHandledTheses } from "@/actions/faculty/handledThesis";
+import { getHandledTheses } from "@/actions/faculty/getHandledThesis";
 import HandledThesisClient from "./HandledThesisClient";
 
 const HandledThesisPage = async () => {

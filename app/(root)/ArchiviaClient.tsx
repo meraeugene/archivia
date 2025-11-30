@@ -105,7 +105,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
                     onValueChange={(val) => handleYearChange(Number(val))}
                   >
                     <SelectTrigger className="w-full py-5 md:w-[150px] border-none shadow-sm text-sm hover:shadow-md transition-all rounded-sm bg-white z-5 cursor-pointer ">
-                      <SelectValue placeholder="Sort by" />
+                      <SelectValue placeholder="Sort by Year" />
                     </SelectTrigger>
                     <SelectContent>
                       <SelectItem key={0} value="0">

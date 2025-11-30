@@ -2,7 +2,6 @@
 
 import { useState, useCallback, useTransition, useEffect } from "react";
 import { Thesis } from "@/types/thesis";
-import { toast } from "sonner";
 import {
   getMoreTheses,
   getThesesCount,
@@ -96,8 +95,9 @@ export function useArchivia(initialTheses?: Thesis[]) {
           trimmedQuery,
           1
         );
-        if (error) toast.error("Error searching theses");
-        else {
+        if (error) {
+          console.log(error);
+        } else {
           const results = data || [];
           setDisplayedTheses(results);
           setOffset(results.length);

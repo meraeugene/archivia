@@ -37,12 +37,14 @@ interface SidebarProps {
   currentUser: CurrentUser;
   pendingAdviserRequestCount: number;
   currentAdviserLeadersCount: number;
+  handledThesesCount: number;
 }
 
 const FacultySidebar = ({
   currentUser,
   pendingAdviserRequestCount,
   currentAdviserLeadersCount,
+  handledThesesCount,
 }: SidebarProps) => {
   const pathname = usePathname();
   const [isPending, startTransition] = useTransition();
@@ -109,6 +111,30 @@ const FacultySidebar = ({
                     item.label
                   )}
                 </button>
+              );
+            }
+
+            if (item.label === "Handled Thesis") {
+              return (
+                <Link
+                  prefetch
+                  key={item.href}
+                  href={item.href}
+                  className={`w-full flex items-center px-3 py-2 text-sm font-medium rounded-md transition-colors
+          ${
+            isActive
+              ? "bg-gray-100 text-gray-900"
+              : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+          }`}
+                >
+                  <Icon className="h-5 w-5 mr-3" />
+                  {item.label}
+                  {handledThesesCount > 0 && (
+                    <span className="ml-auto bg-gray-900 text-white text-xs font-medium px-2 py-1 rounded-full w-6 h-6 flex items-center justify-center">
+                      {handledThesesCount}
+                    </span>
+                  )}
+                </Link>
               );
             }
 
