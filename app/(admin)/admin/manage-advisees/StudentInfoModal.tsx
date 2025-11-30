@@ -13,15 +13,20 @@ import {
 import { Advisee } from "@/types/adviserAdvisees";
 import { formatStudentYear } from "@/utils/formatStudentYear";
 import { formatDate } from "@/utils/formatDate";
+import { ConfirmModal } from "./ConfirmModal";
+import { removeStudentFromAdviser } from "@/actions/admin/removeStudentFromAdviser";
+import { toast } from "sonner";
 
 interface StudentInfoProps {
   selectedStudent: Advisee;
   setSelectedStudent: (student: Advisee | null) => void;
+  adviserId: string | null;
 }
 
 const StudentInfoModal = ({
   selectedStudent,
   setSelectedStudent,
+  adviserId,
 }: StudentInfoProps) => {
   return (
     <div
@@ -77,7 +82,7 @@ const StudentInfoModal = ({
 
         {/* Content */}
         <div className="p-6 space-y-4 max-h-[80vh] overflow-y-auto">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-between ">
             <span
               className={`px-3 py-1 rounded-full text-xs font-bold uppercase ${
                 selectedStudent.status === "accepted"
@@ -89,6 +94,24 @@ const StudentInfoModal = ({
             >
               {selectedStudent.status}
             </span>
+
+            {selectedStudent && (
+              <ConfirmModal
+                mainText="Remove Student"
+                title="Remove Student from Adviser?"
+                description={`Are you sure you want to remove ${selectedStudent.student_name} from their adviser? This action cannot be undone.`}
+                confirmText="Remove"
+                cancelText="Cancel"
+                onConfirm={async () => {
+                  await removeStudentFromAdviser(
+                    selectedStudent.student_id,
+                    adviserId as string
+                  );
+                  toast.success("Student removed from adviser.");
+                  setSelectedStudent(null);
+                }}
+              />
+            )}
           </div>
 
           <div className="flex items-start gap-3">

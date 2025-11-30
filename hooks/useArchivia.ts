@@ -173,13 +173,13 @@ export function useArchivia(initialTheses?: Thesis[]) {
   const handlePreview = (thesis: Thesis) => {
     setSelectedThesis(thesis);
     setIsModalOpen(true);
-    document.body.classList.add("modal-open");
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setIsModalOpen(false);
     setSelectedThesis(null);
-    document.body.classList.remove("modal-open");
+    document.body.style.overflow = "auto";
   };
 
   const handleDownload = async (thesis: Thesis) => {

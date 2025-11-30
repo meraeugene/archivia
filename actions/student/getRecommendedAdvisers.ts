@@ -16,22 +16,22 @@ export async function getRecommendedAdvisers(title: string, abstract: string) {
   }
 
   try {
-    // const res = await fetch("http://localhost:8000/recommend", {
-    //   method: "POST",
-    //   headers: { "Content-Type": "application/json" },
-    //   body: JSON.stringify({ title, abstract, student_id: session?.sub }),
-    //   cache: "no-store",
-    // });
+    const res = await fetch("http://localhost:8000/recommend", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ title, abstract, student_id: session?.sub }),
+      cache: "no-store",
+    });
 
-    const res = await fetch(
-      "https://web-production-9ba9.up.railway.app/recommend",
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ title, abstract, student_id: session?.sub }),
-        cache: "no-store",
-      }
-    );
+    // const res = await fetch(
+    //   "https://web-production-9ba9.up.railway.app/recommend",
+    //   {
+    //     method: "POST",
+    //     headers: { "Content-Type": "application/json" },
+    //     body: JSON.stringify({ title, abstract, student_id: session?.sub }),
+    //     cache: "no-store",
+    //   }
+    // );
 
     if (!res.ok) {
       const err = await res.text();

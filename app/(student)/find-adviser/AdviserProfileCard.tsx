@@ -15,7 +15,6 @@ import { Adviser } from "@/types/advisers";
 import { motion } from "framer-motion";
 import { getInitials } from "@/utils/getInitials";
 import { useEffect, useState } from "react";
-import TypingText from "./TypingEffect";
 
 const AdviserProfileCard = ({
   adviser,
@@ -246,12 +245,9 @@ const AdviserProfileCard = ({
                 </div>
               </div>
 
-              <TypingText
-                text={top1Explanation}
-                className="md:text-xl text-gray-200 font-light  leading-relaxed"
-                startDelay={0.8}
-                speed={25}
-              />
+              <p className="md:text-xl text-gray-200 font-light  leading-relaxed">
+                {top1Explanation}
+              </p>
             </div>
           )}
 

@@ -12,12 +12,18 @@ import StudentInfoModal from "./StudentInfoModal";
 import NoAdviseeCard from "./NoAdviseeCard";
 import AcceptedStudentsCard from "./AcceptedStudentsCard";
 import PendingStudentsCard from "./PendingStudentsCard";
+import { removeAllAdviseesFromAdviser } from "@/actions/admin/removeAllAdviseesFromAdviser";
+import { toast } from "sonner";
+import { ConfirmModal } from "./ConfirmModal";
 
 const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
   const [selectedAdviser, setSelectedAdviser] = useState<string | null>(null);
   const [isLimitModalOpen, setIsLimitModalOpen] = useState(false);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<Advisee | null>(null);
+  const [selectedStudentAdviserId, setSelectedStudentAdviserId] = useState<
+    string | null
+  >(null);
 
   const filteredData = data.filter((adviser) =>
     adviser.adviser_name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -90,18 +96,33 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
 
               {/* Content */}
               <div className="p-6">
-                <Button
-                  size="sm"
-                  variant="outline"
-                  className="rounded mb-6  hover:bg-gray-50 hover:text-black flex items-center gap-2"
-                  onClick={() => {
-                    setSelectedAdviser(adviser.adviser_id);
-                    setIsLimitModalOpen(true);
-                  }}
-                >
-                  <UserPlus className="h-4 w-4 " />
-                  Set Limit
-                </Button>
+                <div className="flex gap-2 mb-6">
+                  <Button
+                    variant="outline"
+                    className="rounded  hover:bg-gray-50 hover:text-black flex items-center gap-2"
+                    onClick={() => {
+                      setSelectedAdviser(adviser.adviser_id);
+                      setIsLimitModalOpen(true);
+                    }}
+                  >
+                    <UserPlus className="h-4 w-4 " />
+                    Set Limit
+                  </Button>
+
+                  {adviser.total_accepted > 0 && (
+                    <ConfirmModal
+                      mainText="Remove All Advisees"
+                      title="Remove All Advisees?"
+                      description="This action will remove all advisees from this adviser. This cannot be undone."
+                      confirmText="Confirm"
+                      cancelText="Cancel"
+                      onConfirm={async () => {
+                        await removeAllAdviseesFromAdviser(adviser.adviser_id);
+                        toast.success("All advisees removed.");
+                      }}
+                    />
+                  )}
+                </div>
 
                 <div className="space-y-6">
                   {/* Pending Requests */}
@@ -116,7 +137,10 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
                   {accepted.length > 0 && (
                     <AcceptedStudentsCard
                       accepted={accepted}
-                      setSelectedStudent={setSelectedStudent}
+                      setSelectedStudent={(student) => {
+                        setSelectedStudent(student);
+                        setSelectedStudentAdviserId(adviser.adviser_id);
+                      }}
                     />
                   )}
 
@@ -133,7 +157,10 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
       {selectedStudent && (
         <StudentInfoModal
           selectedStudent={selectedStudent}
-          setSelectedStudent={setSelectedStudent}
+          setSelectedStudent={(student) => {
+            setSelectedStudent(student);
+          }}
+          adviserId={selectedStudentAdviserId}
         />
       )}
 
