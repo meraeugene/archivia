@@ -4,19 +4,22 @@ import { Adviser } from "@/types/advisers";
 import { useState, useEffect } from "react";
 import { Variants } from "framer-motion";
 import AdviserProfileCard from "./AdviserProfileCard";
-import { Award } from "lucide-react";
+import { Award, Lightbulb } from "lucide-react";
 import HeaderReset from "./HeaderReset";
 import MobileStack from "./MobileStack";
 import PyramidStack from "./PyramidStack";
 import Wildcard from "./Wildcard";
 import FindAdviserDesigns from "./FindAdviserDesigns";
 import NoWildcards from "./NoWildcards";
+import { motion } from "framer-motion";
+import TypingText from "./TypingEffect";
 
 interface RecommendationsListProps {
   recommendations: Adviser[];
   onConnect: (adviser: Adviser) => void;
   wildcardAdvisers: Adviser[];
   handleReset: () => void;
+  explanations: { overall: string; top1: string };
 }
 
 export const RecommendationsList = ({
@@ -24,6 +27,7 @@ export const RecommendationsList = ({
   onConnect,
   wildcardAdvisers,
   handleReset,
+  explanations,
 }: RecommendationsListProps) => {
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -53,7 +57,10 @@ export const RecommendationsList = ({
   const containerVariants: Variants = {
     hidden: {},
     visible: {
-      transition: { staggerChildren: 0.12 },
+      transition: {
+        staggerChildren: 0.15,
+        delayChildren: 0.1,
+      },
     },
   };
 
@@ -69,10 +76,11 @@ export const RecommendationsList = ({
         />
 
         {/* Recommended Section */}
-        <div
-          className={`mb-20 transition-all duration-1000 delay-200 ${
-            mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
-          }`}
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          animate={mounted ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+          className="mb-20"
         >
           <div className="flex items-center justify-between mb-16">
             <div className="flex items-center gap-4">
@@ -109,15 +117,49 @@ export const RecommendationsList = ({
             setSelectedAdviser={setSelectedAdviser}
             recommendations={recommendations}
           />
-        </div>
+        </motion.div>
+
+        <motion.div
+          className="mb-20"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
+          {/* Title */}
+          <motion.div
+            className="flex items-center gap-4 mb-6"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+          >
+            <div className="w-12 h-12 bg-white/10 backdrop-blur-xl border border-white/20 rounded-2xl flex items-center justify-center">
+              <Lightbulb className="text-white" size={24} />
+            </div>
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-white">
+                Explanation
+              </h2>
+              <p className="text-gray-400 text-sm mt-1">
+                Why these advisers were recommended
+              </p>
+            </div>
+          </motion.div>
+
+          {/* Typing paragraph */}
+          <TypingText
+            text={explanations.overall}
+            className="md:text-xl text-white font-light leading-relaxed"
+            startDelay={1.3}
+            speed={25}
+          />
+        </motion.div>
 
         {/* Wildcard Section */}
         <Wildcard
           wildcardAdvisers={wildcardAdvisers}
           cardVariants={cardVariants}
-          containerVariants={containerVariants}
           setSelectedAdviser={setSelectedAdviser}
-          mounted={mounted}
         />
 
         {/* Empty State for Wildcards */}
@@ -132,6 +174,8 @@ export const RecommendationsList = ({
             document.body.style.overflow = "auto";
           }}
           onConnect={() => onConnect(selectedAdviser)}
+          top1Explanation={explanations.top1}
+          isTop1={selectedAdviser === recommendations[0]}
         />
       )}
     </div>

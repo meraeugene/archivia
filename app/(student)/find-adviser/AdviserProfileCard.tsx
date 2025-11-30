@@ -9,20 +9,26 @@ import {
   Award,
   BookOpen,
   XCircle,
+  Lightbulb,
 } from "lucide-react";
 import { Adviser } from "@/types/advisers";
 import { motion } from "framer-motion";
 import { getInitials } from "@/utils/getInitials";
 import { useEffect, useState } from "react";
+import TypingText from "./TypingEffect";
 
 const AdviserProfileCard = ({
   adviser,
   onClose,
   onConnect,
+  top1Explanation,
+  isTop1,
 }: {
   adviser: Adviser;
   onClose: () => void;
   onConnect: () => void;
+  top1Explanation: string;
+  isTop1: boolean;
 }) => {
   const [mounted, setMounted] = useState(false);
   const [expandedProjects, setExpandedProjects] = useState<number[]>([]);
@@ -190,7 +196,6 @@ const AdviserProfileCard = ({
               )}
 
               {/* Action Button */}
-              {/* Action Button */}
               <button
                 onClick={onConnect}
                 disabled={adviser.already_requested || adviser.is_full} // disable if already requested or full
@@ -224,16 +229,49 @@ const AdviserProfileCard = ({
             </div>
           </div>
 
-          {/* BOTTOM SECTION - Past Projects */}
-          <div className="space-y-6">
-            <div className="flex items-center gap-3">
-              <div className="w-10 h-10 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl flex items-center justify-center">
-                <Target className="text-white" size={20} />
+          {/* Top 1 Adviser Explanation */}
+          {isTop1 && top1Explanation && (
+            <div>
+              <div className="flex items-center gap-3 mb-4">
+                <div className="w-10 h-10 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl flex items-center justify-center">
+                  <Lightbulb className="text-white" size={16} />
+                </div>
+                <div>
+                  <h2 className="text-xl md:text-2xl font-bold text-white">
+                    Top Adviser Explanation
+                  </h2>
+                  <p className="text-gray-400 text-sm mt-1">
+                    Why this adviser is your best match
+                  </p>
+                </div>
               </div>
-              <h4 className="text-2xl font-bold text-white">Past Projects</h4>
-            </div>
 
-            {adviser.projects && adviser.projects.length > 0 ? (
+              <TypingText
+                text={top1Explanation}
+                className="md:text-xl text-gray-200 font-light  leading-relaxed"
+                startDelay={0.8}
+                speed={25}
+              />
+            </div>
+          )}
+
+          {/* BOTTOM SECTION - Past Projects */}
+          {adviser.projects && adviser.projects.length > 0 && (
+            <div className="space-y-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl flex items-center justify-center">
+                  <Target className="text-white" size={20} />
+                </div>
+                <div>
+                  <h4 className="text-2xl font-bold text-white">
+                    Top 5 Similar Projects
+                  </h4>
+                  <p className="text-gray-400 text-sm mt-1">
+                    Most relevant past projects for your research.{" "}
+                  </p>
+                </div>
+              </div>
+
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {adviser.projects.map((project, idx) => (
                   <div
@@ -282,17 +320,17 @@ const AdviserProfileCard = ({
                   </div>
                 ))}
               </div>
-            ) : (
-              <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl py-16 text-center">
-                <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
-                  <Target className="text-gray-500" size={32} />
-                </div>
-                <p className="text-gray-400 font-semibold">
-                  No project matches found
-                </p>
-              </div>
-            )}
-          </div>
+
+              {/* <div className="backdrop-blur-xl bg-white/5 border border-white/10 rounded-3xl py-16 text-center">
+             <div className="w-16 h-16 bg-white/10 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                 <Target className="text-gray-500" size={32} />
+            </div>
+                 <p className="text-gray-400 font-semibold">
+                    </p>
+             </div>
+          */}
+            </div>
+          )}
         </div>
       </div>
     </div>

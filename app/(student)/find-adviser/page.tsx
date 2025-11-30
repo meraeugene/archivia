@@ -21,6 +21,7 @@ const FindAdviser = () => {
     handleCancel,
     wildcardAdvisers,
     handleReset,
+    explanations,
   } = useFindAdviser();
 
   return (
@@ -42,6 +43,7 @@ const FindAdviser = () => {
             onConnect={handleConnect}
             wildcardAdvisers={wildcardAdvisers}
             handleReset={handleReset}
+            explanations={explanations}
           />
         )}
       </div>

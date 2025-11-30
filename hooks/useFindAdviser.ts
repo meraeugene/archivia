@@ -18,6 +18,10 @@ export function useFindAdviser() {
   const [showModal, setShowModal] = useState(false);
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
   const [recommendedIds, setRecommendedIds] = useState<string[]>([]);
+  const [explanations, setExplanations] = useState<{
+    overall: string;
+    top1: string;
+  }>({ overall: "", top1: "" });
 
   const hasRecommendations = recommendations.length > 0;
 
@@ -59,9 +63,15 @@ export function useFindAdviser() {
         return;
       }
 
+      console.log(result);
+
       setRecommendations(result.recommendations);
       setRecommendedIds(result.recommended_adviser_ids || []);
       setWildcardAdvisers(result.wildcard_advisers || []);
+      setExplanations({
+        overall: result.overall_explanation || "",
+        top1: result.top1_adviser_explanation || "",
+      });
 
       toast.success(
         `We've found ${result.recommendations.length} adviser${
@@ -140,5 +150,6 @@ export function useFindAdviser() {
     handleConnect,
     handleCancel,
     handleReset,
+    explanations,
   };
 }

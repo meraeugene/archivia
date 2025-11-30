@@ -39,7 +39,7 @@ export function CustomModal({
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
       <div
-        className={`bg-white rounded-md p-8 shadow-2xl border border-gray-200 relative overflow-y-auto max-h-[90vh] ${modalWidth}`}
+        className={`bg-white overflow-hidden rounded-md p-8 shadow-2xl border border-gray-200 relative h-[90vh] flex flex-col ${modalWidth}`}
       >
         {/* Close Icon */}
         <button
@@ -56,7 +56,11 @@ export function CustomModal({
         </div>
 
         {/* Custom Content (Edit Form) */}
-        {children && <div className="mb-6">{children}</div>}
+        {children && (
+          <div className="mb-6 pb-6  scrollbar-none overflow-y-auto ">
+            {children}
+          </div>
+        )}
 
         {/* Buttons */}
         <div className="flex gap-3">

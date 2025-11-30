@@ -3,15 +3,9 @@ import { Adviser } from "@/types/advisers";
 import { getInitials } from "@/utils/getInitials";
 import { CheckCircle2, Zap } from "lucide-react";
 
-const AdviserThumbnail = ({
-  adviser,
-  onClick,
-}: {
-  adviser: Adviser;
-  onClick: () => void;
-}) => {
+const AdviserThumbnail = ({ adviser }: { adviser: Adviser }) => {
   return (
-    <div onClick={onClick} className="group cursor-pointer relative">
+    <div className="group cursor-pointer relative">
       <div className="relative aspect-square bg-black shadow-xl hover:shadow-2xl overflow-hidden transform transition-all duration-300 group-hover:scale-105">
         {adviser.profile_picture ? (
           // eslint-disable-next-line @next/next/no-img-element
