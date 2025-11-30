@@ -11,8 +11,9 @@ interface CustomModalProps {
   cancelText?: string;
   onConfirm: () => void;
   onClose: () => void;
-  children?: React.ReactNode; // for edit form
+  children?: React.ReactNode;
   isLoading?: boolean;
+  modalWidth?: string;
 }
 
 export function CustomModal({
@@ -25,6 +26,7 @@ export function CustomModal({
   onClose,
   children,
   isLoading = false,
+  modalWidth = "w-full max-w-md",
 }: CustomModalProps) {
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => e.key === "Escape" && onClose();
@@ -36,7 +38,9 @@ export function CustomModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm">
-      <div className="bg-white rounded-md p-8 w-1/2 shadow-2xl border border-gray-200 relative overflow-y-auto max-h-[90vh]">
+      <div
+        className={`bg-white rounded-md p-8 shadow-2xl border border-gray-200 relative overflow-y-auto max-h-[90vh] ${modalWidth}`}
+      >
         {/* Close Icon */}
         <button
           onClick={onClose}

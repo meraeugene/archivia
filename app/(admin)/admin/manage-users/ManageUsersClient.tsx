@@ -67,11 +67,11 @@ export default function ManageUsersClient({
         <div className="flex justify-between items-center flex-wrap gap-3">
           {/* Left: Search and Sort */}
           <div className="flex items-center gap-3 flex-wrap">
-            <div className="relative md:w-[300px] w-full">
+            <form autoComplete="off" className="relative md:w-[300px] w-full">
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 type="text"
-                placeholder="Search user by ID, name, or email"
+                placeholder="Search by title or adviser"
                 className="w-full py-3 pl-9 rounded border focus:ring-gray-500"
                 onChange={(e) => {
                   const params = new URLSearchParams(searchParams);
@@ -80,7 +80,7 @@ export default function ManageUsersClient({
                   router.push(`?${params.toString()}`);
                 }}
               />
-            </div>
+            </form>
 
             <Select
               onValueChange={(value) => {

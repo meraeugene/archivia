@@ -72,6 +72,7 @@ const EditThesisModal = ({
       onConfirm={handleConfirmEdit}
       isLoading={isLoading}
       onClose={handleClose}
+      modalWidth="w-[40%]"
     >
       <div className="space-y-4  ">
         {/* Title */}
