@@ -73,7 +73,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
         return {
           action: "refer",
           subject: "this advisory request to another adviser",
-          label: "Reason for referral.(optional)",
+          label: "Reason for referral (optional)",
           placeholder: "Provide a note or reason for referring this request...",
           icon: <CornerUpRight className="text-white" size={28} />,
           iconBg: "bg-gray-900",

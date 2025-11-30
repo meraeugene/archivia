@@ -123,6 +123,11 @@ export function useFindAdviser() {
 
       setRecommendations(result.recommendations || []);
       setWildcardAdvisers(result.wildcard_advisers || []);
+      setExplanations({
+        overall: result.overall_explanation || "",
+        top1: result.top1_adviser_explanation || "",
+      });
+      setRecommendedIds(result.recommended_adviser_ids || []);
     });
   };
 
