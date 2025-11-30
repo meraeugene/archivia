@@ -12,16 +12,16 @@ export async function semanticSearchTheses(query: string, page = 1) {
   }
 
   try {
-    // const res = await fetch(
-    //   `https://web-production-6b29d.up.railway.app/search?query=${encodeURIComponent(
-    //     query
-    //   )}&page=${page}`
-    // );
     const res = await fetch(
-      `http://localhost:8000/search?query=${encodeURIComponent(
+      `https://web-production-6b29d.up.railway.app/search?query=${encodeURIComponent(
         query
       )}&page=${page}`
     );
+    // const res = await fetch(
+    //   `http://localhost:8000/search?query=${encodeURIComponent(
+    //     query
+    //   )}&page=${page}`
+    // );
 
     if (!res.ok) {
       console.error("Semantic search request failed:", res.statusText);
