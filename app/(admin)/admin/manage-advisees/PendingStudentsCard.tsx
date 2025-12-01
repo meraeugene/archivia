@@ -86,3 +86,4 @@ const PendingStudentsCard = ({
 };
 
 export default PendingStudentsCard;
+
