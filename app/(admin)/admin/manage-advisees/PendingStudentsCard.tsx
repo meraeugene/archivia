@@ -2,17 +2,30 @@
 "use client";
 
 import { Advisee } from "@/types/adviserAdvisees";
-import { FileText, User } from "lucide-react";
+import { FileText, User, Trash2 } from "lucide-react";
+import { removePendingStudent } from "@/actions/removePendingStudent"; // path to your server function
+import { toast } from "react-hot-toast";
 
 interface PendingStudentsCardProps {
   pending: Advisee[];
   setSelectedStudent: (student: Advisee) => void;
+  adviser_id: string; // pass adviser_id to remove
 }
 
 const PendingStudentsCard = ({
   pending,
   setSelectedStudent,
+  adviser_id,
 }: PendingStudentsCardProps) => {
+  const handleRemovePending = async (student_id: string) => {
+    try {
+      await removePendingStudent(student_id, adviser_id);
+      toast.success("Pending request removed successfully");
+    } catch (error) {
+      toast.error("Failed to remove pending request");
+    }
+  };
+
   return (
     <div>
       <h3 className="font-bold text-lg mb-3 text-yellow-500">
@@ -22,13 +35,15 @@ const PendingStudentsCard = ({
         {pending.map((student, index) => (
           <div
             key={student.student_id}
-            className="group bg-white p-4 rounded-md  shadow-xl hover:shadow-2xl  hover:translate-x-[-2px] hover:translate-y-[-2px] cursor-pointer transition-all duration-200"
-            onClick={() => {
-              setSelectedStudent(student);
-              document.body.classList.add("modal-open");
-            }}
+            className="group bg-white p-4 rounded-md shadow-xl hover:shadow-2xl hover:translate-x-[-2px] hover:translate-y-[-2px] cursor-pointer transition-all duration-200 flex justify-between items-start"
           >
-            <div className="flex items-start gap-4">
+            <div
+              className="flex items-start gap-4 flex-1"
+              onClick={() => {
+                setSelectedStudent(student);
+                document.body.classList.add("modal-open");
+              }}
+            >
               <div className="flex-shrink-0 w-8 h-8 bg-yellow-500 text-white flex items-center justify-center font-bold text-sm">
                 {index + 1}
               </div>
@@ -55,6 +70,14 @@ const PendingStudentsCard = ({
                 </div>
               </div>
             </div>
+
+            {/* Remove Pending Button */}
+            <button
+              onClick={() => handleRemovePending(student.student_id)}
+              className="text-red-500 hover:text-red-700 ml-2"
+            >
+              <Trash2 className="h-5 w-5" />
+            </button>
           </div>
         ))}
       </div>
