@@ -185,7 +185,7 @@ export function useArchivia(initialTheses?: Thesis[]) {
 
   const handleDownload = async (thesis: Thesis) => {
     if (!thesis.file_url) {
-      toast.info("No pdf existing for this.")
+      toast.info("No PDF is available for this thesis.")
       return
     }
 
