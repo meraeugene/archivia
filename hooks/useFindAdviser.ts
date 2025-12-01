@@ -144,10 +144,12 @@ export function useFindAdviser() {
   };
 
   const handleReset = () => {
+    //Clear form inputs (this is what clears the InputPanel)
     setStudentData({
     title: "",
     abstract: "",
   });
+    //Clear all recommendation-related state
     setRecommendations([]);
     setWildcardAdvisers([]);
     setSelectedAdviser(null);
