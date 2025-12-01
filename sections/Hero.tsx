@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { Archive } from "lucide-react";
+import Link from "next/link";
 
 const Hero = () => {
   const [mounted, setMounted] = useState(false);
@@ -71,7 +72,7 @@ const Hero = () => {
 
         {/* Description */}
         <p
-          className={`text-xl md:text-2xl text-gray-300 md:max-w-xl max-w-3xl mx-auto mb-14 font-light leading-relaxed transition-all duration-1000 delay-300 ${
+          className={`text-xl md:text-2xl text-gray-300 md:max-w-xl max-w-3xl mx-auto mb-20 font-light leading-relaxed transition-all duration-1000 delay-300 ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-8"
           }`}
         >
@@ -80,18 +81,34 @@ const Hero = () => {
         </p>
 
         {/* Scroll indicator */}
-        <div
-          className={`mt-20 transition-all duration-1000 delay-700 ${
+        <Link
+          href="#theses"
+          className={`mt-20  transition-all duration-1000 delay-700 ${
             mounted ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
           }`}
         >
-          <div className="flex flex-col items-center gap-3 text-gray-500 hover:text-gray-300 transition-colors duration-300 cursor-default">
-            <span className="text-sm font-medium">Explore More</span>
-            <div className="w-6 h-10 border-2 border-gray-500 rounded-full flex justify-center p-2 animate-bounce">
-              <div className="w-1 h-3 bg-gray-500 rounded-full animate-pulse"></div>
+          <div className="group inline-block cursor-pointer  text-gray-500 transition-all duration-300 hover:text-gray-300 ">
+            <span className="text-sm  font-medium group-hover:text-white transition-colors duration-300">
+              Explore More
+            </span>
+
+            <div
+              className="w-6 mx-auto mt-3 h-10 border-2 border-gray-500 rounded-full flex justify-center p-2 animate-bounce
+    transition-all duration-300
+    group-hover:border-white
+    group-hover:shadow-[0_0_12px_rgba(255,255,255,0.8)]
+    group-hover:ring-2
+    group-hover:ring-white/40"
+            >
+              <div
+                className="w-1 h-3 bg-gray-500 rounded-full animate-pulse
+      transition-all duration-300
+      group-hover:bg-white
+      group-hover:shadow-[0_0_8px_rgba(255,255,255,0.9)]"
+              />
             </div>
           </div>
-        </div>
+        </Link>
       </div>
 
       {/* Bottom fade */}

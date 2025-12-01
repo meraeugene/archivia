@@ -42,7 +42,7 @@ const SearchCategory: React.FC<SearchCategoryProps> = ({
   };
 
   return (
-    <section className="pt-10">
+    <section id="theses" className="pt-10">
       <div className="max-w-5xl mx-auto px-4 md:px-6">
         <div className="relative max-w-4xl mx-auto">
           <input

@@ -22,6 +22,7 @@ const FindAdviser = () => {
     wildcardAdvisers,
     handleReset,
     explanations,
+    radarData,
   } = useFindAdviser();
 
   return (
@@ -44,6 +45,7 @@ const FindAdviser = () => {
             wildcardAdvisers={wildcardAdvisers}
             handleReset={handleReset}
             explanations={explanations}
+            radarData={radarData}
           />
         )}
       </div>

@@ -2,18 +2,20 @@
 
 import { Adviser } from "@/types/advisers";
 import { motion } from "framer-motion";
-import { RefreshCw, Sparkles } from "lucide-react";
+import { BarChart3, RefreshCw, Sparkles } from "lucide-react";
 
 interface HeaderResetProps {
   recommendations: Adviser[];
   handleReset: () => void;
   mounted: boolean;
+  openGraphModal: () => void;
 }
 
 const HeaderReset = ({
   recommendations,
   handleReset,
   mounted,
+  openGraphModal,
 }: HeaderResetProps) => {
   return (
     <div
@@ -67,7 +69,14 @@ const HeaderReset = ({
           </div>
         </div>
 
-        <div className="flex items-center gap-4    ">
+        <div className="flex items-center gap-4">
+          <button
+            onClick={openGraphModal}
+            className="group/btn hidden lg:flex mx-auto backdrop-blur-xl bg-white/10 border border-white/20 text-white rounded-2xl px-6 py-3.5 font-semibold text-sm hover:bg-white/20 hover:border-white/30 transition-all duration-300  items-center gap-2.5 hover:scale-105 active:scale-95 cursor-pointer shadow-lg hover:shadow-white/10"
+          >
+            <BarChart3 size={18} />
+            <span className="text-xs">View Analysis</span>
+          </button>
           <button
             onClick={handleReset}
             className="group/btn mx-auto backdrop-blur-xl bg-white/10 border border-white/20 text-white rounded-2xl px-6 py-3.5 font-semibold text-sm hover:bg-white/20 hover:border-white/30 transition-all duration-300 flex items-center gap-2.5 hover:scale-105 active:scale-95 cursor-pointer shadow-lg hover:shadow-white/10"

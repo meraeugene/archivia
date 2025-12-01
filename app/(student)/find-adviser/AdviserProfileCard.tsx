@@ -14,7 +14,7 @@ import {
 import { Adviser } from "@/types/advisers";
 import { motion } from "framer-motion";
 import { getInitials } from "@/utils/getInitials";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const AdviserProfileCard = ({
   adviser,
@@ -29,12 +29,7 @@ const AdviserProfileCard = ({
   top1Explanation: string;
   isTop1: boolean;
 }) => {
-  const [mounted, setMounted] = useState(false);
   const [expandedProjects, setExpandedProjects] = useState<number[]>([]);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
 
   const toggleProject = (idx: number) => {
     setExpandedProjects((prev) =>
@@ -44,13 +39,11 @@ const AdviserProfileCard = ({
 
   return (
     <div
-      className="fixed  inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-50 md:p-4 animate-in fade-in duration-300 "
+      className="fixed  inset-0 bg-black/80 backdrop-blur-xl flex items-center justify-center z-50 md:p-4 "
       onClick={onClose}
     >
       <div
-        className={`bg-black border border-white/10  max-w-7xl w-full h-full md:max-h-[95vh] overflow-y-auto shadow-2xl shadow-white/5 transition-all duration-500 scrollbar-none  ${
-          mounted ? "opacity-100 scale-100" : "opacity-0 scale-95"
-        }`}
+        className={`bg-black border border-white/10  max-w-7xl w-full h-full md:max-h-[95vh] overflow-y-auto   animate-fadeInScale shadow-2xl shadow-white/5 transition-all duration-500 scrollbar-none  `}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}

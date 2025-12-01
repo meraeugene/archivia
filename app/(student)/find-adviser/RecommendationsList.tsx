@@ -13,6 +13,7 @@ import FindAdviserDesigns from "./FindAdviserDesigns";
 import NoWildcards from "./NoWildcards";
 import { motion } from "framer-motion";
 import TypingText from "./TypingEffect";
+import GraphModal from "./GraphModal";
 
 interface RecommendationsListProps {
   recommendations: Adviser[];
@@ -20,6 +21,16 @@ interface RecommendationsListProps {
   wildcardAdvisers: Adviser[];
   handleReset: () => void;
   explanations: { overall: string; top1: string };
+  radarData: {
+    name: string;
+    similarity: number;
+    experience: number;
+    overall: number;
+    top_project: {
+      title: string;
+      similarity: number;
+    };
+  }[];
 }
 
 export const RecommendationsList = ({
@@ -28,9 +39,11 @@ export const RecommendationsList = ({
   wildcardAdvisers,
   handleReset,
   explanations,
+  radarData,
 }: RecommendationsListProps) => {
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [toggleGraphModal, setToggleGraphModal] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -73,6 +86,10 @@ export const RecommendationsList = ({
           recommendations={recommendations}
           handleReset={handleReset}
           mounted={mounted}
+          openGraphModal={() => {
+            setToggleGraphModal(true);
+            document.body.style.overflow = "hidden";
+          }}
         />
 
         {/* Recommended Section */}
@@ -176,6 +193,16 @@ export const RecommendationsList = ({
           onConnect={() => onConnect(selectedAdviser)}
           top1Explanation={explanations.top1}
           isTop1={selectedAdviser === recommendations[0]}
+        />
+      )}
+
+      {toggleGraphModal && (
+        <GraphModal
+          onClose={() => {
+            setToggleGraphModal(false);
+            document.body.style.overflow = "auto";
+          }}
+          radarData={radarData}
         />
       )}
     </div>

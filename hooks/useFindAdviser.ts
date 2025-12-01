@@ -11,7 +11,6 @@ import { sendRequest } from "@/actions/student/sendRequest";
 export function useFindAdviser() {
   const { studentData, setStudentData } = useAdviserStore();
   const [recommendations, setRecommendations] = useState<Adviser[]>([]);
-
   const [wildcardAdvisers, setWildcardAdvisers] = useState<Adviser[]>([]);
   const [isPending, startTransition] = useTransition();
   const [isLoading, setIsLoading] = useState(false);
@@ -22,6 +21,18 @@ export function useFindAdviser() {
     overall: string;
     top1: string;
   }>({ overall: "", top1: "" });
+  const [radarData, setRadarData] = useState<
+    {
+      name: string;
+      similarity: number;
+      experience: number;
+      overall: number;
+      top_project: {
+        title: string;
+        similarity: number;
+      };
+    }[]
+  >([]);
 
   const hasRecommendations = recommendations.length > 0;
 
@@ -68,6 +79,7 @@ export function useFindAdviser() {
       setRecommendations(result.recommendations);
       setRecommendedIds(result.recommended_adviser_ids || []);
       setWildcardAdvisers(result.wildcard_advisers || []);
+      setRadarData(result.radar_data || []);
       setExplanations({
         overall: result.overall_explanation || "",
         top1: result.top1_adviser_explanation || "",
@@ -156,5 +168,6 @@ export function useFindAdviser() {
     handleCancel,
     handleReset,
     explanations,
+    radarData,
   };
 }

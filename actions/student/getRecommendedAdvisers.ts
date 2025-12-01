@@ -44,7 +44,7 @@ export async function getRecommendedAdvisers(title: string, abstract: string) {
       recommendations: data.recommendations,
       recommended_adviser_ids: data.recommended_adviser_ids,
       wildcard_advisers: data.wildcard_advisers,
-      radar_chart: data.radar_chart_base64,
+      radar_data: data.radar_data,
       pie_chart: data.pie_chart_base64,
       overall_explanation: data.overall_explanation,
       top1_adviser_explanation: data.top1_adviser_explanation,

@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { User, ClipboardList, Settings } from "lucide-react";
@@ -28,6 +28,8 @@ export default function ResponsiveHeader({
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [hideHeader, setHideHeader] = useState(false);
+  const [lastScrollY, setLastScrollY] = useState(0);
 
   const hideFindAdviser =
     currentUser?.role === "faculty" ||
@@ -45,6 +47,25 @@ export default function ResponsiveHeader({
       document.body.style.overflow = "auto";
     }
   };
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+
+      if (currentScrollY > lastScrollY && currentScrollY > 80) {
+        // Scrolling DOWN
+        setHideHeader(true);
+      } else {
+        // Scrolling UP
+        setHideHeader(false);
+      }
+
+      setLastScrollY(currentScrollY);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
 
   const renderLinks = (isMobile = false) => (
     <div
@@ -125,7 +146,11 @@ export default function ResponsiveHeader({
   );
 
   return (
-    <header className="sticky top-0 z-50 bg-white  md:border-b border-gray-100">
+    <header
+      className={`sticky top-0 z-50 bg-white md:border-b border-gray-100 transition-transform duration-300 ease-in-out ${
+        hideHeader ? "-translate-y-full" : "translate-y-0"
+      }`}
+    >
       <div className="max-w-6xl mx-auto ">
         {/* Desktop Navigation */}
         <div className="md:flex justify-between hidden  items-center py-2 md:py-3 px-2 md:px-6 xl:px-0 ">
