@@ -3,7 +3,7 @@
 
 import { Advisee } from "@/types/adviserAdvisees";
 import { FileText, User, Trash2 } from "lucide-react";
-import { removePendingStudent } from "@/actions/admin/removePendingStudent.ts"; // path to your server function
+import { removePendingStudent } from "@/actions/admin/removePendingStudent"; // path to your server function
 import { toast } from "sonner";
 
 interface PendingStudentsCardProps {
