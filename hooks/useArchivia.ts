@@ -8,6 +8,7 @@ import {
   // searchTheses,
 } from "@/actions/common/theses";
 import { semanticSearchTheses } from "@/actions/common/semanticSearchTheses";
+import { toast } from "sonner";
 
 export function useArchivia(initialTheses?: Thesis[]) {
   const [displayedTheses, setDisplayedTheses] = useState<Thesis[]>(
@@ -183,7 +184,11 @@ export function useArchivia(initialTheses?: Thesis[]) {
   };
 
   const handleDownload = async (thesis: Thesis) => {
-    if (!thesis.file_url) return;
+    if (!thesis.file_url) {
+      toast.info("No pdf existing for this.")
+      return
+    }
+
 
     try {
       const response = await fetch(thesis.file_url);

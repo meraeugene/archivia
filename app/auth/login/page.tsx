@@ -100,7 +100,7 @@ export default function Login() {
                 htmlFor="userId"
                 className="hidden md:block text-sm text-black font-semibold mb-2"
               >
-                Username
+                User ID
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">

@@ -40,7 +40,7 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
         />
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-2  2xl:grid-cols-3  gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-1 xl:grid-cols-2  2xl:grid-cols-2  gap-8">
         {filteredData.map((adviser) => {
           const accepted =
             adviser.advisees?.filter((a) => a.status === "accepted") || [];

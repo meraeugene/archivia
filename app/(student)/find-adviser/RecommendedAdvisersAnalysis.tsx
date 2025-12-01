@@ -142,10 +142,24 @@ export function RecommendedAdvisersAnalysis({
             your research topic.
           </p>
           <p className="mt-2">
-            <strong>Experience:</strong> Based on the number of theses the
-            adviser supervised or served as panel member for similar topics.
-            Includes partial points for panel membership and contribution from
-            similarity of those theses.
+            <strong>Experience:</strong> Computed based on the adviser’s past
+            work in topics similar to your thesis:
+            <ul className="list-disc list-inside ml-4 mt-1">
+              <li>
+                <strong>Supervised Thesis:</strong> +1 point for each thesis the
+                adviser directly supervised.
+              </li>
+              <li>
+                <strong>Panel Membership:</strong> +0.3 points for each time the
+                adviser served as a panel member on a relevant thesis.
+              </li>
+              <li>
+                <strong>Similarity Contribution:</strong> +0.5 × semantic
+                similarity score of the thesis.
+              </li>
+            </ul>
+            Only the top 5 most relevant past theses are considered, and points
+            are normalized across all advisers to create a 0–1 experience score.
           </p>
           <p className="mt-2">
             <strong>Overall:</strong> Combined score = 90% Similarity + 10%
@@ -188,78 +202,12 @@ export function RecommendedAdvisersAnalysis({
         </ChartContainer>
       </CardContent>
 
-      {/* Pie Chart */}
-      <CardContent className="mt-8 w-full ">
-        <div className="w-full h-full flex items-center justify-center">
-          <PieChart width={800} height={650}>
-            <Pie
-              data={pieData}
-              dataKey="value"
-              nameKey="name"
-              cx="50%"
-              cy="50%"
-              outerRadius={250}
-              innerRadius={0}
-              //  FORCE PERCENTAGE INSIDE SLICE
-              label={({
-                cx,
-                cy,
-                midAngle,
-                innerRadius,
-                outerRadius,
-                value,
-              }) => {
-                const RADIAN = Math.PI / 180;
-                const radius = innerRadius + (outerRadius - innerRadius) * 0.5;
-
-                const x = cx + radius * Math.cos(-midAngle * RADIAN);
-                const y = cy + radius * Math.sin(-midAngle * RADIAN);
-
-                return (
-                  <text
-                    x={x}
-                    y={y}
-                    fill="white"
-                    fontSize={16}
-                    fontWeight="bold"
-                    textAnchor="middle"
-                    dominantBaseline="central"
-                  >
-                    {value.toFixed(1)}%
-                  </text>
-                );
-              }}
-              //  REMOVE STICK
-              labelLine={false}
-              // REMOVE SLICE BORDER
-              stroke="none"
-            >
-              {/* OUTSIDE ADVISER NAMES */}
-              <LabelList
-                dataKey="name"
-                position="outside"
-                fill="white"
-                fontSize={16}
-                fontWeight="bold"
-              />
-
-              {pieData.map((entry, index) => (
-                <Cell
-                  key={`cell-${index}`}
-                  fill={pieColors[index % pieColors.length]}
-                />
-              ))}
-            </Pie>
-          </PieChart>
-        </div>
-      </CardContent>
-
-      <CardFooter className="flex-col gap-2  text-sm">
+      <CardFooter className="flex-col gap-2  text-sm mt-12">
         {/* Most Similar Theses */}
         <h2 className="mb-3 text-2xl font-bold text-white text-center">
           Most Similar Theses
         </h2>
-        <div className="grid grid-cols-1 gap-4 max-w-3xl mx-auto">
+        <div className="grid grid-cols-1 gap-4 max-w-3xl mx-auto w-full">
           {topAdvisers.map((adviser) => (
             <div
               key={adviser.name}

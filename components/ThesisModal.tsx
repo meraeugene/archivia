@@ -67,7 +67,7 @@ const ThesisModal: React.FC<ThesisModalProps> = ({
             </div>
 
             <div>
-              <strong>Proponents:</strong>
+              <strong>Proponents: </strong>
 
               {/* Highlight Proponents */}
               <HighlightText

@@ -71,7 +71,13 @@ const MobileHeader = ({
       {mobileMenuOpen && (
         <div className="md:hidden fixed inset-0 z-40">
           {/* Blur overlay only behind menu panel */}
-          <div className="absolute top-[4rem] bottom-0 left-0 right-0 bg-black/10 backdrop-blur-xs" />
+          <div
+            onClick={() => {
+              setMobileMenuOpen(false);
+              document.body.classList.remove("overflow-hidden");
+            }}
+            className="absolute top-[4rem] bottom-0 left-0 right-0 bg-black/10 backdrop-blur-xs"
+          />
 
           {/* Menu panel */}
           <div
