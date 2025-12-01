@@ -3,13 +3,13 @@
 
 import { Advisee } from "@/types/adviserAdvisees";
 import { FileText, User, Trash2 } from "lucide-react";
-import { removePendingStudent } from "@/actions/removePendingStudent"; 
+import { removePendingStudent } from "@/actions/removePendingStudent"; // path to your server function
 import { toast } from "react-hot-toast";
 
 interface PendingStudentsCardProps {
   pending: Advisee[];
   setSelectedStudent: (student: Advisee) => void;
-  adviser_id: string; 
+  adviser_id: string; // pass adviser_id to remove
 }
 
 const PendingStudentsCard = ({
@@ -86,4 +86,3 @@ const PendingStudentsCard = ({
 };
 
 export default PendingStudentsCard;
-
