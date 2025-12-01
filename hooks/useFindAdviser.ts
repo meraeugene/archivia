@@ -144,6 +144,10 @@ export function useFindAdviser() {
   };
 
   const handleReset = () => {
+    setStudentData({
+    title: "",
+    abstract: "",
+  });
     setRecommendations([]);
     setWildcardAdvisers([]);
     setSelectedAdviser(null);
