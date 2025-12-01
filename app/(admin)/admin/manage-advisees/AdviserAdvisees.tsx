@@ -130,6 +130,7 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
                     <PendingStudentsCard
                       pending={pending}
                       setSelectedStudent={setSelectedStudent}
+                      adviser_id={adviser.adviser_id}
                     />
                   )}
 
