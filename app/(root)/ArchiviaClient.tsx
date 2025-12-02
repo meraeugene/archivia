@@ -76,7 +76,7 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
 
     window.addEventListener("keydown", handleEsc);
     return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
+  }, [closeModal]);
 
   return (
     <main className="min-h-screen bg-gray-50 text-black relative ">

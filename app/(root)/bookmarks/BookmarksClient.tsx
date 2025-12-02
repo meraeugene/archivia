@@ -28,6 +28,17 @@ export default function BookmarksClient({
     selectedThesis,
   } = useArchivia();
 
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, [closeModal]);
+
   const handleUnbookmark = (thesisId: number) => {
     // Optimistic removal
     setBookmarks((prev) => prev.filter((b) => b.id !== thesisId));
@@ -54,17 +65,6 @@ export default function BookmarksClient({
   if (bookmarks.length === 0) {
     return <NoBookmarks />;
   }
-
-  useEffect(() => {
-    const handleEsc = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        closeModal();
-      }
-    };
-
-    window.addEventListener("keydown", handleEsc);
-    return () => window.removeEventListener("keydown", handleEsc);
-  }, []);
 
   return (
     <main className="mx-auto bg-gray-50 relative ">

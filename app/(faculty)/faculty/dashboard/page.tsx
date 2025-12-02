@@ -2,7 +2,6 @@ import {
   BookCopy,
   BookOpen,
   Clock,
-  FileCheck,
   FileText,
   Settings,
   Users,
@@ -16,7 +15,6 @@ import {
   getAdviserRequestsCount,
   getHandledThesisCount,
   getPendingAdviserRequestsCount,
-  getThesisSubmissionCount,
 } from "@/actions/faculty/count";
 import { getAdviserRequests } from "@/actions/faculty/getAdviserRequests";
 import { getReferAdvisers } from "@/actions/faculty/getReferAdvisers";
@@ -27,7 +25,6 @@ export default async function FacultyDashboard() {
     adviserRequests,
     pendingAdviserRequestCount,
     totalAdviserRequestCount,
-    thesisApprovedCount,
     handledThesisCount,
     adviserCurrentLeadersCount,
     { advisers: referredAdvisers = [] },
@@ -35,7 +32,6 @@ export default async function FacultyDashboard() {
     getAdviserRequests(),
     getPendingAdviserRequestsCount(),
     getAdviserRequestsCount(),
-    getThesisSubmissionCount(),
     getHandledThesisCount(),
     getAdviserCurrentLeadersCount(),
     getReferAdvisers(),

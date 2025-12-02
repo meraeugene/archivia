@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  LabelList,
-  PolarAngleAxis,
-  PolarGrid,
-  Radar,
-  RadarChart,
-} from "recharts";
-import { PieChart, Pie, Cell } from "recharts";
+import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
 
 import {
   Card,
@@ -47,7 +40,7 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 // Blue shades for pie chart
-const pieColors = ["#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#dbeafe"];
+// const pieColors = ["#3b82f6", "#60a5fa", "#93c5fd", "#bfdbfe", "#dbeafe"];
 
 export function RecommendedAdvisersAnalysis({
   advisers,
@@ -73,10 +66,10 @@ export function RecommendedAdvisersAnalysis({
     .sort((a, b) => b.overall - a.overall)
     .slice(0, 5);
 
-  const pieData = topAdvisers.map((adv) => ({
-    name: adv.name,
-    value: adv.similarity * 100,
-  }));
+  // const pieData = topAdvisers.map((adv) => ({
+  //   name: adv.name,
+  //   value: adv.similarity * 100,
+  // }));
 
   return (
     <Card className="rounded-3xl bg-white/5 border border-white/10 text-white">

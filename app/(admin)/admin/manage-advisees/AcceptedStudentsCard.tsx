@@ -71,11 +71,15 @@ const AcceptedStudentsCard = ({
                       onConfirm={async () => {
                         try {
                           await removeStudentFromAdviser(
-                          student.student_id,
-                          adviserId as string
-                        );
-                        toast.success("Student removed from adviser");
+                            student.student_id,
+                            adviserId as string
+                          );
+                          toast.success("Student removed from adviser");
                         } catch (error) {
+                          console.error(
+                            "Failed to remove adviser student:",
+                            error
+                          );
                           toast.error("Failed to remove adviser student");
                         }
                       }}

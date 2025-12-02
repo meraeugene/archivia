@@ -128,6 +128,10 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
                           );
                           toast.success("All advisees removed");
                         } catch (error) {
+                          console.error(
+                            "Failed to remove all advisees:",
+                            error
+                          );
                           toast.error("Failed to remove all advisees");
                         }
                       }}
