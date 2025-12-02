@@ -52,7 +52,7 @@ export default async function FacultyDashboard() {
       <div className="px-4 py-6 md:p-8 ">
         {/* Statistics Overview */}
         <section className="mb-8">
-          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-5 gap-6 mb-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3  2xl:grid-cols-4 gap-6 mb-8">
             <StatsCard
               title="Total Advisory Requests"
               count={totalAdviserRequestCount}
@@ -77,13 +77,13 @@ export default async function FacultyDashboard() {
               iconClass="bg-gray-100"
             />
 
-            <StatsCard
+            {/* <StatsCard
               title="Approval Requests"
               count={thesisApprovedCount}
               icon={<FileCheck className="h-6 w-6 " />}
               desc="Thesis awaiting your approval"
               iconClass="bg-gray-100"
-            />
+            /> */}
 
             <StatsCard
               title="Handled Thesis"

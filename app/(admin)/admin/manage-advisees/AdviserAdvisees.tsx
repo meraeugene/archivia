@@ -117,8 +117,12 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
                       confirmText="Confirm"
                       cancelText="Cancel"
                       onConfirm={async () => {
-                        await removeAllAdviseesFromAdviser(adviser.adviser_id);
-                        toast.success("All advisees removed.");
+                        try {
+                          await removeAllAdviseesFromAdviser(adviser.adviser_id);
+                        toast.success("All advisees removed");
+                        } catch (error) {
+                          toast.error("Failed to remove all advisees")
+                        }
                       }}
                     />
                   )}

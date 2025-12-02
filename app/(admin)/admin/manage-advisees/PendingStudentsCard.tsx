@@ -5,6 +5,7 @@ import { Advisee } from "@/types/adviserAdvisees";
 import { FileText, User, Trash2 } from "lucide-react";
 import { removePendingStudent } from "@/actions/admin/removePendingStudent"; // path to your server function
 import { toast } from "sonner";
+import { ConfirmModal } from "./ConfirmModal";
 
 interface PendingStudentsCardProps {
   pending: Advisee[];
@@ -17,14 +18,6 @@ const PendingStudentsCard = ({
   setSelectedStudent,
   adviser_id,
 }: PendingStudentsCardProps) => {
-  const handleRemovePending = async (student_id: string) => {
-    try {
-      await removePendingStudent(student_id, adviser_id);
-      toast.success("Pending request removed successfully");
-    } catch (error) {
-      toast.error("Failed to remove pending request");
-    }
-  };
 
   return (
     <div>
@@ -71,13 +64,22 @@ const PendingStudentsCard = ({
               </div>
             </div>
 
-            {/* Remove Pending Button */}
-            <button
-              onClick={() => handleRemovePending(student.student_id)}
-              className="text-red-500 hover:text-red-700 ml-2"
-            >
-              <Trash2 className="h-5 w-5" />
-            </button>
+
+              <ConfirmModal
+                                  size="icon"
+                                  title="Remove Student's Pending Request?"
+                                  description={`Are you sure you want to remove ${student.student_name} from their pending request? This action cannot be undone.`}
+                                  confirmText="Remove"
+                                  cancelText="Cancel"
+                                  onConfirm={async () => {
+                                   try {
+      await removePendingStudent(student.student_id, adviser_id);
+      toast.success("Pending request removed successfully");
+    } catch (error) {
+      toast.error("Failed to remove pending request");
+    }
+                                  }}
+                                />
           </div>
         ))}
       </div>
