@@ -103,14 +103,14 @@ export default async function FacultyDashboard() {
           <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
             <QuickActionsCard
               title="Review Advisory Requests"
-              desc="Review and manage pending student requests"
+              desc="Manage pending student requests"
               icon={<FileText className="h-6 w-6" />}
               link="/faculty/advisory-requests"
             />
             <QuickActionsCard
               title="View Advisees"
               link="/faculty/advisees"
-              desc="View the students you are currently advising."
+              desc="View your current advisees."
               icon={<Users className="h-6 w-6" />}
             />
 

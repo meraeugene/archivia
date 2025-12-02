@@ -56,7 +56,7 @@ const AdviserModal = ({ selectedAdviser, closeModal }: AdviserModalProps) => {
               <img
                 src={selectedAdviser.profile_picture}
                 alt={selectedAdviser.full_name}
-                className="w-full h-full object-cover"
+                className="w-full min-h-[750px] object-cover"
               />
             ) : (
               <div className="w-full h-full bg-gradient-to-br from-gray-800 to-gray-900 flex items-center justify-center">

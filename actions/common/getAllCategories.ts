@@ -14,7 +14,7 @@ export const getAllCategories = cache(async () => {
   if (error) throw error;
 
   return [
-    { key: "all", label: "All" },
+    { key: "all", label: "All Categories" },
     ...data.map((row) => ({
       key: row.category,
       label: row.category,

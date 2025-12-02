@@ -71,7 +71,7 @@ export default function ManageUsersClient({
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
               <Input
                 type="text"
-                placeholder="Search by title or adviser"
+                placeholder="Search by user ID, name, or email"
                 className="w-full py-3 pl-9 rounded border focus:ring-gray-500"
                 onChange={(e) => {
                   const params = new URLSearchParams(searchParams);

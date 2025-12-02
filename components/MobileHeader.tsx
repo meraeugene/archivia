@@ -69,69 +69,44 @@ const MobileHeader = ({
 
       {/* Mobile Menu + Overlay */}
       {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 z-40">
-          {/* Blur overlay only behind menu panel */}
-          <div
-            onClick={() => {
-              setMobileMenuOpen(false);
-              document.body.classList.remove("overflow-hidden");
-            }}
-            className="absolute top-[4rem] bottom-0 left-0 right-0 bg-black/10 backdrop-blur-xs"
-          />
-
-          {/* Menu panel */}
-          <div
-            className="absolute top-[56px]  left-0 right-0 bg-white  z-50 animate-in fade-in slide-in-from-top-2 duration-300"
-            onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
-          >
-            {/* User info */}
-            {currentUser && (
-              <div className="space-y-3 p-4 border-t ">
-                <div className="flex items-center space-x-3">
-                  {currentUser.profile_picture ? (
-                    <img
-                      src={currentUser.profile_picture}
-                      alt={currentUser.full_name}
-                      className="w-10 h-10 rounded-full object-cover"
-                    />
-                  ) : (
-                    <div className="w-10 h-10 rounded-full flex items-center justify-center bg-black text-white font-bold">
-                      {getInitials(currentUser.full_name)}
-                    </div>
-                  )}
-                  <div className="flex-1 min-w-0">
-                    <div className="font-medium text-gray-900 truncate">
-                      {currentUser.prefix} {currentUser.full_name}{" "}
-                      {currentUser.suffix}
-                    </div>
-                    <div className="text-gray-600 text-xs truncate">
-                      {currentUser.email}
+        <>
+          <div className="md:hidden fixed inset-0 z-40">
+            {/* Menu panel */}
+            <div
+              className="absolute top-[56px]  left-0 right-0 bg-white  z-50 animate-in fade-in slide-in-from-top-2 duration-300"
+              onClick={(e) => e.stopPropagation()} // prevent closing when clicking inside
+            >
+              {/* User info */}
+              {currentUser && (
+                <div className="space-y-3 p-4 border-t ">
+                  <div className="flex items-center space-x-3">
+                    {currentUser.profile_picture ? (
+                      <img
+                        src={currentUser.profile_picture}
+                        alt={currentUser.full_name}
+                        className="w-10 h-10 rounded-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-10 h-10 rounded-full flex items-center justify-center bg-black text-white font-bold">
+                        {getInitials(currentUser.full_name)}
+                      </div>
+                    )}
+                    <div className="flex-1 min-w-0">
+                      <div className="font-medium text-gray-900 truncate">
+                        {currentUser.prefix} {currentUser.full_name}{" "}
+                        {currentUser.suffix}
+                      </div>
+                      <div className="text-gray-600 text-xs truncate">
+                        {currentUser.email}
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <Link
-                  prefetch
-                  href={`/profile/${currentUser.user_id}`}
-                  className={`block ${
-                    pathname === `/profile/${currentUser.user_id}`
-                      ? "font-semibold text-black"
-                      : "text-gray-800 hover:text-black"
-                  }`}
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    document.body.style.overflow = "auto";
-                  }}
-                >
-                  Profile
-                </Link>
-
-                {currentUser.role === "student" && (
                   <Link
                     prefetch
-                    href="/my-requests"
+                    href={`/profile/${currentUser.user_id}`}
                     className={`block ${
-                      pathname === "/my-requests"
+                      pathname === `/profile/${currentUser.user_id}`
                         ? "font-semibold text-black"
                         : "text-gray-800 hover:text-black"
                     }`}
@@ -140,44 +115,62 @@ const MobileHeader = ({
                       document.body.style.overflow = "auto";
                     }}
                   >
-                    My Requests
+                    Profile
                   </Link>
-                )}
-              </div>
-            )}
 
-            {/* Navigation links */}
-            <div className="p-4 border-t">{renderLinks(true)}</div>
-
-            {/* Logout button */}
-            {currentUser && (
-              <form
-                onSubmit={async (e) => {
-                  document.body.style.overflow = "auto";
-                  e.preventDefault();
-                  setIsLoggingOut(true);
-                  await logout(); // call server action
-                }}
-                className="py-4 px-4 border-t shadow-2xl"
-              >
-                <button
-                  type="submit"
-                  disabled={isLoggingOut}
-                  className="flex items-center space-x-2 w-full text-left hover:bg-gray-100 disabled:opacity-50 text-gray-800"
-                >
-                  {isLoggingOut ? (
-                    <div className="flex items-center space-x-2">
-                      <div className="h-5 w-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                      <span>Logging out...</span>
-                    </div>
-                  ) : (
-                    <div>Logout</div>
+                  {currentUser.role === "student" && (
+                    <Link
+                      prefetch
+                      href="/my-requests"
+                      className={`block ${
+                        pathname === "/my-requests"
+                          ? "font-semibold text-black"
+                          : "text-gray-800 hover:text-black"
+                      }`}
+                      onClick={() => {
+                        setMobileMenuOpen(false);
+                        document.body.style.overflow = "auto";
+                      }}
+                    >
+                      My Requests
+                    </Link>
                   )}
-                </button>
-              </form>
-            )}
+                </div>
+              )}
+
+              {/* Navigation links */}
+              <div className="p-4 border-t">{renderLinks(true)}</div>
+
+              {/* Logout button */}
+              {currentUser && (
+                <form
+                  onSubmit={async (e) => {
+                    document.body.style.overflow = "auto";
+                    e.preventDefault();
+                    setIsLoggingOut(true);
+                    await logout(); // call server action
+                  }}
+                  className="py-4 px-4 border-t shadow-2xl"
+                >
+                  <button
+                    type="submit"
+                    disabled={isLoggingOut}
+                    className="flex items-center space-x-2 w-full text-left hover:bg-gray-100 disabled:opacity-50 text-gray-800"
+                  >
+                    {isLoggingOut ? (
+                      <div className="flex items-center space-x-2">
+                        <div className="h-5 w-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        <span>Logging out...</span>
+                      </div>
+                    ) : (
+                      <div>Logout</div>
+                    )}
+                  </button>
+                </form>
+              )}
+            </div>
           </div>
-        </div>
+        </>
       )}
     </header>
   );

@@ -240,14 +240,14 @@ export default function ResponsiveHeader({
             )}
           </nav>
         </div>
-
-        <MobileHeader
-          mobileMenuOpen={mobileMenuOpen}
-          setMobileMenuOpen={setMobileMenuOpen}
-          currentUser={currentUser}
-          renderLinks={renderLinks}
-        />
       </div>
+
+      <MobileHeader
+        mobileMenuOpen={mobileMenuOpen}
+        setMobileMenuOpen={setMobileMenuOpen}
+        currentUser={currentUser}
+        renderLinks={renderLinks}
+      />
     </header>
   );
 }

@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import { X, Download } from "lucide-react";
 import { Thesis } from "@/types/thesis";
 import HighlightText from "./HighlightText";

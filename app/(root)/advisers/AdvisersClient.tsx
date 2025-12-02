@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { getInitials } from "@/utils/getInitials";
 import { Adviser } from "@/types/advisers";
@@ -27,6 +27,17 @@ const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
     setSelectedAdviser(null);
     document.body.classList.remove("overflow-hidden");
   };
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
   return (
     <div className="min-h-screen bg-gray-50">

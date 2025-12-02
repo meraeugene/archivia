@@ -9,7 +9,7 @@ import DashboardMobileHeader from "@/components/DashboardMobileHeader";
 import Masonry from "react-masonry-css";
 
 const breakpointColumnsObj = {
-  default: 3,
+  default: 2,
   768: 1,
   1024: 1,
   1440: 2,

@@ -1,7 +1,7 @@
 "use client";
 
 import { HandledThesis } from "@/types/handledThesis";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import HandledThesisModal from "./HandledThesisModal";
 import DashboardMobileHeader from "@/components/DashboardMobileHeader";
 
@@ -46,6 +46,17 @@ export default function HandledThesisClient({
     setIsOpen(false);
     document.body.classList.remove("modal-open");
   };
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
   return (
     <main className="flex-1">

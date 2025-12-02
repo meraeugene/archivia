@@ -86,7 +86,7 @@ export default async function AdminDashboard() {
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 2xl:grid-cols-5 gap-6">
           <QuickActionsCard
             title="Manage advisees"
-            desc="View and manage adviser advisees."
+            desc="Manage adviser advisees."
             icon={<UserCog className="h-6 w-6" />}
             link="/admin/manage-advisees"
           />
@@ -99,19 +99,19 @@ export default async function AdminDashboard() {
           <QuickActionsCard
             title="Manage Theses"
             link="/admin/manage-theses"
-            desc="View and manage theses submissions"
+            desc="Manage theses submissions"
             icon={<BookOpen className="h-6 w-6" />}
           />
           <QuickActionsCard
             title="Backup & Recovery"
             link="/admin/backup"
-            desc="Backup and restore system data"
+            desc="Backup and restore database"
             icon={<Database className="h-6 w-6" />}
           />
           <QuickActionsCard
             title="Retrain Model"
             link="/admin/retrain-model"
-            desc="Retrain the AI model with new data"
+            desc="Retrain the AI adviser model"
             icon={<BrainCircuit className="h-6 w-6" />}
           />
         </div>

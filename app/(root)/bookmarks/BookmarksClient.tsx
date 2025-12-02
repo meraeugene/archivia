@@ -1,7 +1,7 @@
 "use client";
 
 import { Bookmark, Download, Eye } from "lucide-react";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useArchivia } from "@/hooks/useArchivia";
 import { Thesis } from "@/types/thesis";
 import ThesisModal from "@/components/ThesisModal";
@@ -54,6 +54,17 @@ export default function BookmarksClient({
   if (bookmarks.length === 0) {
     return <NoBookmarks />;
   }
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
   return (
     <main className="mx-auto bg-gray-50 relative ">

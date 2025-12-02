@@ -66,7 +66,13 @@ const DashboardMobileHeader = ({ headerTitle }: MobileHeaderProps) => {
       {mobileMenuOpen && (
         <>
           {/* Backdrop below header */}
-          <div className="fixed inset-x-0 top-16 bottom-0  bg-black/20 backdrop-blur-sm transition-opacity duration-300" />
+          <div
+            className="fixed inset-x-0 top-16 bottom-0  bg-black/20 backdrop-blur-sm transition-opacity duration-300"
+            onClick={() => {
+              setMobileMenuOpen(false);
+              document.body.style.overflow = "auto";
+            }}
+          />
 
           {/* Menu Panel */}
           <div className="fixed top-16 left-0 right-0 z-50 bg-white border-y border-gray-200 shadow-lg animate-in fade-in slide-in-from-top-1 duration-300">

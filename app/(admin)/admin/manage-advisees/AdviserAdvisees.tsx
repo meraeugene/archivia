@@ -22,8 +22,13 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedStudent, setSelectedStudent] = useState<Advisee | null>(null);
 
-  const filteredData = data.filter((adviser) =>
-    adviser.adviser_name.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredData = data.filter(
+    (adviser) =>
+      adviser.adviser_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (adviser.advisees?.some((advisee) =>
+        advisee.student_name.toLowerCase().includes(searchTerm.toLowerCase())
+      ) ??
+        false)
   );
 
   return (
@@ -33,7 +38,7 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-4 h-4" />
         <Input
           type="text"
-          placeholder="Search by adviser..."
+          placeholder="Search by adviser or student name"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="w-full py-3 pl-9 rounded border focus:ring-gray-500"
@@ -118,10 +123,12 @@ const AdviserAdvisees = ({ data }: { data: AdviserWithAdvisees[] }) => {
                       cancelText="Cancel"
                       onConfirm={async () => {
                         try {
-                          await removeAllAdviseesFromAdviser(adviser.adviser_id);
-                        toast.success("All advisees removed");
+                          await removeAllAdviseesFromAdviser(
+                            adviser.adviser_id
+                          );
+                          toast.success("All advisees removed");
                         } catch (error) {
-                          toast.error("Failed to remove all advisees")
+                          toast.error("Failed to remove all advisees");
                         }
                       }}
                     />

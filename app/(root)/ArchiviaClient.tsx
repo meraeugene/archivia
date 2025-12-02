@@ -20,6 +20,7 @@ import {
 } from "@/components/ui/select";
 import SearchLoading from "@/components/SearchLoading";
 import GridOverlay from "@/components/GridOverlay";
+import { useEffect } from "react";
 
 interface ArchiviaClientProps {
   initialTheses: Thesis[];
@@ -65,6 +66,17 @@ const ArchiviaClient: React.FC<ArchiviaClientProps> = ({
     handleYearChange,
     handleCategoryChange,
   } = useArchivia(initialTheses);
+
+  useEffect(() => {
+    const handleEsc = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    window.addEventListener("keydown", handleEsc);
+    return () => window.removeEventListener("keydown", handleEsc);
+  }, []);
 
   return (
     <main className="min-h-screen bg-gray-50 text-black relative ">
