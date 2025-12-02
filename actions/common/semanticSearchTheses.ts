@@ -17,6 +17,7 @@ export async function semanticSearchTheses(query: string, page = 1) {
         query
       )}&page=${page}`
     );
+
     // const res = await fetch(
     //   `http://localhost:8000/search?query=${encodeURIComponent(
     //     query

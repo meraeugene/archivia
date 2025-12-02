@@ -106,6 +106,38 @@ export async function submitThesisForApproval(
         error: "Error updating adviser current leaders",
       };
 
+    try {
+      await fetch("https://web-production-6b29d.up.railway.app/upload", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: thesisData.title,
+          adviser_name: thesisData.adviser_name,
+          keywords: thesisData.keywords,
+          proponents: thesisData.proponents,
+          category: thesisData.category,
+        }),
+      });
+      // await fetch("http://localhost:8000/upload", {
+      //   method: "POST",
+      //   headers: {
+      //     "Content-Type": "application/json",
+      //   },
+      //   body: JSON.stringify({
+      //     title: thesisData.title,
+      //     adviser_name: thesisData.adviser_name,
+      //     keywords: thesisData.keywords,
+      //     proponents: thesisData.proponents,
+      //     category: thesisData.category,
+      //   }),
+      // });
+    } catch (err) {
+      console.error("Error updating search index:", err);
+      // Not fatal: the thesis is still in Supabase
+    }
+
     // await sendThesisApprovalEmail({
     //   to: currentUser.email,
     //   type: "approve",
