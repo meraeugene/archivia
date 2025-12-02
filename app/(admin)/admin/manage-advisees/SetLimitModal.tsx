@@ -49,7 +49,7 @@ export const SetLimitModal = ({
         <Input
           type="number"
           min={0}
-          value={Number.isNaN(limit) ? "" : limit} // ✅ Prevent NaN crash
+          value={Number.isNaN(limit) ? "" : limit} //  Prevent NaN crash
           onChange={(e) => setLimit(parseInt(e.target.value))}
         />
       </div>

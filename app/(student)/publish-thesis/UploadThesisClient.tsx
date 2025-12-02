@@ -16,11 +16,16 @@ import { useEffect, useState } from "react";
 interface UploadThesisClientProps {
   categories: { key: string; label: string }[];
   studentAdviser: StudentAdviser;
+  allPanels: {
+    adviser_id: string;
+    full_name: string;
+  }[];
 }
 
 const UploadThesisClient = ({
   categories,
   studentAdviser,
+  allPanels,
 }: UploadThesisClientProps) => {
   const {
     dragActive,
@@ -350,6 +355,7 @@ const UploadThesisClient = ({
         categories={categories}
         studentAdviser={studentAdviser}
         isCancelPending={isCancelPending}
+        allPanels={allPanels}
       />
     </main>
   );

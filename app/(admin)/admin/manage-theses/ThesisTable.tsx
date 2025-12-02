@@ -56,7 +56,7 @@ const ThesesTable = ({
                 {(page - 1) * limit + index + 1}
               </td>
 
-              <td className="px-4 py-2 font-medium text-gray-900 truncate max-w-[15rem] whitespace-nowrap">
+              <td className="px-4 py-2 font-medium text-gray-900 truncate max-w-[150px] whitespace-nowrap">
                 {thesis.title}
               </td>
 

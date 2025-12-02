@@ -8,6 +8,7 @@ import { FormField } from "./FormField";
 import { CategorySelector } from "./CategorySelector";
 import { useState } from "react";
 import ConfirmThesisModal from "./ConfirmThesisModal";
+import { PanelSelector } from "./PanelSelector";
 
 interface UploadThesisModalProps {
   isOpen: boolean;
@@ -17,6 +18,10 @@ interface UploadThesisModalProps {
   categories: { key: string; label: string }[];
   studentAdviser: StudentAdviser;
   isCancelPending: boolean;
+  allPanels: {
+    adviser_id: string;
+    full_name: string;
+  }[];
 }
 
 const UploadThesisModal = ({
@@ -27,6 +32,7 @@ const UploadThesisModal = ({
   categories,
   studentAdviser,
   isCancelPending,
+  allPanels,
 }: UploadThesisModalProps) => {
   const { form, handleChange, errors, validate } = useThesisUpload();
 
@@ -54,7 +60,7 @@ const UploadThesisModal = ({
   return (
     <>
       <div className="fixed inset-0 z-50 flex items-start md:items-center justify-center  bg-black/20 backdrop-blur-sm scrollbar-none  overflow-auto">
-        <div className="bg-white    md:h-[95vh] overflow-auto  md:p-8 p-4 max-w-4xl w-full md:w-fit lg:w-full shadow-2xl border border-gray-200 ">
+        <div className="bg-white  pb-20  md:h-[95vh] overflow-auto  md:p-8 p-4 max-w-4xl w-full md:w-fit lg:w-full shadow-2xl border border-gray-200 lg:pb-12 ">
           <div className="mb-8 flex flex-col items-center text-center">
             <div className="gap-3 mb-2 flex flex-col items-center">
               <div className="w-12 h-12 bg-black rounded-2xl flex items-center justify-center">
@@ -126,27 +132,27 @@ const UploadThesisModal = ({
 
             {/* Panel Chair | Panel Members */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <FormField
+              <PanelSelector
                 label="Panel Chair"
-                placeholder="e.g. John Harvey C. Babia"
+                panels={allPanels}
                 value={form.panel_member1}
-                onChange={(e) => handleChange("panel_member1", e.target.value)}
+                onChange={(value) => handleChange("panel_member1", value)}
                 error={errors.panel_member1}
               />
 
-              <FormField
+              <PanelSelector
                 label="Panel Member 2"
-                placeholder="e.g. Jane Doe"
+                panels={allPanels}
                 value={form.panel_member2}
-                onChange={(e) => handleChange("panel_member2", e.target.value)}
+                onChange={(value) => handleChange("panel_member2", value)}
                 error={errors.panel_member2}
               />
 
-              <FormField
+              <PanelSelector
                 label="Panel Member 3"
-                placeholder="e.g. John Smith"
+                panels={allPanels}
                 value={form.panel_member3}
-                onChange={(e) => handleChange("panel_member3", e.target.value)}
+                onChange={(value) => handleChange("panel_member3", value)}
                 error={errors.panel_member3}
               />
             </div>

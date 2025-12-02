@@ -69,6 +69,16 @@ const ConfirmThesisModal: React.FC<ConfirmThesisModalProps> = ({
             <strong>Year:</strong> {thesis.defense_year || "N/A"}
           </div>
 
+          <div className="text-gray-700">
+            <strong>Keywords:</strong>
+
+            {thesis.keywords && thesis.keywords.length > 0 ? (
+              <span className="ml-1">{thesis.keywords.join(", ")}</span>
+            ) : (
+              "N/A"
+            )}
+          </div>
+
           {/* Categories */}
           <div className="flex flex-wrap gap-2 mt-4">
             {thesis.category?.length

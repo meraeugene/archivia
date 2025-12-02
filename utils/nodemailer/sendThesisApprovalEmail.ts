@@ -137,7 +137,7 @@ export async function sendThesisApprovalEmail({
                   <div style="height: 1px; background: #e5e5e5; margin: 40px 0;"></div>
 
                   <!-- Support -->
-                  <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0;">
+                  <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0; text-align: center;">
                     Questions? Contact your adviser or reach out to <a href="mailto:capstone.archivia@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">capstone.archivia@gmail.com</a>
                   </p>
 

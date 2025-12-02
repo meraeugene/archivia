@@ -76,7 +76,7 @@ export async function middleware(request: NextRequest) {
     return NextResponse.redirect(url);
   }
 
-  // 5.  Student with adviser → prevent access to /find-adviser
+  // 5. Student with adviser or published thesis → prevent access to /find-adviser
   const supabase = await createClient();
 
   if (user?.role === "student" && pathname.startsWith("/find-adviser")) {
@@ -86,8 +86,31 @@ export async function middleware(request: NextRequest) {
       .eq("student_id", user.sub)
       .maybeSingle();
 
-    if (adviser) {
+    const { data: published } = await supabase
+      .from("theses")
+      .select("id")
+      .eq("student_id", user.sub)
+      .limit(1)
+      .maybeSingle();
+
+    if (adviser || published) {
       url.pathname = "/my-requests";
+      return NextResponse.redirect(url);
+    }
+  }
+
+  // 5b. Block access to /my-requests if student has already published a thesis
+  if (user?.role === "student" && pathname.startsWith("/my-requests")) {
+    const { data: published } = await supabase
+      .from("theses")
+      .select("id")
+      .eq("student_id", user.sub)
+      .limit(1)
+      .maybeSingle();
+
+    if (published) {
+      // Redirect to profile (or another page of your choice)
+      url.pathname = "/";
       return NextResponse.redirect(url);
     }
   }

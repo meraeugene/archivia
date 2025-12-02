@@ -36,17 +36,24 @@ export async function sendAuthorizeUploadEmail({
             <!-- Email Container -->
             <table width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e5e5;">
               
-              <!-- Header -->
-              <tr>
-                <td style="background: #000000; padding: 32px 40px; text-align: center;">
-                  <img 
-                    src="https://res.cloudinary.com/dhv8m7hau/image/upload/v1761307366/nborvww6hh8xlbcnhrar.png" 
-                    alt="Archivia Logo" 
-                    style="display: block; width: auto; height: 48px; max-width: 100%;"
-                  />
-                  <p style="color: #999999; margin: 0; font-size: 13px; letter-spacing: 0.3px;">Digital Thesis Archive</p>
-                </td>
-              </tr>
+
+               <!-- Header -->
+            <tr>
+              <td style="background: #000000; padding: 32px 40px; text-align: center;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
+                  <tr>
+                  <td>
+                    <img 
+                      src="https://res.cloudinary.com/dhv8m7hau/image/upload/v1761307366/nborvww6hh8xlbcnhrar.png" 
+                      alt="Archivia Logo" 
+                      style="display: block; width: auto; height: 48px; max-width: 100%;"
+                    />
+                  </td>
+                  </tr>
+                </table>
+                <p style="color: #999999; margin: 0; font-size: 13px; letter-spacing: 0.3px;">Digital Thesis Archive</p>
+              </td>
+            </tr>
 
               <!-- Status Indicator -->
               <tr>
@@ -96,7 +103,7 @@ export async function sendAuthorizeUploadEmail({
                   <div style="height: 1px; background: #e5e5e5; margin: 40px 0;"></div>
 
                   <!-- Support -->
-                  <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0;">
+                  <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0; text-align: center;">
                     Questions? Contact your adviser or reach out to <a href="mailto:capstone.archivia@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">capstone.archivia@gmail.com</a>
                   </p>
 

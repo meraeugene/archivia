@@ -48,6 +48,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
 }) => {
   const [feedback, setFeedback] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
 
   if (!isOpen) return null;
 
@@ -130,6 +131,13 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
     recommendedAdviserIds
   );
 
+  // Filter advisers based on search query
+  const filteredAdvisers = sortedAdvisers?.filter(
+    (adviser) =>
+      adviser.full_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      adviser.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   return (
     <div
       className="fixed  inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm  "
@@ -179,6 +187,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
             <p className="font-bold text-black text-lg">{studentName}</p>
           </div>
 
+          {/* Adviser dropdown */}
           {type === "refer" && (
             <div className="space-y-3 relative">
               <label className="block text-left text-sm font-semibold text-gray-600">
@@ -189,7 +198,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
               <button
                 type="button"
                 onClick={() => setShowDropdown((prev) => !prev)}
-                className="w-full p-3  cursor-pointer border border-gray-200 rounded-md text-sm flex justify-between items-center hover:ring focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black bg-white"
+                className="w-full p-3 cursor-pointer border border-gray-200 rounded-md text-sm flex justify-between items-center hover:ring focus:outline-none focus:ring-2 focus:ring-black/10 focus:border-black bg-white"
               >
                 <span className="truncate text-gray-800">
                   {referredAdvisers?.find((a) => a.id === selectedAdviser?.id)
@@ -205,13 +214,25 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
 
               {/* Dropdown list */}
               {showDropdown && (
-                <div className="absolute z-50  w-full max-h-64 overflow-y-auto bg-white border border-gray-200 scrollbar-none rounded-xl shadow-lg animate-in fade-in slide-in-from-top-1">
-                  {referredAdvisers?.length === 0 ? (
+                <div className="absolute z-50 w-full max-h-64 overflow-y-auto bg-white border border-gray-200 scrollbar-none rounded-xl shadow-lg animate-in fade-in slide-in-from-top-1">
+                  {/* Search input */}
+                  <div className="p-2 sticky top-0 bg-white border-b border-gray-200">
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder="Search by adviser or email..."
+                      className="w-full p-2 text-sm border border-gray-200 rounded-md focus:outline-none focus:ring-2 focus:ring-black/10"
+                    />
+                  </div>
+
+                  {/* Adviser list */}
+                  {filteredAdvisers?.length === 0 ? (
                     <div className="p-3 text-gray-500 text-sm text-center">
-                      No advisers available
+                      No advisers found
                     </div>
                   ) : (
-                    sortedAdvisers?.map((adviser) => (
+                    filteredAdvisers.map((adviser) => (
                       <div
                         key={adviser.id}
                         onClick={() => {
@@ -221,22 +242,21 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                             full_name: adviser.full_name,
                           });
                           setShowDropdown(false);
+                          setSearchQuery(""); // reset search after selection
                         }}
-                        className={`p-3 text-sm cursor-pointer  flex items-center transition hover:bg-gray-50
-                        ${
+                        className={`p-3 text-sm cursor-pointer flex items-center transition hover:bg-gray-50 ${
                           selectedAdviser?.id === adviser.id
                             ? "bg-gray-100"
                             : ""
-                        }
-                      `}
+                        }`}
                       >
-                        <div className="flex flex-col  text-left w-full">
-                          <div className="flex items-center justify-between  gap-2">
+                        <div className="flex flex-col text-left w-full">
+                          <div className="flex items-center justify-between gap-2">
                             <span className="font-semibold text-gray-900">
                               {adviser.full_name}
                             </span>
                             {recommendedAdviserIds?.includes(adviser.id) && (
-                              <p className="flex items-center  gap-1 text-yellow-500 text-xs font-medium">
+                              <p className="flex items-center gap-1 text-yellow-500 text-xs font-medium">
                                 <Star
                                   size={12}
                                   className="fill-yellow-500 text-yellow-500"
@@ -245,8 +265,6 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                               </p>
                             )}
                           </div>
-
-                          {/* Adviser email */}
                           <span className="text-gray-500 text-xs">
                             {adviser.email}
                           </span>

@@ -11,7 +11,7 @@ export async function setAdviserLimit(adviser_id: string, max_limit: number) {
     return { error: "Unauthorized" };
   }
 
-  if (max_limit <= 1) {
+  if (max_limit < 0) {
     return { error: "Limit must be greater than 1." };
   }
 

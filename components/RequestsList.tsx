@@ -22,6 +22,8 @@ const RequestsList = ({
     modalState,
     closeModal,
     handleConfirmModal,
+    setSelectedAdviser,
+    selectedAdviser,
   } = useAdvisoryRequests();
 
   return (
@@ -50,6 +52,8 @@ const RequestsList = ({
           modalState.request?.recommended_adviser_ids || []
         }
         referredAdvisers={referredAdvisers || []}
+        selectedAdviser={selectedAdviser}
+        setSelectedAdviser={setSelectedAdviser}
       />
     </div>
   );

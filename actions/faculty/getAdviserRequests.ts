@@ -20,7 +20,7 @@ export const getAdviserRequests = cache(async () => {
     .select("*")
     .eq("adviser_id", session?.sub)
     .order("submitted_at", { ascending: false })
-    .limit(3);
+    .limit(2);
 
   if (error) {
     console.log(error);

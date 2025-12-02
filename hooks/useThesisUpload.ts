@@ -112,7 +112,7 @@ export function useThesisUpload() {
       setCloudinaryUrl(data.url);
       setCloudinaryId(data.public_id);
       setModalOpen(true);
-      document.body.classList.add("modal-open");
+      document.body.style.overflow = "hidden";
     } else {
       console.error("Upload failed");
     }
@@ -141,7 +141,7 @@ export function useThesisUpload() {
       );
       router.push("/");
       setModalOpen(false);
-      document.body.classList.remove("modal-open");
+      document.body.style.overflow = "auto";
       removeFile();
     }
   };

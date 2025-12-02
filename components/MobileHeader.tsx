@@ -14,6 +14,7 @@ interface MobileHeaderProps {
   setMobileMenuOpen: (open: boolean) => void;
   currentUser: CurrentUser | null;
   renderLinks: (isMobile?: boolean) => JSX.Element;
+  hasPublishedThesis?: boolean;
 }
 
 const MobileHeader = ({
@@ -21,6 +22,7 @@ const MobileHeader = ({
   setMobileMenuOpen,
   currentUser,
   renderLinks,
+  hasPublishedThesis,
 }: MobileHeaderProps) => {
   const [isLoggingOut, setIsLoggingOut] = useState(false);
 
@@ -118,7 +120,7 @@ const MobileHeader = ({
                     Profile
                   </Link>
 
-                  {currentUser.role === "student" && (
+                  {currentUser.role === "student" && !hasPublishedThesis && (
                     <Link
                       prefetch
                       href="/my-requests"

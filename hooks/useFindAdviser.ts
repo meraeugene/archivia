@@ -74,7 +74,7 @@ export function useFindAdviser() {
         return;
       }
 
-      // console.log(result);
+      console.log(result);
 
       setRecommendations(result.recommendations);
       setRecommendedIds(result.recommended_adviser_ids || []);
@@ -146,9 +146,9 @@ export function useFindAdviser() {
   const handleReset = () => {
     //Clear form inputs (this is what clears the InputPanel)
     setStudentData({
-    title: "",
-    abstract: "",
-  });
+      title: "",
+      abstract: "",
+    });
     //Clear all recommendation-related state
     setRecommendations([]);
     setWildcardAdvisers([]);

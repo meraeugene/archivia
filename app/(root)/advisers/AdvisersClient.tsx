@@ -20,12 +20,12 @@ const AdvisersClient = ({ advisers, studentAdviser }: AdvisersClientProps) => {
 
   const openModal = (adviser: Adviser) => {
     setSelectedAdviser(adviser);
-    document.body.classList.add("overflow-hidden");
+    document.body.style.overflow = "hidden";
   };
 
   const closeModal = () => {
     setSelectedAdviser(null);
-    document.body.classList.remove("overflow-hidden");
+    document.body.style.overflow = "auto";
   };
 
   useEffect(() => {

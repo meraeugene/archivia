@@ -2,8 +2,8 @@
 
 import { Thesis } from "@/types/thesis";
 import { createClient } from "@/utils/supabase/server";
-import { sendThesisApprovalEmail } from "@/utils/nodemailer/sendThesisApprovalEmail";
-import { getCurrentUser } from "../auth/getCurrentUser";
+// import { sendThesisApprovalEmail } from "@/utils/nodemailer/sendThesisApprovalEmail";
+import { getSession } from "../auth/getSession";
 
 export async function submitThesisForApproval(
   thesisData: Thesis & {
@@ -40,11 +40,11 @@ export async function submitThesisForApproval(
   }
 
   const supabase = await createClient();
-  const currentUser = await getCurrentUser();
+  const session = await getSession();
 
-  if (!currentUser) return { error: "Not authenticated" };
+  if (!session) return { error: "Not authenticated" };
 
-  if (currentUser.role !== "student") {
+  if (session.role !== "student") {
     return { error: "Only students can publish thesis." };
   }
 
@@ -63,6 +63,7 @@ export async function submitThesisForApproval(
         defense_year: thesisData.defense_year,
         category: thesisData.category,
         file_url: thesisData.file_url,
+        student_id: session.sub,
       },
     ]);
 
@@ -74,7 +75,7 @@ export async function submitThesisForApproval(
     const { error: deleteError } = await supabase
       .from("student_requests")
       .delete()
-      .eq("student_id", currentUser.id)
+      .eq("student_id", session.sub)
       .eq("adviser_id", thesisData.adviser_id);
 
     if (deleteError) {
@@ -105,12 +106,12 @@ export async function submitThesisForApproval(
         error: "Error updating adviser current leaders",
       };
 
-    await sendThesisApprovalEmail({
-      to: currentUser.email,
-      type: "approve",
-      thesisTitle: thesisData.title,
-      adviserName: thesisData.adviser_name,
-    });
+    // await sendThesisApprovalEmail({
+    //   to: currentUser.email,
+    //   type: "approve",
+    //   thesisTitle: thesisData.title,
+    //   adviserName: thesisData.adviser_name,
+    // });
 
     return { success: true, message: "Thesis published successfully." };
   } catch (err) {

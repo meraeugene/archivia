@@ -37,7 +37,7 @@ export async function sendStudentAcceptedEmail({
 
           <table width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e5e5;">
             
-            <!-- Header -->
+           <!-- Header -->
             <tr>
               <td style="background: #000000; padding: 32px 40px; text-align: center;">
                 <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
@@ -94,7 +94,7 @@ export async function sendStudentAcceptedEmail({
 
                 <div style="height: 1px; background: #e5e5e5; margin: 40px 0;"></div>
 
-                <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0;">
+                <p style="color: #737373; font-size: 14px; line-height: 1.6; margin: 0; text-align: center;">
                   Questions? Contact <a href="mailto:capstone.archivia@gmail.com" style="color: #000000; text-decoration: none; font-weight: 600;">capstone.archivia@gmail.com</a>
                 </p>
               </td>

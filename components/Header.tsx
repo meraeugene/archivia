@@ -17,6 +17,7 @@ interface HeaderProps {
   navLinks: { label: string; href: string }[];
   studentAdviser?: StudentAdviser | null;
   isAuthorizedToUploadThesis?: boolean;
+  hasPublishedThesis?: boolean;
 }
 
 export default function ResponsiveHeader({
@@ -24,6 +25,7 @@ export default function ResponsiveHeader({
   navLinks,
   studentAdviser,
   isAuthorizedToUploadThesis,
+  hasPublishedThesis,
 }: HeaderProps) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
@@ -32,9 +34,10 @@ export default function ResponsiveHeader({
   const [lastScrollY, setLastScrollY] = useState(0);
 
   const hideFindAdviser =
-    currentUser?.role === "faculty" ||
-    currentUser?.role === "admin" ||
-    (currentUser?.role === "student" && studentAdviser);
+    currentUser?.role !== "student" ||
+    !!studentAdviser ||
+    isAuthorizedToUploadThesis ||
+    hasPublishedThesis;
 
   const showPublishThesis =
     currentUser?.role === "student" &&
@@ -219,7 +222,7 @@ export default function ResponsiveHeader({
                       </Link>
                     )}
 
-                    {currentUser.role === "student" && (
+                    {currentUser.role === "student" && !hasPublishedThesis && (
                       <Link
                         prefetch
                         href="/my-requests"
@@ -247,6 +250,7 @@ export default function ResponsiveHeader({
         setMobileMenuOpen={setMobileMenuOpen}
         currentUser={currentUser}
         renderLinks={renderLinks}
+        hasPublishedThesis={hasPublishedThesis}
       />
     </header>
   );
