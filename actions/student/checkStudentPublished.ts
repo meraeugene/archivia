@@ -10,9 +10,9 @@ export const checkStudentPublished = async () => {
     throw new Error("Not authenticated");
   }
 
-  if (session.role !== "student") {
-    throw new Error("Only students can check published thesis.");
-  }
+  // if (session.role !== "student") {
+  //   throw new Error("Only students can check published thesis.");
+  // }
 
   const supabase = await createClient();
 
