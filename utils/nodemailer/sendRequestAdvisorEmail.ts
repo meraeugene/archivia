@@ -37,7 +37,7 @@ export async function sendRequestAdviserEmail({
 
           <table width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 8px; border: 1px solid #e5e5e5;">
             
-             <!-- Header -->
+           <!-- Header -->
             <tr>
               <td style="background: #000000; padding: 32px 40px; text-align: center;">
                 <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
