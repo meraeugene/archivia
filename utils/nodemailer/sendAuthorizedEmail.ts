@@ -1,28 +1,23 @@
 import { transporter } from "./transporter";
 
-interface SendEmailOptions {
+interface SendAuthorizeUploadOptions {
   to: string;
-  type: "approve" | "return";
+  studentName: string;
   thesisTitle: string;
-  feedback?: string;
-  adviserName: string;
+  message?: string; // optional note from adviser/admin
 }
 
 /**
- * Sends a thesis notification email to the student.
+ * Sends a thesis upload authorization notification email to the student.
  * Clean black & white minimalist design with Archivia branding.
  */
-export async function sendThesisApprovalEmail({
+export async function sendAuthorizeUploadEmail({
   to,
-  type,
+  studentName,
   thesisTitle,
-  feedback,
-  adviserName,
-}: SendEmailOptions) {
-  const subject =
-    type === "approve"
-      ? `Thesis Approved - Archivia`
-      : "Thesis Returned - Archivia";
+  message,
+}: SendAuthorizeUploadOptions) {
+  const subject = `Upload Authorized - Archivia`;
 
   const html = `
     <!DOCTYPE html>
@@ -38,41 +33,27 @@ export async function sendThesisApprovalEmail({
         <tr>
           <td align="center">
 
-            
             <!-- Email Container -->
             <table width="600" cellpadding="0" cellspacing="0" style="background: #ffffff; border-radius: 8px; overflow: hidden; border: 1px solid #e5e5e5;">
               
-            <!-- Header -->
-            <tr>
-              <td style="background: #000000; padding: 32px 40px; text-align: center;">
-                <table role="presentation" cellpadding="0" cellspacing="0" border="0" align="center">
-                  <tr>
-                  <td>
-                    <img 
-                      src="https://res.cloudinary.com/dhv8m7hau/image/upload/v1761307366/nborvww6hh8xlbcnhrar.png" 
-                      alt="Archivia Logo" 
-                      style="display: block; width: auto; height: 48px; max-width: 100%;"
-                    />
-                  </td>
-                  </tr>
-                </table>
-                <p style="color: #999999; margin: 0; font-size: 13px; letter-spacing: 0.3px;">Digital Thesis Archive</p>
-              </td>
-            </tr>
-
+              <!-- Header -->
+              <tr>
+                <td style="background: #000000; padding: 32px 40px; text-align: center;">
+                  <img 
+                    src="https://res.cloudinary.com/dhv8m7hau/image/upload/v1761307366/nborvww6hh8xlbcnhrar.png" 
+                    alt="Archivia Logo" 
+                    style="display: block; width: auto; height: 48px; max-width: 100%;"
+                  />
+                  <p style="color: #999999; margin: 0; font-size: 13px; letter-spacing: 0.3px;">Digital Thesis Archive</p>
+                </td>
+              </tr>
 
               <!-- Status Indicator -->
               <tr>
                 <td style="padding: 0 40px; padding-top: 40px;">
-                  <div style="display: inline-block; background: ${
-                    type === "approve" ? "#000000" : "#ffffff"
-                  }; border: ${
-    type === "approve" ? "none" : "2px solid #000000"
-  }; border-radius: 6px; padding: 6px 16px;">
-                    <span style="color: ${
-                      type === "approve" ? "#ffffff" : "#000000"
-                    }; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
-                      ${type === "approve" ? "✓ Approved" : "Returned"}
+                  <div style="display: inline-block; background: #000000; border-radius: 6px; padding: 6px 16px;">
+                    <span style="color: #ffffff; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px;">
+                      ✓ Authorized
                     </span>
                   </div>
                 </td>
@@ -84,28 +65,25 @@ export async function sendThesisApprovalEmail({
                   
                   <!-- Title -->
                   <h2 style="color: #000000; margin: 0 0 24px 0; font-size: 28px; font-weight: 700; line-height: 1.2; letter-spacing: -0.5px;">
-                    ${
-                      type === "approve"
-                        ? "Your thesis has been approved"
-                        : "Your thesis has been returned"
-                    }
+                    You are authorized to publish your thesis
                   </h2>
 
                   <!-- Message -->
                   <p style="color: #171717; font-size: 16px; line-height: 1.6; margin: 0 0 24px 0;">
-                    ${
-                      type === "approve"
-                        ? `Your thesis <strong>"${thesisTitle}"</strong> has been approved by ${adviserName}.`
-                        : `Your thesis <strong>"${thesisTitle}"</strong> has been returned by ${adviserName}.`
-                    }
+                    Hello ${studentName}, your thesis <strong>"${thesisTitle}"</strong> has been authorized for publication on Archivia.
                   </p>
 
                   ${
-                    type === "approve"
+                    message
                       ? `
-                  <p style="color: #525252; font-size: 15px; line-height: 1.6; margin: 0 0 32px 0;">
-                    Your research is now published and available for everyone to explore on Archivia.
-                  </p>
+                  <!-- Optional Message Box -->
+                  <div style="background: #fafafa; border: 1px solid #e5e5e5; border-radius: 8px; padding: 24px; margin: 0 0 24px 0;">
+                    <p style="color: #000000; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px 0;">Message</p>
+                    <p style="color: #404040; font-size: 15px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${message}</p>
+                  </div>
+                  `
+                      : ""
+                  }
 
                   <!-- CTA Button -->
                   <div style="text-align: center; margin: 0 0 32px 0;">
@@ -113,25 +91,6 @@ export async function sendThesisApprovalEmail({
                       View Your Publication
                     </a>
                   </div>
-                  `
-                      : ""
-                  }
-
-                  ${
-                    type === "return" && feedback
-                      ? `
-                  <!-- Feedback Box -->
-                  <div style="background: #fafafa; border: 1px solid #e5e5e5; border-radius: 8px; padding: 24px; margin: 0 0 24px 0;">
-                    <p style="color: #000000; font-size: 13px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; margin: 0 0 12px 0;">Feedback from ${adviserName}</p>
-                    <p style="color: #404040; font-size: 15px; line-height: 1.6; margin: 0; white-space: pre-wrap;">${feedback}</p>
-                  </div>
-
-                  <p style="color: #525252; font-size: 15px; line-height: 1.6; margin: 0;">
-                    Please review the feedback and resubmit your thesis once revisions are complete.
-                  </p>
-                  `
-                      : ""
-                  }
 
                   <!-- Divider -->
                   <div style="height: 1px; background: #e5e5e5; margin: 40px 0;"></div>

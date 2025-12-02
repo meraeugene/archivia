@@ -5,30 +5,32 @@ import { cache } from "react";
 
 const PAGE_SIZE = 6;
 
-export const getMoreTheses = async (offset = 0, year = 0, category = "all") => {
-  const supabase = await createClient();
+export const getMoreTheses = cache(
+  async (offset = 0, year = 0, category = "all") => {
+    const supabase = await createClient();
 
-  let query = supabase.from("theses").select("*");
+    let query = supabase.from("theses").select("*");
 
-  if (category !== "all") {
-    query = query.contains("category", [category]);
+    if (category !== "all") {
+      query = query.contains("category", [category]);
+    }
+
+    if (year) {
+      query = query.eq("defense_year", year); // filter by year
+    }
+
+    query = query.range(offset, offset + PAGE_SIZE - 1);
+
+    const { data, error } = await query;
+
+    if (error) {
+      console.error("Error fetching theses:", error.message);
+      return [];
+    }
+
+    return data;
   }
-
-  if (year) {
-    query = query.eq("defense_year", year); // filter by year
-  }
-
-  query = query.range(offset, offset + PAGE_SIZE - 1);
-
-  const { data, error } = await query;
-
-  if (error) {
-    console.error("Error fetching theses:", error.message);
-    return [];
-  }
-
-  return data;
-};
+);
 
 export async function searchTheses(query: string) {
   const supabase = await createClient();

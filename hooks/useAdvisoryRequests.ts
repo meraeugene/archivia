@@ -109,7 +109,13 @@ export function useAdvisoryRequests() {
           );
           break;
         case "authorize":
-          result = await authorizeUpload(requestId);
+          result = await authorizeUpload(
+            requestId,
+            studentEmail,
+            studentName,
+            title,
+            selectedAdviser.full_name
+          );
           break;
         default:
           toast.error("Invalid action type.");

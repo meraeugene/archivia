@@ -13,7 +13,7 @@ import { ChartBarMultiple } from "@/components/admin/ChartBarMultiple";
 import { getAdviserRequestsPerMonth } from "@/actions/admin/getAdviserRequestsPerMonth";
 import QuickActionsCard from "@/components/QuickActionsCard";
 import TopBookmarksCard from "./TopBookmarksCard";
-import { getAdviserAdvisees } from "@/actions/admin/getAdivserAdvisees";
+import { getAdviserAdvisees } from "@/actions/admin/getAdviserAdvisees";
 
 export default async function AdminDashboard() {
   const [

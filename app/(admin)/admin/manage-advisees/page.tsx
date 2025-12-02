@@ -1,4 +1,4 @@
-import { getAdviserAdvisees } from "@/actions/admin/getAdivserAdvisees";
+import { getAdviserAdvisees } from "@/actions/admin/getAdviserAdvisees";
 import AdviserAdvisees from "./AdviserAdvisees";
 
 const page = async () => {

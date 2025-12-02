@@ -3,13 +3,13 @@
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "next/cache";
 import { getCurrentUser } from "../auth/getCurrentUser";
-// import { sendStudentReservedEmail } from "@/utils/nodemailer/sendStudentReservedEmail";
+import { sendStudentReservedEmail } from "@/utils/nodemailer/sendStudentReservedEmail";
 
 export async function markAsReserved(
-  requestId: string
-  // studentEmail: string,
-  // thesisTitle: string,
-  // thesisAbstract: string
+  requestId: string,
+  studentEmail: string,
+  thesisTitle: string,
+  thesisAbstract: string
 ) {
   const supabase = await createClient();
 
@@ -39,12 +39,12 @@ export async function markAsReserved(
     return { success: false, error: error.message };
   }
 
-  // await sendStudentReservedEmail({
-  //   to: studentEmail,
-  //   adviserName: currentUser.full_name,
-  //   thesisTitle,
-  //   thesisAbstract,
-  // });
+  await sendStudentReservedEmail({
+    to: studentEmail,
+    adviserName: currentUser.full_name,
+    thesisTitle,
+    thesisAbstract,
+  });
 
   revalidatePath("/requests");
   revalidatePath("/my-requests");
