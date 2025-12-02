@@ -79,7 +79,7 @@ const ThesisCard: React.FC<ThesisCardProps> = ({
             .join(", ") || "N/A"}
         </div>
 
-        <div className=" gap-2 hidden md:flex">
+        <div>
           <strong>Proponents:</strong>{" "}
           <span>
             <HighlightText

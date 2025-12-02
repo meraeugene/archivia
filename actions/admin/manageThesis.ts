@@ -121,7 +121,6 @@ export async function editThesis({
   if (error) throw new Error(error.message);
   revalidatePath("/manage-thesis");
 }
-
 export async function deleteThesis(id: number) {
   const supabase = await createClient();
   const session = await getSession();
@@ -133,8 +132,19 @@ export async function deleteThesis(id: number) {
     throw new Error("Unauthorized");
   }
 
+  // Step 1: Delete from Supabase
   const { error } = await supabase.from("theses").delete().eq("id", id);
-
   if (error) throw new Error(error.message);
+
+  // Step 2: Delete from FAISS (rebuild index)
+  try {
+    await fetch(`https://web-production-6b29d.up.railway.app/delete/${id}`, {
+      method: "DELETE",
+    });
+  } catch (err) {
+    console.error("Failed to sync FAISS deletion:", err);
+  }
+
+  //  Step 3: Refresh UI
   revalidatePath("/manage-thesis");
 }
