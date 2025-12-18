@@ -8,6 +8,7 @@ import {
   CornerUpRight,
   LockOpen,
   RotateCcw,
+  Sparkles,
   Star,
 } from "lucide-react";
 import { ReferredAdviser } from "@/types/referredAdvisers";
@@ -32,6 +33,7 @@ interface ConfirmModalProps {
     full_name: string;
   }) => void;
   recommendedAdviserIds?: string[];
+  wildcardAdviserIds?: string[];
 }
 
 const ConfirmationModal: React.FC<ConfirmModalProps> = ({
@@ -45,6 +47,7 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
   selectedAdviser,
   setSelectedAdviser,
   recommendedAdviserIds,
+  wildcardAdviserIds,
 }) => {
   const [feedback, setFeedback] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -128,7 +131,8 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
 
   const sortedAdvisers = sortAdvisersByRecommendation(
     referredAdvisers,
-    recommendedAdviserIds
+    recommendedAdviserIds,
+    wildcardAdviserIds
   );
 
   // Filter advisers based on search query
@@ -255,15 +259,26 @@ const ConfirmationModal: React.FC<ConfirmModalProps> = ({
                             <span className="font-semibold text-gray-900">
                               {adviser.full_name}
                             </span>
-                            {recommendedAdviserIds?.includes(adviser.id) && (
-                              <p className="flex items-center gap-1 text-yellow-500 text-xs font-medium">
-                                <Star
-                                  size={12}
-                                  className="fill-yellow-500 text-yellow-500"
-                                />
-                                <span>Recommended</span>
-                              </p>
-                            )}
+                            <div className="flex items-center gap-1">
+                              {recommendedAdviserIds?.includes(adviser.id) && (
+                                <p className="flex items-center gap-1 text-yellow-500 text-xs font-medium">
+                                  <Star
+                                    size={12}
+                                    className="fill-yellow-500 text-yellow-500"
+                                  />
+                                  <span>Recommended</span>
+                                </p>
+                              )}
+                              {wildcardAdviserIds?.includes(adviser.id) && (
+                                <p className="flex items-center gap-1 text-blue-500 text-xs font-medium">
+                                  <Sparkles
+                                    size={12}
+                                    className="fill-blue-500 text-blue-500"
+                                  />
+                                  <span>Wildcard</span>
+                                </p>
+                              )}
+                            </div>
                           </div>
                           <span className="text-gray-500 text-xs">
                             {adviser.email}

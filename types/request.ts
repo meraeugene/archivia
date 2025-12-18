@@ -22,5 +22,6 @@ export type Request = {
   referred_by: string | null;
   thesis_url: string;
   recommended_adviser_ids: string[] | null;
+  wildcard_adviser_ids: string[] | null;
   is_authorized: boolean;
 };

@@ -11,7 +11,8 @@ export async function sendRequest(
   abstract: string,
   adviserEmail: string,
   url: string,
-  recommendedIds?: string[]
+  recommendedIds?: string[],
+  wildcardsIds?: string[]
 ) {
   const supabase = await createClient();
   const currentUser = await getCurrentUser();
@@ -54,6 +55,7 @@ export async function sendRequest(
       abstract,
       thesis_url: url,
       recommended_adviser_ids: recommendedIds,
+      wildcard_adviser_ids: wildcardsIds,
     })
     .select()
     .single();

@@ -81,6 +81,7 @@ export default function AdvisoryRequestsClient({
         recommendedAdviserIds={
           modalState.request?.recommended_adviser_ids || []
         }
+        wildcardAdviserIds={modalState.request?.wildcard_adviser_ids || []}
       />
     </main>
   );

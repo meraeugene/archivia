@@ -17,6 +17,7 @@ export function useFindAdviser() {
   const [showModal, setShowModal] = useState(false);
   const [selectedAdviser, setSelectedAdviser] = useState<Adviser | null>(null);
   const [recommendedIds, setRecommendedIds] = useState<string[]>([]);
+  const [wildcardsIds, setWildcardsIds] = useState<string[]>([]);
   const [explanations, setExplanations] = useState<{
     overall: string;
     top1: string;
@@ -78,6 +79,7 @@ export function useFindAdviser() {
 
       setRecommendations(result.recommendations);
       setRecommendedIds(result.recommended_adviser_ids || []);
+      setWildcardsIds(result.wildcard_adviser_ids || []);
       setWildcardAdvisers(result.wildcard_advisers || []);
       setRadarData(result.radar_data || []);
       setExplanations({
@@ -108,7 +110,8 @@ export function useFindAdviser() {
         studentData.abstract,
         selectedAdviser.email ?? "",
         url,
-        recommendedIds
+        recommendedIds,
+        wildcardsIds
       );
 
       if (res.error) {
@@ -140,6 +143,7 @@ export function useFindAdviser() {
         top1: result.top1_adviser_explanation || "",
       });
       setRecommendedIds(result.recommended_adviser_ids || []);
+      setWildcardsIds(result.wildcard_adviser_ids || []);
     });
   };
 

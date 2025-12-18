@@ -48,6 +48,7 @@ export async function getRecommendedAdvisers(title: string, abstract: string) {
       pie_chart: data.pie_chart_base64,
       overall_explanation: data.overall_explanation,
       top1_adviser_explanation: data.top1_adviser_explanation,
+      wildcard_adviser_ids: data.wildcard_adviser_ids,
     };
   } catch (err) {
     console.error("Fetch error:", err);

@@ -134,9 +134,11 @@ export function RecommendedAdvisersAnalysis({
             supervised theses. Higher similarity indicates closer alignment with
             your research topic.
           </p>
-          <p className="mt-2">
-            <strong>Experience:</strong> Computed based on the adviser’s past
-            work in topics similar to your thesis:
+          <div className="mt-2">
+            <p>
+              <strong>Experience:</strong> Computed based on the adviser’s past
+              work in topics similar to your thesis:
+            </p>
             <ul className="list-disc list-inside ml-4 mt-1">
               <li>
                 <strong>Supervised Thesis:</strong> +1 point for each thesis the
@@ -151,9 +153,8 @@ export function RecommendedAdvisersAnalysis({
                 similarity score of the thesis.
               </li>
             </ul>
-            Only the top 5 most relevant past theses are considered, and points
-            are normalized across all advisers to create a 0–1 experience score.
-          </p>
+          </div>
+
           <p className="mt-2">
             <strong>Overall:</strong> Combined score = 90% Similarity + 10%
             Normalized Experience. This gives a final ranking considering both
