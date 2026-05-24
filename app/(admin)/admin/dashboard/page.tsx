@@ -13,7 +13,6 @@ import { ChartBarMultiple } from "@/components/admin/ChartBarMultiple";
 import { getAdviserRequestsPerMonth } from "@/actions/admin/getAdviserRequestsPerMonth";
 import QuickActionsCard from "@/components/QuickActionsCard";
 import TopBookmarksCard from "./TopBookmarksCard";
-import { getAdviserAdvisees } from "@/actions/admin/getAdviserAdvisees";
 
 export default async function AdminDashboard() {
   const [
@@ -29,7 +28,6 @@ export default async function AdminDashboard() {
   ] = await Promise.all([
     getAdminDashboardStats(),
     getAdviserRequestsPerMonth(),
-    getAdviserAdvisees(),
   ]);
 
   return (

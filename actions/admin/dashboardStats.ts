@@ -6,13 +6,14 @@ import { cache } from "react";
 export const getAdminDashboardStats = cache(async () => {
   const supabase = await createClient();
 
+  // Fetch all counts and top bookmarks in parallel
   const [
-    { count: totalRequests },
-    { count: pendingRequests },
-    { count: totalUsers },
-    { count: totalAdvisers },
-    { count: totalStudents },
-    { data: topBookmarked },
+    totalRequestsRes,
+    pendingRequestsRes,
+    totalUsersRes,
+    totalAdvisersRes,
+    totalStudentsRes,
+    topBookmarkedRes,
   ] = await Promise.all([
     supabase
       .from("student_requests")
@@ -33,12 +34,20 @@ export const getAdminDashboardStats = cache(async () => {
     supabase.from("top_bookmarked_theses").select("*").limit(10),
   ]);
 
+  // Extract counts safely
+  const totalRequests = totalRequestsRes?.count ?? 0;
+  const pendingRequests = pendingRequestsRes?.count ?? 0;
+  const totalUsers = totalUsersRes?.count ?? 0;
+  const totalAdvisers = totalAdvisersRes?.count ?? 0;
+  const totalStudents = totalStudentsRes?.count ?? 0;
+  const topBookmarked = topBookmarkedRes?.data ?? [];
+
   return {
-    totalRequests: totalRequests ?? 0,
-    pendingRequests: pendingRequests ?? 0,
-    totalUsers: totalUsers ?? 0,
-    totalAdvisers: totalAdvisers ?? 0,
-    totalStudents: totalStudents ?? 0,
-    topBookmarked: topBookmarked ?? [],
+    totalRequests,
+    pendingRequests,
+    totalUsers,
+    totalAdvisers,
+    totalStudents,
+    topBookmarked,
   };
 });

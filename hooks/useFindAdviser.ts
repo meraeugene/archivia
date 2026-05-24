@@ -39,7 +39,7 @@ export function useFindAdviser() {
 
   const handleInputChange = (
     field: keyof typeof studentData,
-    value: string
+    value: string,
   ) => {
     setStudentData({ ...studentData, [field]: value });
   };
@@ -68,14 +68,12 @@ export function useFindAdviser() {
     try {
       const result = await getRecommendedAdvisers(
         studentData.title,
-        studentData.abstract
+        studentData.abstract,
       );
       if (result.error) {
         toast.error(result.error);
         return;
       }
-
-      console.log(result);
 
       setRecommendations(result.recommendations);
       setRecommendedIds(result.recommended_adviser_ids || []);
@@ -90,7 +88,7 @@ export function useFindAdviser() {
       toast.success(
         `We've found ${result.recommendations.length} adviser${
           result.recommendations.length !== 1 ? "s" : ""
-        } that best match your thesis proposal.`
+        } that best match your thesis proposal.`,
       );
     } catch (error) {
       console.error(error);
@@ -111,7 +109,7 @@ export function useFindAdviser() {
         selectedAdviser.email ?? "",
         url,
         recommendedIds,
-        wildcardsIds
+        wildcardsIds,
       );
 
       if (res.error) {
@@ -120,7 +118,7 @@ export function useFindAdviser() {
       }
 
       toast.success(
-        "Adviser request sent successfully! We already notified them via email. Please check your my requests page for updates."
+        "Adviser request sent successfully! We already notified them via email. Please check your my requests page for updates.",
       );
       setShowModal(false);
       document.body.classList.remove("modal-open");
@@ -128,7 +126,7 @@ export function useFindAdviser() {
       // Re-fetch recommendations to refresh availability or request status
       const result = await getRecommendedAdvisers(
         studentData.title,
-        studentData.abstract
+        studentData.abstract,
       );
 
       if (result.error) {
